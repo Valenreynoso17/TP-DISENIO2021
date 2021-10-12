@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="connection.driver_class">org.postgresql.Driver</property>
+		<property name="connection.url">jdbc:postgresql://localhost:5432/prueba</property>
+		<property name="connection.username">postgres</property>
+		<property name="connection.password">ChortQuarinReynoso</property>
+		<property name="hibernate.show_sql">true</property>
+
+		<mapping resource="ejemplo01/Profesor.hbm.xml"/>
+		<mapping class="ejemplo01.Profesor"/>
+
+	</session-factory>
+</hibernate-configuration>
