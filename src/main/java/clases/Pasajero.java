@@ -18,6 +18,7 @@ public class Pasajero {
 	private String cuit;
 	private PosicionFrenteIva posicionFrenteIva;
 	private Pais nacionalidad;
+	private Direccion direccion; 
 	//TODO faltan asociaciones por agregar	
 	
 	

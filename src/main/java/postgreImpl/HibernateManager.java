@@ -1,4 +1,4 @@
-package main.java.daos;
+package main.java.postgreImpl;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
