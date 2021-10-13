@@ -1,6 +1,7 @@
 package interfaces.julio.paneles;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -17,6 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+
+import interfaces.TextPrompt;
+import interfaces.TextPrompt.Show;
 
 public class PanelAltaPasajeroDatos extends JPanel{
 	
@@ -56,9 +60,11 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private double pesoXCampo = 0.3;
 	private double pesoYCampo = 0.1;
 	
-	private double pesoXLabelDoble = 0.0;
-	private double pesoXCampoDoble = 0.0;
+	private double pesoXLabelDoble = 0.3;
+	private double pesoXCampoDoble = 0.3;
 	private Font fuente =new Font("Monospaced", Font.ITALIC, 12);	
+	
+	TextPrompt fondoJTextField;
 	
 //	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
 //	
@@ -80,7 +86,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		apellido = new JTextField("Ingrese un apellido"); apellido.setForeground(Color.GRAY);	c.gridx = 0; c.gridy = 1;	this.add(apellido, c);
+		apellido = new JTextField(10); fondoJTextField = new TextPrompt("Ingrese un apellido",apellido); fondoJTextField.setForeground(Color.GRAY);		
+		c.gridx = 0; c.gridy = 1;	this.add(apellido, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -88,7 +95,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		nombre = new JTextField();	c.gridx = 2; c.gridy = 1;	this.add(nombre, c);
+		nombre = new JTextField();	fondoJTextField = new TextPrompt("Ingrese un nombre", nombre); fondoJTextField.setForeground(Color.GRAY);
+		c.gridx = 2; c.gridy = 1;	this.add(nombre, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -105,7 +113,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		numeroDocumento = new JTextField();	c.gridx = 2; c.gridy = 3;	this.add(numeroDocumento, c);
+		numeroDocumento = new JTextField();	fondoJTextField = new TextPrompt("Ingrese el número de documento", numeroDocumento); fondoJTextField.setForeground(Color.GRAY);
+		c.gridx = 2; c.gridy = 3;	this.add(numeroDocumento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -113,7 +122,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		fechaNacimiento = new JTextField();	c.gridx = 0; c.gridy = 5;	this.add(fechaNacimiento, c);
+		fechaNacimiento = new JTextField();	fondoJTextField = new TextPrompt("dd/mm/aaaa", fechaNacimiento); fondoJTextField.setForeground(Color.GRAY);
+		c.gridx = 0; c.gridy = 5;	this.add(fechaNacimiento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -121,7 +131,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		email = new JTextField();	c.gridx = 2; c.gridy = 5;	this.add(email, c);
+		email = new JTextField();	fondoJTextField = new TextPrompt("Ingrese el correo electrónico", email); fondoJTextField.setForeground(Color.GRAY);
+		c.gridx = 2; c.gridy = 5;	this.add(email, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -129,7 +140,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		telefono = new JTextField();	c.gridx = 0; c.gridy = 7;	this.add(telefono, c);
+		telefono = new JTextField();	fondoJTextField = new TextPrompt("Ingrese número de teléfono", telefono); fondoJTextField.setForeground(Color.GRAY);
+		c.gridx = 0; c.gridy = 7;	this.add(telefono, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -137,7 +149,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		ocupacion = new JTextField();	c.gridx = 2; c.gridy = 7;	this.add(ocupacion, c);
+		ocupacion = new JTextField();	fondoJTextField = new TextPrompt("Ingrese ocupación", ocupacion); fondoJTextField.setForeground(Color.GRAY);
+		c.gridx = 2; c.gridy = 7;	this.add(ocupacion, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -145,15 +158,21 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		direccion = new JTextField();	c.gridx = 0; c.gridy = 9;	this.add(direccion, c);
+		direccion = new JTextField();	fondoJTextField = new TextPrompt("Ingrese el domicilio (calle y número)", direccion); fondoJTextField.setForeground(Color.GRAY);
+		direccion.setPreferredSize(new Dimension(400,20));
+		direccion.setMinimumSize(new Dimension(400,20));
+		c.gridx = 0; c.gridy = 9;	this.add(direccion, c);
 		
-			c.fill = GridBagConstraints.NONE; c.weightx = 0; c.weighty = pesoYLabel; c.insets = insetLabelDobleIzq; c.gridwidth = 1;
+			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabelDoble; c.weighty = pesoYLabel; c.insets = insetLabelDobleIzq; c.gridwidth = 1;
 		
 		label = new JLabel("Departamento");	c.gridx = 2; c.gridy = 8;	this.add(label, c);
 		
-			c.fill = GridBagConstraints.BOTH; c.weightx = 0; c.weighty = pesoYCampo; c.insets = insetCampoDobleIzq;
+			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleIzq;
 		
-		departamento = new JTextField("Ingrese el dpto.");	c.gridx = 2; c.gridy = 9;	this.add(departamento, c);
+		departamento = new JTextField();	fondoJTextField = new TextPrompt("Ingrese el dpto.", departamento); fondoJTextField.setForeground(Color.GRAY);
+		departamento.setPreferredSize(new Dimension(180,20));
+		departamento.setMinimumSize(new Dimension(180,20));
+		c.gridx = 2; c.gridy = 9;	this.add(departamento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabelDoble; c.weighty = pesoYLabel; c.insets = insetLabelDobleDer;
 		
@@ -161,7 +180,10 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleDer;
 		
-		piso = new JTextField("Ingrese el piso");	c.gridx = 3; c.gridy = 9;	this.add(piso, c);
+		piso = new JTextField();	fondoJTextField = new TextPrompt("Ingrese el piso", piso); fondoJTextField.setForeground(Color.GRAY);
+		piso.setPreferredSize(new Dimension(180,20));
+		piso.setMinimumSize(new Dimension(180,20));
+		c.gridx = 3; c.gridy = 9;	this.add(piso, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -187,7 +209,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleIzq;
 		
-		codigoPostal = new JTextField();	c.gridx = 0; c.gridy = 13;	this.add(codigoPostal, c);
+		codigoPostal = new JTextField();	fondoJTextField = new TextPrompt("Ingrese el CP", codigoPostal); fondoJTextField.setForeground(Color.GRAY);
+		c.gridx = 0; c.gridy = 13;	this.add(codigoPostal, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabelDoble; c.weighty = pesoYLabel; c.insets = insetLabelDobleDer; c.gridwidth = 1;
 		
@@ -213,7 +236,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		cuit = new JTextField();	c.gridx = 0; c.gridy = 15;	this.add(cuit, c);
+		cuit = new JTextField();	fondoJTextField = new TextPrompt("Ingrese los 11 dígitos del número de CUIT", cuit); fondoJTextField.setForeground(Color.GRAY);
+		c.gridx = 0; c.gridy = 15;	this.add(cuit, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -224,7 +248,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		posicionIVA = new JComboBox<String>();	c.gridx = 2; c.gridy = 15;
 		posicionIVA.addItem("CONSUMIDOR FINAL");	this.add(posicionIVA, c);
 		
-			c.fill = GridBagConstraints.NONE; c.weighty = pesoYLabel; c.gridwidth = 1; c.anchor = GridBagConstraints.SOUTHEAST;
+			c.fill = GridBagConstraints.NONE; c.weighty = pesoYLabel; c.gridwidth = 2; c.anchor = GridBagConstraints.CENTER;
 		
 		label = new JLabel("*campo obligatorio");	label.setFont(fuente);	c.gridx = 2; c.gridy = 16;	this.add(label, c);
 		
