@@ -1,4 +1,4 @@
-package interfaces.julio.paneles;
+package main.java.interfaces.julio.paneles;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import interfaces.julio.frames.FrameAltaPasajero;
+import main.java.interfaces.julio.frames.FrameAltaPasajero;
 
 
 
@@ -28,14 +28,13 @@ public class PanelAltaPasajero extends JPanel{
 	private JButton cancelar;
 	private JButton siguiente;
 
-	
 	private Insets i = new Insets(20,10,10,10);
 //	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
 //	
 //	private EstacionGestionar frameAnterior;
 //	private EstacionAltaGrafo frameSiguiente;
 	
-	public PanelAltaPasajero(FrameAltaPasajero frame) {
+	public PanelAltaPasajero(final FrameAltaPasajero frame) {
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();

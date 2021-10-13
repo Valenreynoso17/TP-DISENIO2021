@@ -1,4 +1,4 @@
-package interfaces.julio.paneles;
+package main.java.interfaces.julio.paneles;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,8 +19,8 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import interfaces.TextPrompt;
-import interfaces.TextPrompt.Show;
+import main.java.interfaces.TextPrompt;
+import main.java.interfaces.TextPrompt.Show;
 
 public class PanelAltaPasajeroDatos extends JPanel{
 	
