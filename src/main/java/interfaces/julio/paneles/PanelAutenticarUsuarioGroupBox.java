@@ -14,6 +14,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import main.java.interfaces.TextPrompt;
+import main.java.interfaces.julio.otros.RoundedBorder;
 
 public class PanelAutenticarUsuarioGroupBox extends JPanel{
 	
@@ -23,11 +24,13 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 	private JTextField contrasenia;
 	
 	
-	private Insets insetLabel = new Insets(0,85,5,80);
+	private Insets insetLabel = new Insets(0,88,8,80);
 	private Insets insetCampo = new Insets(0,80,30,80);
 	
 	private Font fuenteGroupBox = new Font("Iniciar Sesión", Font.PLAIN, 20);	
-	private Font fuenteLabelCampo = new Font("SourceSansPro", Font.PLAIN, 15);
+	private Font fuenteLabelCampo = new Font("SourceSansPro", Font.PLAIN, 14);
+	
+	private RoundedBorder bordeCampo = new RoundedBorder(5, Color.decode("#BDBDBD"));
 	
 	TextPrompt fondoJTextField;
 	
@@ -47,13 +50,13 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 		
 			c.anchor = GridBagConstraints.SOUTHWEST;	c.gridx = 0;	//c.weightx = 0.1; c.weighty = 0.1;
 		
-			c.insets = new Insets(50,85,5,80);	
+			c.insets = new Insets(30,88,8,80);	
 		
 		label = new JLabel("Nombre");	label.setFont(fuenteLabelCampo); c.gridy = 0;	this.add(label, c);
 		
 			c.anchor = GridBagConstraints.CENTER; c.fill = GridBagConstraints.HORIZONTAL;  c.insets = insetCampo;
 		
-		nombre = new JTextField(); 
+		nombre = new JTextField(); nombre.setBorder(bordeCampo);
 		fondoJTextField = new TextPrompt("Ingrese el Nombre del Usuario",nombre); fondoJTextField.setForeground(Color.GRAY); fondoJTextField.setFont(fuenteLabelCampo);
 		nombre.setPreferredSize(new Dimension(350, 30));
 		c.gridy = 1;	this.add(nombre, c);
@@ -64,7 +67,7 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 		
 			c.anchor = GridBagConstraints.CENTER; c.fill = GridBagConstraints.HORIZONTAL; c.insets = new Insets(0,80,50,80);
 		
-		contrasenia = new JTextField();	
+		contrasenia = new JTextField();	contrasenia.setBorder(bordeCampo);
 		fondoJTextField = new TextPrompt(" Ingrese la contraseña", contrasenia); fondoJTextField.setForeground(Color.GRAY); fondoJTextField.setFont(fuenteLabelCampo);
 		contrasenia.setPreferredSize(new Dimension(350, 30));
 		c.gridy = 3;	this.add(contrasenia, c);
