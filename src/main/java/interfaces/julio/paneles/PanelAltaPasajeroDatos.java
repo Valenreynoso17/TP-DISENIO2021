@@ -21,6 +21,7 @@ import javax.swing.border.TitledBorder;
 
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.TextPrompt.Show;
+import main.java.interfaces.julio.otros.RoundedBorder;
 
 public class PanelAltaPasajeroDatos extends JPanel{
 	
@@ -62,7 +63,12 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	
 	private double pesoXLabelDoble = 0.3;
 	private double pesoXCampoDoble = 0.3;
-	private Font fuente =new Font("Monospaced", Font.ITALIC, 12);	
+	
+	private Font fuenteLabelFinal =new Font("SourceSansPro", Font.ITALIC, 13);	
+	private Font fuenteLabelCampo =new Font("SourceSansPro", Font.PLAIN, 14);
+	private Font fuenteGroupBox = new Font("Iniciar Sesión", Font.PLAIN, 18);	
+	
+	private RoundedBorder bordeCampo = new RoundedBorder(5, Color.decode("#BDBDBD"));
 	
 	TextPrompt fondoJTextField;
 	
@@ -73,7 +79,9 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	
 	public PanelAltaPasajeroDatos() {
 		
-		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Dar de alta pasajero"));
+		this.setBackground(Color.WHITE);
+		
+		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Dar de alta pasajero", 0, 0, fuenteGroupBox));
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -82,175 +90,195 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel;	
 		
-		label = new JLabel("Apellido*");	c.gridx = 0; c.gridy = 0;	this.add(label, c);
+		label = new JLabel("Apellido*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 0;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		apellido = new JTextField(10); fondoJTextField = new TextPrompt("Ingrese un apellido",apellido); fondoJTextField.setForeground(Color.GRAY);		
+		apellido = new JTextField(10); apellido.setFont(fuenteLabelCampo);	apellido.setBorder(bordeCampo);
+		fondoJTextField = new TextPrompt("Ingrese un apellido",apellido); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 0; c.gridy = 1;	this.add(apellido, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("Nombre*");	c.gridx = 2; c.gridy = 0;	this.add(label, c);
+		label = new JLabel("Nombre*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 0;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		nombre = new JTextField();	fondoJTextField = new TextPrompt("Ingrese un nombre", nombre); fondoJTextField.setForeground(Color.GRAY);
+		nombre = new JTextField();	nombre.setFont(fuenteLabelCampo);	nombre.setBorder(bordeCampo);
+		fondoJTextField = new TextPrompt("Ingrese un nombre", nombre); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 2; c.gridy = 1;	this.add(nombre, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("Tipo de documento*");	c.gridx = 0; c.gridy = 2;	this.add(label, c);
+		label = new JLabel("Tipo de documento*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 2;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		tipoDocumento = new JComboBox<String>();	c.gridx = 0; c.gridy = 3;	
+		tipoDocumento = new JComboBox<String>();	tipoDocumento.setFont(fuenteLabelCampo);	tipoDocumento.setBackground(Color.white);	tipoDocumento.setBorder(bordeCampo);	
+		c.gridx = 0; c.gridy = 3;	
 		tipoDocumento.addItem("--Seleccione");		this.add(tipoDocumento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("Número de documento*");	c.gridx = 2; c.gridy = 2;	this.add(label, c);
+		label = new JLabel("Número de documento*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 2;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		numeroDocumento = new JTextField();	fondoJTextField = new TextPrompt("Ingrese el número de documento", numeroDocumento); fondoJTextField.setForeground(Color.GRAY);
+		numeroDocumento = new JTextField();	numeroDocumento.setFont(fuenteLabelCampo);	numeroDocumento.setBorder(bordeCampo);
+		fondoJTextField = new TextPrompt("Ingrese el número de documento", numeroDocumento); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 2; c.gridy = 3;	this.add(numeroDocumento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("Fecha de nacimiento*");	c.gridx = 0; c.gridy = 4;	this.add(label, c);
+		label = new JLabel("Fecha de nacimiento*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 4;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		fechaNacimiento = new JTextField();	fondoJTextField = new TextPrompt("dd/mm/aaaa", fechaNacimiento); fondoJTextField.setForeground(Color.GRAY);
+		fechaNacimiento = new JTextField();	fechaNacimiento.setFont(fuenteLabelCampo);	fechaNacimiento.setBorder(bordeCampo);
+		fondoJTextField = new TextPrompt("dd/mm/aaaa", fechaNacimiento); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 0; c.gridy = 5;	this.add(fechaNacimiento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("Email*");	c.gridx = 2; c.gridy = 4;	this.add(label, c);
+		label = new JLabel("Email*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 4;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		email = new JTextField();	fondoJTextField = new TextPrompt("Ingrese el correo electrónico", email); fondoJTextField.setForeground(Color.GRAY);
+		email = new JTextField();	email.setFont(fuenteLabelCampo);	email.setBorder(bordeCampo);
+		fondoJTextField = new TextPrompt("Ingrese el correo electrónico", email); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 2; c.gridy = 5;	this.add(email, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("Teléfono*");	c.gridx = 0; c.gridy = 6;	this.add(label, c);
+		label = new JLabel("Teléfono*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 6;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		telefono = new JTextField();	fondoJTextField = new TextPrompt("Ingrese número de teléfono", telefono); fondoJTextField.setForeground(Color.GRAY);
+		telefono = new JTextField();	telefono.setFont(fuenteLabelCampo);	telefono.setBorder(bordeCampo);
+		fondoJTextField = new TextPrompt("Ingrese número de teléfono", telefono); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 0; c.gridy = 7;	this.add(telefono, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("Ocupación*");	c.gridx = 2; c.gridy = 6;	this.add(label, c);
+		label = new JLabel("Ocupación*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 6;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		ocupacion = new JTextField();	fondoJTextField = new TextPrompt("Ingrese ocupación", ocupacion); fondoJTextField.setForeground(Color.GRAY);
+		ocupacion = new JTextField();	ocupacion.setFont(fuenteLabelCampo);	ocupacion.setBorder(bordeCampo);
+		fondoJTextField = new TextPrompt("Ingrese ocupación", ocupacion); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 2; c.gridy = 7;	this.add(ocupacion, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("Dirección*");	c.gridx = 0; c.gridy = 8;	this.add(label, c);
+		label = new JLabel("Dirección*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 8;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		direccion = new JTextField();	fondoJTextField = new TextPrompt("Ingrese el domicilio (calle y número)", direccion); fondoJTextField.setForeground(Color.GRAY);
+		direccion = new JTextField();	direccion.setFont(fuenteLabelCampo);	direccion.setBorder(bordeCampo);
+		fondoJTextField = new TextPrompt("Ingrese el domicilio (calle y número)", direccion); fondoJTextField.setForeground(Color.GRAY);
 		direccion.setPreferredSize(new Dimension(400,20));
 		direccion.setMinimumSize(new Dimension(400,20));
 		c.gridx = 0; c.gridy = 9;	this.add(direccion, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabelDoble; c.weighty = pesoYLabel; c.insets = insetLabelDobleIzq; c.gridwidth = 1;
 		
-		label = new JLabel("Departamento");	c.gridx = 2; c.gridy = 8;	this.add(label, c);
+		label = new JLabel("Departamento");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 8;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleIzq;
 		
-		departamento = new JTextField();	fondoJTextField = new TextPrompt("Ingrese el dpto.", departamento); fondoJTextField.setForeground(Color.GRAY);
+		departamento = new JTextField();	departamento.setFont(fuenteLabelCampo);	departamento.setBorder(bordeCampo);
+		fondoJTextField = new TextPrompt("Ingrese el dpto.", departamento); fondoJTextField.setForeground(Color.GRAY);
 		departamento.setPreferredSize(new Dimension(180,20));
 		departamento.setMinimumSize(new Dimension(180,20));
 		c.gridx = 2; c.gridy = 9;	this.add(departamento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabelDoble; c.weighty = pesoYLabel; c.insets = insetLabelDobleDer;
 		
-		label = new JLabel("Piso");	c.gridx = 3; c.gridy = 8;	this.add(label, c);
+		label = new JLabel("Piso");	label.setFont(fuenteLabelCampo);	c.gridx = 3; c.gridy = 8;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleDer;
 		
-		piso = new JTextField();	fondoJTextField = new TextPrompt("Ingrese el piso", piso); fondoJTextField.setForeground(Color.GRAY);
+		piso = new JTextField();	piso.setFont(fuenteLabelCampo);	piso.setBorder(bordeCampo);
+		fondoJTextField = new TextPrompt("Ingrese el piso", piso); fondoJTextField.setForeground(Color.GRAY);
 		piso.setPreferredSize(new Dimension(180,20));
 		piso.setMinimumSize(new Dimension(180,20));
 		c.gridx = 3; c.gridy = 9;	this.add(piso, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("País*");	c.gridx = 0; c.gridy = 10;	this.add(label, c);
+		label = new JLabel("País*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 10;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		pais = new JComboBox<String>();	c.gridx = 0; c.gridy = 11;
+		pais = new JComboBox<String>();	pais.setFont(fuenteLabelCampo);	pais.setBackground(Color.white);	pais.setBorder(bordeCampo);
+		c.gridx = 0; c.gridy = 11;
 		pais.addItem("--Seleccione");	this.add(pais, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 
-		label = new JLabel("Provincia*");	c.gridx = 2; c.gridy = 10;	this.add(label, c);
+		label = new JLabel("Provincia*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 10;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		provincia = new JComboBox<String>();	c.gridx = 2; c.gridy = 11;
+		provincia = new JComboBox<String>();	provincia.setFont(fuenteLabelCampo);	provincia.setBackground(Color.white);	provincia.setBorder(bordeCampo);
+		c.gridx = 2; c.gridy = 11;
 		provincia.addItem("--Seleccione");	this.add(provincia, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabelDobleIzq; c.gridwidth = 1;
 		
-		label = new JLabel("Código postal*");	c.gridx = 0; c.gridy = 12;	this.add(label, c);
+		label = new JLabel("Código postal*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 12;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleIzq;
 		
-		codigoPostal = new JTextField();	fondoJTextField = new TextPrompt("Ingrese el CP", codigoPostal); fondoJTextField.setForeground(Color.GRAY);
+		codigoPostal = new JTextField();	codigoPostal.setFont(fuenteLabelCampo);	codigoPostal.setBorder(bordeCampo);
+		fondoJTextField = new TextPrompt("Ingrese el CP", codigoPostal); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 0; c.gridy = 13;	this.add(codigoPostal, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabelDoble; c.weighty = pesoYLabel; c.insets = insetLabelDobleDer; c.gridwidth = 1;
 		
-		label = new JLabel("Localidad*");	c.gridx = 1; c.gridy = 12;	this.add(label, c);
+		label = new JLabel("Localidad*");	label.setFont(fuenteLabelCampo);	c.gridx = 1; c.gridy = 12;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampoDobleDer;
 		
-		localidad = new JComboBox<String>();	c.gridx = 1; c.gridy = 13;
+		localidad = new JComboBox<String>();	localidad.setFont(fuenteLabelCampo);	localidad.setBackground(Color.white);	localidad.setBorder(bordeCampo);
+		c.gridx = 1; c.gridy = 13;
 		localidad.addItem("--Seleccione");	this.add(localidad, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("Nacionalidad*");	c.gridx = 2; c.gridy = 12;	this.add(label, c);
+		label = new JLabel("Nacionalidad*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 12;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		nacionalidad = new JComboBox<String>();	c.gridx = 2; c.gridy = 13;
+		nacionalidad = new JComboBox<String>();	
+		nacionalidad.setFont(fuenteLabelCampo);	nacionalidad.setBackground(Color.white);	
+		nacionalidad.setBorder(bordeCampo);
+		c.gridx = 2; c.gridy = 13;
 		nacionalidad.addItem("--Seleccione");	this.add(nacionalidad, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("CUIT");	c.gridx = 0; c.gridy = 14;	this.add(label, c);
+		label = new JLabel("CUIT");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 14;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		cuit = new JTextField();	fondoJTextField = new TextPrompt("Ingrese los 11 dígitos del número de CUIT", cuit); fondoJTextField.setForeground(Color.GRAY);
+		cuit = new JTextField();	cuit.setFont(fuenteLabelCampo);	cuit.setBorder(bordeCampo);
+		fondoJTextField = new TextPrompt("Ingrese los 11 dígitos del número de CUIT", cuit); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 0; c.gridy = 15;	this.add(cuit, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("Posición frente al IVA*");	c.gridx = 2; c.gridy = 14;	this.add(label, c);
+		label = new JLabel("Posición frente al IVA*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 14;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		posicionIVA = new JComboBox<String>();	c.gridx = 2; c.gridy = 15;
+		posicionIVA = new JComboBox<String>();	posicionIVA.setFont(fuenteLabelCampo);	posicionIVA.setBackground(Color.white);	posicionIVA.setBorder(bordeCampo);
+		c.gridx = 2; c.gridy = 15;
 		posicionIVA.addItem("CONSUMIDOR FINAL");	this.add(posicionIVA, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weighty = pesoYLabel; c.gridwidth = 2; c.anchor = GridBagConstraints.CENTER;
 		
-		label = new JLabel("*campo obligatorio");	label.setFont(fuente);	c.gridx = 2; c.gridy = 16;	this.add(label, c);
+		label = new JLabel("*campo obligatorio");	label.setFont(fuenteLabelFinal);	c.gridx = 2; c.gridy = 16;	this.add(label, c);
 		
 		
 		
