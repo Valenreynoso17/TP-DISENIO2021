@@ -11,7 +11,7 @@ public class FrameAltaPasajero extends JFrame {
 	private JPanel contentPane;
 
 	public FrameAltaPasajero() {
-		super("Sistema de Gestión de Transporte Multimodal");
+		super("Sistema Hotel Premier");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 600);
 		contentPane = new PanelAltaPasajero(this);

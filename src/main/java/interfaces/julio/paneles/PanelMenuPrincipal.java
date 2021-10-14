@@ -8,9 +8,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import main.java.interfaces.julio.otros.*;
 import main.java.interfaces.julio.frames.FrameAutenticarUsuario;
@@ -33,6 +36,9 @@ public class PanelMenuPrincipal extends JPanel{
 	
 	private Font fuenteTitulo = new Font("SourceSansPro", Font.PLAIN, 46);	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 15);
+	
+	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
+	private RoundedBorder bordeSalir = new RoundedBorder(10, Color.DARK_GRAY);
 
 	private FrameAutenticarUsuario frameAnterior;
 	
@@ -57,7 +63,7 @@ public class PanelMenuPrincipal extends JPanel{
 		button = new JButton("Gestionar Pasajero");
 		button.setFont(fuenteBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
-		button.setBorderPainted(false);
+		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
 			c.gridx = 0; c.gridy = 1;
@@ -66,7 +72,7 @@ public class PanelMenuPrincipal extends JPanel{
 		button = new JButton("Gestionar Responsable de Pago");
 		button.setFont(fuenteBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
-		button.setBorderPainted(false);
+		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
 		c.anchor = GridBagConstraints.WEST; c.insets = der;
 			c.gridx = 1; c.gridy = 1;
@@ -75,7 +81,7 @@ public class PanelMenuPrincipal extends JPanel{
 		button = new JButton("Reservar Habitación");
 		button.setFont(fuenteBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
-		button.setBorderPainted(false);
+		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
 		c.anchor = GridBagConstraints.EAST; c.insets = izq;
 			c.gridx = 0; c.gridy = 2;
@@ -84,7 +90,7 @@ public class PanelMenuPrincipal extends JPanel{
 		button = new JButton("Ocupar Habitación");
 		button.setFont(fuenteBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
-		button.setBorderPainted(false);
+		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
 		c.anchor = GridBagConstraints.WEST; c.insets = der;
 			c.gridx = 1; c.gridy = 2;
@@ -93,7 +99,7 @@ public class PanelMenuPrincipal extends JPanel{
 		button = new JButton("Cancelar Reserva");
 		button.setFont(fuenteBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
-		button.setBorderPainted(false);
+		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
 			c.gridx = 0; c.gridy = 3;
@@ -102,7 +108,7 @@ public class PanelMenuPrincipal extends JPanel{
 		button = new JButton("Gestionar Listados");
 		button.setFont(fuenteBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
-		button.setBorderPainted(false);
+		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
 		c.anchor = GridBagConstraints.WEST;	c.insets = der;
 			c.gridx = 1; c.gridy = 3;
@@ -111,7 +117,7 @@ public class PanelMenuPrincipal extends JPanel{
 		button = new JButton("Facturar");
 		button.setFont(fuenteBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
-		button.setBorderPainted(false);
+		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
 			c.gridx = 0; c.gridy = 4;
@@ -119,7 +125,7 @@ public class PanelMenuPrincipal extends JPanel{
 		
 		button = new JButton("Ingresar Nota de Crédito");
 		button.setFont(fuenteBoton);
-		button.setBorderPainted(false);
+		button.setBorder(bordeBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setPreferredSize(new Dimension(350, 40));
 		c.anchor = GridBagConstraints.WEST;	c.insets = der;
@@ -129,7 +135,7 @@ public class PanelMenuPrincipal extends JPanel{
 		cerrarSesion = new JButton("Cerrar Sesión");
 		cerrarSesion.setFont(fuenteBoton);
 		cerrarSesion.setBackground(Color.GRAY);
-		cerrarSesion.setBorderPainted(false);
+		cerrarSesion.setBorder(bordeSalir);
 		cerrarSesion.setPreferredSize(new Dimension(350, 40));
 		cerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -145,8 +151,7 @@ public class PanelMenuPrincipal extends JPanel{
 
 		button = new JButton("Ingresar Pago");
 		button.setFont(fuenteBoton);
-		button.setBorder(new RoundedBorder(10));
-		//button.setBorderPainted(false);
+		button.setBorder(bordeBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setPreferredSize(new Dimension(350, 40));
 		c.anchor = GridBagConstraints.WEST; c.insets = derF;

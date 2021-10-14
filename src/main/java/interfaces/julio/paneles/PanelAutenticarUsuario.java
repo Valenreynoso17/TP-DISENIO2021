@@ -12,8 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import main.java.enmus.TipoMensaje;
 import main.java.interfaces.julio.frames.FrameAutenticarUsuario;
 import main.java.interfaces.julio.frames.FrameMenuPrincipal;
+import main.java.interfaces.julio.otros.Mensaje;
+import main.java.interfaces.julio.otros.RoundedBorder;
 
 
 
@@ -27,7 +30,9 @@ public class PanelAutenticarUsuario extends JPanel{
 	private JLabel label;
 	
 	private Font fuenteTitulo = new Font("SourceSansPro", Font.PLAIN, 46);	
-	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 15);
+	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
+	
+	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
 	private FrameMenuPrincipal frameSiguiente;
 	
@@ -59,7 +64,7 @@ public class PanelAutenticarUsuario extends JPanel{
 		cancelar = new JButton("Salir");
 		cancelar.setFont(fuenteBoton);
 		cancelar.setBackground(Color.decode("#E0E0E0"));
-		cancelar.setBorderPainted(false);
+		cancelar.setBorder(bordeBoton);
 		cancelar.setPreferredSize(new Dimension(140, 30));
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -75,18 +80,22 @@ public class PanelAutenticarUsuario extends JPanel{
 		iniciarSesion = new JButton("Iniciar Sesión");
 		iniciarSesion.setFont(fuenteBoton);
 		iniciarSesion.setBackground(Color.decode("#E0E0E0"));
-		iniciarSesion.setBorderPainted(false);
+		iniciarSesion.setBorder(bordeBoton);
 		iniciarSesion.setPreferredSize(new Dimension(140, 30));
 		iniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//Supongamos que esta todo bien
-				frame.dispose();
-				frameSiguiente = new FrameMenuPrincipal();
+				String pregunta = "<html>Hola <br/> como <br/> andas<html>";
+				String pregunta3 = "<html><p>¿Quiere hacer esto y lo otro y que se yo que de lo otro y otro y muchos otros y aaaa lo otroo eso era?</p><html>";
+				Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar igualmente", "Cancelar");
+				//Mensaje m2 = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", null);
+				//frame.dispose();
+				//frameSiguiente = new FrameMenuPrincipal();
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;
 													c.gridx = 2; c.gridy = 2;
 													this.add(iniciarSesion, c);
 	}
+
 }

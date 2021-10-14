@@ -1,5 +1,6 @@
 package main.java.interfaces.julio.otros;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Insets;
@@ -9,10 +10,12 @@ import javax.swing.border.Border;
 public class RoundedBorder implements Border {
 
     private int radius;
+    private Color color;
 
 
-    public RoundedBorder(int radius) {
+    public RoundedBorder(int radius, Color color) {
         this.radius = radius;
+        this.color = color;
     }
 
 
@@ -27,7 +30,8 @@ public class RoundedBorder implements Border {
 
 
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
+        g.setColor(this.color);
+    	g.drawRoundRect(x, y, width-1, height-1, radius, radius);
     }
 
 }

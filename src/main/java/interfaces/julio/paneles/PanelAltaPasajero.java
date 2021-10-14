@@ -1,23 +1,20 @@
 package main.java.interfaces.julio.paneles;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalTime;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
+
 
 import main.java.interfaces.julio.frames.FrameAltaPasajero;
+import main.java.interfaces.julio.otros.RoundedBorder;
 
 
 
@@ -29,12 +26,20 @@ public class PanelAltaPasajero extends JPanel{
 	private JButton siguiente;
 
 	private Insets i = new Insets(20,10,10,10);
+	
+	private Dimension dimensionBoton = new Dimension(90, 33);
+	
+	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
+	
+	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 //	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
 //	
 //	private EstacionGestionar frameAnterior;
 //	private EstacionAltaGrafo frameSiguiente;
 	
 	public PanelAltaPasajero(final FrameAltaPasajero frame) {
+		
+		this.setBackground(Color.WHITE);
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -48,6 +53,11 @@ public class PanelAltaPasajero extends JPanel{
 		c.insets = new Insets(0,0,0,0);
 		
 		cancelar = new JButton("Cancelar");
+		cancelar.setMinimumSize(dimensionBoton);
+		cancelar.setPreferredSize(dimensionBoton);
+		cancelar.setBackground(Color.decode("#E0E0E0"));
+		cancelar.setFont(fuenteBoton);
+		cancelar.setBorder(bordeBoton);
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -55,14 +65,19 @@ public class PanelAltaPasajero extends JPanel{
 //				frameAnterior = new EstacionGestionar();
 			}
 		});
-		c.anchor = GridBagConstraints.CENTER;
-													c.gridx = 0; c.gridy = 1;
-													this.add(cancelar, c);
+		c.anchor = GridBagConstraints.WEST;		c.insets = new Insets(0,60,10,0);
+		c.gridx = 0; c.gridy = 1;
+		this.add(cancelar, c);
 
 		siguiente = new JButton("Siguiente");
-		c.anchor = GridBagConstraints.CENTER;
-													c.gridx = 1; c.gridy = 1;
-													this.add(siguiente, c);
+		siguiente.setMinimumSize(dimensionBoton);
+		siguiente.setPreferredSize(dimensionBoton);
+		siguiente.setBackground(Color.decode("#E0E0E0"));
+		siguiente.setFont(fuenteBoton);
+		siguiente.setBorder(bordeBoton);
+		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
+		c.gridx = 1; c.gridy = 1;
+		this.add(siguiente, c);
 	}
 }
 
