@@ -16,6 +16,8 @@ public class GestorPasajero {
 		return instance;
 	}
 	
+	// Crea un PasajeroDTO con no todos los datos a partir de un pasajero
+	// TODO Hay que ver si pasar tambien el ID
 	private PasajeroDTO crearPasajeroDTOAcotado(Pasajero pasajero) {
 		PasajeroDTO pasajeroDTO = new PasajeroDTO();
 		

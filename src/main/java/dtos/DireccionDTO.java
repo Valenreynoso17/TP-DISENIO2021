@@ -1,6 +1,7 @@
 package main.java.dtos;
 
 public class DireccionDTO {
+	private String id;
 	private String calle;
 	private String numeroCalle;
 	private String departamento;
@@ -13,9 +14,10 @@ public class DireccionDTO {
 		super();
 	}
 	
-	public DireccionDTO(String calle, String numeroCalle, String departamento, String piso, Integer idLocalidad,
+	public DireccionDTO(String id, String calle, String numeroCalle, String departamento, String piso, Integer idLocalidad,
 			Integer codigoPostal) {
 		super();
+		this.id = id;
 		this.calle = calle;
 		this.numeroCalle = numeroCalle;
 		this.departamento = departamento;
@@ -25,6 +27,9 @@ public class DireccionDTO {
 	}
 	
 	
+	public String getId() {
+		return id;
+	}
 
 	public String getCalle() {
 		return calle;
@@ -51,6 +56,10 @@ public class DireccionDTO {
 	}
 	
 	
+	
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public void setCalle(String calle) {
 		this.calle = calle;
