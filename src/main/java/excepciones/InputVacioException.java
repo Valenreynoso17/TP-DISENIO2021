@@ -1,5 +1,8 @@
 package main.java.excepciones;
 
-public class InputVacioException {
+public class InputVacioException extends Exception{
+	
+	public InputVacioException() {
+	}
 
 }

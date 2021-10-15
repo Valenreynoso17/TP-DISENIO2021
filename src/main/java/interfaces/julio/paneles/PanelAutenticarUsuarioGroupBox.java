@@ -73,4 +73,12 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 		c.gridy = 3;	this.add(contrasenia, c);
 
 	}
+
+	public boolean validar() { //Temporalmente va a validar que no sean vacios
+		if(!nombre.getText().isEmpty() && !contrasenia.getText().isEmpty()) {
+				return true;
+			}
+		
+		return false;
+	}
 }
