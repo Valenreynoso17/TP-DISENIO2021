@@ -84,13 +84,18 @@ public class PanelAutenticarUsuario extends JPanel{
 		iniciarSesion.setPreferredSize(new Dimension(140, 30));
 		iniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				String pregunta = "<html>Hola <br/> como <br/> andas<html>";
-				String pregunta3 = "<html><p>¿Quiere hacer esto y lo otro y que se yo que de lo otro y otro y muchos otros y aaaa lo otroo eso era?</p><html>";
-				Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar igualmente", "Cancelar");
-				//Mensaje m2 = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", null);
-				//frame.dispose();
-				//frameSiguiente = new FrameMenuPrincipal();
+
+				if(panelAutenticarUsuarioGroupBox.validar()) {
+					frame.dispose();
+					frameSiguiente = new FrameMenuPrincipal();
+				}
+				else {
+					//String pregunta = "<html>Hola <br/> como <br/> andas<html>";
+					//String pregunta3 = "<html><p>¿Quiere hacer esto y lo otro y que se yo que de lo otro y otro y muchos otros y aaaa lo otroo eso era?</p><html>";
+					String pregunta = "<html><p>Escriba algo en usuario y algo en contraseña</p><html>";
+					//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
+					Mensaje m2 = new Mensaje(frame, TipoMensaje.ERROR, pregunta, "Aceptar", null);
+				}
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;
