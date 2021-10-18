@@ -3,7 +3,7 @@ package main.java.dtos;
 import main.java.enmus.TipoDocumento;
 
 public class PasajeroDTO {
-	private String id;
+	private Integer id;
 	private String apellido;
 	private String nombre;
 	private TipoDocumento tipoDocumento;
@@ -17,7 +17,7 @@ public class PasajeroDTO {
 		super();
 	}
 	
-	public PasajeroDTO(String id, String apellido, String nombre, TipoDocumento tipoDocumento, String numeroDoc,
+	public PasajeroDTO(Integer id, String apellido, String nombre, TipoDocumento tipoDocumento, String numeroDoc,
 			DireccionDTO direccion, Integer idNacionalidad) {
 		super();
 		this.id = id;
@@ -31,7 +31,7 @@ public class PasajeroDTO {
 
 	
 	
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 	
@@ -61,7 +61,7 @@ public class PasajeroDTO {
 	
 	
 	
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
