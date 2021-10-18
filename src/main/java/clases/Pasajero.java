@@ -2,27 +2,60 @@ package main.java.clases;
 
 import java.time.LocalDate;
 
+import javax.persistence.*;
+
 import main.java.enmus.PosicionFrenteIva;
 import main.java.enmus.TipoDocumento;
 
+@Entity
+@Table(name="disenio.pasajero")
 public class Pasajero {
-	private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	@Column(name = "apellido", nullable = false, unique = false)
 	private String apellido;
+	
+	@Column(name = "nombre", nullable = false, unique = false)
 	private String nombre;
+	
+	@Column(name = "tipoDoc", nullable = false, unique = false)
 	private TipoDocumento tipoDocumento;
+	
+	@Column(name = "documento", nullable = false, unique = false)
 	private String documento;
+	
+	@Column(name = "fechaNacimiento", nullable = false, unique = false)
 	private LocalDate fechaNacimiento;
+	
+	@Column(name = "email", nullable = false, unique = false)
 	private String email;
+	
+	@Column(name = "ocupacion", nullable = false, unique = false)
 	private String ocupacion;
+	
+	@Column(name = "telefono", nullable = false, unique = false)
 	private String telefono;
+	
+	@Column(name = "cuit", nullable = false, unique = false)
 	private String cuit;
+	
+	@Column(name = "posicionFrenteIVA", nullable = false, unique = false)
 	private PosicionFrenteIva posicionFrenteIva;
+	
+	@ManyToOne
+	@JoinColumn(name = "idPais", referencedColumnName = "id")
 	private Pais nacionalidad;
+
+	@OneToOne(optional = false)
+	@JoinColumn(name = "iddireccion", referencedColumnName = "id")
 	private Direccion direccion; 
-	//TODO ver si agregar o no responsableDePago
+	
+	//private ResponsableDePago responsableDePago;
 	
 	
-	public Pasajero(String id, String apellido, String nombre, TipoDocumento tipoDocumento, String documento,
+	public Pasajero(Integer id, String apellido, String nombre, TipoDocumento tipoDocumento, String documento,
 			LocalDate fechaNacimiento, String email, String ocupacion, String telefono, String cuit,
 			PosicionFrenteIva posicionFrenteIva, Pais nacionalidad, Direccion direccion) {
 		super();
@@ -47,7 +80,7 @@ public class Pasajero {
 	
 	
 	
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -101,7 +134,7 @@ public class Pasajero {
 	
 	
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -152,7 +185,6 @@ public class Pasajero {
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
-	
 	
 	
 	
