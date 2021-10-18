@@ -13,6 +13,8 @@
 		<mapping class="main.java.clases.Pais" />
 		<mapping class="main.java.clases.Pasajero" />
 		<mapping class="main.java.clases.Provincia" />
+		<mapping class="main.java.clases.PersonaJuridica" />
+		<mapping class="main.java.clases.ResponsableDePago" />
 
 	</session-factory>
 </hibernate-configuration>
