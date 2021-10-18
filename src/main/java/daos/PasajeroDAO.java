@@ -1,5 +1,7 @@
 package main.java.daos;
 
-public interface PasajeroDAO {
+import main.java.clases.Pasajero;
 
+public interface PasajeroDAO {
+	public Integer guardar(Pasajero pasajero);
 }
