@@ -18,8 +18,6 @@ import main.java.interfaces.julio.frames.FrameMenuPrincipal;
 import main.java.interfaces.julio.otros.Mensaje;
 import main.java.interfaces.julio.otros.RoundedBorder;
 
-
-
 public class PanelAltaPasajero extends JPanel{
 	
 	private PanelAltaPasajeroDatos panelDarAltaPasajero;

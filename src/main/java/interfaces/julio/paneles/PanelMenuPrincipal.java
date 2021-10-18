@@ -9,14 +9,12 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import main.java.interfaces.julio.otros.*;
-import main.java.interfaces.julio.frames.FrameAltaPasajero;
+import main.java.interfaces.nati.frames.FrameGestionarPasajero;
 import main.java.interfaces.julio.frames.FrameAutenticarUsuario;
 import main.java.interfaces.julio.frames.FrameMenuPrincipal;
 
@@ -42,7 +40,7 @@ public class PanelMenuPrincipal extends JPanel{
 	private RoundedBorder bordeSalir = new RoundedBorder(10, Color.DARK_GRAY);
 
 	private FrameAutenticarUsuario frameAnterior;
-	private FrameAltaPasajero frameGestionarPasajeroTrucho;
+	private FrameGestionarPasajero frameGestionarPasajero;
 	
 	public PanelMenuPrincipal(final FrameMenuPrincipal frame) {
 		
@@ -72,7 +70,7 @@ public class PanelMenuPrincipal extends JPanel{
 				
 				//Supongamos que no te muestre un mensaje de confirmación
 				frame.dispose();
-				frameGestionarPasajeroTrucho = new FrameAltaPasajero();
+				frameGestionarPasajero = new FrameGestionarPasajero();
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;

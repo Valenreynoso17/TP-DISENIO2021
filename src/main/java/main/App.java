@@ -4,6 +4,7 @@ import javax.swing.UIManager;
 
 import main.java.interfaces.julio.frames.FrameAltaPasajero;
 import main.java.interfaces.julio.frames.FrameAutenticarUsuario;
+import main.java.interfaces.nati.frames.FrameGestionarPasajero;
 
 public class App {
 
@@ -11,7 +12,9 @@ public class App {
 
 			//FrameAltaPasajero f = new FrameAltaPasajero();
 
-			FrameAutenticarUsuario fAU = new FrameAutenticarUsuario();
+			//FrameAutenticarUsuario fAU = new FrameAutenticarUsuario();
+		
+			FrameGestionarPasajero fGP = new FrameGestionarPasajero();
 	}
 
 }
