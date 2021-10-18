@@ -69,7 +69,11 @@ public class PanelAutenticarUsuario extends JPanel{
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.dispose();
+				
+				String pregunta = "<html><p>¿Realmente quiere salir?</p><html>";
+				//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
+				Mensaje m1 = new Mensaje(frame, TipoMensaje.ERROR, pregunta, "Aceptar", "Cancelar");
+				//frame.dispose();
 			}
 		});
 		c.anchor = GridBagConstraints.WEST;
@@ -94,7 +98,7 @@ public class PanelAutenticarUsuario extends JPanel{
 					//String pregunta3 = "<html><p>¿Quiere hacer esto y lo otro y que se yo que de lo otro y otro y muchos otros y aaaa lo otroo eso era?</p><html>";
 					String pregunta = "<html><p>Escriba algo en usuario y algo en contraseña</p><html>";
 					//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
-					Mensaje m2 = new Mensaje(frame, TipoMensaje.ERROR, pregunta, "Aceptar", null);
+					Mensaje m1 = new Mensaje(frame, TipoMensaje.ERROR, pregunta, "Aceptar", null);
 				}
 			}
 		});

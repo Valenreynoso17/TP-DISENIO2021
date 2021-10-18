@@ -75,7 +75,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	
 	private Font fuenteLabelFinal =new Font("SourceSansPro", Font.ITALIC, 13);	
 	private Font fuenteLabelCampo =new Font("SourceSansPro", Font.PLAIN, 14);
-	private Font fuenteGroupBox = new Font("Iniciar Sesión", Font.PLAIN, 18);	
+	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	
 	private RoundedBorder bordeCampo = new RoundedBorder(5, Color.decode("#BDBDBD"));
 	
