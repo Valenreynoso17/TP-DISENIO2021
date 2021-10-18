@@ -1,16 +1,27 @@
 package main.java.clases;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="disenio.localidad")
 public class Localidad {
-	private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	@Column(name="nombre", nullable = false, unique = false)
 	private String nombre;
-	private Provincia Provincia;
+
+	@ManyToOne
+	@JoinColumn(name = "idprovincia", referencedColumnName = "id")
+	private Provincia provincia;
 	
 	
-	public Localidad(String id, String nombre, main.java.clases.Provincia provincia) {
+	public Localidad(Integer id, String nombre, Provincia provincia) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
-		Provincia = provincia;
+		this.provincia = provincia;
 	}
 	
 	public Localidad() {
@@ -19,12 +30,12 @@ public class Localidad {
 	
 	
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
 	public Provincia getProvincia() {
-		return Provincia;
+		return provincia;
 	}
 
 	public String getNombre() {
@@ -33,7 +44,7 @@ public class Localidad {
 	
 	
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -42,7 +53,7 @@ public class Localidad {
 	}
 
 	public void setProvincia(Provincia provincia) {
-		Provincia = provincia;
+		this.provincia = provincia;
 	}
 	
 	

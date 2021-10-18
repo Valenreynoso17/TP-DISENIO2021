@@ -2,14 +2,26 @@ package main.java.clases;
 
 import java.util.List;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="disenio.pais")
 public class Pais {
-	private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	@Column(name = "nombre", nullable = false, unique = false)
 	private String nombre;
+	
+	@Column(name = "nacionalidad", nullable = false, unique = false)
 	private String nacionalidad;
+	
+	@OneToMany(mappedBy = "pais")
 	private List<Provincia> provincias;
 	
 	
-	public Pais(String id, String nombre, String nacionalidad, List<Provincia> provincias) {
+	public Pais(Integer id, String nombre, String nacionalidad, List<Provincia> provincias) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -23,7 +35,7 @@ public class Pais {
 	
 
 	
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -41,7 +53,7 @@ public class Pais {
 	
 	
 	
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -1,16 +1,35 @@
 package main.java.clases;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="disenio.direccion")
 public class Direccion {
-	private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	@Column(name = "calle", nullable = false, unique = false)
 	private String calle;
+	
+	@Column(name = "numero", nullable = false, unique = false)
 	private Integer numero;
+	
+	@Column(name = "departamento", nullable = false, unique = false)
 	private Integer departamento;
+	
+	@Column(name = "piso", nullable = false, unique = false)
 	private Integer piso;
+	
+	@Column(name = "codigopostal", nullable = false, unique = false)
 	private Integer codigoPostal;
+
+	@ManyToOne
+	@JoinColumn(name = "idlocalidad", referencedColumnName = "id")
 	private Localidad localidad;
 	
 	
-	public Direccion(String id, String calle, Integer numero, Integer departamento, Integer piso, Integer codigoPostal,
+	public Direccion(Integer id, String calle, Integer numero, Integer departamento, Integer piso, Integer codigoPostal,
 			Localidad localidad) {
 		super();
 		this.id = id;
@@ -29,7 +48,7 @@ public class Direccion {
 	
 
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -59,7 +78,7 @@ public class Direccion {
 
 	
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
