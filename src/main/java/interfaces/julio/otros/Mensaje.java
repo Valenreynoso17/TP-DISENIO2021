@@ -8,18 +8,19 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import main.java.enmus.TipoMensaje;
+import main.java.interfaces.nati.paneles.PanelGestionarPasajero;
 
 public class Mensaje extends JFrame{
+	
+	private Integer resultado = 0;
 
 	private JPanel contentPane;
 	
@@ -37,8 +38,9 @@ public class Mensaje extends JFrame{
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 
-	public Mensaje(JFrame frame, TipoMensaje tipo, String texto, String opcionAceptar, String opcionCancelar) {
-		super("Sistema Hotel Premier");
+	public Integer mostrarMensaje(JFrame frame, TipoMensaje tipo, String texto, String opcionAceptar, String opcionCancelar) {
+		//super("Sistema Hotel Premier");
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 240);
 		contentPane = new JPanel();
@@ -53,7 +55,7 @@ public class Mensaje extends JFrame{
 		
 		//this.elegirIconoSegunTipoMensaje(tipo);
 		
-		labelTexto = new JLabel("ic");	c.weightx = 0.1; c.weighty = 0.1;
+		labelTexto = new JLabel(" ");	c.weightx = 0.1; c.weighty = 0.1;
 		labelTexto.setFont(fuenteBoton);
 		c.anchor = GridBagConstraints.CENTER;	//c.insets = izq;
 			c.gridx = 0; c.gridy = 0;
@@ -74,6 +76,7 @@ public class Mensaje extends JFrame{
 		botonDerecho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				resultado = 1;
 				dispose();
 			}
 		});
@@ -90,6 +93,7 @@ public class Mensaje extends JFrame{
 			botonIzquierdo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
+					resultado = 0;
 					dispose();
 				}
 			});
@@ -98,10 +102,9 @@ public class Mensaje extends JFrame{
 			contentPane.add(botonIzquierdo, c);
 		}
 		
-		//DatePicker fecha = new DatePicker(LocalDate.now())
-		
 		setContentPane(contentPane);
 		
+		return resultado;
 	}
 
 //	private void elegirIconoSegunTipoMensaje(TipoMensaje tipo) {

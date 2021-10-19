@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.time.LocalTime;
 
 import javax.swing.ComboBoxEditor;
@@ -20,6 +22,8 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import main.java.enmus.PosicionFrenteIva;
+import main.java.enmus.TipoDocumento;
 import main.java.enmus.TipoMensaje;
 import main.java.excepciones.InputVacioException;
 import main.java.interfaces.TextPrompt;
@@ -32,14 +36,13 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	
 	private FrameAltaPasajero frameActual;
 	
-	private JComboBox<String> tipoDocumento;
-	private JComboBox<String> pais;
-	private JComboBox<String> provincia;
-	private JComboBox<String> localidad;
-	private JComboBox<String> nacionalidad;
-	private JComboBox<String> posicionIVA;
+	private JComboBox tipoDocumento;
+	private JComboBox pais;
+	private JComboBox provincia;
+	private JComboBox localidad;
+	private JComboBox nacionalidad;
+	private JComboBox posicionIVA;
 	
-	private JButton button;
 	private JLabel label;
 	
 	private JTextField apellido;
@@ -129,10 +132,12 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		tipoDocumento = new JComboBox<String>();	tipoDocumento.setFont(fuenteLabelCampo);	tipoDocumento.setBackground(Color.white);	
-		//tipoDocumento.setBorder(bordeCampo);	
+		tipoDocumento = new JComboBox();	tipoDocumento.setFont(fuenteLabelCampo);	tipoDocumento.setBackground(Color.white);	
+		tipoDocumento.addItem("--Seleccione");
+		this.cargarComboBoxDesdeEnum(tipoDocumento, TipoDocumento.values());
+		
 		c.gridx = 0; c.gridy = 3;	tipoDocumento.setMinimumSize(dimensionCampo);	tipoDocumento.setPreferredSize(dimensionCampo);
-		tipoDocumento.addItem("--Seleccione");		this.add(tipoDocumento, c);
+		this.add(tipoDocumento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -227,7 +232,6 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
 		pais = new JComboBox<String>();	pais.setFont(fuenteLabelCampo);	pais.setBackground(Color.white);	
-		//pais.setBorder(bordeCampo);
 		c.gridx = 0; c.gridy = 11;	pais.setMinimumSize(dimensionCampo);	pais.setPreferredSize(dimensionCampo);
 		pais.addItem("--Seleccione");	this.add(pais, c);
 		
@@ -291,10 +295,10 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		posicionIVA = new JComboBox<String>();	posicionIVA.setFont(fuenteLabelCampo);	posicionIVA.setBackground(Color.white);	
-		//posicionIVA.setBorder(bordeCampo);
+		posicionIVA = new JComboBox();	posicionIVA.setFont(fuenteLabelCampo);	posicionIVA.setBackground(Color.white);	
+		
 		c.gridx = 2; c.gridy = 15;	posicionIVA.setMinimumSize(dimensionCampo);	posicionIVA.setPreferredSize(dimensionCampo);	
-		posicionIVA.addItem("CONSUMIDOR FINAL");	this.add(posicionIVA, c);
+		this.cargarComboBoxDesdeEnum(posicionIVA, PosicionFrenteIva.values());	this.add(posicionIVA, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weighty = pesoYLabel; c.gridwidth = 2; c.anchor = GridBagConstraints.CENTER;
 		
@@ -366,6 +370,14 @@ public class PanelAltaPasajeroDatos extends JPanel{
 //		
 	}
 
+	private void cargarComboBoxDesdeEnum(JComboBox comboBox, Object[] values) {
+		
+		for(Object o : values){
+			
+			comboBox.addItem(String.valueOf(o).replaceAll("_", " ")); //Para que no aparezcan los guiones bajos
+		}
+}
+
 	public boolean validar() {
 		try {
 			
@@ -377,7 +389,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			
 			String pregunta = "<html><p>Faltan datos</p><html>";
 			//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
-			Mensaje m2 = new Mensaje(frameActual, TipoMensaje.ERROR, pregunta, "Aceptar", null);
+			Mensaje m2 = new Mensaje(getPanel(), frameActual, TipoMensaje.ERROR, pregunta, "Aceptar", null);
 		}
 		
 		return false;
@@ -390,7 +402,12 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		}
 	} 
 
+	public JPanel getPanel() {
+		return this;
+	}
 }
+
+
 	
 //	public void inputEstaVacia() throws InputVacioException{
 //		String error = "";

@@ -10,11 +10,12 @@ public class App {
 
 	public static void main(String[] args) {
 
-			//FrameAltaPasajero f = new FrameAltaPasajero();
+			FrameAltaPasajero f = new FrameAltaPasajero();
 
 			//FrameAutenticarUsuario fAU = new FrameAutenticarUsuario();
 		
-			FrameGestionarPasajero fGP = new FrameGestionarPasajero();
+			//FrameGestionarPasajero fGP = new FrameGestionarPasajero();
+		
 	}
 
 }

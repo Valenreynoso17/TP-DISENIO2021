@@ -10,20 +10,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import main.java.enmus.TipoMensaje;
+import main.java.interfaces.julio.frames.FrameAltaPasajero;
 import main.java.interfaces.julio.frames.FrameMenuPrincipal;
 import main.java.interfaces.julio.otros.Mensaje;
+import main.java.interfaces.julio.otros.PanelPermiteMensajes;
 import main.java.interfaces.julio.otros.RoundedBorder;
 import main.java.interfaces.julio.paneles.PanelAltaPasajeroDatos;
 import main.java.interfaces.nati.frames.FrameGestionarPasajero;
 
-public class PanelGestionarPasajero extends JPanel{
+public class PanelGestionarPasajero extends PanelPermiteMensajes{
 	// en este panel estan los botones y los dos otros paneles
 	private PanelGestionarPasajeroBusqueda panelGestionarPasajeroBusqueda;
 	private PanelGestionarPasajeroTabla panelGestionarPasajeroTabla;
+	
+	private JFrame frameActual;
+	private FrameAltaPasajero frameAltaPasajero;
 	
 	private JButton buscar;
 	private JButton cancelar;
@@ -41,6 +47,8 @@ public class PanelGestionarPasajero extends JPanel{
 	private FrameMenuPrincipal frameAnterior;
 	
 	public PanelGestionarPasajero(final FrameGestionarPasajero frame) {
+		
+		this.frameActual = frame;
 		
 		this.setBackground(Color.WHITE);
 		
@@ -66,7 +74,10 @@ public class PanelGestionarPasajero extends JPanel{
 		buscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
+				String texto = "<html><p>No existe ningún pasajero con los criterios de búsqueda"
+						+ " seleccionados. ¿Desea agregar un nuevo pasajero?</p><html>";
+				Mensaje m = new Mensaje();
+				System.out.println(m.mostrarMensaje(frame, TipoMensaje.CONFIRMACION, texto, "Si", "No"));
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
@@ -122,4 +133,9 @@ public class PanelGestionarPasajero extends JPanel{
 		c.gridx = 2; c.gridy = 3;
 		this.add(siguiente, c);
 	}
+	
+	public JPanel getPanel() {
+		return this;
+	}
+	
 }

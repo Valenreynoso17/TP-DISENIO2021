@@ -14,9 +14,9 @@ import javax.swing.JPanel;
 
 import main.java.enmus.TipoMensaje;
 import main.java.interfaces.julio.frames.FrameAltaPasajero;
-import main.java.interfaces.julio.frames.FrameMenuPrincipal;
 import main.java.interfaces.julio.otros.Mensaje;
 import main.java.interfaces.julio.otros.RoundedBorder;
+import main.java.interfaces.nati.frames.FrameGestionarPasajero;
 
 public class PanelAltaPasajero extends JPanel{
 	
@@ -33,7 +33,7 @@ public class PanelAltaPasajero extends JPanel{
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
-	private FrameMenuPrincipal frameAnteriorTrucho;
+	private FrameGestionarPasajero frameAnterior;
 	
 	public PanelAltaPasajero(final FrameAltaPasajero frame) {
 		
@@ -61,7 +61,7 @@ public class PanelAltaPasajero extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				
 				frame.dispose();
-				frameAnteriorTrucho = new FrameMenuPrincipal();
+				frameAnterior = new FrameGestionarPasajero();
 			}
 		});
 		c.anchor = GridBagConstraints.WEST;		c.insets = new Insets(0,60,10,0);
@@ -81,7 +81,7 @@ public class PanelAltaPasajero extends JPanel{
 					
 					String texto = "<html><p>El pasajero se agregó al sistema correctamente.</p><html>";
 					//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
-					Mensaje m2 = new Mensaje(frame, TipoMensaje.EXITO, texto, "Aceptar", null);
+					Mensaje m2 = new Mensaje(getPanel(), frame, TipoMensaje.EXITO, texto, "Aceptar", null);
 				}
 				
 //				frame.dispose();
@@ -91,6 +91,10 @@ public class PanelAltaPasajero extends JPanel{
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
 		c.gridx = 1; c.gridy = 1;
 		this.add(siguiente, c);
+	}
+	
+	public JPanel getPanel() {
+		return this;
 	}
 }
 
