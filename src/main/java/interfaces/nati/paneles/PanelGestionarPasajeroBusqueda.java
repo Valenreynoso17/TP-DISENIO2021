@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import main.java.enmus.TipoDocumento;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.julio.otros.RoundedBorder;
 import main.java.interfaces.nati.frames.FrameGestionarPasajero;
@@ -23,7 +24,7 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 	
 	private FrameGestionarPasajero frameActual;
 	
-	private JComboBox<String> tipoDocumento;
+	private JComboBox tipoDocumento;
 	
 	private JLabel label;
 	
@@ -94,7 +95,9 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 	
 		tipoDocumento = new JComboBox<String>();	tipoDocumento.setFont(fuenteLabelCampo);	tipoDocumento.setBackground(Color.white);	
 		c.gridx = 1; c.gridy = 1;	tipoDocumento.setMinimumSize(dimensionCampo);	tipoDocumento.setPreferredSize(dimensionCampo);
-		tipoDocumento.addItem("--Seleccione");		this.add(tipoDocumento, c);
+		tipoDocumento.addItem("--Seleccione");
+		this.cargarComboBoxDesdeEnum(tipoDocumento, TipoDocumento.values());
+		this.add(tipoDocumento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel;
 		
@@ -108,4 +111,12 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 		
 	
 	}
+	
+	private void cargarComboBoxDesdeEnum(JComboBox comboBox, Object[] values) {
+		
+		for(Object o : values){
+			
+			comboBox.addItem(String.valueOf(o).replaceAll("_", " ")); //Para que no aparezcan los guiones bajos
+		}
+}
 }

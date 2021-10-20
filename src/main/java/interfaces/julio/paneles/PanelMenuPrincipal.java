@@ -15,11 +15,12 @@ import javax.swing.JPanel;
 
 import main.java.interfaces.julio.otros.*;
 import main.java.interfaces.nati.frames.FrameGestionarPasajero;
+import main.java.enmus.TipoMensaje;
 import main.java.interfaces.julio.frames.FrameAutenticarUsuario;
 import main.java.interfaces.julio.frames.FrameMenuPrincipal;
 
 
-public class PanelMenuPrincipal extends JPanel{
+public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 	
 	private PanelAutenticarUsuarioGroupBox panelAutenticarUsuarioGroupBox = new PanelAutenticarUsuarioGroupBox();
 	
@@ -40,9 +41,12 @@ public class PanelMenuPrincipal extends JPanel{
 	private RoundedBorder bordeSalir = new RoundedBorder(10, Color.DARK_GRAY);
 
 	private FrameAutenticarUsuario frameAnterior;
+	private FrameMenuPrincipal frameActual;
 	private FrameGestionarPasajero frameGestionarPasajero;
 	
 	public PanelMenuPrincipal(final FrameMenuPrincipal frame) {
+		
+		this.frameActual = frame;
 		
 		this.setBackground(Color.white);
 		
@@ -68,7 +72,6 @@ public class PanelMenuPrincipal extends JPanel{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//Supongamos que no te muestre un mensaje de confirmación
 				frame.dispose();
 				frameGestionarPasajero = new FrameGestionarPasajero();
 			}
@@ -82,6 +85,13 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String texto = "<html><p>Próximamente...</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.ERROR, texto, "Aceptar", null);
+			}
+		});
 		c.anchor = GridBagConstraints.WEST; c.insets = der;
 			c.gridx = 1; c.gridy = 1;
 		this.add(button, c);
@@ -91,6 +101,13 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String texto = "<html><p>Esperar a la etapa 8.</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.ERROR, texto, "Aceptar", null);
+			}
+		});
 		c.anchor = GridBagConstraints.EAST; c.insets = izq;
 			c.gridx = 0; c.gridy = 2;
 		this.add(button, c);
@@ -98,6 +115,13 @@ public class PanelMenuPrincipal extends JPanel{
 		button = new JButton("Ocupar Habitación");
 		button.setFont(fuenteBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String texto = "<html><p>Esperar a la etapa 8.</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.ERROR, texto, "Aceptar", null);
+			}
+		});
 		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
 		c.anchor = GridBagConstraints.WEST; c.insets = der;
@@ -109,6 +133,13 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String texto = "<html><p>Esperar a la etapa 8.</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.ERROR, texto, "Aceptar", null);
+			}
+		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
 			c.gridx = 0; c.gridy = 3;
 		this.add(button, c);
@@ -118,6 +149,13 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String texto = "<html><p>Esperar a la etapa 8.</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.ERROR, texto, "Aceptar", null);
+			}
+		});
 		c.anchor = GridBagConstraints.WEST;	c.insets = der;
 			c.gridx = 1; c.gridy = 3;
 		this.add(button, c);
@@ -127,6 +165,13 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String texto = "<html><p>Esperar a la etapa 8.</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.ERROR, texto, "Aceptar", null);
+			}
+		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
 			c.gridx = 0; c.gridy = 4;
 		this.add(button, c);
@@ -136,6 +181,13 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBorder(bordeBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String texto = "<html><p>Próximamente...</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.ERROR, texto, "Aceptar", null);
+			}
+		});
 		c.anchor = GridBagConstraints.WEST;	c.insets = der;
 			c.gridx = 1; c.gridy = 4;
 		this.add(button, c);
@@ -148,9 +200,8 @@ public class PanelMenuPrincipal extends JPanel{
 		cerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//Supongamos que no te muestre un mensaje de confirmación
-				frame.dispose();
-				frameAnterior = new FrameAutenticarUsuario();
+				String pregunta = "<html><p>¿Está seguro que desea cerrar sesión? Deberá volver a inciar sesión.</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.ADVERTENCIA, pregunta, "Si", "No");
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izqF;
@@ -162,8 +213,29 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBorder(bordeBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String texto = "<html><p>Esperar a la etapa 8.</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.ERROR, texto, "Aceptar", null);
+			}
+		});
 		c.anchor = GridBagConstraints.WEST; c.insets = derF;
 			c.gridx = 1; c.gridy = 5;
 		this.add(button, c);
+	}
+	
+	public PanelPermiteMensajes getPanel() {
+		return this;
+	}
+
+	public void confirmoElMensaje() {
+		//Simplemente aprieta "Aceptar", pero continúa en la misma pantalla
+	}
+
+	public void confirmoCancelar() {
+		
+		frameActual.dispose();
+		frameAnterior = new FrameAutenticarUsuario();
 	}
 }

@@ -10,20 +10,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import main.java.enmus.TipoMensaje;
+import main.java.interfaces.julio.frames.FrameAltaPasajero;
 import main.java.interfaces.julio.frames.FrameMenuPrincipal;
 import main.java.interfaces.julio.otros.Mensaje;
+import main.java.interfaces.julio.otros.PanelPermiteMensajes;
 import main.java.interfaces.julio.otros.RoundedBorder;
 import main.java.interfaces.julio.paneles.PanelAltaPasajeroDatos;
 import main.java.interfaces.nati.frames.FrameGestionarPasajero;
 
-public class PanelGestionarPasajero extends JPanel{
+public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensajes{
 	// en este panel estan los botones y los dos otros paneles
 	private PanelGestionarPasajeroBusqueda panelGestionarPasajeroBusqueda;
 	private PanelGestionarPasajeroTabla panelGestionarPasajeroTabla;
+	
+	private FrameMenuPrincipal frameAnterior;
+	private JFrame frameActual;
+	private FrameAltaPasajero frameAltaPasajero;
 	
 	private JButton buscar;
 	private JButton cancelar;
@@ -38,9 +45,9 @@ public class PanelGestionarPasajero extends JPanel{
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
-	private FrameMenuPrincipal frameAnterior;
-	
 	public PanelGestionarPasajero(final FrameGestionarPasajero frame) {
+		
+		this.frameActual = frame;
 		
 		this.setBackground(Color.WHITE);
 		
@@ -66,7 +73,9 @@ public class PanelGestionarPasajero extends JPanel{
 		buscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
+				String texto = "<html><p>No existe ningún pasajero con los criterios de búsqueda"
+						+ " seleccionados. ¿Desea agregar un nuevo pasajero?</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.CONFIRMACION, texto, "Si", "No");
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
@@ -90,8 +99,8 @@ public class PanelGestionarPasajero extends JPanel{
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.dispose();
-				frameAnterior = new FrameMenuPrincipal();
+				String pregunta = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.CONFIRMACION, pregunta, "Si", "No");
 			}
 		});
 		c.anchor = GridBagConstraints.WEST;		c.insets = new Insets(0,60,10,0);
@@ -121,5 +130,22 @@ public class PanelGestionarPasajero extends JPanel{
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
 		c.gridx = 2; c.gridy = 3;
 		this.add(siguiente, c);
+	}
+	
+	public PanelPermiteMensajes getPanel() {
+		return this;
+	}
+	
+
+	public void confirmoElMensaje() {
+		
+		frameActual.dispose();
+		frameAltaPasajero = new FrameAltaPasajero();
+	}
+	
+	public void confirmoCancelar() {
+		
+		frameActual.dispose();
+		frameAnterior = new FrameMenuPrincipal();
 	}
 }

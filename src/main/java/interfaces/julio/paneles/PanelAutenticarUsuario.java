@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -16,11 +17,13 @@ import main.java.enmus.TipoMensaje;
 import main.java.interfaces.julio.frames.FrameAutenticarUsuario;
 import main.java.interfaces.julio.frames.FrameMenuPrincipal;
 import main.java.interfaces.julio.otros.Mensaje;
+import main.java.interfaces.julio.otros.PanelPermiteMensajes;
 import main.java.interfaces.julio.otros.RoundedBorder;
+import main.java.interfaces.nati.frames.FrameGestionarPasajero;
 
 
 
-public class PanelAutenticarUsuario extends JPanel{
+public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensajes{
 	
 	private PanelAutenticarUsuarioGroupBox panelAutenticarUsuarioGroupBox = new PanelAutenticarUsuarioGroupBox();
 	
@@ -34,9 +37,12 @@ public class PanelAutenticarUsuario extends JPanel{
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
+	private FrameAutenticarUsuario frameActual;
 	private FrameMenuPrincipal frameSiguiente;
 	
 	public PanelAutenticarUsuario(final FrameAutenticarUsuario frame) {
+		
+		this.frameActual = frame;
 		
 		this.setBackground(Color.white);
 		
@@ -69,11 +75,8 @@ public class PanelAutenticarUsuario extends JPanel{
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				String pregunta = "<html><p>¿Realmente quiere salir?</p><html>";
-				//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
-				Mensaje m1 = new Mensaje(frame, TipoMensaje.ERROR, pregunta, "Aceptar", "Cancelar");
-				//frame.dispose();
+				String pregunta = "<html><p>¿Está seguro que desea salir del programa?</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.CONFIRMACION, pregunta, "Si", "No");
 			}
 		});
 		c.anchor = GridBagConstraints.WEST;
@@ -94,17 +97,29 @@ public class PanelAutenticarUsuario extends JPanel{
 					frameSiguiente = new FrameMenuPrincipal();
 				}
 				else {
-					//String pregunta = "<html>Hola <br/> como <br/> andas<html>";
-					//String pregunta3 = "<html><p>¿Quiere hacer esto y lo otro y que se yo que de lo otro y otro y muchos otros y aaaa lo otroo eso era?</p><html>";
-					String pregunta = "<html><p>Escriba algo en usuario y algo en contraseña</p><html>";
-					//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
-					Mensaje m1 = new Mensaje(frame, TipoMensaje.ERROR, pregunta, "Aceptar", null);
+					String pregunta = "<html><p>La contraseña y/o el nombre ingresaod son inválidos. Por favor, vuelva a ingresarlos.</p><html>";
+					Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.ERROR, pregunta, "Aceptar", null);
 				}
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;
 													c.gridx = 2; c.gridy = 2;
 													this.add(iniciarSesion, c);
+	}
+	
+	public PanelPermiteMensajes getPanel() {
+		return this;
+	}
+
+	public void confirmoElMensaje() {
+
+		frameActual.dispose();
+	}
+
+
+	public void confirmoCancelar() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

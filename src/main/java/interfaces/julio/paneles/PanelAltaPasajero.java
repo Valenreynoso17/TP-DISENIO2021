@@ -16,9 +16,11 @@ import main.java.enmus.TipoMensaje;
 import main.java.interfaces.julio.frames.FrameAltaPasajero;
 import main.java.interfaces.julio.frames.FrameMenuPrincipal;
 import main.java.interfaces.julio.otros.Mensaje;
+import main.java.interfaces.julio.otros.PanelPermiteMensajes;
 import main.java.interfaces.julio.otros.RoundedBorder;
+import main.java.interfaces.nati.frames.FrameGestionarPasajero;
 
-public class PanelAltaPasajero extends JPanel{
+public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 	
 	private PanelAltaPasajeroDatos panelDarAltaPasajero;
 	
@@ -33,9 +35,12 @@ public class PanelAltaPasajero extends JPanel{
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
-	private FrameMenuPrincipal frameAnteriorTrucho;
+	private FrameGestionarPasajero frameAnterior;
+	private FrameAltaPasajero frameActual;
+	private FrameMenuPrincipal frameMenuprincipal;
 	
 	public PanelAltaPasajero(final FrameAltaPasajero frame) {
+		this.frameActual = frame;
 		
 		this.setBackground(Color.WHITE);
 		
@@ -60,8 +65,8 @@ public class PanelAltaPasajero extends JPanel{
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.dispose();
-				frameAnteriorTrucho = new FrameMenuPrincipal();
+				String pregunta = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
+				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.CONFIRMACION, pregunta, "Si", "No");
 			}
 		});
 		c.anchor = GridBagConstraints.WEST;		c.insets = new Insets(0,60,10,0);
@@ -80,17 +85,32 @@ public class PanelAltaPasajero extends JPanel{
 				if(panelDarAltaPasajero.validar()) {
 					
 					String texto = "<html><p>El pasajero se agregó al sistema correctamente.</p><html>";
-					//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
-					Mensaje m2 = new Mensaje(frame, TipoMensaje.EXITO, texto, "Aceptar", null);
+					Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.EXITO, texto, "Aceptar", null);
 				}
 				
-//				frame.dispose();
-//				frameAnteriorTrucho = new FrameMenuPrincipal();
+				String texto = "<html><p>¡CUIDADO! El tipo y número de documento ya existen en el sistema.</p><html>";
+				Mensaje m2 = new Mensaje(getPanel(), frame, TipoMensaje.EXITO, texto, "Aceptar Igualmente", "Corregir");
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
 		c.gridx = 1; c.gridy = 1;
 		this.add(siguiente, c);
 	}
+	
+	public PanelPermiteMensajes getPanel() {
+		return this;
+	}
+
+	public void confirmoElMensaje() {
+		frameActual.dispose();
+		frameMenuprincipal = new FrameMenuPrincipal();	//Si se crea el pasajero, vuelve al MenuPrincipal
+	}
+
+	public void confirmoCancelar() {
+		
+		frameActual.dispose();
+		frameAnterior = new FrameGestionarPasajero();	//Si cancela, vuelve a GestionarPasajero
+	}
+
 }
 
