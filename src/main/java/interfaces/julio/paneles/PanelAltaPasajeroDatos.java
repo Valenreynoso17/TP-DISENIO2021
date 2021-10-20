@@ -387,9 +387,9 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		}
 		catch(InputVacioException e1) {
 			
-			String pregunta = "<html><p>Faltan datos</p><html>";
-			//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
-			Mensaje m2 = new Mensaje(getPanel(), frameActual, TipoMensaje.ERROR, pregunta, "Aceptar", null);
+//			String pregunta = "<html><p>Faltan datos</p><html>";
+//			//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
+//			Mensaje m2 = new Mensaje(getPanel(), frameActual, TipoMensaje.ERROR, pregunta, "Aceptar", null);
 		}
 		
 		return false;
