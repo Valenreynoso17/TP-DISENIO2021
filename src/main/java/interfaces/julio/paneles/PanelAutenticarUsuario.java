@@ -32,6 +32,12 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 	
 	private JLabel label;
 	
+	private String textoMensajeSalir = "<html><p>¿Está seguro que desea salir del programa?</p><html>";
+	private Mensaje mensajeSalir = new Mensaje(1, textoMensajeSalir, TipoMensaje.CONFIRMACION, "Si", "No");
+	
+	private String textoMensajeInputInvalido = "<html><p>La contraseña y/o el nombre ingresados son inválidos. Por favor, vuelva a ingresarlos.</p><html>";
+	private Mensaje mensajeInputInvalido = new Mensaje(2, textoMensajeInputInvalido, TipoMensaje.ERROR, "Aceptar", null);
+	
 	private Font fuenteTitulo = new Font("SourceSansPro", Font.PLAIN, 46);	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
@@ -75,8 +81,7 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String pregunta = "<html><p>¿Está seguro que desea salir del programa?</p><html>";
-				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.CONFIRMACION, pregunta, "Si", "No");
+				mensajeSalir.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.WEST;
@@ -97,8 +102,7 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 					frameSiguiente = new FrameMenuPrincipal();
 				}
 				else {
-					String pregunta = "<html><p>La contraseña y/o el nombre ingresaod son inválidos. Por favor, vuelva a ingresarlos.</p><html>";
-					Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.ERROR, pregunta, "Aceptar", null);
+					mensajeInputInvalido.mostrar(getPanel(), frame);
 				}
 			}
 		});
@@ -110,16 +114,25 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 	public PanelPermiteMensajes getPanel() {
 		return this;
 	}
+	
+	public void confirmoElMensaje(Integer idMensaje) {
+		
+		switch(idMensaje) {
+		case 1:	//Si sale, cierra el programa
+			frameActual.dispose();	
+			break;
+		case 2:	//No pasa nada
+			
+			break;		
+		}
+		
 
-	public void confirmoElMensaje() {
-
-		frameActual.dispose();
 	}
 
 
-	public void confirmoCancelar() {
-		// TODO Auto-generated method stub
-		
+	public void confirmoCancelar(Integer idMensaje) {
+
+		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
 	}
 
 }

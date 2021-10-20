@@ -4,6 +4,6 @@ import main.java.interfaces.julio.frames.FrameAltaPasajero;
 
 public interface PanelPermiteMensajes{
 
-	public void confirmoElMensaje();
-	public void confirmoCancelar();
+	public void confirmoElMensaje(Integer idMensaje);
+	public void confirmoCancelar(Integer idMensaje);
 }

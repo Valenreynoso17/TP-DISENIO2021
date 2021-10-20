@@ -8,26 +8,22 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.time.LocalTime;
+import java.util.List;
 
-import javax.swing.ComboBoxEditor;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import main.java.dtos.PaisDTO;
 import main.java.enmus.PosicionFrenteIva;
 import main.java.enmus.TipoDocumento;
 import main.java.enmus.TipoMensaje;
 import main.java.excepciones.InputVacioException;
+import main.java.gestores.GestorPaisProvincia;
 import main.java.interfaces.TextPrompt;
-import main.java.interfaces.TextPrompt.Show;
 import main.java.interfaces.julio.frames.FrameAltaPasajero;
 import main.java.interfaces.julio.otros.Mensaje;
 import main.java.interfaces.julio.otros.RoundedBorder;
@@ -36,8 +32,10 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	
 	private FrameAltaPasajero frameActual;
 	
+	private GestorPaisProvincia gestorPP;
+	
 	private JComboBox tipoDocumento;
-	private JComboBox pais;
+	private JComboBox<PaisDTO> pais;
 	private JComboBox provincia;
 	private JComboBox localidad;
 	private JComboBox nacionalidad;
@@ -96,6 +94,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	public PanelAltaPasajeroDatos(FrameAltaPasajero frame) {
 		
 		this.frameActual = frame;
+		gestorPP =  GestorPaisProvincia.getInstance();
 		
 		this.setBackground(Color.WHITE);
 		
@@ -231,9 +230,18 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		pais = new JComboBox<String>();	pais.setFont(fuenteLabelCampo);	pais.setBackground(Color.white);	
+		List<PaisDTO> paises = gestorPP.buscarPaises();//.toArray((new PaisDTO[paises.size()]);
+		pais = new JComboBox<PaisDTO>(paises.toArray(new PaisDTO[paises.size()]));	
+		pais.setFont(fuenteLabelCampo);	pais.setBackground(Color.white);	
 		c.gridx = 0; c.gridy = 11;	pais.setMinimumSize(dimensionCampo);	pais.setPreferredSize(dimensionCampo);
-		pais.addItem("--Seleccione");	this.add(pais, c);
+//		pais.addItem("--Seleccione");	
+//		estaciones.toArray(new Estacion[estaciones.size()])
+		pais.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		this.add(pais, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 
@@ -242,9 +250,9 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
 		provincia = new JComboBox<String>();	provincia.setFont(fuenteLabelCampo);	provincia.setBackground(Color.white);	
-		//provincia.setBorder(bordeCampo);
 		c.gridx = 2; c.gridy = 11;	provincia.setMinimumSize(dimensionCampo);	provincia.setPreferredSize(dimensionCampo);
-		provincia.addItem("--Seleccione");	this.add(provincia, c);
+		provincia.addItem("--Seleccione");	
+		this.add(provincia, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabelDobleIzq; c.gridwidth = 1;
 		
@@ -265,7 +273,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		localidad = new JComboBox<String>();	localidad.setFont(fuenteLabelCampo);	localidad.setBackground(Color.white);	
 		//localidad.setBorder(bordeCampo);
 		c.gridx = 1; c.gridy = 13;	localidad.setMinimumSize(dimensionCampo);	localidad.setPreferredSize(dimensionCampo);
-		localidad.addItem("--Seleccione");	this.add(localidad, c);
+		localidad.addItem("--Seleccione");	
+		this.add(localidad, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -277,14 +286,15 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		nacionalidad.setFont(fuenteLabelCampo);	nacionalidad.setBackground(Color.white);	
 		//nacionalidad.setBorder(bordeCampo);
 		c.gridx = 2; c.gridy = 13;	nacionalidad.setMinimumSize(dimensionCampo);	nacionalidad.setPreferredSize(dimensionCampo);
-		nacionalidad.addItem("--Seleccione");	this.add(nacionalidad, c);
+		nacionalidad.addItem("--Seleccione");	
+		this.add(nacionalidad, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
 		label = new JLabel("CUIT");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 14;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
-		
+
 		cuit = new JTextField();	cuit.setFont(fuenteLabelCampo);	cuit.setBorder(bordeCampo);
 		fondoJTextField = new TextPrompt("Ingrese los 11 dígitos del número de CUIT", cuit); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 0; c.gridy = 15;	cuit.setMinimumSize(dimensionCampo);	cuit.setPreferredSize(dimensionCampo);	this.add(cuit, c);
@@ -298,7 +308,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		posicionIVA = new JComboBox();	posicionIVA.setFont(fuenteLabelCampo);	posicionIVA.setBackground(Color.white);	
 		
 		c.gridx = 2; c.gridy = 15;	posicionIVA.setMinimumSize(dimensionCampo);	posicionIVA.setPreferredSize(dimensionCampo);	
-		this.cargarComboBoxDesdeEnum(posicionIVA, PosicionFrenteIva.values());	this.add(posicionIVA, c);
+		this.cargarComboBoxDesdeEnum(posicionIVA, PosicionFrenteIva.values());	
+		this.add(posicionIVA, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weighty = pesoYLabel; c.gridwidth = 2; c.anchor = GridBagConstraints.CENTER;
 		

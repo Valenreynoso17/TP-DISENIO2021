@@ -16,7 +16,10 @@ public class PaisDTO {
 		this.nacionalidad = nacionalidad;
 	}
 	
-	
+	public String toString() {
+		
+		return this.nombre;
+	}
 
 	public Integer getId() {
 		return id;
