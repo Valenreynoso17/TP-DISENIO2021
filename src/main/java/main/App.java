@@ -2,9 +2,10 @@ package main.java.main;
 
 import javax.swing.UIManager;
 
-import main.java.interfaces.julio.frames.FrameAltaPasajero;
-import main.java.interfaces.julio.frames.FrameAutenticarUsuario;
-import main.java.interfaces.nati.frames.FrameGestionarPasajero;
+import main.java.gestores.GestorPaisProvincia;
+import main.java.interfaces.CU01.FrameAutenticarUsuario;
+import main.java.interfaces.CU02.FrameGestionarPasajero;
+import main.java.interfaces.CU11.FrameAltaPasajero;
 
 public class App {
 
@@ -16,6 +17,9 @@ public class App {
 		
 			//FrameGestionarPasajero fGP = new FrameGestionarPasajero();
 		
+			//GestorPaisProvincia gPP = GestorPaisProvincia.getInstance();
+			
+			//System.out.println(gPP.buscarPaises());
 	}
 
 }

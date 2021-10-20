@@ -1,4 +1,4 @@
-package main.java.interfaces.nati.paneles;
+package main.java.interfaces.CU02;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,8 +17,7 @@ import javax.swing.border.TitledBorder;
 
 import main.java.enmus.TipoDocumento;
 import main.java.interfaces.TextPrompt;
-import main.java.interfaces.julio.otros.RoundedBorder;
-import main.java.interfaces.nati.frames.FrameGestionarPasajero;
+import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelGestionarPasajeroBusqueda extends JPanel{
 	

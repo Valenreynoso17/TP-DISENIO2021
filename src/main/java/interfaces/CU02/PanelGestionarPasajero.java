@@ -1,4 +1,4 @@
-package main.java.interfaces.nati.paneles;
+package main.java.interfaces.CU02;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,13 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import main.java.enmus.TipoMensaje;
-import main.java.interfaces.julio.frames.FrameAltaPasajero;
-import main.java.interfaces.julio.frames.FrameMenuPrincipal;
-import main.java.interfaces.julio.otros.Mensaje;
-import main.java.interfaces.julio.otros.PanelPermiteMensajes;
-import main.java.interfaces.julio.otros.RoundedBorder;
-import main.java.interfaces.julio.paneles.PanelAltaPasajeroDatos;
-import main.java.interfaces.nati.frames.FrameGestionarPasajero;
+import main.java.interfaces.CU11.FrameAltaPasajero;
+import main.java.interfaces.CU11.PanelAltaPasajeroDatos;
+import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.clasesExtra.Mensaje;
+import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
+import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensajes{
 	// en este panel estan los botones y los dos otros paneles
@@ -31,6 +30,16 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 	private FrameMenuPrincipal frameAnterior;
 	private JFrame frameActual;
 	private FrameAltaPasajero frameAltaPasajero;
+	
+	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
+	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
+	
+	private String textoMensajeNoExistePasajeroBuscar = "<html><p>No existe ningún pasajero con los criterios de búsqueda"
+														+ " seleccionados. ¿Desea agregar un nuevo pasajero?</p><html>";
+	private Mensaje mensajeNoExistePasajeroBuscar = new Mensaje(2, textoMensajeNoExistePasajeroBuscar, TipoMensaje.CONFIRMACION, "Si", "No");
+	
+	private String textoMensajeNoExistePasajeroSiguiente = "<html><p>No seleccionó ningún pasajero. ¿Desea agregar un nuevo pasajero?";
+	private Mensaje mensajeNoExistePasajeroSiguiente = new Mensaje(3, textoMensajeNoExistePasajeroSiguiente, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private JButton buscar;
 	private JButton cancelar;
@@ -73,9 +82,7 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		buscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String texto = "<html><p>No existe ningún pasajero con los criterios de búsqueda"
-						+ " seleccionados. ¿Desea agregar un nuevo pasajero?</p><html>";
-				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.CONFIRMACION, texto, "Si", "No");
+				mensajeNoExistePasajeroBuscar.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
@@ -99,8 +106,7 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String pregunta = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
-				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.CONFIRMACION, pregunta, "Si", "No");
+				mensajeCancelar.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.WEST;		c.insets = new Insets(0,60,10,0);
@@ -116,15 +122,7 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-//				if(panelDarAltaPasajero.validar()) {
-//					
-//					String texto = "<html><p>El pasajero se agregó al sistema correctamente.</p><html>";
-//					//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
-//					Mensaje m2 = new Mensaje(frame, TipoMensaje.EXITO, texto, "Aceptar", null);
-//				}
-				
-//				frame.dispose();
-//				frameAnteriorTrucho = new FrameMenuPrincipal();
+				mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
@@ -137,15 +135,26 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 	}
 	
 
-	public void confirmoElMensaje() {
+	public void confirmoElMensaje(Integer idMensaje) {
 		
-		frameActual.dispose();
-		frameAltaPasajero = new FrameAltaPasajero();
+		switch(idMensaje) {
+		case 1:	//Si cancela, vuelve a MenuPrincipal
+			frameActual.dispose();
+			frameAnterior = new FrameMenuPrincipal();	
+			break;
+		case 2:	//Si no se encontro ningún pasajero, va a la pantalla de AltaPasajero
+			frameActual.dispose();
+			frameAltaPasajero = new FrameAltaPasajero();
+			break;
+		case 3:	//Si no se seleccionó ningún pasajero, va a la pantalla de AltaPasajero
+			frameActual.dispose();
+			frameAltaPasajero = new FrameAltaPasajero();	
+			break;		
+		}
 	}
 	
-	public void confirmoCancelar() {
+	public void confirmoCancelar(Integer idMensaje) {
 		
-		frameActual.dispose();
-		frameAnterior = new FrameMenuPrincipal();
+		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
 	}
 }

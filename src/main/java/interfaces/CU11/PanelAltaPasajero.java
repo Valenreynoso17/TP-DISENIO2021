@@ -1,4 +1,4 @@
-package main.java.interfaces.julio.paneles;
+package main.java.interfaces.CU11;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,12 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import main.java.enmus.TipoMensaje;
-import main.java.interfaces.julio.frames.FrameAltaPasajero;
-import main.java.interfaces.julio.frames.FrameMenuPrincipal;
-import main.java.interfaces.julio.otros.Mensaje;
-import main.java.interfaces.julio.otros.PanelPermiteMensajes;
-import main.java.interfaces.julio.otros.RoundedBorder;
-import main.java.interfaces.nati.frames.FrameGestionarPasajero;
+import main.java.interfaces.CU02.FrameGestionarPasajero;
+import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.clasesExtra.Mensaje;
+import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
+import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 	
@@ -38,6 +37,15 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 	private FrameGestionarPasajero frameAnterior;
 	private FrameAltaPasajero frameActual;
 	private FrameMenuPrincipal frameMenuprincipal;
+	
+	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
+	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
+	
+	private String textoMensajeDocumentoRepetido = "<html><p>¡CUIDADO! El tipo y número de documento ya existen en el sistema.</p><html>";
+	private Mensaje mensajeDocumentoRepetido = new Mensaje(2, textoMensajeDocumentoRepetido, TipoMensaje.EXITO, "Aceptar Igualmente", "Corregir");
+	
+	private String textoMensajePasajeroCreado = "<html><p>El pasajero se agregó al sistema correctamente.</p><html>";
+	private Mensaje mensajePasajeroCreado = new Mensaje(3, textoMensajePasajeroCreado, TipoMensaje.EXITO, "Aceptar", null);
 	
 	public PanelAltaPasajero(final FrameAltaPasajero frame) {
 		this.frameActual = frame;
@@ -65,8 +73,7 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String pregunta = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
-				Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.CONFIRMACION, pregunta, "Si", "No");
+				mensajeCancelar.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.WEST;		c.insets = new Insets(0,60,10,0);
@@ -82,14 +89,15 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(panelDarAltaPasajero.validar()) {
+				if(panelDarAltaPasajero.inputEsNoVacio()) {
 					
-					String texto = "<html><p>El pasajero se agregó al sistema correctamente.</p><html>";
-					Mensaje m = new Mensaje(getPanel(), frame, TipoMensaje.EXITO, texto, "Aceptar", null);
+					if(panelDarAltaPasajero.inputTieneFormatoValido()) {
+						
+						mensajePasajeroCreado.mostrar(getPanel(), frame);
+					}	
 				}
-				
-				String texto = "<html><p>¡CUIDADO! El tipo y número de documento ya existen en el sistema.</p><html>";
-				Mensaje m2 = new Mensaje(getPanel(), frame, TipoMensaje.EXITO, texto, "Aceptar Igualmente", "Corregir");
+					
+					//mensajeDocumentoRepetido.mostrar(getPanel(), frame); //Hay que crear luego la validación de que no se repitan DNIs
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
@@ -101,15 +109,37 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 		return this;
 	}
 
-	public void confirmoElMensaje() {
-		frameActual.dispose();
-		frameMenuprincipal = new FrameMenuPrincipal();	//Si se crea el pasajero, vuelve al MenuPrincipal
+	public void confirmoElMensaje(Integer idMensaje) {
+		
+		switch(idMensaje) {
+		case 1:	//Si cancela, vuelve a GestionarPasajero
+			frameActual.dispose();
+			frameAnterior = new FrameGestionarPasajero();	
+			break;
+		case 2:	//Si tiene documento repetido, se guarda igualmente (primero muestra el mensaje de que se creó el pasajero)
+			mensajePasajeroCreado.mostrar(getPanel(), frameActual);
+			break;
+		case 3:	//Si se creo el pasajero, vuelve al MenuPrincpal
+			frameActual.dispose();
+			frameMenuprincipal = new FrameMenuPrincipal();	
+			break;		
+		}
+		
+
 	}
 
-	public void confirmoCancelar() {
+	public void confirmoCancelar(Integer idMensaje) {
 		
-		frameActual.dispose();
-		frameAnterior = new FrameGestionarPasajero();	//Si cancela, vuelve a GestionarPasajero
+		switch(idMensaje) {
+		case 1:	//Si no quiere cancelar, no pasa nada
+			
+			break;
+		case 2:	//Si tiene documento repetido, se centra en el campo "Documento"
+			
+			break;		
+		}
+		
+
 	}
 
 }
