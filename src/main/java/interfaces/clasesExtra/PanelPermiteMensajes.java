@@ -1,6 +1,6 @@
-package main.java.interfaces.julio.otros;
+package main.java.interfaces.clasesExtra;
 
-import main.java.interfaces.julio.frames.FrameAltaPasajero;
+import main.java.interfaces.CU11.FrameAltaPasajero;
 
 public interface PanelPermiteMensajes{
 

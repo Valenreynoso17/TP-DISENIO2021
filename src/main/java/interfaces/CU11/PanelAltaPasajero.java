@@ -1,4 +1,4 @@
-package main.java.interfaces.julio.paneles;
+package main.java.interfaces.CU11;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,12 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import main.java.enmus.TipoMensaje;
-import main.java.interfaces.julio.frames.FrameAltaPasajero;
-import main.java.interfaces.julio.frames.FrameMenuPrincipal;
-import main.java.interfaces.julio.otros.Mensaje;
-import main.java.interfaces.julio.otros.PanelPermiteMensajes;
-import main.java.interfaces.julio.otros.RoundedBorder;
-import main.java.interfaces.nati.frames.FrameGestionarPasajero;
+import main.java.interfaces.CU02.FrameGestionarPasajero;
+import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.clasesExtra.Mensaje;
+import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
+import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 	
@@ -90,12 +89,15 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(panelDarAltaPasajero.validar()) {
+				if(panelDarAltaPasajero.inputEsNoVacio()) {
 					
-					mensajePasajeroCreado.mostrar(getPanel(), frame);
+					if(panelDarAltaPasajero.inputTieneFormatoValido()) {
+						
+						mensajePasajeroCreado.mostrar(getPanel(), frame);
+					}	
 				}
 					
-					mensajeDocumentoRepetido.mostrar(getPanel(), frame);
+					//mensajeDocumentoRepetido.mostrar(getPanel(), frame); //Hay que crear luego la validación de que no se repitan DNIs
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);

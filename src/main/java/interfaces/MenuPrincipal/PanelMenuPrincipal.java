@@ -1,4 +1,4 @@
-package main.java.interfaces.julio.paneles;
+package main.java.interfaces.MenuPrincipal;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,11 +13,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import main.java.interfaces.julio.otros.*;
-import main.java.interfaces.nati.frames.FrameGestionarPasajero;
 import main.java.enmus.TipoMensaje;
-import main.java.interfaces.julio.frames.FrameAutenticarUsuario;
-import main.java.interfaces.julio.frames.FrameMenuPrincipal;
+import main.java.interfaces.CU01.FrameAutenticarUsuario;
+import main.java.interfaces.CU01.PanelAutenticarUsuarioGroupBox;
+import main.java.interfaces.CU02.FrameGestionarPasajero;
+import main.java.interfaces.clasesExtra.Mensaje;
+import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
+import main.java.interfaces.clasesExtra.RoundedBorder;
 
 
 public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
@@ -41,7 +43,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 	private RoundedBorder bordeSalir = new RoundedBorder(10, Color.DARK_GRAY);
 	
 	private String textoMensajeCerrarSesion = "<html><p>¿Está seguro que desea cerrar sesión? Deberá volver a inciar sesión.</p><html>";
-	private Mensaje mensajeCerrarSesion = new Mensaje(1, textoMensajeCerrarSesion, TipoMensaje.ADVERTENCIA, "Si", "No");
+	private Mensaje mensajeCerrarSesion = new Mensaje(1, textoMensajeCerrarSesion, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoMensajeEtapa8 = "<html><p>Esperar a la etapa 8.</p><html>";
 	private Mensaje mensajeEtapa8 = new Mensaje(2, textoMensajeEtapa8, TipoMensaje.ERROR, "Aceptar", null);

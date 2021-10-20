@@ -1,4 +1,4 @@
-package main.java.interfaces.nati.paneles;
+package main.java.interfaces.CU02;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,13 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import main.java.enmus.TipoMensaje;
-import main.java.interfaces.julio.frames.FrameAltaPasajero;
-import main.java.interfaces.julio.frames.FrameMenuPrincipal;
-import main.java.interfaces.julio.otros.Mensaje;
-import main.java.interfaces.julio.otros.PanelPermiteMensajes;
-import main.java.interfaces.julio.otros.RoundedBorder;
-import main.java.interfaces.julio.paneles.PanelAltaPasajeroDatos;
-import main.java.interfaces.nati.frames.FrameGestionarPasajero;
+import main.java.interfaces.CU11.FrameAltaPasajero;
+import main.java.interfaces.CU11.PanelAltaPasajeroDatos;
+import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.clasesExtra.Mensaje;
+import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
+import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensajes{
 	// en este panel estan los botones y los dos otros paneles

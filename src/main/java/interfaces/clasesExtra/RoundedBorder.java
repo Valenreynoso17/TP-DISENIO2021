@@ -1,4 +1,4 @@
-package main.java.interfaces.julio.otros;
+package main.java.interfaces.clasesExtra;
 
 import java.awt.Color;
 import java.awt.Component;

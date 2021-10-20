@@ -1,4 +1,4 @@
-package main.java.interfaces.julio.otros;
+package main.java.interfaces.clasesExtra;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -84,7 +84,12 @@ public class Mensaje extends JFrame{
 		botonDerecho.setFont(fuenteBoton);
 		botonDerecho.setBorder(bordeBoton);
 		botonDerecho.setBackground(Color.decode("#E0E0E0"));
-		botonDerecho.setPreferredSize(new Dimension(100, 35));
+		if(textoOpcionAceptar.length() > 10) {	//Por ejemplo, si el texto es "Aceptar igualmente" necesita que el boton cubra todo el texto
+			botonDerecho.setPreferredSize(new Dimension(textoOpcionAceptar.length()+140, 35));
+		}
+		else {
+			botonDerecho.setPreferredSize(new Dimension(100, 35));
+		}
 		botonDerecho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 

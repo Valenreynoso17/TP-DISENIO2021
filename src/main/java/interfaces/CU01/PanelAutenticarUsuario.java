@@ -1,4 +1,4 @@
-package main.java.interfaces.julio.paneles;
+package main.java.interfaces.CU01;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,12 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import main.java.enmus.TipoMensaje;
-import main.java.interfaces.julio.frames.FrameAutenticarUsuario;
-import main.java.interfaces.julio.frames.FrameMenuPrincipal;
-import main.java.interfaces.julio.otros.Mensaje;
-import main.java.interfaces.julio.otros.PanelPermiteMensajes;
-import main.java.interfaces.julio.otros.RoundedBorder;
-import main.java.interfaces.nati.frames.FrameGestionarPasajero;
+import main.java.interfaces.CU02.FrameGestionarPasajero;
+import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.clasesExtra.Mensaje;
+import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
+import main.java.interfaces.clasesExtra.RoundedBorder;
 
 
 
@@ -97,12 +96,12 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 		iniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if(panelAutenticarUsuarioGroupBox.validar()) {
+				if(panelAutenticarUsuarioGroupBox.inputEsNoVacio()) {
 					frame.dispose();
 					frameSiguiente = new FrameMenuPrincipal();
 				}
 				else {
-					mensajeInputInvalido.mostrar(getPanel(), frame);
+					//mensajeInputInvalido.mostrar(getPanel(), frame);
 				}
 			}
 		});

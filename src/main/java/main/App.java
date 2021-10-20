@@ -3,17 +3,17 @@ package main.java.main;
 import javax.swing.UIManager;
 
 import main.java.gestores.GestorPaisProvincia;
-import main.java.interfaces.julio.frames.FrameAltaPasajero;
-import main.java.interfaces.julio.frames.FrameAutenticarUsuario;
-import main.java.interfaces.nati.frames.FrameGestionarPasajero;
+import main.java.interfaces.CU01.FrameAutenticarUsuario;
+import main.java.interfaces.CU02.FrameGestionarPasajero;
+import main.java.interfaces.CU11.FrameAltaPasajero;
 
 public class App {
 
 	public static void main(String[] args) {
 
-			//FrameAltaPasajero f = new FrameAltaPasajero();
+			FrameAltaPasajero f = new FrameAltaPasajero();
 
-			FrameAutenticarUsuario fAU = new FrameAutenticarUsuario();
+			//FrameAutenticarUsuario fAU = new FrameAutenticarUsuario();
 		
 			//FrameGestionarPasajero fGP = new FrameGestionarPasajero();
 		

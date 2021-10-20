@@ -1,20 +1,18 @@
-package main.java.interfaces.julio.frames;
+package main.java.interfaces.CU02;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import main.java.interfaces.julio.paneles.PanelAltaPasajero;
-
-public class FrameAltaPasajero extends JFrame {
+public class FrameGestionarPasajero extends JFrame {
 
 	private JPanel contentPane;
 
-	public FrameAltaPasajero() {
+	public FrameGestionarPasajero() {
 		super("Sistema Hotel Premier");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 600);
-		contentPane = new PanelAltaPasajero(this);
+		contentPane = new PanelGestionarPasajero(this);
 		setContentPane(contentPane);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
