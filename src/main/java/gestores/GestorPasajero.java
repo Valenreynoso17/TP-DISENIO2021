@@ -3,12 +3,20 @@ package main.java.gestores;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD
 import javax.swing.SortOrder;
 
 import main.java.clases.Pasajero;
 import main.java.daos.PasajeroDAO;
 import main.java.dtos.PasajeroDTO;
 import main.java.enmus.ColumnaBuscarPasajeros;
+=======
+import main.java.clases.Direccion;
+import main.java.clases.Pasajero;
+import main.java.daos.PasajeroDAO;
+import main.java.dtos.PasajeroDTO;
+import main.java.excepciones.DocumentoRepetidoException;
+>>>>>>> bbd78af994e24d8b7a147326b4008c5b1b382ebe
 import main.java.excepciones.InputInvalidaException;
 import main.java.postgreImpl.PasajeroPostgreSQLImpl;
 
@@ -16,6 +24,11 @@ public class GestorPasajero {
 	private static GestorPasajero instance;
 	
 	private PasajeroDAO pasajeroDAO;
+<<<<<<< HEAD
+=======
+	private GestorDireccion gestorDireccion; // No se si deberia instanciarse en el constructor y sólo cuando
+											 // se necesita, por ahora elegí la segunda
+>>>>>>> bbd78af994e24d8b7a147326b4008c5b1b382ebe
 	
 	private GestorPasajero() {
 		pasajeroDAO = new PasajeroPostgreSQLImpl();
@@ -70,6 +83,32 @@ public class GestorPasajero {
 		pasajeroDTO.setNumeroDoc(pasajero.getDocumento());
 		
 		return pasajeroDTO;
+	}
+	
+	public void validarDatosPasajero(PasajeroDTO pasajeroDTO) throws DocumentoRepetidoException {
+		
+		// En principio los datos ya tendrían que ser válidos porque se validaron en la interfaz
+		
+		// Ver si ya existe en el sistema
+		List<Pasajero> listaPasajeros = pasajeroDAO.buscarPorDocumento(pasajeroDTO.getTipoDocumento(), pasajeroDTO.getNumeroDoc());
+		
+		// Ojo con el isEmpty, cpz tendría que ser == null
+		if (!listaPasajeros.isEmpty()) {
+			throw new DocumentoRepetidoException();
+		}
+		
+		
+	}
+	
+	public void crearPasajero(PasajeroDTO pasajeroDTO) {
+		
+		gestorDireccion = GestorDireccion.getInstance();
+		
+		Direccion direccion = gestorDireccion.crearDireccion(pasajeroDTO.getDireccion());
+		
+		Pasajero pasajero = new Pasajero(pasajeroDTO, direccion);
+		
+		pasajeroDAO.guardar(pasajero);
 	}
 	
 	
