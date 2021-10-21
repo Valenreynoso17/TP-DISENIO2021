@@ -7,6 +7,7 @@ import javax.persistence.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.engine.jdbc.env.spi.NameQualifierSupport;
 
+import main.java.dtos.PasajeroDTO;
 import main.java.enmus.PosicionFrenteIva;
 import main.java.enmus.TipoDocumento;
 
@@ -76,6 +77,23 @@ public class Pasajero {
 		this.cuit = cuit;
 		this.posicionFrenteIva = posicionFrenteIva;
 		this.nacionalidad = nacionalidad;
+		this.direccion = direccion;
+	}
+	
+	public Pasajero(PasajeroDTO pasajeroDTO, Direccion direccion) {
+		super();
+		this.id = pasajeroDTO.getId();
+		this.apellido = pasajeroDTO.getApellido();
+		this.nombre = pasajeroDTO.getNombre();
+		this.tipoDocumento = pasajeroDTO.getTipoDocumento();
+		this.documento = pasajeroDTO.getNumeroDoc();
+//		this.fechaNacimiento = pasajeroDTO
+//		this.email = pasajeroDTO.get
+//		this.ocupacion = pasajeroDTO.ge
+//		this.telefono = pasajeroDTO.get
+//		this.cuit = pasajeroDTO.get
+//		this.posicionFrenteIva = pasajeroDTO.getp
+//		this.nacionalidad = pasajeroDTO.get
 		this.direccion = direccion;
 	}
 	
