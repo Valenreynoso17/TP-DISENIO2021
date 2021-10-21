@@ -15,7 +15,10 @@ public class ProvinciaDTO {
 		super();
 	}
 	
-	
+	public String toString() {
+		
+		return this.nombre;
+	}
 
 	public Integer getId() {
 		return id;
