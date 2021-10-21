@@ -916,19 +916,14 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	
 	public PasajeroDTO crearDTOS() {
 		
-		/*TODO: 
-		 * Ver el tema del id localidad
-		 * Aca cpz se deberian pasar todos los datos, porque sino dsp no se cuando los pasas
-		 */
-		
 		DireccionDTO direccionDto = new DireccionDTO(null,direccion.getText(), departamento.getText(), piso.getText(), ((LocalidadDTO) localidad.getSelectedItem()).getId(), Integer.valueOf(codigoPostal.getText()));
 		
-//		PasajeroDTO pasajeroDto = new PasajeroDTO(null, apellido.getText(), nombre.getText(), TipoDocumento.valueOf(tipoDocumento.getSelectedItem().toString()), numeroDocumento.getText(), direccionDto, null); 
+		PasajeroDTO pasajeroDto = new PasajeroDTO(null, apellido.getText(), nombre.getText(), TipoDocumento.valueOf(tipoDocumento.getSelectedItem().toString()), numeroDocumento.getText(), cuit.getText(), PosicionFrenteIva.valueOf(posicionIVA.getSelectedItem().toString().replace(" ", "_")), email.getText(), telefono.getText(), null, ocupacion.getText(), direccionDto, ((PaisDTO) nacionalidad.getSelectedItem()).getId()); 
 		
-		return null;
+		return pasajeroDto;
 	}
 }
-//
+
 //	private void inputNoEsVacia() throws InputVacioException{
 //		
 //		if(apellido.getText().isEmpty() || nombre.getText().isEmpty()) { //Faltan los otros campos
