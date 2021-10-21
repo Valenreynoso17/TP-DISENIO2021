@@ -860,7 +860,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		 * Aca cpz se deberian pasar todos los datos, porque sino dsp no se cuando los pasas
 		 */
 		
-		DireccionDTO direccionDto = new DireccionDTO(null,direccion.getText(), departamento.getText(), piso.getText(), null, Integer.valueOf(codigoPostal.getText()));
+		DireccionDTO direccionDto = new DireccionDTO(null,direccion.getText(), departamento.getText(), piso.getText(), localidad.getSelectedItem().getId(), Integer.valueOf(codigoPostal.getText()));
 		
 		PasajeroDTO pasajeroDto = new PasajeroDTO(null, apellido.getText(), nombre.getText(), TipoDocumento.valueOf(tipoDocumento.getSelectedItem().toString()), numeroDocumento.getText(), direccionDto, null); 
 		

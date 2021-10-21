@@ -87,7 +87,7 @@ public class Pasajero {
 		this.nombre = pasajeroDTO.getNombre();
 		this.tipoDocumento = pasajeroDTO.getTipoDocumento();
 		this.documento = pasajeroDTO.getNumeroDoc();
-//		this.fechaNacimiento = pasajeroDTO
+//		this.fechaNacimiento = pasajeroDTO.getfe
 //		this.email = pasajeroDTO.get
 //		this.ocupacion = pasajeroDTO.ge
 //		this.telefono = pasajeroDTO.get
