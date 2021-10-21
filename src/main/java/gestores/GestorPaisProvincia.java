@@ -70,6 +70,10 @@ public class GestorPaisProvincia {
 		return localidadesDTO;
 	}
 	
+	public Localidad buscarLocalidadPorID(Integer idLocalidad) {
+		return localidadDAO.buscar(idLocalidad);
+	}
+	
 	// Crea un paisDTO a partir de un pais
 	private PaisDTO crearPaisDTO(Pais pais) {
 		PaisDTO dto = new PaisDTO();

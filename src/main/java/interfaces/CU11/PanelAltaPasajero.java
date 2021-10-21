@@ -12,7 +12,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import main.java.dtos.DireccionDTO;
+import main.java.dtos.PasajeroDTO;
 import main.java.enmus.TipoMensaje;
+import main.java.excepciones.DocumentoRepetidoException;
+import main.java.gestores.GestorPasajero;
 import main.java.interfaces.CU02.FrameGestionarPasajero;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
@@ -93,7 +97,30 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 					
 					if(panelDarAltaPasajero.inputTieneFormatoValido()) {
 						
-						mensajePasajeroCreado.mostrar(getPanel(), frame);
+						PasajeroDTO pasajeroDTO = panelDarAltaPasajero.crearDTOS();
+						
+						GestorPasajero gestorPasajero = GestorPasajero.getInstance();
+						
+						try {
+							gestorPasajero.validarDatosPasajero(pasajeroDTO);
+							
+							// Cpz aca se podría recuper el resto de datos del pasajero
+							gestorPasajero.crearPasajero(pasajeroDTO);
+							
+							mensajePasajeroCreado.mostrar(getPanel(), frame);
+						} catch (DocumentoRepetidoException e1) {
+							
+							// Informar que un pasajero con ese dni ya existe
+							
+							// Elección AceptarIgualmente/Cancelar
+//							if(aceptarIgualmente) {
+//								gestorPasajero.crearPasajero(pasajeroDTO);
+//								
+//								mensajePasajeroCreado.mostrar(getPanel(), frame);
+//							}
+						}
+						
+						
 					}	
 				}
 					
