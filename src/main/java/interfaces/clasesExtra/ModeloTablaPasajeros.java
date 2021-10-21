@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import main.java.clases.Pasajero;
-import main.java.enmus.TipoDocumento;
+import main.java.enums.TipoDocumento;
 
 public class ModeloTablaPasajeros extends DefaultTableModel{
 

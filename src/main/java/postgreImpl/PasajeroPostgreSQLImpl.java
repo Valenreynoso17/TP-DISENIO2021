@@ -11,8 +11,8 @@ import org.hibernate.SessionFactory;
 import main.java.clases.Pasajero;
 import main.java.daos.PasajeroDAO;
 import main.java.dtos.PasajeroDTO;
-import main.java.enmus.ColumnaBuscarPasajeros;
-import main.java.enmus.TipoDocumento;
+import main.java.enums.ColumnaBuscarPasajeros;
+import main.java.enums.TipoDocumento;
 
 public class PasajeroPostgreSQLImpl implements PasajeroDAO {
 	private SessionFactory sessionFactory;

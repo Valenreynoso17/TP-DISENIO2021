@@ -1,4 +1,4 @@
-package main.java.enmus;
+package main.java.enums;
 
 public enum ColumnaBuscarPasajeros {
 	APELLIDO("apellido"), NOMBRE("nombre"), TIPO_DOCUMENTO("tipoDocumento"), NUMERO_DOCUMENTO("documento");

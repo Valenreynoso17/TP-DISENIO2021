@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import main.java.enmus.TipoMensaje;
+import main.java.enums.TipoMensaje;
 import main.java.interfaces.CU11.FrameAltaPasajero;
 import main.java.interfaces.CU11.PanelAltaPasajeroDatos;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
