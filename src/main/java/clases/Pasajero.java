@@ -8,8 +8,8 @@ import org.hibernate.annotations.Type;
 import org.hibernate.engine.jdbc.env.spi.NameQualifierSupport;
 
 import main.java.dtos.PasajeroDTO;
-import main.java.enmus.PosicionFrenteIva;
-import main.java.enmus.TipoDocumento;
+import main.java.enums.PosicionFrenteIva;
+import main.java.enums.TipoDocumento;
 
 @Entity
 @Table(name="disenio.pasajero")
@@ -87,7 +87,7 @@ public class Pasajero {
 		this.nombre = pasajeroDTO.getNombre();
 		this.tipoDocumento = pasajeroDTO.getTipoDocumento();
 		this.documento = pasajeroDTO.getNumeroDoc();
-//		this.fechaNacimiento = pasajeroDTO
+//		this.fechaNacimiento = pasajeroDTO.getfe
 //		this.email = pasajeroDTO.get
 //		this.ocupacion = pasajeroDTO.ge
 //		this.telefono = pasajeroDTO.get

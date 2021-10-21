@@ -1,4 +1,4 @@
-package main.java.enmus;
+package main.java.enums;
 
 public enum PosicionFrenteIva {
 	CONSUMIDOR_FINAL, RESPONSABLE_INSCRIPTO
