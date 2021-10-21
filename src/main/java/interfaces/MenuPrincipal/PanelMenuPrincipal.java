@@ -13,7 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import main.java.enmus.TipoMensaje;
+import main.java.enums.TipoMensaje;
 import main.java.interfaces.CU01.FrameAutenticarUsuario;
 import main.java.interfaces.CU01.PanelAutenticarUsuarioGroupBox;
 import main.java.interfaces.CU02.FrameGestionarPasajero;

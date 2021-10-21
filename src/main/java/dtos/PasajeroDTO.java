@@ -1,6 +1,6 @@
 package main.java.dtos;
 
-import main.java.enmus.TipoDocumento;
+import main.java.enums.TipoDocumento;
 
 public class PasajeroDTO {
 	private Integer id;
