@@ -29,9 +29,6 @@ import main.java.dtos.PaisDTO;
 import main.java.dtos.PasajeroDTO;
 
 import main.java.dtos.ProvinciaDTO;
-import main.java.enmus.PosicionFrenteIva;
-import main.java.enmus.TipoDocumento;
-import main.java.enmus.TipoMensaje;
 
 import main.java.enums.PosicionFrenteIva;
 import main.java.enums.TipoDocumento;
@@ -924,11 +921,11 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		 * Aca cpz se deberian pasar todos los datos, porque sino dsp no se cuando los pasas
 		 */
 		
-		DireccionDTO direccionDto = new DireccionDTO(null,direccion.getText(), departamento.getText(), piso.getText(), localidad.getSelectedItem().getId(), Integer.valueOf(codigoPostal.getText()));
+		DireccionDTO direccionDto = new DireccionDTO(null,direccion.getText(), departamento.getText(), piso.getText(), ((LocalidadDTO) localidad.getSelectedItem()).getId(), Integer.valueOf(codigoPostal.getText()));
 		
-		PasajeroDTO pasajeroDto = new PasajeroDTO(null, apellido.getText(), nombre.getText(), TipoDocumento.valueOf(tipoDocumento.getSelectedItem().toString()), numeroDocumento.getText(), direccionDto, null); 
+//		PasajeroDTO pasajeroDto = new PasajeroDTO(null, apellido.getText(), nombre.getText(), TipoDocumento.valueOf(tipoDocumento.getSelectedItem().toString()), numeroDocumento.getText(), direccionDto, null); 
 		
-		return pasajeroDto;
+		return null;
 	}
 }
 //

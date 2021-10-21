@@ -1,10 +1,9 @@
 package main.java.dtos;
 
-
 import java.time.LocalDate;
 
-import main.java.enmus.PosicionFrenteIva;
-import main.java.enmus.TipoDocumento;
+import main.java.enums.PosicionFrenteIva;
+import main.java.enums.TipoDocumento;
 
 public class PasajeroDTO {
 	private Integer id;
