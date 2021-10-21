@@ -1,4 +1,4 @@
-package main.java.interfaces.nati.paneles;
+package main.java.interfaces.CU02;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,9 +24,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import main.java.interfaces.julio.otros.RoundedBorder;
-import main.java.interfaces.nati.frames.FrameGestionarPasajero;
-import main.java.interfaces.nati.otros.ModeloTablaPasajeros;
+import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
+import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelGestionarPasajeroTabla extends JPanel{
 

@@ -1,4 +1,4 @@
-package main.java.interfaces.julio.paneles;
+package main.java.interfaces.MenuPrincipal;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,13 +13,16 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import main.java.interfaces.julio.otros.*;
-import main.java.interfaces.nati.frames.FrameGestionarPasajero;
-import main.java.interfaces.julio.frames.FrameAutenticarUsuario;
-import main.java.interfaces.julio.frames.FrameMenuPrincipal;
+import main.java.enmus.TipoMensaje;
+import main.java.interfaces.CU01.FrameAutenticarUsuario;
+import main.java.interfaces.CU01.PanelAutenticarUsuarioGroupBox;
+import main.java.interfaces.CU02.FrameGestionarPasajero;
+import main.java.interfaces.clasesExtra.Mensaje;
+import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
+import main.java.interfaces.clasesExtra.RoundedBorder;
 
 
-public class PanelMenuPrincipal extends JPanel{
+public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 	
 	private PanelAutenticarUsuarioGroupBox panelAutenticarUsuarioGroupBox = new PanelAutenticarUsuarioGroupBox();
 	
@@ -38,11 +41,25 @@ public class PanelMenuPrincipal extends JPanel{
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	private RoundedBorder bordeSalir = new RoundedBorder(10, Color.DARK_GRAY);
+	
+	private String textoMensajeCerrarSesion = "<html><p>¿Está seguro que desea cerrar sesión? Deberá volver a inciar sesión.</p><html>";
+	private Mensaje mensajeCerrarSesion = new Mensaje(1, textoMensajeCerrarSesion, TipoMensaje.CONFIRMACION, "Si", "No");
+	
+	private String textoMensajeEtapa8 = "<html><p>Esperar a la etapa 8.</p><html>";
+	private Mensaje mensajeEtapa8 = new Mensaje(2, textoMensajeEtapa8, TipoMensaje.ERROR, "Aceptar", null);
+	
+	private String textoMensajeProximamente = "<html><p>Próximamente...</p><html>";
+	private Mensaje mensajeProximamente = new Mensaje(3, textoMensajeProximamente, TipoMensaje.ERROR, "Aceptar", null);
+	
+
 
 	private FrameAutenticarUsuario frameAnterior;
+	private FrameMenuPrincipal frameActual;
 	private FrameGestionarPasajero frameGestionarPasajero;
 	
 	public PanelMenuPrincipal(final FrameMenuPrincipal frame) {
+		
+		this.frameActual = frame;
 		
 		this.setBackground(Color.white);
 		
@@ -68,7 +85,6 @@ public class PanelMenuPrincipal extends JPanel{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//Supongamos que no te muestre un mensaje de confirmación
 				frame.dispose();
 				frameGestionarPasajero = new FrameGestionarPasajero();
 			}
@@ -82,6 +98,12 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				mensajeProximamente.mostrar(getPanel(), frame);
+			}
+		});
 		c.anchor = GridBagConstraints.WEST; c.insets = der;
 			c.gridx = 1; c.gridy = 1;
 		this.add(button, c);
@@ -91,6 +113,12 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				mensajeEtapa8.mostrar(getPanel(), frame);
+			}
+		});
 		c.anchor = GridBagConstraints.EAST; c.insets = izq;
 			c.gridx = 0; c.gridy = 2;
 		this.add(button, c);
@@ -98,6 +126,12 @@ public class PanelMenuPrincipal extends JPanel{
 		button = new JButton("Ocupar Habitación");
 		button.setFont(fuenteBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				mensajeEtapa8.mostrar(getPanel(), frame);
+			}
+		});
 		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
 		c.anchor = GridBagConstraints.WEST; c.insets = der;
@@ -109,6 +143,12 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				mensajeEtapa8.mostrar(getPanel(), frame);
+			}
+		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
 			c.gridx = 0; c.gridy = 3;
 		this.add(button, c);
@@ -118,6 +158,12 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				mensajeEtapa8.mostrar(getPanel(), frame);
+			}
+		});
 		c.anchor = GridBagConstraints.WEST;	c.insets = der;
 			c.gridx = 1; c.gridy = 3;
 		this.add(button, c);
@@ -127,6 +173,12 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setBorder(bordeBoton);
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				mensajeEtapa8.mostrar(getPanel(), frame);
+			}
+		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
 			c.gridx = 0; c.gridy = 4;
 		this.add(button, c);
@@ -136,6 +188,12 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBorder(bordeBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				mensajeProximamente.mostrar(getPanel(), frame);
+			}
+		});
 		c.anchor = GridBagConstraints.WEST;	c.insets = der;
 			c.gridx = 1; c.gridy = 4;
 		this.add(button, c);
@@ -148,9 +206,7 @@ public class PanelMenuPrincipal extends JPanel{
 		cerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//Supongamos que no te muestre un mensaje de confirmación
-				frame.dispose();
-				frameAnterior = new FrameAutenticarUsuario();
+				mensajeCerrarSesion.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izqF;
@@ -162,8 +218,41 @@ public class PanelMenuPrincipal extends JPanel{
 		button.setBorder(bordeBoton);
 		button.setBackground(Color.decode("#E0E0E0"));
 		button.setPreferredSize(new Dimension(350, 40));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				mensajeEtapa8.mostrar(getPanel(), frame);
+			}
+		});
 		c.anchor = GridBagConstraints.WEST; c.insets = derF;
 			c.gridx = 1; c.gridy = 5;
 		this.add(button, c);
+	}
+	
+	public PanelPermiteMensajes getPanel() {
+		return this;
+	}
+	
+	public void confirmoElMensaje(Integer idMensaje) {
+		
+		switch(idMensaje) {
+		case 1:	//Si cancela, vuelve a AutenticarUsuario
+			frameActual.dispose();
+			frameAnterior = new FrameAutenticarUsuario();	
+			break;
+		case 2:	//No pasa nada
+
+			break;
+		case 3:	//No pasa nada
+
+			break;		
+		}
+		
+
+	}
+
+	public void confirmoCancelar(Integer idMensaje) {
+		
+		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
 	}
 }

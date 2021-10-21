@@ -1,4 +1,4 @@
-package main.java.interfaces.nati.otros;
+package main.java.interfaces.clasesExtra;
 
 import java.time.LocalTime;
 import java.util.List;

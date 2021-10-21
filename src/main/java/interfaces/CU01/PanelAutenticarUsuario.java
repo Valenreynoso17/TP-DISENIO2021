@@ -1,4 +1,4 @@
-package main.java.interfaces.julio.paneles;
+package main.java.interfaces.CU01;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -13,14 +14,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import main.java.enmus.TipoMensaje;
-import main.java.interfaces.julio.frames.FrameAutenticarUsuario;
-import main.java.interfaces.julio.frames.FrameMenuPrincipal;
-import main.java.interfaces.julio.otros.Mensaje;
-import main.java.interfaces.julio.otros.RoundedBorder;
+import main.java.interfaces.CU02.FrameGestionarPasajero;
+import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.clasesExtra.Mensaje;
+import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
+import main.java.interfaces.clasesExtra.RoundedBorder;
 
 
 
-public class PanelAutenticarUsuario extends JPanel{
+public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensajes{
 	
 	private PanelAutenticarUsuarioGroupBox panelAutenticarUsuarioGroupBox = new PanelAutenticarUsuarioGroupBox();
 	
@@ -29,14 +31,23 @@ public class PanelAutenticarUsuario extends JPanel{
 	
 	private JLabel label;
 	
+	private String textoMensajeSalir = "<html><p>¿Está seguro que desea salir del programa?</p><html>";
+	private Mensaje mensajeSalir = new Mensaje(1, textoMensajeSalir, TipoMensaje.CONFIRMACION, "Si", "No");
+	
+	private String textoMensajeInputInvalido = "<html><p>La contraseña y/o el nombre ingresados son inválidos. Por favor, vuelva a ingresarlos.</p><html>";
+	private Mensaje mensajeInputInvalido = new Mensaje(2, textoMensajeInputInvalido, TipoMensaje.ERROR, "Aceptar", null);
+	
 	private Font fuenteTitulo = new Font("SourceSansPro", Font.PLAIN, 46);	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
+	private FrameAutenticarUsuario frameActual;
 	private FrameMenuPrincipal frameSiguiente;
 	
 	public PanelAutenticarUsuario(final FrameAutenticarUsuario frame) {
+		
+		this.frameActual = frame;
 		
 		this.setBackground(Color.white);
 		
@@ -69,11 +80,7 @@ public class PanelAutenticarUsuario extends JPanel{
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				String pregunta = "<html><p>¿Realmente quiere salir?</p><html>";
-				//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
-				Mensaje m1 = new Mensaje(frame, TipoMensaje.ERROR, pregunta, "Aceptar", "Cancelar");
-				//frame.dispose();
+				mensajeSalir.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.WEST;
@@ -89,22 +96,42 @@ public class PanelAutenticarUsuario extends JPanel{
 		iniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if(panelAutenticarUsuarioGroupBox.validar()) {
+				if(panelAutenticarUsuarioGroupBox.inputEsNoVacio()) {
 					frame.dispose();
 					frameSiguiente = new FrameMenuPrincipal();
 				}
 				else {
-					//String pregunta = "<html>Hola <br/> como <br/> andas<html>";
-					//String pregunta3 = "<html><p>¿Quiere hacer esto y lo otro y que se yo que de lo otro y otro y muchos otros y aaaa lo otroo eso era?</p><html>";
-					String pregunta = "<html><p>Escriba algo en usuario y algo en contraseña</p><html>";
-					//Mensaje m = new Mensaje(frame, TipoMensaje.ADVERTENCIA, pregunta3, "Aceptar", "Cancelar");
-					Mensaje m1 = new Mensaje(frame, TipoMensaje.ERROR, pregunta, "Aceptar", null);
+					//mensajeInputInvalido.mostrar(getPanel(), frame);
 				}
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;
 													c.gridx = 2; c.gridy = 2;
 													this.add(iniciarSesion, c);
+	}
+	
+	public PanelPermiteMensajes getPanel() {
+		return this;
+	}
+	
+	public void confirmoElMensaje(Integer idMensaje) {
+		
+		switch(idMensaje) {
+		case 1:	//Si sale, cierra el programa
+			frameActual.dispose();	
+			break;
+		case 2:	//No pasa nada
+			
+			break;		
+		}
+		
+
+	}
+
+
+	public void confirmoCancelar(Integer idMensaje) {
+
+		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
 	}
 
 }
