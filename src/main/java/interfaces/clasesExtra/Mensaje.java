@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import main.java.enmus.TipoMensaje;
+import main.java.enums.TipoMensaje;
 
 public class Mensaje extends JFrame{
 

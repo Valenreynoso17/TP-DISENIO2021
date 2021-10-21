@@ -8,8 +8,8 @@ import org.hibernate.annotations.Type;
 import org.hibernate.engine.jdbc.env.spi.NameQualifierSupport;
 
 import main.java.dtos.PasajeroDTO;
-import main.java.enmus.PosicionFrenteIva;
-import main.java.enmus.TipoDocumento;
+import main.java.enums.PosicionFrenteIva;
+import main.java.enums.TipoDocumento;
 
 @Entity
 @Table(name="disenio.pasajero")
