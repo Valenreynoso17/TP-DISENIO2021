@@ -8,9 +8,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -18,6 +20,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.MaskFormatter;
 
 import main.java.dtos.PaisDTO;
 import main.java.enmus.PosicionFrenteIva;
@@ -69,7 +72,9 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private JTextField apellido;					//Campos de texto
 	private JTextField nombre;
 	private JTextField numeroDocumento;
-	private JTextField fechaNacimiento;
+	private MaskFormatter formato; 
+	private JTextField fechaNacimiento ;
+	
 	private JTextField email;
 	private JTextField telefono;
 	private JTextField ocupacion;
@@ -270,6 +275,13 @@ public class PanelAltaPasajeroDatos extends JPanel{
 
 		fechaNacimiento = new JTextField();	fechaNacimiento.setFont(fuenteLabelCampo);	fechaNacimiento.setBorder(bordeCampo);
 		fondoJTextField = new TextPrompt("dd/mm/aaaa", fechaNacimiento); fondoJTextField.setForeground(Color.GRAY);
+	    
+	    try {
+	    	fechaNacimiento = new JFormattedTextField(new MaskFormatter("##'/##'/####"));
+	    	
+	    }catch (ParseException e) {
+	    	e.printStackTrace();
+	    }
 		c.gridx = 0; c.gridy = 5;	fechaNacimiento.setMinimumSize(dimensionCampo);	fechaNacimiento.setPreferredSize(dimensionCampo);	this.add(fechaNacimiento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
