@@ -32,15 +32,11 @@ public class PanelGestionarPasajeroTabla extends JPanel{
 
 	private JTable tabla;
 	private ModeloTablaPasajeros miModelo;
-	
 	private JLabel label;
-	
 	private Vector filaSeleccionada = null;
 	private Integer nroFilaSeleccionada;
 	private JScrollPane tableContainer;
-	
 	private Insets insetTabla = new Insets(15, 100, 15, 100);
-	
 	private Font fuenteLabelCampo =new Font("SourceSansPro", Font.PLAIN, 14);
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	
