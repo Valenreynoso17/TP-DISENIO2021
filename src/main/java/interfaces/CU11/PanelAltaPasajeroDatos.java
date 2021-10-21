@@ -267,7 +267,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 //			c.anchor = GridBagConstraints.SOUTHWEST;
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
-		
+
 		fechaNacimiento = new JTextField();	fechaNacimiento.setFont(fuenteLabelCampo);	fechaNacimiento.setBorder(bordeCampo);
 		fondoJTextField = new TextPrompt("dd/mm/aaaa", fechaNacimiento); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 0; c.gridy = 5;	fechaNacimiento.setMinimumSize(dimensionCampo);	fechaNacimiento.setPreferredSize(dimensionCampo);	this.add(fechaNacimiento, c);
@@ -610,6 +610,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			  public void insertUpdate(DocumentEvent e) {
 				  labelCuitVacio.setVisible(false);
 				  labelCuitFormatoInvalido.setVisible(false);
+//				  cuit.setText(cuit.getText()+"-");
 			  }
 		});
 		fondoJTextField = new TextPrompt("Ingrese los 11 dígitos del número de CUIT", cuit); fondoJTextField.setForeground(Color.GRAY);
