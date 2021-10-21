@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.engine.jdbc.env.spi.NameQualifierSupport;
+
 import main.java.enmus.PosicionFrenteIva;
 import main.java.enmus.TipoDocumento;
 
@@ -20,7 +23,8 @@ public class Pasajero {
 	@Column(name = "nombre", nullable = false, unique = false)
 	private String nombre;
 	
-	@Column(name = "tipoDoc", nullable = false, unique = false)
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipodoc", nullable = false, unique = false)
 	private TipoDocumento tipoDocumento;
 	
 	@Column(name = "documento", nullable = false, unique = false)
@@ -41,6 +45,7 @@ public class Pasajero {
 	@Column(name = "cuit", nullable = false, unique = false)
 	private String cuit;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "posicionFrenteIVA", nullable = false, unique = false)
 	private PosicionFrenteIva posicionFrenteIva;
 	
