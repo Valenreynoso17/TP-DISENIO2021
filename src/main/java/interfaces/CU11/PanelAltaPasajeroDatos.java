@@ -27,10 +27,16 @@ import main.java.dtos.DireccionDTO;
 import main.java.dtos.LocalidadDTO;
 import main.java.dtos.PaisDTO;
 import main.java.dtos.PasajeroDTO;
+
 import main.java.dtos.ProvinciaDTO;
 import main.java.enmus.PosicionFrenteIva;
 import main.java.enmus.TipoDocumento;
 import main.java.enmus.TipoMensaje;
+
+import main.java.enums.PosicionFrenteIva;
+import main.java.enums.TipoDocumento;
+import main.java.enums.TipoMensaje;
+
 import main.java.excepciones.InputVacioException;
 import main.java.gestores.GestorPaisProvincia;
 import main.java.interfaces.TextPrompt;
@@ -71,7 +77,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private JLabel labelCodigoPostalVacio;
 	private JLabel labelCuitVacio;
 	
-	private JLabel labelApellidoFormatoInvalido;	//Muestran mensaje "Formato inv·lido"
+	private JLabel labelApellidoFormatoInvalido;	//Muestran mensaje "Formato inv√°lido"
 	private JLabel labelNombreFormatoInvalido;
 	private JLabel labelNumeroDocumentoFormatoInvalido;
 	private JLabel labelEmailFormatoInvalido;
@@ -159,7 +165,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		labelApellidoVacio.setOpaque(true);	labelApellidoVacio.setBackground(Color.decode("#cc0000")); labelApellidoVacio.setForeground(Color.WHITE);
 		this.add(labelApellidoVacio, c); labelApellidoVacio.setVisible(false);	//Empieza invisible
 		
-		labelApellidoFormatoInvalido = new JLabel(" Formato inv·lido ");	labelApellidoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 0; 
+		labelApellidoFormatoInvalido = new JLabel(" Formato inv√°lido ");	labelApellidoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 0; 
 		labelApellidoFormatoInvalido.setOpaque(true);	labelApellidoFormatoInvalido.setBackground(Color.decode("#cc0000")); labelApellidoFormatoInvalido.setForeground(Color.WHITE);
 		this.add(labelApellidoFormatoInvalido, c); labelApellidoFormatoInvalido.setVisible(false);	//Empieza invisible
 
@@ -196,7 +202,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		labelNombreVacio.setOpaque(true);	labelNombreVacio.setBackground(Color.decode("#cc0000")); labelNombreVacio.setForeground(Color.WHITE);
 		this.add(labelNombreVacio, c); labelNombreVacio.setVisible(false);	//Empieza invisible
 		
-		labelNombreFormatoInvalido = new JLabel(" Formato inv·lido ");	labelNombreFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 0; 
+		labelNombreFormatoInvalido = new JLabel(" Formato inv√°lido ");	labelNombreFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 0; 
 		labelNombreFormatoInvalido.setOpaque(true);	labelNombreFormatoInvalido.setBackground(Color.decode("#cc0000")); labelNombreFormatoInvalido.setForeground(Color.WHITE);
 		this.add(labelNombreFormatoInvalido, c); labelNombreFormatoInvalido.setVisible(false);	//Empieza invisible
 	
@@ -237,7 +243,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("N˙mero de documento*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 2;	this.add(label, c);
+		label = new JLabel("N√∫mero de documento*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 2;	this.add(label, c);
 		
 			c.anchor = GridBagConstraints.CENTER; c.insets = insetLabelError;
 			
@@ -245,7 +251,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		labelNumeroDocumentoVacio.setOpaque(true);	labelNumeroDocumentoVacio.setBackground(Color.decode("#cc0000")); labelNumeroDocumentoVacio.setForeground(Color.WHITE);
 		this.add(labelNumeroDocumentoVacio, c); labelNumeroDocumentoVacio.setVisible(false);	//Empieza invisible
 		
-		labelNumeroDocumentoFormatoInvalido = new JLabel(" Formato inv·lido ");	labelNumeroDocumentoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 2; 
+		labelNumeroDocumentoFormatoInvalido = new JLabel(" Formato inv√°lido ");	labelNumeroDocumentoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 2; 
 		labelNumeroDocumentoFormatoInvalido.setOpaque(true);	labelNumeroDocumentoFormatoInvalido.setBackground(Color.decode("#cc0000")); labelNumeroDocumentoFormatoInvalido.setForeground(Color.WHITE);
 		this.add(labelNumeroDocumentoFormatoInvalido, c); labelNumeroDocumentoFormatoInvalido.setVisible(false);	//Empieza invisible
 	
@@ -268,7 +274,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 				  labelNumeroDocumentoFormatoInvalido.setVisible(false);
 			  }
 		});
-		fondoJTextField = new TextPrompt("Ingrese el n˙mero de documento", numeroDocumento); fondoJTextField.setForeground(Color.GRAY);
+		fondoJTextField = new TextPrompt("Ingrese el n√∫mero de documento", numeroDocumento); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 2; c.gridy = 3;	numeroDocumento.setMinimumSize(dimensionCampo);	numeroDocumento.setPreferredSize(dimensionCampo);	this.add(numeroDocumento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
@@ -307,7 +313,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		labelEmailVacio.setOpaque(true);	labelEmailVacio.setBackground(Color.decode("#cc0000")); labelEmailVacio.setForeground(Color.WHITE);
 		this.add(labelEmailVacio, c); labelEmailVacio.setVisible(false);	//Empieza invisible
 		
-		labelEmailFormatoInvalido = new JLabel(" Formato inv·lido ");	labelEmailFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 4; 
+		labelEmailFormatoInvalido = new JLabel(" Formato inv√°lido ");	labelEmailFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 4; 
 		labelEmailFormatoInvalido.setOpaque(true);	labelEmailFormatoInvalido.setBackground(Color.decode("#cc0000")); labelEmailFormatoInvalido.setForeground(Color.WHITE);
 		this.add(labelEmailFormatoInvalido, c); labelEmailFormatoInvalido.setVisible(false);	//Empieza invisible
 	
@@ -330,12 +336,12 @@ public class PanelAltaPasajeroDatos extends JPanel{
 				  labelEmailFormatoInvalido.setVisible(false);
 			  }
 		});
-		fondoJTextField = new TextPrompt("Ingrese el correo electrÛnico", email); fondoJTextField.setForeground(Color.GRAY);
+		fondoJTextField = new TextPrompt("Ingrese el correo electr√≥nico", email); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 2; c.gridy = 5;	email.setMinimumSize(dimensionCampo);	email.setPreferredSize(dimensionCampo);	this.add(email, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("TelÈfono*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 6;	this.add(label, c);
+		label = new JLabel("Tel√©fono*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 6;	this.add(label, c);
 		
 			c.anchor = GridBagConstraints.CENTER; c.insets = insetLabelError;
 			
@@ -343,7 +349,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		labelTelefonoVacio.setOpaque(true);	labelTelefonoVacio.setBackground(Color.decode("#cc0000")); labelTelefonoVacio.setForeground(Color.WHITE);
 		this.add(labelTelefonoVacio, c); labelTelefonoVacio.setVisible(false);	//Empieza invisible
 		
-		labelTelefonoFormatoInvalido = new JLabel(" Formato inv·lido ");	labelTelefonoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 6; 
+		labelTelefonoFormatoInvalido = new JLabel(" Formato inv√°lido ");	labelTelefonoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 6; 
 		labelTelefonoFormatoInvalido.setOpaque(true);	labelTelefonoFormatoInvalido.setBackground(Color.decode("#cc0000")); labelTelefonoFormatoInvalido.setForeground(Color.WHITE);
 		this.add(labelTelefonoFormatoInvalido, c); labelTelefonoFormatoInvalido.setVisible(false);	//Empieza invisible
 	
@@ -377,12 +383,12 @@ public class PanelAltaPasajeroDatos extends JPanel{
 				  labelTelefonoFormatoInvalido.setVisible(false);
 			  }
 		});
-		fondoJTextField = new TextPrompt("Ingrese n˙mero de telÈfono", telefono); fondoJTextField.setForeground(Color.GRAY);
+		fondoJTextField = new TextPrompt("Ingrese n√∫mero de tel√©fono", telefono); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 0; c.gridy = 7;	telefono.setMinimumSize(dimensionCampo);	telefono.setPreferredSize(dimensionCampo);	this.add(telefono, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("OcupaciÛn*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 6;	this.add(label, c);
+		label = new JLabel("Ocupaci√≥n*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 6;	this.add(label, c);
 		
 			c.anchor = GridBagConstraints.CENTER; c.insets = insetLabelError;
 			
@@ -390,7 +396,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		labelOcupacionVacio.setOpaque(true);	labelOcupacionVacio.setBackground(Color.decode("#cc0000")); labelOcupacionVacio.setForeground(Color.WHITE);
 		this.add(labelOcupacionVacio, c); labelOcupacionVacio.setVisible(false);	//Empieza invisible
 		
-		labelOcupacionFormatoInvalido = new JLabel(" Formato inv·lido ");	labelOcupacionFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 6; 
+		labelOcupacionFormatoInvalido = new JLabel(" Formato inv√°lido ");	labelOcupacionFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 6; 
 		labelOcupacionFormatoInvalido.setOpaque(true);	labelOcupacionFormatoInvalido.setBackground(Color.decode("#cc0000")); labelOcupacionFormatoInvalido.setForeground(Color.WHITE);
 		this.add(labelOcupacionFormatoInvalido, c); labelOcupacionFormatoInvalido.setVisible(false);	//Empieza invisible
 	
@@ -413,12 +419,12 @@ public class PanelAltaPasajeroDatos extends JPanel{
 				  labelOcupacionFormatoInvalido.setVisible(false);
 			  }
 		});
-		fondoJTextField = new TextPrompt("Ingrese ocupaciÛn", ocupacion); fondoJTextField.setForeground(Color.GRAY);
+		fondoJTextField = new TextPrompt("Ingrese ocupaci√≥n", ocupacion); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 2; c.gridy = 7;	ocupacion.setMinimumSize(dimensionCampo);	ocupacion.setPreferredSize(dimensionCampo);	this.add(ocupacion, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("DirecciÛn*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 8;	this.add(label, c);
+		label = new JLabel("Direcci√≥n*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 8;	this.add(label, c);
 		
 			c.anchor = GridBagConstraints.CENTER; c.insets = insetLabelError;
 			
@@ -426,7 +432,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		labelDireccionVacio.setOpaque(true);	labelDireccionVacio.setBackground(Color.decode("#cc0000")); labelDireccionVacio.setForeground(Color.WHITE);
 		this.add(labelDireccionVacio, c); labelDireccionVacio.setVisible(false);	//Empieza invisible
 		
-		labelDireccionFormatoInvalido = new JLabel(" Formato inv·lido ");	labelDireccionFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 8; 
+		labelDireccionFormatoInvalido = new JLabel(" Formato inv√°lido ");	labelDireccionFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 8; 
 		labelDireccionFormatoInvalido.setOpaque(true);	labelDireccionFormatoInvalido.setBackground(Color.decode("#cc0000")); labelDireccionFormatoInvalido.setForeground(Color.WHITE);
 		this.add(labelDireccionFormatoInvalido, c); labelDireccionFormatoInvalido.setVisible(false);	//Empieza invisible
 	
@@ -449,7 +455,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 				  labelDireccionFormatoInvalido.setVisible(false);
 			  }
 		});
-		fondoJTextField = new TextPrompt("Ingrese el domicilio (calle y n˙mero)", direccion); fondoJTextField.setForeground(Color.GRAY);
+		fondoJTextField = new TextPrompt("Ingrese el domicilio (calle y n√∫mero)", direccion); fondoJTextField.setForeground(Color.GRAY);
 //		direccion.setPreferredSize(new Dimension(400,20));
 //		direccion.setMinimumSize(new Dimension(400,20));
 		c.gridx = 0; c.gridy = 9;	direccion.setMinimumSize(dimensionCampo);	direccion.setPreferredSize(dimensionCampo);	this.add(direccion, c);
@@ -499,7 +505,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 //		labelApellidoVacio.setOpaque(true);	labelApellidoVacio.setBackground(Color.decode("#cc0000")); labelApellidoVacio.setForeground(Color.WHITE);
 //		this.add(labelApellidoVacio, c); labelApellidoVacio.setVisible(false);	//Empieza invisible
 		
-		labelPisoFormatoInvalido = new JLabel(" Formato inv·lido ");	labelPisoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 8; 
+		labelPisoFormatoInvalido = new JLabel(" Formato inv√°lido ");	labelPisoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 8; 
 		labelPisoFormatoInvalido.setOpaque(true);	labelPisoFormatoInvalido.setBackground(Color.decode("#cc0000")); labelPisoFormatoInvalido.setForeground(Color.WHITE);
 		this.add(labelPisoFormatoInvalido, c); labelPisoFormatoInvalido.setVisible(false);	//Empieza invisible
 	
@@ -526,13 +532,13 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("PaÌs*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 10;	this.add(label, c);
+		label = new JLabel("Pa√≠s*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 10;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 
 		List<PaisDTO> paises = gestorPP.buscarPaises();
 		pais = new JComboBox<PaisDTO>(paises.toArray(new PaisDTO[paises.size()]));
-		pais.insertItemAt(null, 0); pais.setSelectedIndex(0); //Para que el primero estÈ vacÌo
+		pais.insertItemAt(null, 0); pais.setSelectedIndex(0); //Para que el primero est√© vac√≠o
 		pais.setFont(fuenteLabelCampo);	pais.setBackground(Color.white);	
 		c.gridx = 0; c.gridy = 11;	pais.setMinimumSize(dimensionCampo);	pais.setPreferredSize(dimensionCampo);
 //		pais.addItem("--Seleccione");	
@@ -572,7 +578,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabelDobleIzq; c.gridwidth = 1;
 		
-		label = new JLabel("CÛdigo postal*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 12;	this.add(label, c);
+		label = new JLabel("C√≥digo postal*");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 12;	this.add(label, c);
 		
 			c.anchor = GridBagConstraints.EAST; c.insets = insetLabelVacioCP;
 			
@@ -628,7 +634,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 		nacionalidad = new JComboBox<PaisDTO>(paises.toArray(new PaisDTO[paises.size()]));	//Misma lista que Pais
 		nacionalidad.setFont(fuenteLabelCampo);	nacionalidad.setBackground(Color.white);	
-		nacionalidad.insertItemAt(null, 0); nacionalidad.setSelectedIndex(0); //Para que el primero estÈ vacÌo
+		nacionalidad.insertItemAt(null, 0); nacionalidad.setSelectedIndex(0); //Para que el primero est√© vac√≠o
 		c.gridx = 2; c.gridy = 13;	nacionalidad.setMinimumSize(dimensionCampo);	nacionalidad.setPreferredSize(dimensionCampo);
 		this.add(nacionalidad, c);
 		
@@ -642,7 +648,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		labelCuitVacio.setOpaque(true);	labelCuitVacio.setBackground(Color.decode("#cc0000")); labelCuitVacio.setForeground(Color.WHITE);
 		this.add(labelCuitVacio, c); labelCuitVacio.setVisible(false);	//Empieza invisible
 		
-		labelCuitFormatoInvalido = new JLabel(" Formato inv·lido ");	labelCuitFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 14; 
+		labelCuitFormatoInvalido = new JLabel(" Formato inv√°lido ");	labelCuitFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 14; 
 		labelCuitFormatoInvalido.setOpaque(true);	labelCuitFormatoInvalido.setBackground(Color.decode("#cc0000")); labelCuitFormatoInvalido.setForeground(Color.WHITE);
 		this.add(labelCuitFormatoInvalido, c); labelCuitFormatoInvalido.setVisible(false);	//Empieza invisible
 	
@@ -673,12 +679,12 @@ public class PanelAltaPasajeroDatos extends JPanel{
 //				  cuit.setText(cuit.getText()+"-");
 			  }
 		});
-		fondoJTextField = new TextPrompt("Ingrese los 11 dÌgitos del n˙mero de CUIT", cuit); fondoJTextField.setForeground(Color.GRAY);
+		fondoJTextField = new TextPrompt("Ingrese los 11 d√≠gitos del n√∫mero de CUIT", cuit); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 0; c.gridy = 15;	cuit.setMinimumSize(dimensionCampo);	cuit.setPreferredSize(dimensionCampo);	this.add(cuit, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("PosiciÛn frente al IVA*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 14;	this.add(label, c);
+		label = new JLabel("Posici√≥n frente al IVA*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 14;	this.add(label, c);
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
@@ -799,7 +805,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	return resultado;
 	}
 
-	private boolean esValidoCuit(JTextField cuit2) {	//Para todos: Si es v·lido devuelve TRUE / Si NO es v·lido devuelve FALSE
+	private boolean esValidoCuit(JTextField cuit2) {	//Para todos: Si es v√°lido devuelve TRUE / Si NO es v√°lido devuelve FALSE
 		
 		if(cuit2.getText().length() > 13) {	//TODO: Validar
 			
@@ -881,7 +887,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 
 	private boolean esValidoNumeroDeDocumento(JTextField numeroDocumento2) {
 
-		if(numeroDocumento2.getText().length() > 15) {	//TODO: HabrÌa que validar el tema de que sean numeros? Y en un pasaporte?
+		if(numeroDocumento2.getText().length() > 15) {	//TODO: Habr√≠a que validar el tema de que sean numeros? Y en un pasaporte?
 			
 			return false;
 		}

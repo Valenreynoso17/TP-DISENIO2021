@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 import main.java.dtos.DireccionDTO;
 import main.java.dtos.PasajeroDTO;
-import main.java.enmus.TipoMensaje;
+import main.java.enums.TipoMensaje;
 import main.java.excepciones.DocumentoRepetidoException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.CU02.FrameGestionarPasajero;

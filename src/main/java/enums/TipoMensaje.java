@@ -1,4 +1,4 @@
-package main.java.enmus;
+package main.java.enums;
 
 public enum TipoMensaje {
 	ADVERTENCIA, CONFIRMACION, ERROR, EXITO
