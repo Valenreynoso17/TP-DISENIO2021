@@ -8,9 +8,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -18,6 +20,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.MaskFormatter;
 
 import main.java.dtos.PaisDTO;
 import main.java.enmus.PosicionFrenteIva;
@@ -43,6 +46,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private JComboBox posicionIVA;
 	
 	private JLabel label;
+	
+	private JFormattedTextField fechaNacimientoFormato;
 	
 	private JLabel labelApellidoVacio;				//Muestran mensaje "Campo incompleto"
 	private JLabel labelNombreVacio;
@@ -268,9 +273,17 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 
-		fechaNacimiento = new JTextField();	fechaNacimiento.setFont(fuenteLabelCampo);	fechaNacimiento.setBorder(bordeCampo);
+		//fechaNacimiento = new JTextField();
+		try {
+			fechaNacimiento = new JFormattedTextField(new MaskFormatter("##'/##'/####"));
+	    	
+	    }catch (ParseException e) {
+	    	e.printStackTrace();
+	    }
+		fechaNacimiento.setFont(fuenteLabelCampo);	fechaNacimiento.setBorder(bordeCampo);
 		fondoJTextField = new TextPrompt("dd/mm/aaaa", fechaNacimiento); fondoJTextField.setForeground(Color.GRAY);
-		c.gridx = 0; c.gridy = 5;	fechaNacimiento.setMinimumSize(dimensionCampo);	fechaNacimiento.setPreferredSize(dimensionCampo);	this.add(fechaNacimiento, c);
+		c.gridx = 0; c.gridy = 5;	fechaNacimiento.setMinimumSize(dimensionCampo);	fechaNacimiento.setPreferredSize(dimensionCampo);	
+		this.add(fechaNacimiento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -326,7 +339,14 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		telefono = new JTextField();	telefono.setFont(fuenteLabelCampo);	telefono.setBorder(bordeCampo);
+		//telefono = new JTextField();	
+		try {
+			telefono = new JFormattedTextField(new MaskFormatter("###'-#####'-########"));
+	    	
+	    }catch (ParseException e) {
+	    	e.printStackTrace();
+	    }
+		telefono.setFont(fuenteLabelCampo);	telefono.setBorder(bordeCampo);
 		telefono.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelTelefonoVacio.setVisible(false);
@@ -597,7 +617,14 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 
-		cuit = new JTextField();	cuit.setFont(fuenteLabelCampo);	cuit.setBorder(bordeCampo);
+		//cuit = new JTextField();	
+		try {
+			cuit = new JFormattedTextField(new MaskFormatter("##'-########'-#"));
+	    	
+	    }catch (ParseException e) {
+	    	e.printStackTrace();
+	    }
+		cuit.setFont(fuenteLabelCampo);	cuit.setBorder(bordeCampo);
 		cuit.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelCuitVacio.setVisible(false);
