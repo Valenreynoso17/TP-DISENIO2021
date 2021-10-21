@@ -3,20 +3,14 @@ package main.java.gestores;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
 import javax.swing.SortOrder;
 
 import main.java.clases.Pasajero;
 import main.java.daos.PasajeroDAO;
 import main.java.dtos.PasajeroDTO;
-import main.java.enmus.ColumnaBuscarPasajeros;
-=======
+import main.java.enums.ColumnaBuscarPasajeros;
 import main.java.clases.Direccion;
-import main.java.clases.Pasajero;
-import main.java.daos.PasajeroDAO;
-import main.java.dtos.PasajeroDTO;
 import main.java.excepciones.DocumentoRepetidoException;
->>>>>>> bbd78af994e24d8b7a147326b4008c5b1b382ebe
 import main.java.excepciones.InputInvalidaException;
 import main.java.postgreImpl.PasajeroPostgreSQLImpl;
 
@@ -24,11 +18,8 @@ public class GestorPasajero {
 	private static GestorPasajero instance;
 	
 	private PasajeroDAO pasajeroDAO;
-<<<<<<< HEAD
-=======
 	private GestorDireccion gestorDireccion; // No se si deberia instanciarse en el constructor y sólo cuando
 											 // se necesita, por ahora elegí la segunda
->>>>>>> bbd78af994e24d8b7a147326b4008c5b1b382ebe
 	
 	private GestorPasajero() {
 		pasajeroDAO = new PasajeroPostgreSQLImpl();

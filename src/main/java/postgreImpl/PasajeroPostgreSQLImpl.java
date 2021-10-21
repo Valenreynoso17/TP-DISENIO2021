@@ -78,12 +78,12 @@ public class PasajeroPostgreSQLImpl implements PasajeroDAO {
 		// Se setea el orden
 		switch (orden) {
 			case ASCENDING:
-				q.setParameter("ordenResultados", atributoOrden.getNombreAtributo() + " ASC");
-				System.out.println("p." + atributoOrden.getNombreAtributo() + " ASC");
+				q.setParameter("ordenResultados", "p." + atributoOrden.getNombreAtributo() + " ASC");
+				System.out.println(atributoOrden.getNombreAtributo() + " ASC");
 				break;
 			case DESCENDING:
-				q.setParameter("ordenResultados", atributoOrden.getNombreAtributo() + " DESC");
-				System.out.println("p." + atributoOrden.getNombreAtributo() + " DESC");
+				q.setParameter("ordenResultados", "p." + atributoOrden.getNombreAtributo() + " DESC");
+				System.out.println(atributoOrden.getNombreAtributo() + " DESC");
 				break;
 			default:
 				break;
