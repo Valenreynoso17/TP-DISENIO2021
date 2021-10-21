@@ -2,6 +2,8 @@ package main.java.clases;
 
 import javax.persistence.*;
 
+import main.java.dtos.DireccionDTO;
+
 @Entity
 @Table(name="disenio.direccion")
 public class Direccion {
@@ -9,17 +11,14 @@ public class Direccion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "calle", nullable = false, unique = false)
-	private String calle;
-	
-	@Column(name = "numero", nullable = false, unique = false)
-	private Integer numero;
+	@Column(name = "direcciondomicilio", nullable = false, unique = false)
+	private String direccionDomicilio;
 	
 	@Column(name = "departamento", nullable = false, unique = false)
-	private Integer departamento;
+	private String departamento;
 	
 	@Column(name = "piso", nullable = false, unique = false)
-	private Integer piso;
+	private String piso;
 	
 	@Column(name = "codigopostal", nullable = false, unique = false)
 	private Integer codigoPostal;
@@ -29,42 +28,44 @@ public class Direccion {
 	private Localidad localidad;
 	
 	
-	public Direccion(Integer id, String calle, Integer numero, Integer departamento, Integer piso, Integer codigoPostal,
+	public Direccion(Integer id, String direccionDomicilio, String departamento, String piso, Integer codigoPostal,
 			Localidad localidad) {
 		super();
 		this.id = id;
-		this.calle = calle;
-		this.numero = numero;
+		this.direccionDomicilio = direccionDomicilio;
 		this.departamento = departamento;
 		this.piso = piso;
 		this.codigoPostal = codigoPostal;
 		this.localidad = localidad;
 	}
 	
+	public Direccion(DireccionDTO direccionDTO) {
+		super();
+		this.id = direccionDTO.getId();
+		this.direccionDomicilio = direccionDTO.getDireccionDomicilio();
+		this.departamento = direccionDTO.getDepartamento();
+		this.piso = direccionDTO.getPiso();
+		this.codigoPostal = direccionDTO.getCodigoPostal();
+		this.localidad = null;		
+	}
 	
 	public Direccion() {
 		super();
 	}
 	
-
-
 	public Integer getId() {
 		return id;
 	}
 
-	public String getCalle() {
-		return calle;
+	public String getDireccionDomicilio() {
+		return direccionDomicilio;
 	}
 
-	public Integer getNumero() {
-		return numero;
-	}
-
-	public Integer getDepartamento() {
+	public String getDepartamento() {
 		return departamento;
 	}
 
-	public Integer getPiso() {
+	public String getPiso() {
 		return piso;
 	}
 
@@ -76,25 +77,19 @@ public class Direccion {
 		return localidad;
 	}
 
-	
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public void setCalle(String calle) {
-		this.calle = calle;
+	public void setDireccionDomicilio(String direccionDomicilio) {
+		this.direccionDomicilio = direccionDomicilio;
 	}
 
-	public void setNumero(Integer numero) {
-		this.numero = numero;
-	}
-
-	public void setDepartamento(Integer departamento) {
+	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 	}
 
-	public void setPiso(Integer piso) {
+	public void setPiso(String piso) {
 		this.piso = piso;
 	}
 

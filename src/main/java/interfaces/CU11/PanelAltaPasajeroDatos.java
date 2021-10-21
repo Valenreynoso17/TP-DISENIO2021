@@ -22,7 +22,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 
+import main.java.dtos.DireccionDTO;
 import main.java.dtos.PaisDTO;
+import main.java.dtos.PasajeroDTO;
 import main.java.enmus.PosicionFrenteIva;
 import main.java.enmus.TipoDocumento;
 import main.java.enmus.TipoMensaje;
@@ -861,6 +863,20 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	        }
 
 	    return resultado;
+	}
+	
+	public PasajeroDTO crearDTOS() {
+		
+		/*TODO: 
+		 * Ver el tema del id localidad
+		 * Aca cpz se deberian pasar todos los datos, porque sino dsp no se cuando los pasas
+		 */
+		
+		DireccionDTO direccionDto = new DireccionDTO(null,direccion.getText(), departamento.getText(), piso.getText(), null, Integer.valueOf(codigoPostal.getText()));
+		
+		PasajeroDTO pasajeroDto = new PasajeroDTO(null, apellido.getText(), nombre.getText(), TipoDocumento.valueOf(tipoDocumento.getSelectedItem().toString()), numeroDocumento.getText(), direccionDto, null); 
+		
+		return pasajeroDto;
 	}
 }
 //

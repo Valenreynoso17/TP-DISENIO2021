@@ -2,8 +2,7 @@ package main.java.dtos;
 
 public class DireccionDTO {
 	private Integer id;
-	private String calle;
-	private String numeroCalle;
+	private String direccionDomicilio;
 	private String departamento;
 	private String piso;
 	private Integer idLocalidad;
@@ -14,12 +13,11 @@ public class DireccionDTO {
 		super();
 	}
 	
-	public DireccionDTO(Integer id, String calle, String numeroCalle, String departamento, String piso, Integer idLocalidad,
+	public DireccionDTO(Integer id, String direccionDomicilio, String departamento, String piso, Integer idLocalidad,
 			Integer codigoPostal) {
 		super();
 		this.id = id;
-		this.calle = calle;
-		this.numeroCalle = numeroCalle;
+		this.direccionDomicilio = direccionDomicilio;
 		this.departamento = departamento;
 		this.piso = piso;
 		this.idLocalidad = idLocalidad;
@@ -31,12 +29,8 @@ public class DireccionDTO {
 		return id;
 	}
 
-	public String getCalle() {
-		return calle;
-	}
-
-	public String getNumeroCalle() {
-		return numeroCalle;
+	public String getDireccionDomicilio() {
+		return direccionDomicilio;
 	}
 	
 	public String getDepartamento() {
@@ -56,17 +50,12 @@ public class DireccionDTO {
 	}
 	
 	
-	
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public void setCalle(String calle) {
-		this.calle = calle;
-	}
-
-	public void setNumeroCalle(String numeroCalle) {
-		this.numeroCalle = numeroCalle;
+	public void setDireccionDomicilio(String direccionDomicilio) {
+		this.direccionDomicilio = direccionDomicilio;
 	}
 
 	public void setDepartamento(String departamento) {

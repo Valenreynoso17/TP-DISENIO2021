@@ -83,6 +83,30 @@ public class PasajeroPostgreSQLImpl implements PasajeroDAO {
 		
 		return pasajeros;
 	}
+
+	
+	@Override
+	public List<Pasajero> buscarPorDocumento(TipoDocumento tipoDoc, String numeroDoc) {
+		
+		String stringQuery = 	"SELECT p FROM Pasajero p "
+							  + "WHERE  p.tipoDocumento = :tipodoc "
+							  + "AND 	p.documento = :documento";								
+		
+			
+		Session sesion = sessionFactory.openSession();
+		
+		TypedQuery<Pasajero> q = sesion.createQuery(stringQuery, Pasajero.class);
+		
+		// Setea los parametros necesarios para hacer la busqueda
+		q.setParameter("tipodoc", tipoDoc);
+		q.setParameter("documento", numeroDoc);		
+		
+		List<Pasajero> pasajeros = q.getResultList();
+		
+		sesion.close();
+		
+		return pasajeros;
+	}
 	
 	
 }
