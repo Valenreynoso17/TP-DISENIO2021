@@ -51,6 +51,9 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 	private String textoMensajePasajeroCreado = "<html><p>El pasajero se agregó al sistema correctamente.</p><html>";
 	private Mensaje mensajePasajeroCreado = new Mensaje(3, textoMensajePasajeroCreado, TipoMensaje.EXITO, "Aceptar", null);
 	
+	private PasajeroDTO pasajeroDTO;
+	private GestorPasajero gestorPasajero;
+	
 	public PanelAltaPasajero(final FrameAltaPasajero frame) {
 		this.frameActual = frame;
 		
@@ -97,9 +100,9 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 					
 					if(panelDarAltaPasajero.inputTieneFormatoValido()) {
 						
-						PasajeroDTO pasajeroDTO = panelDarAltaPasajero.crearDTOS();
+						pasajeroDTO = panelDarAltaPasajero.crearDTOS();
 						
-						GestorPasajero gestorPasajero = GestorPasajero.getInstance();
+						gestorPasajero = GestorPasajero.getInstance();
 						
 						try {
 							gestorPasajero.validarDatosPasajero(pasajeroDTO);
@@ -111,13 +114,8 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 						} catch (DocumentoRepetidoException e1) {
 							
 							// Informar que un pasajero con ese dni ya existe
-							
-							// Elección AceptarIgualmente/Cancelar
-//							if(aceptarIgualmente) {
-//								gestorPasajero.crearPasajero(pasajeroDTO);
-//								
-//								mensajePasajeroCreado.mostrar(getPanel(), frame);
-//							}
+							mensajeDocumentoRepetido.mostrar(getPanel(), frame);
+						
 						}
 						
 						
@@ -144,6 +142,7 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 			frameAnterior = new FrameGestionarPasajero();	
 			break;
 		case 2:	//Si tiene documento repetido, se guarda igualmente (primero muestra el mensaje de que se creó el pasajero)
+			gestorPasajero.crearPasajero(pasajeroDTO);
 			mensajePasajeroCreado.mostrar(getPanel(), frameActual);
 			break;
 		case 3:	//Si se creo el pasajero, vuelve al MenuPrincpal
