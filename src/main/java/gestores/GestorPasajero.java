@@ -3,15 +3,22 @@ package main.java.gestores;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.SortOrder;
+
 import main.java.clases.Pasajero;
+import main.java.daos.PasajeroDAO;
 import main.java.dtos.PasajeroDTO;
+import main.java.enmus.ColumnaBuscarPasajeros;
 import main.java.excepciones.InputInvalidaException;
+import main.java.postgreImpl.PasajeroPostgreSQLImpl;
 
 public class GestorPasajero {
 	private static GestorPasajero instance;
 	
+	private PasajeroDAO pasajeroDAO;
+	
 	private GestorPasajero() {
-		
+		pasajeroDAO = new PasajeroPostgreSQLImpl();
 	}
 	
 	public static GestorPasajero getInstance() {
@@ -20,12 +27,23 @@ public class GestorPasajero {
 		return instance;
 	}
 	
-	public List<PasajeroDTO> buscar(PasajeroDTO filtros, Integer tamPagina, Integer nroPagina) throws InputInvalidaException {
+	public List<PasajeroDTO> buscarPaginado(PasajeroDTO filtros, Integer tamPagina, Integer nroPagina) throws InputInvalidaException {
 		validarDatosBusqueda(filtros);
 		
+		List<Pasajero> pasajeros = pasajeroDAO.buscarPasajerosPaginado(filtros, tamPagina, nroPagina, ColumnaBuscarPasajeros.NOMBRE, SortOrder.DESCENDING);
 		
-		return null;
+		List<PasajeroDTO> pasajerosDTO = new ArrayList<>();
+		
+		for (Pasajero p : pasajeros) {
+			pasajerosDTO.add(crearPasajeroDTOAcotado(p));
+		}
+		
+		return pasajerosDTO;
 	}
+	
+	/*public List<PasajeroDTO> buscarPaginadoSinValidar(PasajeroDTO filtros, Integer tamPagina, Integer nroPagina, String columna, String orden) {
+		
+	}*/
 	
 	private void validarDatosBusqueda(PasajeroDTO pasajeroDTO) throws InputInvalidaException{
 		List<String> camposInvalidos = new ArrayList<String>();
@@ -38,7 +56,7 @@ public class GestorPasajero {
 	}
 	
 	private boolean nombreApellidoValido(String apellido) {
-		return apellido.matches("[A-Z¡…Õ”⁄‹—«]+( [A-Z¡…Õ”⁄‹—«]+)+");
+		return apellido.matches("[A-Z¡…Õ”⁄‹—«]+( [A-Z¡…Õ”⁄‹—«]+)*");
 	}
 	
 	// Crea un PasajeroDTO con no todos los datos a partir de un pasajero
