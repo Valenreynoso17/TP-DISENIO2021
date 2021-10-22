@@ -20,10 +20,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SortOrder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import main.java.dtos.PasajeroDTO;
+import main.java.enums.ColumnaBuscarPasajeros;
+import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
@@ -43,11 +47,25 @@ public class PanelGestionarPasajeroTabla extends JPanel{
 	private Font fuenteLabelCampo =new Font("SourceSansPro", Font.PLAIN, 14);
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	
+	private PasajeroDTO filtros;
+	private Integer cantResultados;
+	private Integer nroPagina;
+	private ColumnaBuscarPasajeros columnaFiltro;
+	
+	private GestorPasajero gestorPasajero;
+	
+	final private Integer tamPagina = 10;
+	
 	//private RoundedBorder bordeCampo = new RoundedBorder(5, Color.decode("#BDBDBD"));
 	
 	//Predicate<Pasajero> FiltroApellido, FiltroNombre, FiltroTipoDocumento, FiltroNumeroDocumento;
 	
 	public PanelGestionarPasajeroTabla(FrameGestionarPasajero frame) {
+		nroPagina = 1;
+		
+		gestorPasajero = GestorPasajero.getInstance();
+		
+		columnaFiltro = ColumnaBuscarPasajeros.NOMBRE;
 		
 		this.setBackground(Color.WHITE);
 		
@@ -111,6 +129,24 @@ public class PanelGestionarPasajeroTabla extends JPanel{
 		label = new JLabel("PAGINACIÓN");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 1;	this.add(label, c);
 
 	
+	}
+	
+	
+	
+	public void buscarResultados(PasajeroDTO filtros, Integer cantResultados) {
+		this.filtros = filtros;
+		this.cantResultados = cantResultados;
+		
+		List<PasajeroDTO> resultados = gestorPasajero.buscarPaginado(filtros, tamPagina, nroPagina, columnaFiltro, SortOrder.ASCENDING);
+		actualizarTabla(resultados);
+		
+	}
+	
+	public void actualizarTabla(List<PasajeroDTO> datos) {
+		for (PasajeroDTO p : datos) {
+			miModelo.addRow(new Object[] {p.getApellido(), p.getNombre(), p.getTipoDocumento(), p.getNumeroDoc()});
+		}
+		
 	}
 }
 
