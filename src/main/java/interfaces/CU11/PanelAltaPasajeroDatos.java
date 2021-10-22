@@ -958,7 +958,10 @@ public PasajeroDTO crearDTOS() {
 		
 		DireccionDTO direccionDto = new DireccionDTO(null,direccion.getText(), departamento.getText(), piso.getText(), ((LocalidadDTO) localidad.getSelectedItem()).getId(), Integer.valueOf(codigoPostal.getText()));
 		
-		PasajeroDTO pasajeroDto = new PasajeroDTO(null, apellido.getText(), nombre.getText(), TipoDocumento.valueOf(tipoDocumento.getSelectedItem().toString()), numeroDocumento.getText(), cuit.getText(), PosicionFrenteIva.valueOf(posicionIVA.getSelectedItem().toString().replace(" ", "_")), email.getText(), telefono.getText(), null, ocupacion.getText(), direccionDto, ((PaisDTO) nacionalidad.getSelectedItem()).getId()); 
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		LocalDate fechaNac = LocalDate.parse(fechaNacimiento.getText(), formatter);
+		
+		PasajeroDTO pasajeroDto = new PasajeroDTO(null, apellido.getText(), nombre.getText(), TipoDocumento.valueOf(tipoDocumento.getSelectedItem().toString()), numeroDocumento.getText(), cuit.getText(), PosicionFrenteIva.valueOf(posicionIVA.getSelectedItem().toString().replace(" ", "_")), email.getText(), telefono.getText(), fechaNac, ocupacion.getText(), direccionDto, ((PaisDTO) nacionalidad.getSelectedItem()).getId()); 
 		
 		return pasajeroDto;
 	}
