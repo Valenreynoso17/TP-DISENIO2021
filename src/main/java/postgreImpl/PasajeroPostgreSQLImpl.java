@@ -154,7 +154,7 @@ public class PasajeroPostgreSQLImpl implements PasajeroDAO {
 		// Setea los parametros necesarios para hacer la busqueda
 		if (filtros.getNombre() != null) q.setParameter("nombre", filtros.getNombre() + "%");
 		if (filtros.getApellido() != null) q.setParameter("apellido", filtros.getApellido() + "%"); 
-		if (filtros.getTipoDocumento() != null) q.setParameter("tipodoc", TipoDocumento.DNI);
+		if (filtros.getTipoDocumento() != null) q.setParameter("tipodoc", filtros.getTipoDocumento());
 		if (filtros.getNumeroDoc() != null) q.setParameter("documento", filtros.getNumeroDoc());
 		
 		Integer cantInteger = q.getSingleResult().intValue();
