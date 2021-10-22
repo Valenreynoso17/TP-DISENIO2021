@@ -83,7 +83,6 @@ public class GestorPasajero {
 		// Ver si ya existe en el sistema
 		List<Pasajero> listaPasajeros = pasajeroDAO.buscarPorDocumento(pasajeroDTO.getTipoDocumento(), pasajeroDTO.getNumeroDoc());
 		
-		// Ojo con el isEmpty, cpz tendría que ser == null
 		if (!listaPasajeros.isEmpty()) {
 			throw new DocumentoRepetidoException();
 		}
@@ -94,12 +93,12 @@ public class GestorPasajero {
 	public void crearPasajero(PasajeroDTO pasajeroDTO) {
 		
 		gestorDireccion = GestorDireccion.getInstance();
-		gestorPaisProvincia = GestorPaisProvincia.getInstance();
-		
 		Direccion direccion = gestorDireccion.crearDireccion(pasajeroDTO.getDireccion());
-		Pais pais = gestorPaisProvincia.buscarPaisPorId(pasajeroDTO.getIdNacionalidad());
 		
-		Pasajero pasajero = new Pasajero(pasajeroDTO, direccion, pais);
+		gestorPaisProvincia = GestorPaisProvincia.getInstance();
+		Pais paisNacionalidad = gestorPaisProvincia.buscarPaisPorId(pasajeroDTO.getIdNacionalidad());
+		
+		Pasajero pasajero = new Pasajero(pasajeroDTO, direccion, paisNacionalidad);
 		
 		pasajeroDAO.guardar(pasajero);
 	}
