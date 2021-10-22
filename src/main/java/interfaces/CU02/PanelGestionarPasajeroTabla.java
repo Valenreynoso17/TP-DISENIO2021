@@ -31,10 +31,11 @@ import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
-public class PanelGestionarPasajeroTabla extends JPanel{
+public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 
 	private JTable tabla;
 	private ModeloTablaPasajeros miModelo;
+	private PanelPaginacion paginacion;
 	
 	private JLabel label;
 	
@@ -49,7 +50,7 @@ public class PanelGestionarPasajeroTabla extends JPanel{
 	
 	private PasajeroDTO filtros;
 	private Integer cantResultados;
-	private Integer nroPagina;
+	private Integer paginaActual;
 	private ColumnaBuscarPasajeros columnaFiltro;
 	private SortOrder orden;
 	private List<PasajeroDTO> ultimosResultados;
@@ -63,8 +64,8 @@ public class PanelGestionarPasajeroTabla extends JPanel{
 	//Predicate<Pasajero> FiltroApellido, FiltroNombre, FiltroTipoDocumento, FiltroNumeroDocumento;
 	
 	public PanelGestionarPasajeroTabla(FrameGestionarPasajero frame) {
-		nroPagina = 1;
-		
+		paginaActual = 1;
+		cantResultados = 0;
 		
 		gestorPasajero = GestorPasajero.getInstance();
 		
@@ -128,8 +129,7 @@ public class PanelGestionarPasajeroTabla extends JPanel{
 				
 				if (filtros != null) {
 					actualizarTabla();
-				}
-						
+				}						
 				
 			}
 			
@@ -160,9 +160,13 @@ public class PanelGestionarPasajeroTabla extends JPanel{
 		
 			c.anchor = GridBagConstraints.CENTER; c.insets = new Insets(0,0,0,0);
 		
-		label = new JLabel("PAGINACIÓN");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 1;	this.add(label, c);
-
-	
+		//label = new JLabel("PAGINACIÓN");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 1;	this.add(label, c);
+		paginacion = new PanelPaginacion(this, tamPagina);	c.gridx = 0;	c.gridy = 1;
+		this.add(paginacion, c);
+		
+		paginacion.refrescarCantidadResultados(cantResultados, paginaActual);
+		
+		
 	}
 	
 	
@@ -172,8 +176,11 @@ public class PanelGestionarPasajeroTabla extends JPanel{
 		
 		actualizarTabla();
 		
+		
+		paginacion.refrescarCantidadResultados(cantResultados, paginaActual);
 	}
 	
+	// No se usa de momento
 	public void reordenar(ColumnaBuscarPasajeros columnaFiltro, SortOrder orden) {
 		this.columnaFiltro = columnaFiltro;
 		this.orden = orden;
@@ -182,15 +189,24 @@ public class PanelGestionarPasajeroTabla extends JPanel{
 	}
 	
 	public void actualizarTabla() {
-		ultimosResultados = gestorPasajero.buscarPaginado(filtros, tamPagina, nroPagina, columnaFiltro, orden);
+		ultimosResultados = gestorPasajero.buscarPaginado(filtros, tamPagina, paginaActual, columnaFiltro, orden);
 		
 		miModelo.limpiarTabla();
 		miModelo.cargarPasajeros(ultimosResultados);
 		
 	}
 	
+	// TODO queda corroborar que anda bien una vez que la paginacion este hecha
 	public PasajeroDTO pasajeroSeleccionado() {
 		return ultimosResultados.get(tabla.getSelectedRow());
+	}
+
+
+	@Override
+	public void cambiarPagina(Integer pagina) {
+		this.paginaActual = pagina;
+		paginacion.refrescarBotones(pagina);
+		actualizarTabla();
 		
 	}
 }
