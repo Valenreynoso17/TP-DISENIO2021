@@ -107,7 +107,6 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 						try {
 							gestorPasajero.validarDatosPasajero(pasajeroDTO);
 							
-							// Cpz aca se podría recuper el resto de datos del pasajero
 							gestorPasajero.crearPasajero(pasajeroDTO);
 							
 							mensajePasajeroCreado.mostrar(getPanel(), frame);

@@ -46,6 +46,12 @@ public class GestorPaisProvincia {
 		return paisesDTO;	
 	}
 	
+	public Pais buscarPaisPorId(Integer idPais) {
+		
+		Pais pais = paisDAO.buscarPorId(idPais);
+		
+		return pais;
+	}
 	// Dado el id de un pais devuelve todas las provincias de ese pais, en forma de DTO
 	public List<ProvinciaDTO> buscarProviciasPorPais(Integer idPais) {
 		List<Provincia> provincias = provinciaDAO.buscarPorPais(idPais);

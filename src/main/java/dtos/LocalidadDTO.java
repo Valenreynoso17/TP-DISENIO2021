@@ -15,7 +15,10 @@ public class LocalidadDTO {
 		super();
 	}
 	
-	
+	public String toString() {
+		
+		return this.nombre;
+	}
 
 	public Integer getId() {
 		return id;

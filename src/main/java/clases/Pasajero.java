@@ -80,20 +80,20 @@ public class Pasajero {
 		this.direccion = direccion;
 	}
 	
-	public Pasajero(PasajeroDTO pasajeroDTO, Direccion direccion) {
+	public Pasajero(PasajeroDTO pasajeroDTO, Direccion direccion, Pais nacionalidad) {
 		super();
 		this.id = pasajeroDTO.getId();
 		this.apellido = pasajeroDTO.getApellido();
 		this.nombre = pasajeroDTO.getNombre();
 		this.tipoDocumento = pasajeroDTO.getTipoDocumento();
 		this.documento = pasajeroDTO.getNumeroDoc();
-//		this.fechaNacimiento = pasajeroDTO
-//		this.email = pasajeroDTO.get
-//		this.ocupacion = pasajeroDTO.ge
-//		this.telefono = pasajeroDTO.get
-//		this.cuit = pasajeroDTO.get
-//		this.posicionFrenteIva = pasajeroDTO.getp
-//		this.nacionalidad = pasajeroDTO.get
+		this.fechaNacimiento = pasajeroDTO.getFechaNacimiento();
+		this.email = pasajeroDTO.getEmail();
+		this.ocupacion = pasajeroDTO.getOcupacion();
+		this.telefono = pasajeroDTO.getTelefono();
+		this.cuit = pasajeroDTO.getCuit();
+		this.posicionFrenteIva = pasajeroDTO.getPosicionIVA();
+		this.nacionalidad = nacionalidad;
 		this.direccion = direccion;
 	}
 	

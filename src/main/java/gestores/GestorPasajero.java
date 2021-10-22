@@ -10,6 +10,7 @@ import main.java.daos.PasajeroDAO;
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.ColumnaBuscarPasajeros;
 import main.java.clases.Direccion;
+import main.java.clases.Pais;
 import main.java.excepciones.DocumentoRepetidoException;
 import main.java.excepciones.InputInvalidaException;
 import main.java.postgreImpl.PasajeroPostgreSQLImpl;
@@ -18,8 +19,8 @@ public class GestorPasajero {
 	private static GestorPasajero instance;
 	
 	private PasajeroDAO pasajeroDAO;
-	private GestorDireccion gestorDireccion; // No se si deberia instanciarse en el constructor y sólo cuando
-											 // se necesita, por ahora elegí la segunda
+	private GestorDireccion gestorDireccion;
+	private GestorPaisProvincia gestorPaisProvincia;
 	
 	private GestorPasajero() {
 		pasajeroDAO = new PasajeroPostgreSQLImpl();
@@ -93,10 +94,12 @@ public class GestorPasajero {
 	public void crearPasajero(PasajeroDTO pasajeroDTO) {
 		
 		gestorDireccion = GestorDireccion.getInstance();
+		gestorPaisProvincia = GestorPaisProvincia.getInstance();
 		
 		Direccion direccion = gestorDireccion.crearDireccion(pasajeroDTO.getDireccion());
+		Pais pais = gestorPaisProvincia.buscarPaisPorId(pasajeroDTO.getIdNacionalidad());
 		
-		Pasajero pasajero = new Pasajero(pasajeroDTO, direccion);
+		Pasajero pasajero = new Pasajero(pasajeroDTO, direccion, pais);
 		
 		pasajeroDAO.guardar(pasajero);
 	}
