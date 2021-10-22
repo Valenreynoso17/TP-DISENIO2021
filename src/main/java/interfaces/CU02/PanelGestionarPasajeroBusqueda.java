@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,11 +17,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.DocumentFilter;
 
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoDocumento;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.clasesExtra.UppercaseDocumentFilter;
 
 public class PanelGestionarPasajeroBusqueda extends JPanel{
 	
@@ -63,6 +69,9 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Gestionar Pasajero", 0, 0, fuenteGroupBox));
 		
 		this.setLayout(new GridBagLayout());
+		
+		DocumentFilter filter = new UppercaseDocumentFilter();
+		
 		GridBagConstraints c = new GridBagConstraints();
 		
 			c.anchor = GridBagConstraints.WEST;
@@ -73,7 +82,12 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 		
 			c.fill = GridBagConstraints.HORIZONTAL; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo;
 		
+		// Configuracion apellido textField
 		apellido = new JTextField(); apellido.setFont(fuenteLabelCampo);	apellido.setBorder(bordeCampo);	
+		
+		AbstractDocument apellidoDoc = (AbstractDocument) apellido.getDocument();
+		apellidoDoc.setDocumentFilter(filter);
+		
 		fondoJTextField = new TextPrompt("Ingrese un apellido",apellido); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 1; c.gridy = 0;	apellido.setMinimumSize(dimensionCampo);	apellido.setPreferredSize(dimensionCampo);	this.add(apellido, c);
 		
@@ -83,7 +97,13 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 		
 			c.fill = GridBagConstraints.HORIZONTAL; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo;
 		
+		// Configuracion nombre textField
 		nombre = new JTextField();	nombre.setFont(fuenteLabelCampo);	nombre.setBorder(bordeCampo);
+		
+		AbstractDocument nombreDoc = (AbstractDocument) nombre.getDocument();
+		nombreDoc.setDocumentFilter(filter);
+		
+		
 		fondoJTextField = new TextPrompt("Ingrese un nombre", nombre); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 3; c.gridy = 0;	nombre.setMinimumSize(dimensionCampo);	nombre.setPreferredSize(dimensionCampo);	this.add(nombre, c);
 		
@@ -106,6 +126,10 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 			c.fill = GridBagConstraints.HORIZONTAL; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo;
 		
 		numeroDocumento = new JTextField();	numeroDocumento.setFont(fuenteLabelCampo);	numeroDocumento.setBorder(bordeCampo);
+		
+		AbstractDocument numeroDoc = (AbstractDocument) numeroDocumento.getDocument();
+		numeroDoc.setDocumentFilter(filter);
+		
 		fondoJTextField = new TextPrompt("Ingrese el número de documento", numeroDocumento); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 3; c.gridy = 1;	numeroDocumento.setMinimumSize(dimensionCampo);	numeroDocumento.setPreferredSize(dimensionCampo);	this.add(numeroDocumento, c);
 		
@@ -124,7 +148,7 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 	}
 	
 	private void cargarComboBoxDesdeEnum(JComboBox<TipoDocumento> comboBox) {
-		
+		comboBox.addItem(null);
 		for(TipoDocumento o : TipoDocumento.values()){
 			
 			comboBox.addItem(o); //Para que no aparezcan los guiones bajos

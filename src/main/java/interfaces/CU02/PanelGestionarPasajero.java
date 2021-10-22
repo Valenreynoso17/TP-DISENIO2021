@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.InputInvalidaException;
+import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.excepciones.SinResultadosException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.CU11.FrameAltaPasajero;
@@ -139,8 +140,13 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		siguiente.setBorder(bordeBoton);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();
+				}
+				catch (PasajeroNoSeleccionadoException exc) {
+					mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
+				}
 				
-				System.out.println(panelGestionarPasajeroTabla.pasajeroSeleccionado().getNombre());
 				//mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
 			}
 		});

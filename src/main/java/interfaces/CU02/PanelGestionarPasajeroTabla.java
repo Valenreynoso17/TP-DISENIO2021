@@ -27,6 +27,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.ColumnaBuscarPasajeros;
+import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
 import main.java.interfaces.clasesExtra.RoundedBorder;
@@ -174,8 +175,9 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		this.filtros = filtros;
 		this.cantResultados = cantResultados;
 		
-		actualizarTabla();
+		if (((double) cantResultados) / tamPagina > paginaActual) paginaActual = 1;
 		
+		actualizarTabla();
 		
 		paginacion.refrescarCantidadResultados(cantResultados, paginaActual);
 	}
@@ -197,7 +199,10 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 	}
 	
 	// TODO queda corroborar que anda bien una vez que la paginacion este hecha
-	public PasajeroDTO pasajeroSeleccionado() {
+	public PasajeroDTO pasajeroSeleccionado() throws PasajeroNoSeleccionadoException {
+		Integer indice = tabla.getSelectedRow();
+		
+		if (indice < 0) throw new PasajeroNoSeleccionadoException();
 		return ultimosResultados.get(tabla.getSelectedRow());
 	}
 
