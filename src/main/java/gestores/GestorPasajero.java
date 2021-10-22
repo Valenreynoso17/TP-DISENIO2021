@@ -32,10 +32,13 @@ public class GestorPasajero {
 		return instance;
 	}
 	
-	public List<PasajeroDTO> buscarPaginado(PasajeroDTO filtros, Integer tamPagina, Integer nroPagina) throws InputInvalidaException {
-		validarDatosBusqueda(filtros);
-		
-		List<Pasajero> pasajeros = pasajeroDAO.buscarPasajerosPaginado(filtros, tamPagina, nroPagina, ColumnaBuscarPasajeros.NOMBRE, SortOrder.DESCENDING);
+	// Busca en la BD los pasajeros que cumplen con los filtro y devuelve la cantidad de resultados
+	public Integer buscarCantidadPasajeros(PasajeroDTO filtros) {		
+		return pasajeroDAO.cantidadPasajeros(filtros);
+	}
+	
+	public List<PasajeroDTO> buscarPaginadoSinValidar(PasajeroDTO filtros, Integer tamPagina, Integer nroPagina, ColumnaBuscarPasajeros columna, SortOrder orden) {
+		List<Pasajero> pasajeros = pasajeroDAO.buscarPasajerosPaginado(filtros, tamPagina, nroPagina, columna, orden);
 		
 		List<PasajeroDTO> pasajerosDTO = new ArrayList<>();
 		
@@ -45,10 +48,6 @@ public class GestorPasajero {
 		
 		return pasajerosDTO;
 	}
-	
-	/*public List<PasajeroDTO> buscarPaginadoSinValidar(PasajeroDTO filtros, Integer tamPagina, Integer nroPagina, String columna, String orden) {
-		
-	}*/
 	
 	private void validarDatosBusqueda(PasajeroDTO pasajeroDTO) throws InputInvalidaException{
 		List<String> camposInvalidos = new ArrayList<String>();
