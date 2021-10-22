@@ -143,9 +143,12 @@ public class PanelGestionarPasajeroTabla extends JPanel{
 	}
 	
 	public void actualizarTabla(List<PasajeroDTO> datos) {
-		for (PasajeroDTO p : datos) {
-			miModelo.addRow(new Object[] {p.getApellido(), p.getNombre(), p.getTipoDocumento(), p.getNumeroDoc()});
-		}
+		miModelo.limpiarTabla();
+		miModelo.cargarPasajeros(datos);
+		
+	}
+	
+	public PasajeroDTO pasajeroSeleccionado() {
 		
 	}
 }

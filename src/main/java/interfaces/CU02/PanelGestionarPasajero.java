@@ -100,8 +100,7 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 				exc.printStackTrace();
 			}
 			catch (SinResultadosException exc) {
-				// TODO falta mensaje de error
-				exc.printStackTrace();
+				mensajeNoExistePasajeroBuscar.mostrar(getPanel(), frameActual);
 			}	
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
@@ -140,6 +139,7 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		siguiente.setBorder(bordeBoton);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				
 				mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
 			}

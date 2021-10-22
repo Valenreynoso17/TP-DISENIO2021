@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import main.java.clases.Pasajero;
+import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoDocumento;
 
 public class ModeloTablaPasajeros extends DefaultTableModel{
@@ -31,14 +32,14 @@ public class ModeloTablaPasajeros extends DefaultTableModel{
 		this.setRowCount(0); //Elimino todas las filas de la tabla
 	}
 	
-	public void cargarPasajeros(List<Pasajero> pasajeros) {
+	public void cargarPasajeros(List<PasajeroDTO> pasajeros) {
 		
-//		for(Pasajero p : pasajeros) {
-//			this.addRow(new Object[] {p.getApellido()
-//									, p.getNombre()
-//									, p.getTipoDocumento()
-//									, p.getNumeroDocumento()});
-//		}
+		for(PasajeroDTO p : pasajeros) {
+			this.addRow(new Object[] {p.getApellido()
+									, p.getNombre()
+									, p.getTipoDocumento()
+									, p.getNumeroDoc()});
+		}
 
 	}
 	
