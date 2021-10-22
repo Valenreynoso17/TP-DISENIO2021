@@ -159,8 +159,8 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 		case 1:	//Si no quiere cancelar, no pasa nada
 			
 			break;
-		case 2:	//Si tiene documento repetido, se centra en el campo "Documento"
-			
+		case 2:	//Si quiere corregir, se centra en el campo NumeroDocumento
+			this.panelDarAltaPasajero.centrarDocumento();			
 			break;		
 		}
 		
