@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -115,7 +117,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	//private Insets insetCampoUltimos = new Insets(0,70,20,70);
 	private Insets insetLabelError = new Insets(0,0,0,20);
 	private Insets insetLabelMasChico = new Insets(0,60,0,0);
-	private Insets insetLabelDepartamentoInvalido = new Insets(0,100,0,0);
+	private Insets insetLabelDepartamentoInvalido = new Insets(0,60,0,0);
+	private Insets insetLabelErrorPiso = new Insets(0,120,0,0);
 	
 	private double pesoXLabel = 0.3;
 	private double pesoYLabel = 0.5;
@@ -178,6 +181,17 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
 		apellido = new JTextField(10); apellido.setFont(fuenteLabelCampo);	apellido.setBorder(bordeCampo);	apellido.setDocument(new JTextFieldLimitado(40));
+		apellido.addKeyListener(new KeyListener() {		//Para que el texto aparezca y se guarde en mayúsculas
+		    @Override
+		    public void keyTyped(KeyEvent e) {}
+		    @Override
+		    public void keyPressed(KeyEvent e) {}
+		    @Override
+		    public void keyReleased(KeyEvent e) {
+		        int pos = apellido.getCaretPosition();
+		        apellido.setText(apellido.getText().toUpperCase());
+		        apellido.setCaretPosition(pos);
+		    }});
 		apellido.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelApellidoVacio.setVisible(false);
@@ -215,6 +229,17 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
 		nombre = new JTextField();	nombre.setFont(fuenteLabelCampo);	nombre.setBorder(bordeCampo);	nombre.setDocument(new JTextFieldLimitado(40));
+		nombre.addKeyListener(new KeyListener() {		//Para que el texto aparezca y se guarde en mayúsculas
+		    @Override
+		    public void keyTyped(KeyEvent e) {}
+		    @Override
+		    public void keyPressed(KeyEvent e) {}
+		    @Override
+		    public void keyReleased(KeyEvent e) {
+		        int pos = nombre.getCaretPosition();
+		        nombre.setText(nombre.getText().toUpperCase());
+		        nombre.setCaretPosition(pos);
+		    }});
 		nombre.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelNombreVacio.setVisible(false);
@@ -345,6 +370,17 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
 		email = new JTextField();	email.setFont(fuenteLabelCampo);	email.setBorder(bordeCampo);	email.setDocument(new JTextFieldLimitado(80));
+		email.addKeyListener(new KeyListener() {		//Para que el texto aparezca y se guarde en mayúsculas
+		    @Override
+		    public void keyTyped(KeyEvent e) {}
+		    @Override
+		    public void keyPressed(KeyEvent e) {}
+		    @Override
+		    public void keyReleased(KeyEvent e) {
+		        int pos = email.getCaretPosition();
+		        email.setText(email.getText().toUpperCase());
+		        email.setCaretPosition(pos);
+		    }});
 		email.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelEmailVacio.setVisible(false);
@@ -417,6 +453,17 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
 		ocupacion = new JTextField();	ocupacion.setFont(fuenteLabelCampo);	ocupacion.setBorder(bordeCampo);	ocupacion.setDocument(new JTextFieldLimitado(40)); 
+		ocupacion.addKeyListener(new KeyListener() {		//Para que el texto aparezca y se guarde en mayúsculas
+		    @Override
+		    public void keyTyped(KeyEvent e) {}
+		    @Override
+		    public void keyPressed(KeyEvent e) {}
+		    @Override
+		    public void keyReleased(KeyEvent e) {
+		        int pos = ocupacion.getCaretPosition();
+		        ocupacion.setText(ocupacion.getText().toUpperCase());
+		        ocupacion.setCaretPosition(pos);
+		    }});
 		ocupacion.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelOcupacionVacio.setVisible(false);
@@ -453,6 +500,17 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
 		direccion = new JTextField();	direccion.setFont(fuenteLabelCampo);	direccion.setBorder(bordeCampo);	direccion.setDocument(new JTextFieldLimitado(60)); 
+		direccion.addKeyListener(new KeyListener() {		//Para que el texto aparezca y se guarde en mayúsculas
+		    @Override
+		    public void keyTyped(KeyEvent e) {}
+		    @Override
+		    public void keyPressed(KeyEvent e) {}
+		    @Override
+		    public void keyReleased(KeyEvent e) {
+		        int pos = direccion.getCaretPosition();
+		        direccion.setText(direccion.getText().toUpperCase());
+		        direccion.setCaretPosition(pos);
+		    }});
 		direccion.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelDireccionVacio.setVisible(false);
@@ -476,7 +534,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 		label = new JLabel("Piso");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 8;	this.add(label, c);
 		
-			c.anchor = GridBagConstraints.CENTER; c.insets = insetLabelError;
+			c.anchor = GridBagConstraints.CENTER; c.insets = insetLabelErrorPiso;
 		
 		labelPisoFormatoInvalido = new JLabel(" Formato inválido ");	labelPisoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 2; c.gridy = 8; 
 		labelPisoFormatoInvalido.setOpaque(true);	labelPisoFormatoInvalido.setBackground(Color.decode("#cc0000")); labelPisoFormatoInvalido.setForeground(Color.WHITE);
@@ -487,6 +545,17 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleIzq;
 		
 		piso = new JTextField();	piso.setFont(fuenteLabelCampo);	piso.setBorder(bordeCampo);	piso.setDocument(new JTextFieldLimitado(3));
+		piso.addKeyListener(new KeyListener() {		//Para que el texto aparezca y se guarde en mayúsculas
+		    @Override
+		    public void keyTyped(KeyEvent e) {}
+		    @Override
+		    public void keyPressed(KeyEvent e) {}
+		    @Override
+		    public void keyReleased(KeyEvent e) {
+		        int pos = piso.getCaretPosition();
+		        piso.setText(piso.getText().toUpperCase());
+		        piso.setCaretPosition(pos);
+		    }});
 		piso.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelPisoFormatoInvalido.setVisible(false);
@@ -505,7 +574,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 		label = new JLabel("Departamento");	label.setFont(fuenteLabelCampo);	c.gridx = 3; c.gridy = 8;	this.add(label, c);
 		
-			c.anchor = GridBagConstraints.EAST; c.insets = insetLabelDepartamentoInvalido;
+			c.anchor = GridBagConstraints.CENTER; c.insets = insetLabelDepartamentoInvalido;
 			
 		labelDepartamentoFormatoInvalido = new JLabel(" Formato inv ");	labelDepartamentoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 8; 
 		labelDepartamentoFormatoInvalido.setOpaque(true);	labelDepartamentoFormatoInvalido.setBackground(Color.decode("#cc0000")); labelDepartamentoFormatoInvalido.setForeground(Color.WHITE);
@@ -516,6 +585,17 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleDer;
 		
 		departamento = new JTextField();	departamento.setFont(fuenteLabelCampo);	departamento.setBorder(bordeCampo);	departamento.setDocument(new JTextFieldLimitado(5)); 
+		departamento.addKeyListener(new KeyListener() {		//Para que el texto aparezca y se guarde en mayúsculas
+		    @Override
+		    public void keyTyped(KeyEvent e) {}
+		    @Override
+		    public void keyPressed(KeyEvent e) {}
+		    @Override
+		    public void keyReleased(KeyEvent e) {
+		        int pos = departamento.getCaretPosition();
+		        departamento.setText(departamento.getText().toUpperCase());
+		        departamento.setCaretPosition(pos);
+		    }});
 		departamento.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelDepartamentoFormatoInvalido.setVisible(false);
@@ -613,6 +693,17 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleIzq;
 		
 		codigoPostal = new JTextField();	codigoPostal.setFont(fuenteLabelCampo);	codigoPostal.setBorder(bordeCampo);	codigoPostal.setDocument(new JTextFieldLimitado(10));
+		codigoPostal.addKeyListener(new KeyListener() {		//Para que el texto aparezca y se guarde en mayúsculas
+		    @Override
+		    public void keyTyped(KeyEvent e) {}
+		    @Override
+		    public void keyPressed(KeyEvent e) {}
+		    @Override
+		    public void keyReleased(KeyEvent e) {
+		        int pos = codigoPostal.getCaretPosition();
+		        codigoPostal.setText(codigoPostal.getText().toUpperCase());
+		        codigoPostal.setCaretPosition(pos);
+		    }});
 		codigoPostal.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelCodigoPostalVacio.setVisible(false);
@@ -873,14 +964,11 @@ public class PanelAltaPasajeroDatos extends JPanel{
 
 	private boolean esValidoCuit(JTextField cuit2) {
 			
+		boolean resultado = false;
+		
 			try {
-				System.out.println(cuit.getText(3, 8));	//DNI
-				
-				if(esTotalmenteNumero(cuit2)) {					
-					if(cuit.getText(3, 8).equals(numeroDocumento.getText())) {	//Si coincide con el número de documento
-						
-						return true;
-					}
+				if(cuit2.getText(3, 8).equals(numeroDocumento.getText())) {	//Si coincide con el número de documento
+						resultado = true;
 				}
 				
 			} catch (BadLocationException e) {
@@ -888,7 +976,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 				e.printStackTrace();
 			}	
 		
-		return false;
+		return resultado;
 	}
 
 	private boolean esValidoFechaNacimiento(JTextField fechaNacimiento2) {
@@ -940,7 +1028,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 
 	private boolean esValidoEmail(JTextField email2) {	//TRUE: Email es válido (cuenta con texto + @ + texto + .com) / FALSE: Email no es válido
 		
-		String regex = "^(.+)@(.+)$";	//"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$"
+		String regex = "^[A-Z0-9!#$%&’+/=?^_`{|}~-]+(?:.[A-Z0-9!#$%&’+/=?^_`{|}~-]+)@(?:[A-Z0-9](?:[a-z0-9-][a-z0-9])?.)+(?:[A-Z]{2}|COM|ORG|NET|GOV|MIL|BIZ|INFO|MOBI|NAME|AERO|JOBS|MUSEUM|AR)$"; //"^(.+)@(.+)$";	//"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$"
 		 
 		Pattern patron = Pattern.compile(regex);
 
@@ -973,6 +1061,10 @@ public PasajeroDTO crearDTOS() {
 		
 		return pasajeroDto;
 	}
+
+public void centrarDocumento() {
+	this.numeroDocumento.requestFocusInWindow();
+}
 }
 	
 	
