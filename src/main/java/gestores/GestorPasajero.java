@@ -13,6 +13,7 @@ import main.java.clases.Direccion;
 import main.java.clases.Pais;
 import main.java.excepciones.DocumentoRepetidoException;
 import main.java.excepciones.InputInvalidaException;
+import main.java.excepciones.SinResultadosException;
 import main.java.postgreImpl.PasajeroPostgreSQLImpl;
 
 public class GestorPasajero {
@@ -33,11 +34,15 @@ public class GestorPasajero {
 	}
 	
 	// Busca en la BD los pasajeros que cumplen con los filtro y devuelve la cantidad de resultados
-	public Integer buscarCantidadPasajeros(PasajeroDTO filtros) {		
-		return pasajeroDAO.cantidadPasajeros(filtros);
+	public Integer buscarCantidadPasajeros(PasajeroDTO filtros) throws SinResultadosException{	
+		Integer cantPasajeros = pasajeroDAO.cantidadPasajeros(filtros);
+		
+		if (cantPasajeros == 0) throw new SinResultadosException();
+		
+		return cantPasajeros;
 	}
 	
-	public List<PasajeroDTO> buscarPaginadoSinValidar(PasajeroDTO filtros, Integer tamPagina, Integer nroPagina, ColumnaBuscarPasajeros columna, SortOrder orden) {
+	public List<PasajeroDTO> buscarPaginado(PasajeroDTO filtros, Integer tamPagina, Integer nroPagina, ColumnaBuscarPasajeros columna, SortOrder orden) {
 		List<Pasajero> pasajeros = pasajeroDAO.buscarPasajerosPaginado(filtros, tamPagina, nroPagina, columna, orden);
 		
 		List<PasajeroDTO> pasajerosDTO = new ArrayList<>();
@@ -49,7 +54,7 @@ public class GestorPasajero {
 		return pasajerosDTO;
 	}
 	
-	private void validarDatosBusqueda(PasajeroDTO pasajeroDTO) throws InputInvalidaException{
+	public void validarDatosBusqueda(PasajeroDTO pasajeroDTO) throws InputInvalidaException{
 		List<String> camposInvalidos = new ArrayList<String>();
 		
 		if (pasajeroDTO.getNombre() != null && !nombreApellidoValido(pasajeroDTO.getNombre())) camposInvalidos.add("Nombre");
@@ -83,7 +88,6 @@ public class GestorPasajero {
 		// Ver si ya existe en el sistema
 		List<Pasajero> listaPasajeros = pasajeroDAO.buscarPorDocumento(pasajeroDTO.getTipoDocumento(), pasajeroDTO.getNumeroDoc());
 		
-		// Ojo con el isEmpty, cpz tendría que ser == null
 		if (!listaPasajeros.isEmpty()) {
 			throw new DocumentoRepetidoException();
 		}
@@ -94,12 +98,12 @@ public class GestorPasajero {
 	public void crearPasajero(PasajeroDTO pasajeroDTO) {
 		
 		gestorDireccion = GestorDireccion.getInstance();
-		gestorPaisProvincia = GestorPaisProvincia.getInstance();
-		
 		Direccion direccion = gestorDireccion.crearDireccion(pasajeroDTO.getDireccion());
-		Pais pais = gestorPaisProvincia.buscarPaisPorId(pasajeroDTO.getIdNacionalidad());
 		
-		Pasajero pasajero = new Pasajero(pasajeroDTO, direccion, pais);
+		gestorPaisProvincia = GestorPaisProvincia.getInstance();
+		Pais paisNacionalidad = gestorPaisProvincia.buscarPaisPorId(pasajeroDTO.getIdNacionalidad());
+		
+		Pasajero pasajero = new Pasajero(pasajeroDTO, direccion, paisNacionalidad);
 		
 		pasajeroDAO.guardar(pasajero);
 	}

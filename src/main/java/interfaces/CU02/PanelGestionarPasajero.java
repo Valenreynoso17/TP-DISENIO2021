@@ -14,7 +14,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoMensaje;
+import main.java.excepciones.InputInvalidaException;
+import main.java.excepciones.SinResultadosException;
+import main.java.gestores.GestorPasajero;
 import main.java.interfaces.CU11.FrameAltaPasajero;
 import main.java.interfaces.CU11.PanelAltaPasajeroDatos;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
@@ -26,6 +30,8 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 	// en este panel estan los botones y los dos otros paneles
 	private PanelGestionarPasajeroBusqueda panelGestionarPasajeroBusqueda;
 	private PanelGestionarPasajeroTabla panelGestionarPasajeroTabla;
+	
+	public GestorPasajero gestorPasajero;
 	
 	private FrameMenuPrincipal frameAnterior;
 	private JFrame frameActual;
@@ -55,6 +61,7 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
 	public PanelGestionarPasajero(final FrameGestionarPasajero frame) {
+		gestorPasajero = GestorPasajero.getInstance();
 		
 		this.frameActual = frame;
 		
@@ -79,11 +86,22 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		buscar.setBackground(Color.decode("#E0E0E0"));
 		buscar.setFont(fuenteBoton);
 		buscar.setBorder(bordeBoton);
-		buscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		buscar.addActionListener(e -> {
+			PasajeroDTO filtros = panelGestionarPasajeroBusqueda.getFiltros();
+			try{
+				gestorPasajero.validarDatosBusqueda(filtros);
+				Integer cantResultados = gestorPasajero.buscarCantidadPasajeros(filtros);
 				
-				mensajeNoExistePasajeroBuscar.mostrar(getPanel(), frame);
+				panelGestionarPasajeroTabla.buscarResultados(filtros, cantResultados);
+				
 			}
+			catch (InputInvalidaException exc) {
+				// TODO falta mensaje de error
+				exc.printStackTrace();
+			}
+			catch (SinResultadosException exc) {
+				mensajeNoExistePasajeroBuscar.mostrar(getPanel(), frameActual);
+			}	
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
 		c.gridx = 1; c.gridy = 1;
@@ -122,7 +140,8 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
+				System.out.println(panelGestionarPasajeroTabla.pasajeroSeleccionado().getNombre());
+				//mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);

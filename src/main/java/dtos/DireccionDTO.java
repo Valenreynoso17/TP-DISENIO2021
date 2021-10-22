@@ -6,7 +6,7 @@ public class DireccionDTO {
 	private String departamento;
 	private String piso;
 	private Integer idLocalidad;
-	private Integer codigoPostal;
+	private String codigoPostal;
 	
 	
 	public DireccionDTO() {
@@ -14,7 +14,7 @@ public class DireccionDTO {
 	}
 	
 	public DireccionDTO(Integer id, String direccionDomicilio, String departamento, String piso, Integer idLocalidad,
-			Integer codigoPostal) {
+			String codigoPostal) {
 		super();
 		this.id = id;
 		this.direccionDomicilio = direccionDomicilio;
@@ -45,7 +45,7 @@ public class DireccionDTO {
 		return idLocalidad;
 	}
 
-	public Integer getCodigoPostal() {
+	public String getCodigoPostal() {
 		return codigoPostal;
 	}
 	
@@ -70,7 +70,7 @@ public class DireccionDTO {
 		this.idLocalidad = idLocalidad;
 	}
 
-	public void setCodigoPostal(Integer codigoPostal) {
+	public void setCodigoPostal(String codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
 	
