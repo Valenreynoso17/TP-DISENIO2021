@@ -80,7 +80,6 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private JLabel labelCodigoPostalVacio;
 	private JLabel labelLocalidadVacio;
 	private JLabel labelNacionalidadVacio;
-	private JLabel labelCuitVacio;
 	
 	private JLabel labelApellidoFormatoInvalido;	//Muestran mensaje "Formato inválido"
 	private JLabel labelNombreFormatoInvalido;
@@ -775,10 +774,6 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		label = new JLabel("CUIT");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 14;	this.add(label, c);
 		
 			c.anchor = GridBagConstraints.CENTER; c.insets = insetLabelError;
-			
-		labelCuitVacio = new JLabel(" Campo incompleto ");	labelCuitVacio.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 14; 
-		labelCuitVacio.setOpaque(true);	labelCuitVacio.setBackground(Color.decode("#cc0000")); labelCuitVacio.setForeground(Color.WHITE);
-		this.add(labelCuitVacio, c); labelCuitVacio.setVisible(false);	//Empieza invisible
 		
 		labelCuitFormatoInvalido = new JLabel(" Formato inválido ");	labelCuitFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 14; 
 		labelCuitFormatoInvalido.setOpaque(true);	labelCuitFormatoInvalido.setBackground(Color.decode("#cc0000")); labelCuitFormatoInvalido.setForeground(Color.WHITE);
@@ -800,15 +795,12 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		cuit.setFont(fuenteLabelCampo);	cuit.setBorder(bordeCampo);
 		cuit.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
-				  labelCuitVacio.setVisible(false);
 				  labelCuitFormatoInvalido.setVisible(false);
 			  }
 			  public void removeUpdate(DocumentEvent e)  {
-				  labelCuitVacio.setVisible(false);
 				  labelCuitFormatoInvalido.setVisible(false);
 			  }
 			  public void insertUpdate(DocumentEvent e) {
-				  labelCuitVacio.setVisible(false);
 				  labelCuitFormatoInvalido.setVisible(false);
 			  }
 		});
@@ -896,10 +888,6 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			resultado = false;
 			labelNacionalidadVacio.setVisible(true);
 		}
-		if(cuit.getText().contains(" ")) {				//Por el formato que tiene
-			resultado = false;
-			labelCuitVacio.setVisible(true);
-		}
 		
 	
 	return resultado;
@@ -917,7 +905,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			resultado = false;
 			labelNombreFormatoInvalido.setVisible(true);
 		}
-		if(!esTotalmenteNumero(numeroDocumento)) {
+		if(!esValidoNumeroDocumento(numeroDocumento)) {
 			resultado = false;
 			labelNumeroDocumentoFormatoInvalido.setVisible(true);
 		}
@@ -962,12 +950,20 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	return resultado;
 	}
 
+	private boolean esValidoNumeroDocumento(JTextField numeroDocumento2) {
+		
+		return false;
+	}
+
 	private boolean esValidoCuit(JTextField cuit2) {
 			
 		boolean resultado = false;
 		
 			try {
 				if(cuit2.getText(3, 8).equals(numeroDocumento.getText())) {	//Si coincide con el número de documento
+						resultado = true;
+				}
+				if(tipoDocumento.getSelectedItem().toString() != "DNI") {
 						resultado = true;
 				}
 				
