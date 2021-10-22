@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoDocumento;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
@@ -23,7 +24,7 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 	
 	private FrameGestionarPasajero frameActual;
 	
-	private JComboBox tipoDocumento;
+	private JComboBox<TipoDocumento> tipoDocumento;
 	
 	private JLabel label;
 	
@@ -92,10 +93,10 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 		
 		c.fill = GridBagConstraints.HORIZONTAL; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo;
 	
-		tipoDocumento = new JComboBox<String>();	tipoDocumento.setFont(fuenteLabelCampo);	tipoDocumento.setBackground(Color.white);	
+		tipoDocumento = new JComboBox<TipoDocumento>();	tipoDocumento.setFont(fuenteLabelCampo);	tipoDocumento.setBackground(Color.white);		
 		c.gridx = 1; c.gridy = 1;	tipoDocumento.setMinimumSize(dimensionCampo);	tipoDocumento.setPreferredSize(dimensionCampo);
-		tipoDocumento.addItem("--Seleccione");
-		this.cargarComboBoxDesdeEnum(tipoDocumento, TipoDocumento.values());
+		//tipoDocumento.addItem("--Seleccione");
+		this.cargarComboBoxDesdeEnum(tipoDocumento);
 		this.add(tipoDocumento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel;
@@ -111,11 +112,22 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 	
 	}
 	
-	private void cargarComboBoxDesdeEnum(JComboBox comboBox, Object[] values) {
+	public PasajeroDTO getFiltros() {
+		PasajeroDTO dto = new PasajeroDTO();
 		
-		for(Object o : values){
+		if (!nombre.getText().isBlank()) dto.setNombre(nombre.getText());
+		if (!apellido.getText().isBlank()) dto.setApellido(apellido.getText());
+		dto.setTipoDocumento((TipoDocumento) tipoDocumento.getSelectedItem());
+		if (!numeroDocumento.getText().isBlank()) dto.setNumeroDoc(numeroDocumento.getText());
+		
+		return dto;
+	}
+	
+	private void cargarComboBoxDesdeEnum(JComboBox<TipoDocumento> comboBox) {
+		
+		for(TipoDocumento o : TipoDocumento.values()){
 			
-			comboBox.addItem(String.valueOf(o).replaceAll("_", " ")); //Para que no aparezcan los guiones bajos
+			comboBox.addItem(o); //Para que no aparezcan los guiones bajos
 		}
 }
 }
