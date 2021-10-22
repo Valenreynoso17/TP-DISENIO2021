@@ -71,7 +71,6 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private JLabel labelNombreVacio;
 	private JLabel labelNumeroDocumentoVacio;
 	private JLabel labelFechaNacimientoVacio;
-	private JLabel labelEmailVacio;
 	private JLabel labelTelefonoVacio;
 	private JLabel labelOcupacionVacio;
 	private JLabel labelDireccionVacio;
@@ -80,10 +79,13 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private JLabel labelCodigoPostalVacio;
 	private JLabel labelLocalidadVacio;
 	private JLabel labelNacionalidadVacio;
+	private JLabel labelCuitVacio;
+	
+	private boolean seleccionoResponsableInscripto = false;	//Para que deba, o no, ingresar el cuit
 	
 	private JLabel labelApellidoFormatoInvalido;	//Muestran mensaje "Formato inválido"
 	private JLabel labelNombreFormatoInvalido;
-	private JLabel labelNumeroDocumentoFormatoInvalido;
+	private JLabel labelNumeroDocumentoFormatoInvalido = new JLabel(" Formato inválido ");	
 	private JLabel labelFechaNacimientoFormatoInvalido;
 	private JLabel labelEmailFormatoInvalido;
 	private JLabel labelTelefonoFormatoInvalido;
@@ -263,7 +265,10 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
 		tipoDocumento = new JComboBox<TipoDocumento>();	tipoDocumento.setFont(fuenteLabelCampo);	tipoDocumento.setBackground(Color.white);	
-//		tipoDocumento.addItem("--Seleccione");
+		tipoDocumento.addItemListener(event -> {
+			
+			labelNumeroDocumentoFormatoInvalido.setVisible(false);
+        });
 		this.cargarComboBoxDesdeEnum(tipoDocumento, TipoDocumento.values());
 		
 		c.gridx = 0; c.gridy = 3;	tipoDocumento.setMinimumSize(dimensionCampo);	tipoDocumento.setPreferredSize(dimensionCampo);
@@ -279,7 +284,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		labelNumeroDocumentoVacio.setOpaque(true);	labelNumeroDocumentoVacio.setBackground(Color.decode("#cc0000")); labelNumeroDocumentoVacio.setForeground(Color.WHITE);
 		this.add(labelNumeroDocumentoVacio, c); labelNumeroDocumentoVacio.setVisible(false);	//Empieza invisible
 		
-		labelNumeroDocumentoFormatoInvalido = new JLabel(" Formato inválido ");	labelNumeroDocumentoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 2; 
+		labelNumeroDocumentoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 2; 
 		labelNumeroDocumentoFormatoInvalido.setOpaque(true);	labelNumeroDocumentoFormatoInvalido.setBackground(Color.decode("#cc0000")); labelNumeroDocumentoFormatoInvalido.setForeground(Color.WHITE);
 		this.add(labelNumeroDocumentoFormatoInvalido, c); labelNumeroDocumentoFormatoInvalido.setVisible(false);	//Empieza invisible
 	
@@ -352,13 +357,9 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
-		label = new JLabel("Email*");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 4;	this.add(label, c);
+		label = new JLabel("Email");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 4;	this.add(label, c);
 		
 			c.anchor = GridBagConstraints.CENTER; c.insets = insetLabelError;
-			
-		labelEmailVacio = new JLabel(" Campo incompleto ");	labelEmailVacio.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 4; 
-		labelEmailVacio.setOpaque(true);	labelEmailVacio.setBackground(Color.decode("#cc0000")); labelEmailVacio.setForeground(Color.WHITE);
-		this.add(labelEmailVacio, c); labelEmailVacio.setVisible(false);	//Empieza invisible
 		
 		labelEmailFormatoInvalido = new JLabel(" Formato inválido ");	labelEmailFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 4; 
 		labelEmailFormatoInvalido.setOpaque(true);	labelEmailFormatoInvalido.setBackground(Color.decode("#cc0000")); labelEmailFormatoInvalido.setForeground(Color.WHITE);
@@ -382,15 +383,12 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		    }});
 		email.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
-				  labelEmailVacio.setVisible(false);
 				  labelEmailFormatoInvalido.setVisible(false);
 			  }
 			  public void removeUpdate(DocumentEvent e)  {
-				  labelEmailVacio.setVisible(false);
 				  labelEmailFormatoInvalido.setVisible(false);
 			  }
 			  public void insertUpdate(DocumentEvent e) {
-				  labelEmailVacio.setVisible(false);
 				  labelEmailFormatoInvalido.setVisible(false);
 			  }
 		});
@@ -774,6 +772,10 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		label = new JLabel("CUIT");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 14;	this.add(label, c);
 		
 			c.anchor = GridBagConstraints.CENTER; c.insets = insetLabelError;
+			
+		labelCuitVacio = new JLabel(" Campo incompleto ");	labelCuitVacio.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 14; 
+		labelCuitVacio.setOpaque(true);	labelCuitVacio.setBackground(Color.decode("#cc0000")); labelCuitVacio.setForeground(Color.WHITE);
+		this.add(labelCuitVacio, c); labelCuitVacio.setVisible(false);	//Empieza invisible
 		
 		labelCuitFormatoInvalido = new JLabel(" Formato inválido ");	labelCuitFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 14; 
 		labelCuitFormatoInvalido.setOpaque(true);	labelCuitFormatoInvalido.setBackground(Color.decode("#cc0000")); labelCuitFormatoInvalido.setForeground(Color.WHITE);
@@ -814,6 +816,19 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
 		posicionIVA = new JComboBox<PosicionFrenteIva>();	posicionIVA.setFont(fuenteLabelCampo);	posicionIVA.setBackground(Color.white);	
+		posicionIVA.addItemListener(event -> {
+			if(posicionIVA.getSelectedItem().equals("RESPONSABLE INSCRIPTO")) {	//Cuando se cambia de Pais la provincia queda nula y sin provincia el metodo getSelectedItem() da null
+	            seleccionoResponsableInscripto = true;
+	            cuit.setEnabled(true);
+			}
+			else if(posicionIVA.getSelectedItem().equals("CONSUMIDOR FINAL")) {	
+				seleccionoResponsableInscripto = false;
+				labelCuitFormatoInvalido.setVisible(false);
+				labelCuitVacio.setVisible(false);
+	            cuit.setEnabled(false);
+			}
+
+        });
 		
 		c.gridx = 2; c.gridy = 15;	posicionIVA.setMinimumSize(dimensionCampo);	posicionIVA.setPreferredSize(dimensionCampo);	
 		this.cargarComboBoxDesdeEnum(posicionIVA, PosicionFrenteIva.values());	
@@ -852,10 +867,6 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			resultado = false;
 			labelFechaNacimientoVacio.setVisible(true);
 		}
-		if(email.getText().isEmpty()) {
-			resultado = false;
-			labelEmailVacio.setVisible(true);
-		}
 		if(telefono.getText().isEmpty()) {
 			resultado = false;
 			labelTelefonoVacio.setVisible(true);
@@ -887,6 +898,12 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		if(nacionalidad.getSelectedItem() == null) {	//Por ser lista desplegable
 			resultado = false;
 			labelNacionalidadVacio.setVisible(true);
+		}
+		if(seleccionoResponsableInscripto) {
+			if(cuit.getText().contains(" ")) {	//Por el formato que tiene
+				resultado = false;
+				labelCuitVacio.setVisible(true);
+			}
 		}
 		
 	
@@ -941,9 +958,11 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			resultado = false;
 			labelCodigoPostalFormatoInvalido.setVisible(true);
 		}
-		if(!esValidoCuit(cuit)) {
-			resultado = false;
-			labelCuitFormatoInvalido.setVisible(true);
+		if(seleccionoResponsableInscripto) {
+			if(!esValidoCuit(cuit)) {
+				resultado = false;
+				labelCuitFormatoInvalido.setVisible(true);
+			}
 		}
 		
 	
@@ -952,7 +971,13 @@ public class PanelAltaPasajeroDatos extends JPanel{
 
 	private boolean esValidoNumeroDocumento(JTextField numeroDocumento2) {
 		
-		return false;
+		if(tipoDocumento.getSelectedItem().equals("DNI")) {	//Si es DNI, se ve si es completamente numero y si tiene como máximo 8 caracteres
+			return (esTotalmenteNumero(numeroDocumento2) && numeroDocumento2.getText().length() < 8);
+		}
+		else {
+			
+			return !contieneCaracteresEspeciales(numeroDocumento2);	//Si no es DNI, se valida si tiene o no caracteres especiales
+		}
 	}
 
 	private boolean esValidoCuit(JTextField cuit2) {
@@ -963,7 +988,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 				if(cuit2.getText(3, 8).equals(numeroDocumento.getText())) {	//Si coincide con el número de documento
 						resultado = true;
 				}
-				if(tipoDocumento.getSelectedItem().toString() != "DNI") {
+				if(!tipoDocumento.getSelectedItem().equals("DNI")) {	//Si no es DNI, entonces no importa qué ponga, siempre será válido
 						resultado = true;
 				}
 				
