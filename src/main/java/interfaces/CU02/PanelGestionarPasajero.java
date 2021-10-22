@@ -140,8 +140,8 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
+				System.out.println(panelGestionarPasajeroTabla.pasajeroSeleccionado().getNombre());
+				//mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
