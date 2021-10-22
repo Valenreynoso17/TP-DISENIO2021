@@ -26,6 +26,12 @@ public class ModeloTablaPasajeros extends DefaultTableModel{
 	      if (columna == 3) return String.class;
 	      return Object.class;
 	   }
+	   
+	    @Override
+	    public boolean isCellEditable(int row, int column) {
+	       //all cells false
+	       return false;
+	    }
 
 	public void limpiarTabla() {
 
