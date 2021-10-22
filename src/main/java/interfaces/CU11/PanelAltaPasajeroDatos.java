@@ -946,11 +946,11 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			resultado = false;
 			labelDireccionFormatoInvalido.setVisible(true);
 		}
-		if(contieneCaracteresEspeciales(departamento)) {
+		if(contieneCaracteresEspecialesYGuiones(departamento)) {
 			resultado = false;
 			labelDepartamentoFormatoInvalido.setVisible(true);
 		}
-		if(contieneCaracteresEspeciales(piso)) {
+		if(contieneCaracteresEspecialesYGuiones(piso)) {
 			resultado = false;
 			labelPisoFormatoInvalido.setVisible(true);
 		}
@@ -972,7 +972,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private boolean esValidoNumeroDocumento(JTextField numeroDocumento2) {
 		
 		if(tipoDocumento.getSelectedItem().equals("DNI")) {	//Si es DNI, se ve si es completamente numero y si tiene como máximo 8 caracteres
-			return (esTotalmenteNumero(numeroDocumento2) && numeroDocumento2.getText().length() < 8);
+			return (esTotalmenteNumero(numeroDocumento2) && numeroDocumento2.getText().length() < 9);
 		}
 		else {
 			
@@ -1002,6 +1002,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 
 	private boolean esValidoFechaNacimiento(JTextField fechaNacimiento2) {
 		
+		boolean resultado = true;
+		
 		String fecha = fechaNacimiento2.getText();
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
@@ -1009,15 +1011,41 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		try {
 			
 			LocalDate localDate = LocalDate.parse(fecha, formatter);	//Si se puede convertir a LocalDate, es una fecha válida
+			
+			if(!fechaEnRango(localDate)) {
+				
+				resultado = false;
+			}
+			
 		}
 		catch(DateTimeParseException e) {
 			
-			return false;
+			resultado = false;
 		}
 		
 		
-		return true;
+		return resultado;
 	}
+	
+	private boolean fechaEnRango(LocalDate fecha) {
+		
+		LocalDate fechaMaxima = LocalDate.of(1900,1,1);	//Fecha de nacimiento máxima
+		LocalDate fechaMinima = LocalDate.now().minusDays(1);	//Fecha de nacimiento mínima (ayer)
+		   return !(fecha.isBefore(fechaMaxima) || fecha.isAfter(fechaMinima));
+		}
+	
+	private boolean contieneCaracteresEspecialesYGuiones(JTextField field) {	//TRUE: La cadena tiene caracteres especiales / FALSE: La cadena NO tiene caracteres especiales
+
+		Pattern p = Pattern.compile("[^a-z0-9-. ]", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(field.getText());
+		boolean b = m.find();
+
+		if (b) {
+			return true;
+		}
+
+	return false;
+}
 
 	private boolean contieneCaracteresEspeciales(JTextField field) {	//TRUE: La cadena tiene caracteres especiales / FALSE: La cadena NO tiene caracteres especiales
 
