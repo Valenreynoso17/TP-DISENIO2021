@@ -24,6 +24,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
 
 import main.java.dtos.DireccionDTO;
@@ -443,7 +444,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		labelDireccionVacio.setOpaque(true);	labelDireccionVacio.setBackground(Color.decode("#cc0000")); labelDireccionVacio.setForeground(Color.WHITE);
 		this.add(labelDireccionVacio, c); labelDireccionVacio.setVisible(false);	//Empieza invisible
 		
-		labelDireccionFormatoInvalido = new JLabel(" Formato invñalido ");	labelDireccionFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 8; 
+		labelDireccionFormatoInvalido = new JLabel(" Formato inválido ");	labelDireccionFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 8; 
 		labelDireccionFormatoInvalido.setOpaque(true);	labelDireccionFormatoInvalido.setBackground(Color.decode("#cc0000")); labelDireccionFormatoInvalido.setForeground(Color.WHITE);
 		this.add(labelDireccionFormatoInvalido, c); labelDireccionFormatoInvalido.setVisible(false);	//Empieza invisible
 	
@@ -471,54 +472,19 @@ public class PanelAltaPasajeroDatos extends JPanel{
 //		direccion.setMinimumSize(new Dimension(400,20));
 		c.gridx = 0; c.gridy = 9;	direccion.setMinimumSize(dimensionCampo);	direccion.setPreferredSize(dimensionCampo);	this.add(direccion, c);
 		
-			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabelDoble; c.weighty = pesoYLabel; c.insets = insetLabelDobleIzq; c.gridwidth = 1;
+			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabelDoble; c.weighty = pesoYLabel; c.insets = insetCampoDobleIzq;	c.gridwidth = 1;
 		
-		label = new JLabel("Departamento");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 8;	this.add(label, c);
-		
-			c.anchor = GridBagConstraints.EAST; c.insets = insetLabelDepartamentoInvalido;
-			
-//		labelApellidoVacio = new JLabel(" Campo incompleto ");	labelApellidoVacio.setFont(fuenteLabelError); c.gridx = 1; c.gridy = 0; 
-//		labelApellidoVacio.setOpaque(true);	labelApellidoVacio.setBackground(Color.decode("#cc0000")); labelApellidoVacio.setForeground(Color.WHITE);
-//		this.add(labelApellidoVacio, c); labelApellidoVacio.setVisible(false);	//Empieza invisible
-			
-		labelDepartamentoFormatoInvalido = new JLabel(" Formato inv ");	labelDepartamentoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 2; c.gridy = 8; 
-		labelDepartamentoFormatoInvalido.setOpaque(true);	labelDepartamentoFormatoInvalido.setBackground(Color.decode("#cc0000")); labelDepartamentoFormatoInvalido.setForeground(Color.WHITE);
-		this.add(labelDepartamentoFormatoInvalido, c); labelDepartamentoFormatoInvalido.setVisible(false);	//Empieza invisible
-	
-			c.anchor = GridBagConstraints.SOUTHWEST;
-		
-			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleIzq;
-		
-		departamento = new JTextField();	departamento.setFont(fuenteLabelCampo);	departamento.setBorder(bordeCampo);	departamento.setDocument(new JTextFieldLimitado(5)); 
-		departamento.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
-			  public void changedUpdate(DocumentEvent e) {
-				  labelDepartamentoFormatoInvalido.setVisible(false);
-			  }
-			  public void removeUpdate(DocumentEvent e)  {
-				  labelDepartamentoFormatoInvalido.setVisible(false);
-			  }
-			  public void insertUpdate(DocumentEvent e) {
-				  labelDepartamentoFormatoInvalido.setVisible(false);
-			  }
-		});
-		fondoJTextField = new TextPrompt("Ingrese el dpto.", departamento); fondoJTextField.setForeground(Color.GRAY);
-//		departamento.setPreferredSize(new Dimension(180,20));
-//		departamento.setMinimumSize(new Dimension(180,20));
-		c.gridx = 2; c.gridy = 9;	departamento.setMinimumSize(dimensionCampo);	departamento.setPreferredSize(dimensionCampo);	this.add(departamento, c);
-		
-			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabelDoble; c.weighty = pesoYLabel; c.insets = insetLabelDobleDer;
-		
-		label = new JLabel("Piso");	label.setFont(fuenteLabelCampo);	c.gridx = 3; c.gridy = 8;	this.add(label, c);
+		label = new JLabel("Piso");	label.setFont(fuenteLabelCampo);	c.gridx = 2; c.gridy = 8;	this.add(label, c);
 		
 			c.anchor = GridBagConstraints.CENTER; c.insets = insetLabelError;
 		
-		labelPisoFormatoInvalido = new JLabel(" Formato inválido ");	labelPisoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 8; 
+		labelPisoFormatoInvalido = new JLabel(" Formato inválido ");	labelPisoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 2; c.gridy = 8; 
 		labelPisoFormatoInvalido.setOpaque(true);	labelPisoFormatoInvalido.setBackground(Color.decode("#cc0000")); labelPisoFormatoInvalido.setForeground(Color.WHITE);
 		this.add(labelPisoFormatoInvalido, c); labelPisoFormatoInvalido.setVisible(false);	//Empieza invisible
 	
 			c.anchor = GridBagConstraints.SOUTHWEST;
 		
-			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleDer;
+			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleIzq;
 		
 		piso = new JTextField();	piso.setFont(fuenteLabelCampo);	piso.setBorder(bordeCampo);	piso.setDocument(new JTextFieldLimitado(3));
 		piso.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
@@ -533,9 +499,36 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			  }
 		});
 		fondoJTextField = new TextPrompt("Ingrese el piso", piso); fondoJTextField.setForeground(Color.GRAY);
-//		piso.setPreferredSize(new Dimension(180,20));
-//		piso.setMinimumSize(new Dimension(180,20));
-		c.gridx = 3; c.gridy = 9;	piso.setMinimumSize(dimensionCampo);	piso.setPreferredSize(dimensionCampo);	this.add(piso, c);
+		c.gridx = 2; c.gridy = 9;	piso.setMinimumSize(dimensionCampo);	piso.setPreferredSize(dimensionCampo);	this.add(piso, c);
+		
+			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabelDoble; c.weighty = pesoYLabel; c.insets = insetCampoDobleDer; c.gridwidth = 1;
+		
+		label = new JLabel("Departamento");	label.setFont(fuenteLabelCampo);	c.gridx = 3; c.gridy = 8;	this.add(label, c);
+		
+			c.anchor = GridBagConstraints.EAST; c.insets = insetLabelDepartamentoInvalido;
+			
+		labelDepartamentoFormatoInvalido = new JLabel(" Formato inv ");	labelDepartamentoFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; c.gridy = 8; 
+		labelDepartamentoFormatoInvalido.setOpaque(true);	labelDepartamentoFormatoInvalido.setBackground(Color.decode("#cc0000")); labelDepartamentoFormatoInvalido.setForeground(Color.WHITE);
+		this.add(labelDepartamentoFormatoInvalido, c); labelDepartamentoFormatoInvalido.setVisible(false);	//Empieza invisible
+	
+			c.anchor = GridBagConstraints.SOUTHWEST;
+		
+			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampoDoble; c.weighty = pesoYCampo; c.insets = insetCampoDobleDer;
+		
+		departamento = new JTextField();	departamento.setFont(fuenteLabelCampo);	departamento.setBorder(bordeCampo);	departamento.setDocument(new JTextFieldLimitado(5)); 
+		departamento.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
+			  public void changedUpdate(DocumentEvent e) {
+				  labelDepartamentoFormatoInvalido.setVisible(false);
+			  }
+			  public void removeUpdate(DocumentEvent e)  {
+				  labelDepartamentoFormatoInvalido.setVisible(false);
+			  }
+			  public void insertUpdate(DocumentEvent e) {
+				  labelDepartamentoFormatoInvalido.setVisible(false);
+			  }
+		});
+		fondoJTextField = new TextPrompt("Ingrese el dpto.", departamento); fondoJTextField.setForeground(Color.GRAY);
+		c.gridx = 3; c.gridy = 9;	departamento.setMinimumSize(dimensionCampo);	departamento.setPreferredSize(dimensionCampo);	this.add(departamento, c);
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
@@ -869,13 +862,33 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			resultado = false;
 			labelCodigoPostalFormatoInvalido.setVisible(true);
 		}
-		if(esTotalmenteNumero(cuit)) {
+		if(!esValidoCuit(cuit)) {
 			resultado = false;
 			labelCuitFormatoInvalido.setVisible(true);
 		}
 		
 	
 	return resultado;
+	}
+
+	private boolean esValidoCuit(JTextField cuit2) {
+			
+			try {
+				System.out.println(cuit.getText(3, 8));	//DNI
+				
+				if(esTotalmenteNumero(cuit2)) {					
+					if(cuit.getText(3, 8).equals(numeroDocumento.getText())) {	//Si coincide con el número de documento
+						
+						return true;
+					}
+				}
+				
+			} catch (BadLocationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		
+		return false;
 	}
 
 	private boolean esValidoFechaNacimiento(JTextField fechaNacimiento2) {
@@ -899,7 +912,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 
 	private boolean contieneCaracteresEspeciales(JTextField field) {	//TRUE: La cadena tiene caracteres especiales / FALSE: La cadena NO tiene caracteres especiales
 
-			Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+			Pattern p = Pattern.compile("[^a-z0-9. ]", Pattern.CASE_INSENSITIVE);
 			Matcher m = p.matcher(field.getText());
 			boolean b = m.find();
 
@@ -932,11 +945,6 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		Pattern patron = Pattern.compile(regex);
 
 		Matcher matcher = patron.matcher(email.getText());
-		
-//		if(email2.getText().matches("^(.+)@(.+)$")) {	//TODO: Dominio (@)
-//			
-//			return false;
-//		}
 		
 		return matcher.matches();
 	}
