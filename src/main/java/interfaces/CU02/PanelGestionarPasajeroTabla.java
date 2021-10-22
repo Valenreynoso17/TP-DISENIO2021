@@ -175,7 +175,7 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		this.filtros = filtros;
 		this.cantResultados = cantResultados;
 		
-		if (((double) cantResultados) / tamPagina > paginaActual) paginaActual = 1;
+		if (cantResultados / ((double) tamPagina) < paginaActual) paginaActual = 1;
 		
 		actualizarTabla();
 		

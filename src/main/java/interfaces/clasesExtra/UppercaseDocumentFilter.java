@@ -14,6 +14,6 @@ public class UppercaseDocumentFilter extends DocumentFilter {
     @Override
     public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
         throws BadLocationException {
-        fb.replace(offset, length, text.toUpperCase(), attrs);
+        if (length < 10) fb.replace(offset, length, text.toUpperCase(), attrs);
     }
 }
