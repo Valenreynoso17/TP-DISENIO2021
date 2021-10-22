@@ -1052,7 +1052,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	
 public PasajeroDTO crearDTOS() {
 		
-		DireccionDTO direccionDto = new DireccionDTO(null,direccion.getText(), departamento.getText(), piso.getText(), ((LocalidadDTO) localidad.getSelectedItem()).getId(), Integer.valueOf(codigoPostal.getText()));
+		DireccionDTO direccionDto = new DireccionDTO(null,direccion.getText(), departamento.getText(), piso.getText(), ((LocalidadDTO) localidad.getSelectedItem()).getId(), codigoPostal.getText());
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 		LocalDate fechaNac = LocalDate.parse(fechaNacimiento.getText(), formatter);

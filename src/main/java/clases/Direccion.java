@@ -21,14 +21,14 @@ public class Direccion {
 	private String piso;
 	
 	@Column(name = "codigopostal", nullable = false, unique = false)
-	private Integer codigoPostal;
+	private String codigoPostal;
 
 	@ManyToOne
 	@JoinColumn(name = "idlocalidad", referencedColumnName = "id")
 	private Localidad localidad;
 	
 	
-	public Direccion(Integer id, String direccionDomicilio, String departamento, String piso, Integer codigoPostal,
+	public Direccion(Integer id, String direccionDomicilio, String departamento, String piso, String codigoPostal,
 			Localidad localidad) {
 		super();
 		this.id = id;
@@ -69,7 +69,7 @@ public class Direccion {
 		return piso;
 	}
 
-	public Integer getCodigoPostal() {
+	public String getCodigoPostal() {
 		return codigoPostal;
 	}
 
@@ -93,7 +93,7 @@ public class Direccion {
 		this.piso = piso;
 	}
 
-	public void setCodigoPostal(Integer codigoPostal) {
+	public void setCodigoPostal(String codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
 
