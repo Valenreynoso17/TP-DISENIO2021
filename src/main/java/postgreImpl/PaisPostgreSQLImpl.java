@@ -31,9 +31,13 @@ public class PaisPostgreSQLImpl implements PaisDAO {
 		return listaPaises;
 	}
 
-	public Pais buscar(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public Pais buscarPorId(Integer id) {
+		Session sesion = sessionFactory.openSession();
+		
+		Pais pais = sesion.load(Pais.class, id);
+		
+		return pais;
 	}
 	
 	
