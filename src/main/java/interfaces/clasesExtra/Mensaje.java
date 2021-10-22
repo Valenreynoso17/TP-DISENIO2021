@@ -54,6 +54,8 @@ public class Mensaje extends JFrame{
 	
 	public void mostrar(final PanelPermiteMensajes panel, JFrame frame) {
 		
+		frame.setEnabled(false);	//Para que solo se pueda clickear el mensaje
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 240);
 		contentPane = new JPanel();
@@ -93,6 +95,7 @@ public class Mensaje extends JFrame{
 		botonDerecho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				frame.setEnabled(true);
 				dispose();
 				panel.confirmoElMensaje(id);
 			}
@@ -110,6 +113,7 @@ public class Mensaje extends JFrame{
 			botonIzquierdo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
+					frame.setEnabled(true);
 					dispose();
 					panel.confirmoCancelar(id);
 				}

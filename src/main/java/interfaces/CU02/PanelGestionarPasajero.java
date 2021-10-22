@@ -45,6 +45,10 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 														+ " seleccionados. ¿Desea agregar un nuevo pasajero?</p><html>";
 	private Mensaje mensajeNoExistePasajeroBuscar = new Mensaje(2, textoMensajeNoExistePasajeroBuscar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
+	private String textoModificarPasajero = 	"<html><p>Modificar pasajero en proximas versiones</p><html>";
+	
+	private Mensaje mensajeModificarPasajero = new Mensaje(4, textoModificarPasajero, TipoMensaje.ERROR, "Aceptar", null);
+	
 	private String textoMensajeNoExistePasajeroSiguiente = "<html><p>No seleccionó ningún pasajero. ¿Desea agregar un nuevo pasajero?";
 	private Mensaje mensajeNoExistePasajeroSiguiente = new Mensaje(3, textoMensajeNoExistePasajeroSiguiente, TipoMensaje.CONFIRMACION, "Si", "No");
 	
@@ -142,6 +146,8 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 			public void actionPerformed(ActionEvent e) {
 				try {
 					PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();
+					
+					mensajeModificarPasajero.mostrar(getPanel(), frame);
 				}
 				catch (PasajeroNoSeleccionadoException exc) {
 					mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
