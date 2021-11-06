@@ -151,18 +151,9 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);
 	private Font fuenteLabelError = new Font("SourceSansPro", Font.PLAIN, 10);
 	
-	private RoundedBorder bordeCampo = new RoundedBorder(5, Color.decode("#BDBDBD"));
-	
-//	private ComboBoxRenderer rendererListasDesplegables = new ComboBoxRenderer();
-//	
-//	ComboBoxEditor renderer = new ComboBoxEditor();
+	private RoundedBorder bordeCampo = new RoundedBorder(5, Color.BLACK);
 	
 	private TextPrompt fondoJTextField;
-	
-//	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
-//	
-//	private EstacionGestionar frameAnterior;
-//	private EstacionAltaGrafo frameSiguiente;
 	
 	public PanelAltaPasajeroDatos(FrameAltaPasajero frame) {
 		
@@ -257,7 +248,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		tipoDocumento = new JComboBox<TipoDocumento>();	tipoDocumento.setFont(fuenteLabelCampo);	tipoDocumento.setBackground(Color.white);	
+		tipoDocumento = new JComboBox<TipoDocumento>();	tipoDocumento.setFont(fuenteLabelCampo);	
+		tipoDocumento.setBackground(Color.white);	
 		tipoDocumento.addItemListener(event -> {
 			
 			labelNumeroDocumentoFormatoInvalido.setVisible(false);
@@ -593,7 +585,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 			
 		provincia = new JComboBox<ProvinciaDTO>(provinciaModel);	//provincias.toArray(new ProvinciaDTO[provincias.size()])
-		provincia.setFont(fuenteLabelCampo);	provincia.setBackground(Color.white);	
+		provincia.setFont(fuenteLabelCampo);	provincia.setBackground(Color.white);		
 		provincia.addItemListener(event -> {
 			
 			labelProvinciaVacio.setVisible(false);
@@ -742,7 +734,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 			c.fill = GridBagConstraints.BOTH; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampo; c.gridwidth = 2;
 		
-		posicionIVA = new JComboBox<PosicionFrenteIva>();	posicionIVA.setFont(fuenteLabelCampo);	posicionIVA.setBackground(Color.white);	
+		posicionIVA = new JComboBox<PosicionFrenteIva>();	
+		posicionIVA.setFont(fuenteLabelCampo);	posicionIVA.setBackground(Color.white);		
 		posicionIVA.addItemListener(event -> {
 			if(posicionIVA.getSelectedItem().equals("RESPONSABLE INSCRIPTO")) {	//Cuando se cambia de Pais la provincia queda nula y sin provincia el metodo getSelectedItem() da null
 	            seleccionoResponsableInscripto = true;

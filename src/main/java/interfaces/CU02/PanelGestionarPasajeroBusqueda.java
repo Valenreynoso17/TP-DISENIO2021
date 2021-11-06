@@ -51,7 +51,7 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 	private Font fuenteLabelCampo =new Font("SourceSansPro", Font.PLAIN, 14);
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	
-	private RoundedBorder bordeCampo = new RoundedBorder(5, Color.decode("#BDBDBD"));
+	private RoundedBorder bordeCampo = new RoundedBorder(5, Color.BLACK);
 	
 //	private ComboBoxRenderer rendererListasDesplegables = new ComboBoxRenderer();
 //	

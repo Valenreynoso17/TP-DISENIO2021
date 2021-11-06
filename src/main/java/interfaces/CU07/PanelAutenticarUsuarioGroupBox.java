@@ -1,4 +1,4 @@
-package main.java.interfaces.CU01;
+package main.java.interfaces.CU07;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,7 +36,7 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 	private Insets insetLabelError = new Insets(0,0,2,90);
 
 	
-	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 20);	
+	private Font fuenteGroupBox = new Font("Iniciar Sesión", Font.PLAIN, 20);	
 	private Font fuenteLabelCampo = new Font("SourceSansPro", Font.PLAIN, 14);
 	private Font fuenteLabelError = new Font("SourceSansPro", Font.PLAIN, 10);
 	
