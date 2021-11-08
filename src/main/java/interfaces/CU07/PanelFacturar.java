@@ -1,4 +1,4 @@
-package main.java.interfaces.CU05;
+package main.java.interfaces.CU07;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,10 +25,10 @@ import main.java.interfaces.clasesExtra.RoundedBorder;
 
 
 
-public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermiteMensajes{
+public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	
-	private PanelMostrarEstadoHabitacionesGroupBox panelMostrarEstadoHabitacionesGroupBox = new PanelMostrarEstadoHabitacionesGroupBox();
-	private PanelResultadosDeBusquedaHabitacionesGroupBox panelResultadosDeBusquedaHabitacionesGroupBox = new PanelResultadosDeBusquedaHabitacionesGroupBox();
+	private PanelFacturarGroupBox panelFacturarGroupBox = new PanelFacturarGroupBox();
+	private PanelResultadosDeBusquedaFacturarGroupBox panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox();
 	
 	private JButton buscar;
 	private JButton siguiente;
@@ -53,12 +53,12 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	private Insets insetPanelTabla = new Insets(0,30,0,30);
 	
 	private FrameMenuPrincipal frameAnterior;
-	private FrameMuestraEstadoHabitaciones frameActual;
+	private FrameFacturar frameActual;
 	private JFrame frameSiguiente;	//Dependiendo quien lo llame, cambia el frame que se mostrara al presionar "Siguiente"
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
-	public PanelMostrarEstadoHabitaciones(final FrameMuestraEstadoHabitaciones frame) {
+	public PanelFacturar(final FrameFacturar frame) {
 		
 		this.frameActual = frame;
 		
@@ -69,7 +69,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		
 		c.insets = insetPanelBusqueda;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 0;	c.gridwidth = 3;
-		c.weightx = 0.1; c.weighty = 0.1;			this.add(panelMostrarEstadoHabitacionesGroupBox, c);
+		c.weightx = 0.1; c.weighty = 0.1;			this.add(panelFacturarGroupBox, c);
 		
 		c.weightx = 0.0; c.weighty = 0.0;	
 		c.gridwidth = 1;
@@ -84,18 +84,18 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		buscar.setBorder(bordeBoton);
 		buscar.addActionListener(e -> {
 			
-			try{
-					this.panelMostrarEstadoHabitacionesGroupBox.inputNoEsVacia();
-////				gestorPasajero.validarDatosBusqueda(filtros);	//TODO: Buscar si la habitacion tiene facturas y conforme a eso tirar las excepciones
-////				Integer cantResultados = gestorPasajero.buscarCantidadPasajeros(filtros);
+//			try{
+//					this.panelMostrarEstadoHabitacionesGroupBox.inputNoEsVacia();
+//////				gestorPasajero.validarDatosBusqueda(filtros);	//TODO: Buscar si la habitacion tiene facturas y conforme a eso tirar las excepciones
+//////				Integer cantResultados = gestorPasajero.buscarCantidadPasajeros(filtros);
+//////				
+//////				panelGestionarPasajeroTabla.buscarResultados(filtros, cantResultados);
 ////				
-////				panelGestionarPasajeroTabla.buscarResultados(filtros, cantResultados);
+//			}
+//			catch(InputVacioException exc) {
 //				
-			}
-			catch(InputVacioException exc) {
-				
-				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelIncompleto();
-			}
+//				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelIncompleto();
+//			}
 //			catch (HabitacionInexistenteException exc) {
 //				mensajeHabitacionInexistente.mostrar(getPanel(), frame);
 //				exc.printStackTrace();
@@ -110,7 +110,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		
 		c.insets = insetPanelTabla;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 2;	c.gridwidth = 3;
-		c.weightx = 0.8; c.weighty = 0.8;			this.add(panelResultadosDeBusquedaHabitacionesGroupBox, c);
+		c.weightx = 0.8; c.weighty = 0.8;			this.add(panelResultadosDeBusquedaFacturarGroupBox, c);
 		c.weightx = 0.1; c.weighty = 0.1;	
 		c.gridwidth = 1;
 		c.fill = GridBagConstraints.NONE;
@@ -140,7 +140,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.apretoSiguiente();
+				//frame.apretoSiguiente();
 				//frame.dispose();
 				//frameSiguiente = new FrameIngresarDatosPago();
 			}

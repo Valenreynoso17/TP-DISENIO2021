@@ -1,4 +1,4 @@
-package main.java.interfaces.CU05;
+package main.java.interfaces.CU07;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,7 +19,7 @@ import javax.swing.event.DocumentListener;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
-public class PanelResultadosDeBusquedaGroupBox extends JPanel{
+public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	
 	private JLabel label;
 	
@@ -27,7 +27,7 @@ public class PanelResultadosDeBusquedaGroupBox extends JPanel{
 	private Font fuenteLabelCampo = new Font("SourceSansPro", Font.PLAIN, 14);
 	private Font fuenteLabelError = new Font("SourceSansPro", Font.PLAIN, 10);
 	
-	public PanelResultadosDeBusquedaGroupBox() {
+	public PanelResultadosDeBusquedaFacturarGroupBox() {
 		
 		this.setBackground(Color.white);
 		
