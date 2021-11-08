@@ -25,7 +25,6 @@ public class PanelPaginacion extends JPanel {
 		
 		//this.add(new Label("Paginacion"));
 		
-		System.out.println("DONE");
 	}
 	
 	public void refrescarCantidadResultados(Integer cantResultados, Integer paginaActual) {
