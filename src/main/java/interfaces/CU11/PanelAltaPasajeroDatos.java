@@ -52,18 +52,6 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	
 	private GestorPaisProvincia gestorPP;
 	
-//	private DocumentFilter filter = new UppercaseDocumentFilter();	//Para que se ingrese en mayúsculas
-//	
-//	private AbstractDocument apellidoDoc;
-//	private AbstractDocument nombreDoc;
-//	private AbstractDocument numeroDocumentoDoc;
-//	private AbstractDocument emailDoc;
-//	private AbstractDocument ocupacionDoc;
-//	private AbstractDocument direccionDoc;
-//	private AbstractDocument departamentoDoc;
-//	private AbstractDocument pisoDoc;
-//	private AbstractDocument codigoPostalDoc;
-	
 	private List<PaisDTO> paises;
 	private List<ProvinciaDTO> provincias;
 	private List<LocalidadDTO> localidades;
