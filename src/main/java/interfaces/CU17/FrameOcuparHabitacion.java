@@ -11,6 +11,8 @@ import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
 public class FrameOcuparHabitacion extends FrameMuestraEstadoHabitaciones {
 
 	private JPanel contentPane;
+	
+	private FrameOcuparHabitacionConPasajeros frameSiguiente;
 
 	public FrameOcuparHabitacion() {
 		super("Sistema Hotel Premier");
@@ -28,7 +30,7 @@ public class FrameOcuparHabitacion extends FrameMuestraEstadoHabitaciones {
 	public void apretoSiguiente() {
 		
 		this.dispose();
-		//frameConfirmarDatosHabitacion = new FrameConfirmarDatosHabitacion();
+		frameSiguiente = new FrameOcuparHabitacionConPasajeros();
 	}
 
 }

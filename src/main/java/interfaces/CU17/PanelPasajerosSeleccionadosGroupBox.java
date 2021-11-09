@@ -1,4 +1,4 @@
-package main.java.interfaces.CU05;
+package main.java.interfaces.CU17;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,8 +9,8 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
+
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,46 +19,31 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.CU02.PanelPaginacion;
+import main.java.interfaces.CU07.FrameFacturar;
+import main.java.interfaces.CU07.FrameFacturarANombreDeUnTercero;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
-import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
+import main.java.interfaces.clasesExtra.ModeloPasajerosSeleccionadosOcuparHabitacion;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
-public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
-	
-	private JButton facturarANombreDeUnTercero;
+public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 	
 	private JTable tabla;
-	private ModeloTablaPasajeros miModelo;
+	private ModeloPasajerosSeleccionadosOcuparHabitacion miModelo;
 	private PanelPaginacion paginacion;
 	
 	private Vector filaSeleccionada = null;
 	private Integer nroFilaSeleccionada;
 	private JScrollPane tableContainer;
 	
-	private Insets insetTabla = new Insets(15, 100, 15, 100);
+	private Insets insetTabla = new Insets(5, 20, 5, 20);
 
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
-	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
-	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
-	
-	private Insets insetPanelBusqueda = new Insets(30,30,5,30);
-	private Insets insetPanelTabla = new Insets(0,30,0,30);
-	
-	private FrameMenuPrincipal frameAnterior;
-	private FrameMuestraEstadoHabitaciones frameActual;
-	private JFrame frameSiguiente;	//Dependiendo quien lo llame, cambia el frame que se mostrara al presionar "Siguiente"
-	
-	private Dimension dimensionBoton = new Dimension(90, 33);
-	
-	private GestorPasajero gestorPasajero;
-	
-	final private Integer tamPagina = 10;
-	
-	public PanelResultadosDeBusquedaHabitacionesGroupBox() {
+	public PanelPasajerosSeleccionadosGroupBox() {
 		
 		this.setBackground(Color.white);
 		
@@ -67,7 +52,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		miModelo = new ModeloTablaPasajeros();
+		miModelo = new ModeloPasajerosSeleccionadosOcuparHabitacion();
 		
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
@@ -115,5 +100,4 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		c.gridwidth = 1;
 		
 	}
-		
 }

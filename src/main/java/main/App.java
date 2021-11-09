@@ -5,6 +5,8 @@ import main.java.interfaces.CU04.FrameConfirmarDatosHabitacion;
 import main.java.interfaces.CU04.FrameReservaANombreDe;
 import main.java.interfaces.CU04.FrameReservarHabitacion;
 import main.java.interfaces.CU07.FrameFacturar;
+import main.java.interfaces.CU07.FrameFacturarANombreDeUnTercero;
+import main.java.interfaces.CU17.FrameMenuOcuparHabitacion;
 import main.java.interfaces.CU17.FrameOcuparHabitacion;
 import main.java.interfaces.CU18.FrameBuscarFacturasHabitacion;
 
@@ -15,7 +17,7 @@ public class App {
 		
 			//FrameBuscarFacturasHabitacion fBH = new FrameBuscarFacturasHabitacion();
 		
-			//FrameOcuparHabitacion fOH = new FrameOcuparHabitacion();
+			FrameOcuparHabitacion fOH = new FrameOcuparHabitacion();
 		
 			//FrameConfirmarDatosHabitacion fCDH = new FrameConfirmarDatosHabitacion();
 		
@@ -23,7 +25,11 @@ public class App {
 		
 			//FrameReservaANombreDe fRAND = new FrameReservaANombreDe();
 		
-			FrameFacturar fF = new FrameFacturar();
+			//FrameFacturar fF = new FrameFacturar();
+		
+			//FrameFacturarANombreDeUnTercero fFANDUT = new FrameFacturarANombreDeUnTercero();
+		
+			//FrameMenuOcuparHabitacion fMOH = new FrameMenuOcuparHabitacion();
 	}
 
 }

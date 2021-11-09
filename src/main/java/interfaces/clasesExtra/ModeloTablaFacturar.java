@@ -24,7 +24,7 @@ public class ModeloTablaFacturar extends DefaultTableModel{
 		      if (columna == 1) return String.class;
 		      if (columna == 2) return TipoDocumento.class;
 		      if (columna == 3) return String.class;
-		      if (columna == 3) return LocalDate.class;
+		      if (columna == 4) return LocalDate.class;
 		      return Object.class;
 		   }
 		   

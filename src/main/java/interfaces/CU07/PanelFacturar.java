@@ -28,7 +28,7 @@ import main.java.interfaces.clasesExtra.RoundedBorder;
 public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	
 	private PanelFacturarGroupBox panelFacturarGroupBox = new PanelFacturarGroupBox();
-	private PanelResultadosDeBusquedaFacturarGroupBox panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox();
+	private PanelResultadosDeBusquedaFacturarGroupBox panelResultadosDeBusquedaFacturarGroupBox;
 	
 	private JButton buscar;
 	private JButton siguiente;
@@ -108,6 +108,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		c.gridx = 1; c.gridy = 1;
 		this.add(buscar, c);
 		
+		panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox(frame);
 		c.insets = insetPanelTabla;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 2;	c.gridwidth = 3;
 		c.weightx = 0.8; c.weighty = 0.8;			this.add(panelResultadosDeBusquedaFacturarGroupBox, c);
