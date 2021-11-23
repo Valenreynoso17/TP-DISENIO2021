@@ -15,6 +15,18 @@
 		<mapping class="main.java.clases.Provincia" />
 		<mapping class="main.java.clases.PersonaJuridica" />
 		<mapping class="main.java.clases.ResponsableDePago" />
+		<mapping class="main.java.clases.Habitacion" />
+		<mapping class="main.java.clases.TipoHabitacion" />
+		<mapping class="main.java.clases.Reserva" />
+		<mapping class="main.java.clases.FueraDeServicio" />
+		<mapping class="main.java.clases.Ocupacion" />
+		<mapping class="main.java.clases.ItemOcupacion" />
+		<mapping class="main.java.clases.Consumo" />
+		<mapping class="main.java.clases.ItemConsumo" />
+		<mapping class="main.java.clases.ItemFactura" />
+		<mapping class="main.java.clases.Factura" />
+		<mapping class="main.java.clases.DocumentoLegal" />
+		<mapping class="main.java.clases.DatosResponsableDePago" />
 
 	</session-factory>
 </hibernate-configuration>
