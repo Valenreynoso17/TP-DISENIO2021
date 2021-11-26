@@ -29,7 +29,7 @@ public class PasajeroPostgreSQLImpl implements PasajeroDAO {
 		
 		sesion.beginTransaction();
 		
-		sesion.saveOrUpdate(pasajero.getDireccion());
+		//sesion.saveOrUpdate(pasajero.getDireccion());
 		sesion.saveOrUpdate(pasajero);
 		
 		sesion.getTransaction().commit();
