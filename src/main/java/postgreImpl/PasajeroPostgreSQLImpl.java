@@ -45,31 +45,34 @@ public class PasajeroPostgreSQLImpl implements PasajeroDAO {
 		int nroFiltros = 0;
 		
 		// Agrega los filtros necesarios a la consulta
-		if (filtros.getNombre() != null) {
-			stringQuery += "WHERE p.nombre LIKE :nombre ";
+		if (filtros != null) {
+			if (filtros.getNombre() != null) {
+				stringQuery += "WHERE p.nombre LIKE :nombre ";
+				
+				nroFiltros++;
+			}
+			if (filtros.getApellido() != null) {
+				if (nroFiltros == 0) stringQuery += "WHERE p.apellido LIKE :apellido ";
+				else stringQuery += "AND p.apellido LIKE :apellido ";
+				
+				nroFiltros++;
+			}
+			if (filtros.getTipoDocumento() != null) {
+				if (nroFiltros == 0) stringQuery += "WHERE p.tipoDocumento = :tipodoc ";
+				else stringQuery += "AND p.tipoDocumento = :tipodoc ";
+				
+				nroFiltros++;
+			}
+			if (filtros.getNumeroDoc() != null) {
+				if (nroFiltros == 0) stringQuery += "WHERE p.documento = :documento ";
+				else stringQuery += "AND p.documento = :documento ";
+			}		
 			
-			nroFiltros++;
-		}
-		if (filtros.getApellido() != null) {
-			if (nroFiltros == 0) stringQuery += "WHERE p.apellido LIKE :apellido ";
-			else stringQuery += "AND p.apellido LIKE :apellido ";
+			stringQuery += "ORDER BY " + atributoOrden.getNombreAtributo() + " ";
 			
-			nroFiltros++;
+			if (orden.equals(SortOrder.DESCENDING)) stringQuery += "DESC";
 		}
-		if (filtros.getTipoDocumento() != null) {
-			if (nroFiltros == 0) stringQuery += "WHERE p.tipoDocumento = :tipodoc ";
-			else stringQuery += "AND p.tipoDocumento = :tipodoc ";
-			
-			nroFiltros++;
-		}
-		if (filtros.getNumeroDoc() != null) {
-			if (nroFiltros == 0) stringQuery += "WHERE p.documento = :documento ";
-			else stringQuery += "AND p.documento = :documento ";
-		}		
 		
-		stringQuery += "ORDER BY " + atributoOrden.getNombreAtributo() + " ";
-		
-		if (orden.equals(SortOrder.DESCENDING)) stringQuery += "DESC";
 		
 		
 		Session sesion = sessionFactory.openSession();
@@ -78,10 +81,12 @@ public class PasajeroPostgreSQLImpl implements PasajeroDAO {
 		TypedQuery<Pasajero> q = sesion.createQuery(stringQuery, Pasajero.class);
 		
 		// Setea los parametros necesarios para hacer la busqueda
-		if (filtros.getNombre() != null) q.setParameter("nombre", filtros.getNombre() + "%");
-		if (filtros.getApellido() != null) q.setParameter("apellido", filtros.getApellido() + "%"); 
-		if (filtros.getTipoDocumento() != null) q.setParameter("tipodoc", filtros.getTipoDocumento());
-		if (filtros.getNumeroDoc() != null) q.setParameter("documento", filtros.getNumeroDoc());
+		if (filtros != null) {
+			if (filtros.getNombre() != null) q.setParameter("nombre", filtros.getNombre() + "%");
+			if (filtros.getApellido() != null) q.setParameter("apellido", filtros.getApellido() + "%"); 
+			if (filtros.getTipoDocumento() != null) q.setParameter("tipodoc", filtros.getTipoDocumento());
+			if (filtros.getNumeroDoc() != null) q.setParameter("documento", filtros.getNumeroDoc());
+		}
 		
 		
 		// Setea la cantidad de resultados y el numero de primer resultado

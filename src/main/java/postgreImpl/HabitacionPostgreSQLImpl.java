@@ -1,5 +1,9 @@
 package main.java.postgreImpl;
 
+import java.util.List;
+
+import javax.persistence.TypedQuery;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -34,6 +38,20 @@ public class HabitacionPostgreSQLImpl implements HabitacionDAO {
 		sesion.close();
 		
 		return tipo;
+	}
+
+	@Override
+	public List<Habitacion> buscarHabitaciones() {
+		Session sesion = sessionFactory.openSession();
+		
+		String stringQuery = "SELECT h FROM Habitacion h ";	
+		
+		TypedQuery<Habitacion> q = sesion.createQuery(stringQuery, Habitacion.class);
+		List<Habitacion> habitaciones = q.getResultList();
+		
+		sesion.close();
+		
+		return habitaciones;
 	}
 
 }
