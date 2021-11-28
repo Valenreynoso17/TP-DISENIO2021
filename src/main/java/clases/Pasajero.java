@@ -54,7 +54,7 @@ public class Pasajero {
 	@JoinColumn(name = "idPais", referencedColumnName = "id")
 	private Pais nacionalidad;
 
-	@OneToOne(optional = false)
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "iddireccion", referencedColumnName = "id")
 	private Direccion direccion; 
 	
