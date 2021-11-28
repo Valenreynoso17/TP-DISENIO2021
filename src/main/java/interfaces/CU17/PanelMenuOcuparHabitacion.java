@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+
+import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelMenuOcuparHabitacion extends JPanel{
@@ -25,6 +27,9 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 	
 	//private FrameAutenticarUsuario frameAnterior;
 	private FrameMenuOcuparHabitacion frameActual;
+	private FrameMenuPrincipal frameMenuPrincipal;
+	private FrameOcuparHabitacion frameOcuparHabitacion;
+	private FrameOcuparHabitacionConPasajeros frameAnterior;
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 20);	
@@ -61,6 +66,8 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		cargarOtroPasajero.setBorder(bordeBoton);
 		cargarOtroPasajero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;	
@@ -75,6 +82,9 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		cargarOtraHabitacion.setBorder(bordeBoton);
 		cargarOtraHabitacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				frameActual.dispose();
+				frameOcuparHabitacion = new FrameOcuparHabitacion();
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
@@ -89,6 +99,9 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		salir.setBorder(bordeBoton);
 		salir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				frameActual.dispose();
+				frameMenuPrincipal = new FrameMenuPrincipal();
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;	c.insets = new Insets(0,0,30,0);
