@@ -208,6 +208,9 @@ public class Pasajero {
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
+
+
+	
 	
 	
 	
