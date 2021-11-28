@@ -1,4 +1,4 @@
-package main.java.interfaces.CU02;
+package main.java.interfaces.CU17;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,9 +26,9 @@ import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 import main.java.interfaces.clasesExtra.UppercaseDocumentFilter;
 
-public class PanelGestionarPasajeroBusqueda extends JPanel{
+public class PanelOcuparHabitacionBusqueda extends JPanel{
 	
-	private FrameGestionarPasajero frameActual;
+	private FrameOcuparHabitacionConPasajeros frameActual;
 	
 	private JComboBox<TipoDocumento> tipoDocumento;
 	
@@ -60,7 +60,7 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 	private TextPrompt fondoJTextField;
 	//cuadradito de arriba
 
-	public PanelGestionarPasajeroBusqueda(FrameGestionarPasajero frame) {
+	public PanelOcuparHabitacionBusqueda(FrameOcuparHabitacionConPasajeros frame) {
 		
 		this.frameActual = frame;
 		

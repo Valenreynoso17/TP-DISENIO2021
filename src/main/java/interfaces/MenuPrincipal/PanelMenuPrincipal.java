@@ -17,6 +17,10 @@ import main.java.enums.TipoMensaje;
 import main.java.interfaces.CU01.FrameAutenticarUsuario;
 import main.java.interfaces.CU01.PanelAutenticarUsuarioGroupBox;
 import main.java.interfaces.CU02.FrameGestionarPasajero;
+import main.java.interfaces.CU04.FrameReservarHabitacion;
+import main.java.interfaces.CU07.FrameFacturar;
+import main.java.interfaces.CU17.FrameOcuparHabitacion;
+import main.java.interfaces.CU18.FrameBuscarFacturasHabitacion;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
@@ -51,11 +55,14 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 	private String textoMensajeProximamente = "<html><p>Próximamente...</p><html>";
 	private Mensaje mensajeProximamente = new Mensaje(3, textoMensajeProximamente, TipoMensaje.ERROR, "Aceptar", null);
 	
-
-
 	private FrameAutenticarUsuario frameAnterior;
 	private FrameMenuPrincipal frameActual;
+	
 	private FrameGestionarPasajero frameGestionarPasajero;
+	private FrameReservarHabitacion frameReservarHabitacion;
+	private FrameOcuparHabitacion frameOcuparHabitacion;
+	private FrameFacturar frameFacturar;
+	private FrameBuscarFacturasHabitacion frameIngresarPago;
 	
 	public PanelMenuPrincipal(final FrameMenuPrincipal frame) {
 		
@@ -116,7 +123,8 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				mensajeEtapa8.mostrar(getPanel(), frame);
+				frame.dispose();
+				frameReservarHabitacion = new FrameReservarHabitacion();
 			}
 		});
 		c.anchor = GridBagConstraints.EAST; c.insets = izq;
@@ -129,7 +137,8 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				mensajeEtapa8.mostrar(getPanel(), frame);
+				frame.dispose();
+				frameOcuparHabitacion = new FrameOcuparHabitacion();
 			}
 		});
 		button.setBorder(bordeBoton);
@@ -176,7 +185,8 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				mensajeEtapa8.mostrar(getPanel(), frame);
+				frameActual.dispose();
+				frameFacturar = new FrameFacturar();
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
@@ -221,7 +231,8 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				mensajeEtapa8.mostrar(getPanel(), frame);
+				frame.dispose();
+				frameIngresarPago = new FrameBuscarFacturasHabitacion();
 			}
 		});
 		c.anchor = GridBagConstraints.WEST; c.insets = derF;

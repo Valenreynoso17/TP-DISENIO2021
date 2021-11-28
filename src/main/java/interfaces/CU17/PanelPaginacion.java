@@ -1,4 +1,4 @@
-package main.java.interfaces.CU02;
+package main.java.interfaces.CU17;
 
 import java.awt.Color;
 import java.awt.Label;
