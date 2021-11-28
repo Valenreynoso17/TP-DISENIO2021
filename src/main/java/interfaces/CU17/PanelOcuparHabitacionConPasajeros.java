@@ -51,7 +51,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	
 	private Mensaje mensajeModificarPasajero = new Mensaje(4, textoModificarPasajero, TipoMensaje.ERROR, "Aceptar", null);
 	
-	private String textoMensajeNoExistePasajeroSiguiente = "<html><p>No seleccionó ningún pasajero. ¿Desea agregar un nuevo pasajero?";
+	private String textoMensajeNoExistePasajeroSiguiente = "<html><p>No seleccionó ningún pasajero. ¿Desea agregar un nuevo pasajero?</p><html>";
 	private Mensaje mensajeNoExistePasajeroSiguiente = new Mensaje(3, textoMensajeNoExistePasajeroSiguiente, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private JButton buscar;
@@ -160,16 +160,18 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		siguiente.setBorder(bordeBoton);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					PasajeroDTO pasajero = panelOcuparHabitacionTabla.pasajeroSeleccionado();
-					
-					mensajeModificarPasajero.mostrar(getPanel(), frame);
-				}
-				catch (PasajeroNoSeleccionadoException exc) {
-					mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
-				}
 				
-				//mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
+				
+//				try {
+//					PasajeroDTO pasajero = panelOcuparHabitacionTabla.pasajeroSeleccionado();
+//					
+//					mensajeModificarPasajero.mostrar(getPanel(), frame);
+//				}
+//				catch (PasajeroNoSeleccionadoException exc) {
+//					mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
+//				}
+//				
+//				//mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);

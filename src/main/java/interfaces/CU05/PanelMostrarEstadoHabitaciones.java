@@ -14,8 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import main.java.enums.TipoMensaje;
-import main.java.excepciones.HabitacionInexistenteException;
-import main.java.excepciones.HabitacionSinFacturasPendientesException;
+import main.java.excepciones.FechaInvalidaException;
 import main.java.excepciones.InputVacioException;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
@@ -86,6 +85,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			
 			try{
 					this.panelMostrarEstadoHabitacionesGroupBox.inputNoEsVacia();
+					this.panelMostrarEstadoHabitacionesGroupBox.inputEsValida();
 ////				gestorPasajero.validarDatosBusqueda(filtros);	//TODO: Buscar si la habitacion tiene facturas y conforme a eso tirar las excepciones
 ////				Integer cantResultados = gestorPasajero.buscarCantidadPasajeros(filtros);
 ////				
@@ -94,15 +94,12 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			}
 			catch(InputVacioException exc) {
 				
-				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelIncompleto();
+				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelVacio(exc.inputsVacios);
 			}
-//			catch (HabitacionInexistenteException exc) {
-//				mensajeHabitacionInexistente.mostrar(getPanel(), frame);
-//				exc.printStackTrace();
-//			}
-//			catch (HabitacionSinFacturasPendientesException exc) {
-//				mensajeHabitacionSinFacturasPendientes.mostrar(getPanel(), frameActual);
-//			}	
+			catch (FechaInvalidaException exc) {
+				System.out.println("FechaInvalida");
+				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelInvalido(exc.inputsInvalidos);
+			}	
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
 		c.gridx = 1; c.gridy = 1;
