@@ -35,7 +35,7 @@ public class Ocupacion {
 	@Column(name = "egreso", nullable = false, unique = false)
 	private LocalDate egreso;
 	
-	@Column(name = "horayfechasalidareal", nullable = false, unique = false)
+	@Column(name = "horayfechasalidareal", nullable = true, unique = false)
 	private LocalDateTime horaYFechaSalidaReal;
 	
 	@Column(name = "precio", nullable = false, unique = false)
@@ -45,6 +45,7 @@ public class Ocupacion {
 	@JoinColumn(name = "idhabitacion", referencedColumnName = "id")
 	private Habitacion habitacion;
 	
+	// TODO falta hacer que se guarden los pasajeros cuando se guarda la ocupacion
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
 			name = "disenio.ocupacionpasajeros",
@@ -60,7 +61,7 @@ public class Ocupacion {
 	@OneToMany(mappedBy = "ocupacion")
 	private List<ItemOcupacion> itemsOcupacion;
 	
-	@Transient
+	@OneToMany(mappedBy = "ocupacion")
 	private List<Consumo> consumos;
 
 	
