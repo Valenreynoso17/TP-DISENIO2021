@@ -46,7 +46,11 @@ public class ResponsableDePagoPostgreSQLImpl implements ResponsableDePagoDAO {
 	public Integer guardar(ResponsableDePago responsable) {
 		Session sesion = sessionFactory.openSession();
 		
+		sesion.beginTransaction();
+		
 		sesion.saveOrUpdate(responsable);
+		
+		sesion.getTransaction().commit();
 		
 		sesion.close();
 		

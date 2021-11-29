@@ -22,7 +22,11 @@ public class OcupacionPostgreSQLImpl implements OcupacionDAO {
 	public Integer guardar(Ocupacion ocupacion) {
 		Session sesion = sessionFactory.openSession();
 		
+		sesion.beginTransaction();
+		
 		sesion.saveOrUpdate(ocupacion);
+		
+		sesion.getTransaction().commit();
 		
 		sesion.close();
 		
