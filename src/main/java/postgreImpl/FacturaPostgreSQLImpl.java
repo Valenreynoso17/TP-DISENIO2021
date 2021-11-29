@@ -28,7 +28,11 @@ public class FacturaPostgreSQLImpl implements FacturaDAO {
 	public Integer cargar(Factura factura) {
 		Session sesion = sessionFactory.openSession();
 		
+		sesion.beginTransaction();
+		
 		sesion.saveOrUpdate(factura);
+		
+		sesion.getTransaction().commit();
 		
 		sesion.close();
 		
