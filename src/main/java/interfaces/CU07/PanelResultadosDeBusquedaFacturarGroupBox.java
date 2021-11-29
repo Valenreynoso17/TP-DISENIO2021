@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -25,11 +26,13 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import main.java.enums.TipoDocumento;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.CU02.PanelPaginacion;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
+import main.java.interfaces.clasesExtra.ModeloTablaFacturar;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
@@ -38,7 +41,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	private JButton facturarANombreDeUnTercero;
 	
 	private JTable tabla;
-	private ModeloTablaPasajeros miModelo;
+	private ModeloTablaFacturar miModelo;
 	private PanelPaginacion paginacion;
 	
 	private Vector filaSeleccionada = null;
@@ -77,7 +80,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		miModelo = new ModeloTablaPasajeros();
+		miModelo = new ModeloTablaFacturar();
 		
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
@@ -101,6 +104,10 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 				nroFilaSeleccionada = tabla.getSelectedRow();
 			}
 		});
+		
+		Object[] prueba = {"Perez", "Juan", TipoDocumento.DNI, "32333444", LocalDate.now()};
+		
+		miModelo.addRow(prueba);	//TODO: Borrar
 		
 		//PARA CENTRAR
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();

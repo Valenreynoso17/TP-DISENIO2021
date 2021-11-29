@@ -11,11 +11,10 @@ import main.java.enums.TipoDocumento;
 public class ModeloTablaConsumos extends DefaultTableModel{
 	
 	public ModeloTablaConsumos() {
-		this.addColumn("Apellido"); 
-		this.addColumn("Nombre"); 
-		this.addColumn("Tipo de documento");
-		this.addColumn("Número de documento"); 
-		this.addColumn("Fecha de nacimiento"); 
+		this.addColumn("Consumos"); 
+		this.addColumn("Cantidad"); 
+		this.addColumn("Precio unitario");
+		this.addColumn("Total neto"); 
 	}
 	
 	   public Class getColumnClass(int columna)
