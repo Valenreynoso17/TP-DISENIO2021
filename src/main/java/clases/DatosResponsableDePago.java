@@ -33,4 +33,73 @@ public class DatosResponsableDePago {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "idresponsabledepago", referencedColumnName = "id")
 	private ResponsableDePago reponsable;
+
+	
+	
+	public DatosResponsableDePago() {
+		super();
+	}
+	
+	public DatosResponsableDePago(Integer id, String razonSocial, String cuit, String telefono, Direccion direccion,
+			ResponsableDePago reponsable) {
+		super();
+		this.id = id;
+		this.razonSocial = razonSocial;
+		this.cuit = cuit;
+		this.telefono = telefono;
+		this.direccion = direccion;
+		this.reponsable = reponsable;
+	}
+	
+	
+
+	public Integer getId() {
+		return id;
+	}
+
+	public String getRazonSocial() {
+		return razonSocial;
+	}
+
+	public String getCuit() {
+		return cuit;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public ResponsableDePago getReponsable() {
+		return reponsable;
+	}
+	
+	
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setRazonSocial(String razonSocial) {
+		this.razonSocial = razonSocial;
+	}
+
+	public void setCuit(String cuit) {
+		this.cuit = cuit;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
+	}
+
+	public void setReponsable(ResponsableDePago reponsable) {
+		this.reponsable = reponsable;
+	}
 }

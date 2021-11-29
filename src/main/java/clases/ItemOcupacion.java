@@ -11,4 +11,11 @@ public class ItemOcupacion extends ItemFactura {
 	@ManyToOne()
 	@JoinColumn(name = "idocupacion", referencedColumnName = "id")
 	private Ocupacion ocupacion;
+	
+	public ItemOcupacion(Integer id, Double precioUnitario, String descripcion, Factura factura, 
+			Integer cantidadDias, Ocupacion ocupacion) {
+		super(id, precioUnitario, descripcion, factura);
+		this.cantidadDias = cantidadDias;
+		this.ocupacion = ocupacion;
+	}
 }

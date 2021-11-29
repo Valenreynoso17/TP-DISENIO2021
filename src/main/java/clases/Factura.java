@@ -52,5 +52,100 @@ public class Factura extends DocumentoLegal {
 	
 	@OneToMany(mappedBy = "factura")
 	private List<ItemFactura> items;
+
 	
+	
+	public Factura() {
+		super();
+	}
+	
+	public Factura(Integer id, TipoFactura tipo, Double montoTotal, Double montoNeto, Double vuelto,
+			EstadoFactura estado, LocalDate fechaFacturacion, Habitacion habitacion, List<ItemFactura> items) {
+		super();
+		this.id = id;
+		this.tipo = tipo;
+		this.montoTotal = montoTotal;
+		this.montoNeto = montoNeto;
+		this.vuelto = vuelto;
+		this.estado = estado;
+		this.fechaFacturacion = fechaFacturacion;
+		this.habitacion = habitacion;
+		this.items = items;
+	}
+	
+	
+
+	public Integer getId() {
+		return id;
+	}
+
+	public TipoFactura getTipo() {
+		return tipo;
+	}
+
+	public Double getMontoTotal() {
+		return montoTotal;
+	}
+
+	public Double getMontoNeto() {
+		return montoNeto;
+	}
+
+	public Double getVuelto() {
+		return vuelto;
+	}
+
+	public EstadoFactura getEstado() {
+		return estado;
+	}
+
+	public LocalDate getFechaFacturacion() {
+		return fechaFacturacion;
+	}
+
+	public Habitacion getHabitacion() {
+		return habitacion;
+	}
+
+	public List<ItemFactura> getItems() {
+		return items;
+	}
+	
+	
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setTipo(TipoFactura tipo) {
+		this.tipo = tipo;
+	}
+
+	public void setMontoTotal(Double montoTotal) {
+		this.montoTotal = montoTotal;
+	}
+
+	public void setMontoNeto(Double montoNeto) {
+		this.montoNeto = montoNeto;
+	}
+
+	public void setVuelto(Double vuelto) {
+		this.vuelto = vuelto;
+	}
+
+	public void setEstado(EstadoFactura estado) {
+		this.estado = estado;
+	}
+
+	public void setFechaFacturacion(LocalDate fechaFacturacion) {
+		this.fechaFacturacion = fechaFacturacion;
+	}
+
+	public void setHabitacion(Habitacion habitacion) {
+		this.habitacion = habitacion;
+	}
+
+	public void setItems(List<ItemFactura> items) {
+		this.items = items;
+	}
 }

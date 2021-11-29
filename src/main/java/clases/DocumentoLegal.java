@@ -22,4 +22,41 @@ public abstract class DocumentoLegal {
 	@OneToOne
 	@JoinColumn(name = "iddatosresponsable", referencedColumnName = "id")
 	private DatosResponsableDePago datosResponsable;
+
+	
+	
+	public DocumentoLegal() {
+		super();
+	}
+	
+	public DocumentoLegal(Integer numero, DatosResponsableDePago datosResponsable) {
+		super();
+		this.numero = numero;
+		this.datosResponsable = datosResponsable;
+	}
+	
+	
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public DatosResponsableDePago getDatosResponsable() {
+		return datosResponsable;
+	}
+	
+	
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+
+	public void setDatosResponsable(DatosResponsableDePago datosResponsable) {
+		this.datosResponsable = datosResponsable;
+	}
+	
+	
+	
+	
+	
 }

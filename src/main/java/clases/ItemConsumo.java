@@ -15,4 +15,33 @@ public class ItemConsumo extends ItemFactura {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "idconsumo", referencedColumnName = "id")
 	private Consumo consumo;
+
+	public ItemConsumo(Integer id, Double precioUnitario, String descripcion, Factura factura, 
+			Integer cantidad, Consumo consumo) {
+		super(id, precioUnitario, descripcion, factura);
+		this.cantidad = cantidad;
+		this.consumo = consumo;
+	}
+	
+	
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public Consumo getConsumo() {
+		return consumo;
+	}
+	
+	
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public void setConsumo(Consumo consumo) {
+		this.consumo = consumo;
+	}
+	
+	
 }
