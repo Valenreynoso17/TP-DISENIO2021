@@ -17,11 +17,11 @@ import javax.persistence.Table;
 public abstract class DocumentoLegal {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer numero;
+	protected Integer id;
 	
 	@OneToOne
 	@JoinColumn(name = "iddatosresponsable", referencedColumnName = "id")
-	private DatosResponsableDePago datosResponsable;
+	protected DatosResponsableDePago datosResponsable;
 
 	
 	
@@ -29,16 +29,16 @@ public abstract class DocumentoLegal {
 		super();
 	}
 	
-	public DocumentoLegal(Integer numero, DatosResponsableDePago datosResponsable) {
+	public DocumentoLegal(Integer id, DatosResponsableDePago datosResponsable) {
 		super();
-		this.numero = numero;
+		this.id = id;
 		this.datosResponsable = datosResponsable;
 	}
 	
 	
 
-	public Integer getNumero() {
-		return numero;
+	public Integer getId() {
+		return id;
 	}
 
 	public DatosResponsableDePago getDatosResponsable() {
@@ -47,8 +47,8 @@ public abstract class DocumentoLegal {
 	
 	
 
-	public void setNumero(Integer numero) {
-		this.numero = numero;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setDatosResponsable(DatosResponsableDePago datosResponsable) {

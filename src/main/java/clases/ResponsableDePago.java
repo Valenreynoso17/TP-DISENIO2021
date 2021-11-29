@@ -16,12 +16,13 @@ public class ResponsableDePago {
 	private String razonSocial;
 	
 	@OneToOne(optional = true)
-	@JoinColumn(name = "idresponsabledepago", nullable = true, referencedColumnName = "id")
+	@JoinColumn(name = "cuitpersonajuridica", nullable = true, referencedColumnName = "id")
 	private PersonaJuridica personaJuridica;
 	
 	@OneToOne(optional = true)
 	@JoinColumn(name = "idpasajero", nullable = true, referencedColumnName = "id")
 	private Pasajero pasajero;
+	
 	
 	public ResponsableDePago() {
 		super();

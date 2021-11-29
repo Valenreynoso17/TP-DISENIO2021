@@ -21,9 +21,9 @@ import main.java.enums.TipoFactura;
 @Entity
 @Table(name="disenio.factura")
 public class Factura extends DocumentoLegal {
-	@Id
+	@Column(name = "numero", nullable = false, unique = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer numero;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo", nullable = false, unique = false)
@@ -59,10 +59,11 @@ public class Factura extends DocumentoLegal {
 		super();
 	}
 	
-	public Factura(Integer id, TipoFactura tipo, Double montoTotal, Double montoNeto, Double vuelto,
-			EstadoFactura estado, LocalDate fechaFacturacion, Habitacion habitacion, List<ItemFactura> items) {
-		super();
-		this.id = id;
+	public Factura(Integer id, DatosResponsableDePago datosResponsable, Integer numero, TipoFactura tipo, Double montoTotal, 
+			Double montoNeto, Double vuelto, EstadoFactura estado, LocalDate fechaFacturacion, Habitacion habitacion, 
+			List<ItemFactura> items) {
+		super(id, datosResponsable);
+		this.numero = numero;
 		this.tipo = tipo;
 		this.montoTotal = montoTotal;
 		this.montoNeto = montoNeto;
@@ -75,8 +76,8 @@ public class Factura extends DocumentoLegal {
 	
 	
 
-	public Integer getId() {
-		return id;
+	public Integer getNumero() {
+		return numero;
 	}
 
 	public TipoFactura getTipo() {
@@ -113,8 +114,8 @@ public class Factura extends DocumentoLegal {
 	
 	
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setNumero(Integer numero) {
+		this.numero = numero;
 	}
 
 	public void setTipo(TipoFactura tipo) {
