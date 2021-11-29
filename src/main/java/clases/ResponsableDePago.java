@@ -2,6 +2,9 @@ package main.java.clases;
 
 import javax.persistence.*;
 
+import main.java.excepciones.YaAsociadoConPasajeroException;
+import main.java.excepciones.YaAsociadoConPersonaJuridicaException;
+
 @Entity
 @Table(name="disenio.responsabledepago")
 public class ResponsableDePago {
@@ -11,6 +14,14 @@ public class ResponsableDePago {
 	
 	@Column(name = "razonSocial")
 	private String razonSocial;
+	
+	@OneToOne(optional = true)
+	@JoinColumn(name = "cuitpersonajuridica", nullable = true, referencedColumnName = "id")
+	private PersonaJuridica personaJuridica;
+	
+	@OneToOne(optional = true)
+	@JoinColumn(name = "idpasajero", nullable = true, referencedColumnName = "id")
+	private Pasajero pasajero;
 	
 	
 	public ResponsableDePago() {
@@ -33,7 +44,15 @@ public class ResponsableDePago {
 		return razonSocial;
 	}
 	
+	public PersonaJuridica getPersonaJuridica() {
+		return personaJuridica;
+	}
+
+	public Pasajero getPasajero() {
+		return pasajero;
+	}
 	
+
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -41,6 +60,16 @@ public class ResponsableDePago {
 
 	public void setRazonSocial(String razonSocial) {
 		this.razonSocial = razonSocial;
+	}
+	
+	public void setPersonaJuridica(PersonaJuridica personaJuridica) {
+		if (this.pasajero != null) throw new YaAsociadoConPasajeroException();
+		this.personaJuridica = personaJuridica;
+	}
+
+	public void setPasajero(Pasajero pasajero) {
+		if (this.personaJuridica != null) throw new YaAsociadoConPersonaJuridicaException();
+		this.pasajero = pasajero;
 	}
 	
 	
