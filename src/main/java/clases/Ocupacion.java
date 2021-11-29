@@ -50,7 +50,7 @@ public class Ocupacion {
 			name = "disenio.ocupacionpasajeros",
 			joinColumns = @JoinColumn(name = "idocupacion", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "idpasajero", referencedColumnName = "id")
-			)	
+			)
 	private Set<Pasajero> pasajeros = new HashSet<>();
 	
 	@ManyToOne(optional = false)
