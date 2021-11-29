@@ -148,7 +148,7 @@ public class PanelFacturarGroupBox extends JPanel{
 
 		if(this.numeroDeHabitacion.getText().isEmpty() || this.horaDeSalida.getText().isEmpty()) {
 
-			throw new InputVacioException();
+			//throw new InputVacioException();
 		}
 		
 	}

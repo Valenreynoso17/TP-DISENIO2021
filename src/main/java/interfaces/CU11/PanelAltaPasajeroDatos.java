@@ -940,7 +940,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 		LocalDate fechaMaxima = LocalDate.of(1900,1,1);	//Fecha de nacimiento máxima
 		LocalDate fechaMinima = LocalDate.now().minusDays(1);	//Fecha de nacimiento mínima (ayer)
-		   return !(fecha.isBefore(fechaMaxima) || fecha.isAfter(fechaMinima));
+		   return (fecha.isBefore(fechaMaxima) && fecha.isAfter(fechaMinima));
 		}
 	
 	private boolean contieneCaracteresEspecialesYGuiones(JTextField field) {	//TRUE: La cadena tiene caracteres especiales / FALSE: La cadena NO tiene caracteres especiales
