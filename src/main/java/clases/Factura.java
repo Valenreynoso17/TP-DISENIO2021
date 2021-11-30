@@ -48,6 +48,7 @@ public class Factura extends DocumentoLegal {
 	private static Double iva = 0.21;
 	
 	@ManyToOne(optional = false)
+	@JoinColumn(name = "idhabitacion", referencedColumnName = "id")
 	private Habitacion habitacion;
 	
 	@OneToMany

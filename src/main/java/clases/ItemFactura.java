@@ -17,17 +17,17 @@ import javax.persistence.Table;
 public abstract class ItemFactura {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	protected Integer id;
 	
 	@Column(name = "preciounitario", nullable = false, unique = false)
-	private Double precioUnitario;
+	protected Double precioUnitario;
 	
 	@Column(name = "descripcion", nullable = false, unique = false)
-	private String descripcion;
+	protected String descripcion;
 	
 	/*@ManyToOne(optional = true)
 	@JoinColumn(name = "idfactura", referencedColumnName = "id")
-	private Factura factura;*/
+	protected Factura factura;*/
 
 	public ItemFactura() {
 		super();

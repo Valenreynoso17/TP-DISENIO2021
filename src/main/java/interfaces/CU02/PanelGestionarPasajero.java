@@ -152,8 +152,6 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 				catch (PasajeroNoSeleccionadoException exc) {
 					mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
 				}
-				
-				//mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
