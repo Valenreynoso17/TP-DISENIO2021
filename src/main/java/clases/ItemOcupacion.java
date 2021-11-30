@@ -20,4 +20,8 @@ public class ItemOcupacion extends ItemFactura {
 		
 		ocupacion.agregarItemOcupacion(this);
 	}
+	
+	public Integer getCantidadDias() {
+		return this.cantidadDias;
+	}
 }

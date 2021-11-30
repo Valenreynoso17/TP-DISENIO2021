@@ -2,6 +2,7 @@ package main.java.dtos;
 
 import java.time.LocalDate;
 
+import main.java.clases.Pasajero;
 import main.java.enums.PosicionFrenteIva;
 import main.java.enums.TipoDocumento;
 
@@ -41,6 +42,15 @@ public class PasajeroDTO {
 		this.ocupacion = ocupacion;
 		this.direccion = direccion;
 		this.idNacionalidad = idNacionalidad;
+	}
+	
+	public PasajeroDTO(Pasajero pasajero) {
+		this.id = pasajero.getId();
+		this.apellido = pasajero.getApellido();
+		this.nombre = pasajero.getNombre();
+		this.tipoDocumento = pasajero.getTipoDocumento();
+		this.numeroDoc = pasajero.getDocumento();
+		this.fechaNacimiento = pasajero.getFechaNacimiento();
 	}
 
 	public Integer getId() {
