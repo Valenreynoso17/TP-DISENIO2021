@@ -20,6 +20,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.CascadeType;
 
 @Entity
@@ -46,13 +49,17 @@ public class Ocupacion {
 	private Habitacion habitacion;
 	
 	// TODO falta hacer que se guarden los pasajeros cuando se guarda la ocupacion
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade =  {
+			CascadeType.PERSIST,
+			CascadeType.MERGE
+	})
 	@JoinTable(
-			name = "disenio.ocupacionpasajeros",
+			schema = "disenio",
+			name = "ocupacionpasajeros",
 			joinColumns = @JoinColumn(name = "idocupacion", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "idpasajero", referencedColumnName = "id")
 			)
-	private Set<Pasajero> pasajeros = new HashSet<>();
+	private Set<Pasajero> pasajeros;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "idpasajeroresponsable", referencedColumnName = "id")
@@ -170,8 +177,8 @@ public class Ocupacion {
 		this.consumos = consumos;
 	}
 	
-	
-	
-	
+	public void agregarItemOcupacion(ItemOcupacion item) {
+		this.itemsOcupacion.add(item);
+	}
 	
 }

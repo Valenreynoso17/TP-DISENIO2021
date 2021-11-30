@@ -4,5 +4,5 @@ import main.java.clases.Factura;
 
 public interface FacturaDAO {
 	public Factura buscar(Integer id);
-	public Integer cargar(Factura factura);
+	public Integer guardar(Factura factura);
 }

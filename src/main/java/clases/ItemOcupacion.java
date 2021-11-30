@@ -12,10 +12,12 @@ public class ItemOcupacion extends ItemFactura {
 	@JoinColumn(name = "idocupacion", referencedColumnName = "id")
 	private Ocupacion ocupacion;
 	
-	public ItemOcupacion(Integer id, Double precioUnitario, String descripcion, Factura factura, 
+	public ItemOcupacion(Integer id, Double precioUnitario, String descripcion, 
 			Integer cantidadDias, Ocupacion ocupacion) {
-		super(id, precioUnitario, descripcion, factura);
+		super(id, precioUnitario, descripcion);
 		this.cantidadDias = cantidadDias;
 		this.ocupacion = ocupacion;
+		
+		ocupacion.agregarItemOcupacion(this);
 	}
 }

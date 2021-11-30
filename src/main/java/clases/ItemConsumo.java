@@ -16,11 +16,13 @@ public class ItemConsumo extends ItemFactura {
 	@JoinColumn(name = "idconsumo", referencedColumnName = "id")
 	private Consumo consumo;
 
-	public ItemConsumo(Integer id, Double precioUnitario, String descripcion, Factura factura, 
+	public ItemConsumo(Integer id, Double precioUnitario, String descripcion, 
 			Integer cantidad, Consumo consumo) {
-		super(id, precioUnitario, descripcion, factura);
+		super(id, precioUnitario, descripcion);
 		this.cantidad = cantidad;
 		this.consumo = consumo;
+		
+		consumo.agregarItemConsumo(this);
 	}
 	
 	
