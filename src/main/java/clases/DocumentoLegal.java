@@ -17,6 +17,7 @@ import javax.persistence.Table;
 public abstract class DocumentoLegal {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
 	protected Integer id;
 	
 	@OneToOne

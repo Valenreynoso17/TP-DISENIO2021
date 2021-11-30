@@ -25,6 +25,10 @@ public class ItemConsumo extends ItemFactura {
 		consumo.agregarItemConsumo(this);
 	}
 	
+	public ItemConsumo() {
+		super();
+	}
+	
 	
 
 	public Integer getCantidad() {
