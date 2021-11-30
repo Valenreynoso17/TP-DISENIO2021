@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
 
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -24,6 +26,9 @@ import main.java.interfaces.clasesExtra.ModeloTablaConsumos;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelFacturarConsumosGroupBox extends JPanel{
+	
+	
+	Integer valorCantidad = 3;
 	
 	private JLabel label;
 	
@@ -38,7 +43,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	private JTextField totalAPagar;
 	
 	private JTable tabla;
-	private ModeloTablaConsumos miModelo;
+	private ModeloTablaConsumos miModelo;	
 	
 	private Vector filaSeleccionada = null;
 	private Integer nroFilaSeleccionada;
@@ -52,16 +57,21 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);
 	private Font fuenteLabelCampo =new Font("SourceSansPro", Font.PLAIN, 14);
 	
-	private double pesoXLabel = 0.1;
-	private double pesoYLabel = 0.1;
-	private double pesoXCampo = 0.2;
-	private double pesoYCampo = 0.1;
+	private double pesoXLabel = 0.05;
+	private double pesoYLabel = 0.05;
+	private double pesoXCampo = 0.05;
+	private double pesoYCampo = 0.05;
 	
 	private Dimension dimensionCampo = new Dimension(240, 25);
 	private Dimension dimensionCamposFinales = new Dimension(180, 25);
 	private Dimension dimensionCampoTipoFactura = new Dimension(22, 25);
 	
 	private RoundedBorder bordeCampo = new RoundedBorder(5, Color.BLACK);
+	
+	private ButtonRenderer renderBotonMenos = new ButtonRenderer('-');
+	private ButtonRenderer renderBotonMas = new ButtonRenderer('+');
+	private ButtonEditor editorBotonMenos = new ButtonEditor(new JCheckBox(), '-');
+	private ButtonEditor editorBotonMas = new ButtonEditor(new JCheckBox(), '+');
 	
 	public PanelFacturarConsumosGroupBox() {
 		
@@ -134,7 +144,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		c.gridx = 2; c.gridy = 2;	tipoFactura.setMinimumSize(dimensionCampoTipoFactura);	tipoFactura.setPreferredSize(dimensionCampoTipoFactura);	
 		this.add(tipoFactura, c); 
 		
-		//Aca empiezan las configuraciones para la tabla
+		//----------- CONFIGURACIONES TABLA -----------
 		
 		miModelo = new ModeloTablaConsumos();
 		
@@ -143,7 +153,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
-		tabla.setRowSelectionAllowed(true);
+		tabla.setRowSelectionAllowed(false);
 		tabla.setColumnSelectionAllowed(false);
 		
 		tabla.setFocusable(false); //Para que no seleccione una sola columna
@@ -152,7 +162,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		tabla.setAutoCreateRowSorter(true);	//Para que se ordenen
+		tabla.setAutoCreateRowSorter(false);	//Para que no se ordenen
 		
 		tabla.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {				
@@ -161,23 +171,58 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 			}
 		});
 		
+		//JSpinner j = new JSpinner();
+		
+		
+		Object[] prueba = new Object[] {"VALOR DE LA ESTADÍA","", valorCantidad.toString()+"/3", "", 1400.00, 4200.00}; 
+		
+		miModelo.addRow(prueba);
+		for(int i = 0; i < 8; i++)
+			miModelo.addRow(new Object[]{null,null,null,null,null,null});	//Fila en blanco
+		
+		miModelo.addRow(new Object[] {"TOTAL","","","","", 4200.00});
+		
+		tabla.getTableHeader().setOpaque(false);
+		tabla.getTableHeader().setBackground(Color.decode("#424242"));		//Para que el fondo de la cabecera sea de un color en específico
+		tabla.getTableHeader().setForeground(Color.WHITE);					//Para que la fuente de la cabecera sea blanca
+		tabla.getTableHeader().setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
+		
+		tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
+		
+		tabla.getColumnModel().getColumn(1).setCellRenderer(renderBotonMenos);
+		tabla.getColumnModel().getColumn(1).setCellEditor(editorBotonMenos);
+		
+		tabla.getColumnModel().getColumn(3).setCellRenderer(renderBotonMas);
+		tabla.getColumnModel().getColumn(3).setCellEditor(editorBotonMas);
+		
+		tabla.getColumnModel().getColumn(0).setPreferredWidth(400);	//Ancho de las columnas
+		tabla.getColumnModel().getColumn(1).setPreferredWidth(5);
+		tabla.getColumnModel().getColumn(2).setPreferredWidth(50);
+		tabla.getColumnModel().getColumn(3).setPreferredWidth(5);
+		tabla.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tabla.getColumnModel().getColumn(5).setPreferredWidth(100);
+		
 		//PARA CENTRAR
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		
 		tabla.setDefaultRenderer(Object.class, centerRenderer);
+		tabla.setDefaultRenderer(Integer.class, centerRenderer); //Por alguna razon no lo toma sin esto
 		
 		tabla.setBackground(Color.white);
-		tabla.setGridColor(Color.white);
+		tabla.setGridColor(Color.black);
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;
 		c.insets = insetTabla;
-		c.weightx = 0.5;
-		c.weighty = 0.5;
+		c.weightx = 1;
+		c.weighty = 1;
 		c.gridwidth = 4;
 		c.gridx = 0;
 		c.gridy = 3;
 		this.add(tableContainer, c);
+		
+		//----------- CONFIGURACIONES TABLA -----------
 		
 		c.weightx = 0.1;
 		c.weighty = 0.1;

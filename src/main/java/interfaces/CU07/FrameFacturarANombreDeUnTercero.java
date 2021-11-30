@@ -10,11 +10,10 @@ public class FrameFacturarANombreDeUnTercero extends JFrame{
 
 	public FrameFacturarANombreDeUnTercero(FrameFacturar frame) {
 		super("Sistema Hotel Premier");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 250);
 		contentPane = new PanelFacturarANombreDeUnTercero(this, frame);
 		setContentPane(contentPane);
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
