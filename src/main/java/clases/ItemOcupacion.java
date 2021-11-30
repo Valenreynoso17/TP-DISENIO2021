@@ -24,4 +24,8 @@ public class ItemOcupacion extends ItemFactura {
 	public ItemOcupacion() {
 		super();
 	}
+	
+	public Integer getCantidadDias() {
+		return this.cantidadDias;
+	}
 }

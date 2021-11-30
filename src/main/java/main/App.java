@@ -15,7 +15,7 @@ import main.java.interfaces.clasesExtra.MensajeYaExistenReservas;
 public class App {
 
 	public static void main(String[] args) {
-			FrameAutenticarUsuario fAU = new FrameAutenticarUsuario();
+			//FrameAutenticarUsuario fAU = new FrameAutenticarUsuario();
 		
 			//FrameBuscarFacturasHabitacion fBH = new FrameBuscarFacturasHabitacion();
 		

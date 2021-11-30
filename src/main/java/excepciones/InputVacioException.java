@@ -8,5 +8,9 @@ public class InputVacioException extends Exception{
 		super();
 		this.inputsVacios = inputs;		
 	}
+	
+	public String getInputsVacios() {
+		return this.inputsVacios;
+	}
 
 }

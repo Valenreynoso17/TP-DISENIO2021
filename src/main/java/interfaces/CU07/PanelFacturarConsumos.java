@@ -34,7 +34,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
-	private Insets insetPanelFacturarConsumos = new Insets(30,30,5,30);
+	private Insets insetPanelFacturarConsumos = new Insets(30,30,20,30);
 	
 	private FrameFacturar frameAnterior;
 	private FrameFacturarConsumos frameActual;
@@ -72,7 +72,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 				mensajeCancelar.mostrar(getPanel(), frame);
 			}
 		});
-		c.anchor = GridBagConstraints.WEST;		c.insets = new Insets(0,60,10,0);
+		c.anchor = GridBagConstraints.WEST;		c.insets = new Insets(0,60,20,0);
 		c.gridx = 0; c.gridy = 1;
 		this.add(cancelar, c);
 
@@ -86,9 +86,12 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 			public void actionPerformed(ActionEvent e) {
 				
 				//TODO: Imprimir	
+				
+				//Si no seleccionó ningún consumo hay que mostrar: 
+				mensajeNadaSeleccionado.mostrar(getPanel(), frame);
 			}
 		});
-		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
+		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,20,60);
 		c.gridx = 1; c.gridy = 1;
 		this.add(aceptar, c);
 	}
