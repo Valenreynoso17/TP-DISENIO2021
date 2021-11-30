@@ -123,7 +123,6 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 					
 					this.panelFacturarGroupBox.colocarLabelInvalido(exc.getInputsInvalidos());
 				}	
->>>>>>> 97ad5d187dfa5c94081ca8eae65453b627300b74
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
 		c.gridx = 1; c.gridy = 1;
