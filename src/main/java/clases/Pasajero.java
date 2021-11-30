@@ -208,6 +208,100 @@ public class Pasajero {
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
+		result = prime * result + ((cuit == null) ? 0 : cuit.hashCode());
+		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
+		result = prime * result + ((documento == null) ? 0 : documento.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((fechaNacimiento == null) ? 0 : fechaNacimiento.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nacionalidad == null) ? 0 : nacionalidad.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((ocupacion == null) ? 0 : ocupacion.hashCode());
+		result = prime * result + ((posicionFrenteIva == null) ? 0 : posicionFrenteIva.hashCode());
+		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
+		result = prime * result + ((tipoDocumento == null) ? 0 : tipoDocumento.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pasajero other = (Pasajero) obj;
+		if (apellido == null) {
+			if (other.apellido != null)
+				return false;
+		} else if (!apellido.equals(other.apellido))
+			return false;
+		if (cuit == null) {
+			if (other.cuit != null)
+				return false;
+		} else if (!cuit.equals(other.cuit))
+			return false;
+		if (direccion == null) {
+			if (other.direccion != null)
+				return false;
+		} else if (!direccion.equals(other.direccion))
+			return false;
+		if (documento == null) {
+			if (other.documento != null)
+				return false;
+		} else if (!documento.equals(other.documento))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (fechaNacimiento == null) {
+			if (other.fechaNacimiento != null)
+				return false;
+		} else if (!fechaNacimiento.equals(other.fechaNacimiento))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (nacionalidad == null) {
+			if (other.nacionalidad != null)
+				return false;
+		} else if (!nacionalidad.equals(other.nacionalidad))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		if (ocupacion == null) {
+			if (other.ocupacion != null)
+				return false;
+		} else if (!ocupacion.equals(other.ocupacion))
+			return false;
+		if (posicionFrenteIva != other.posicionFrenteIva)
+			return false;
+		if (telefono == null) {
+			if (other.telefono != null)
+				return false;
+		} else if (!telefono.equals(other.telefono))
+			return false;
+		if (tipoDocumento != other.tipoDocumento)
+			return false;
+		return true;
+	}
+
+
+	
 	
 	
 	

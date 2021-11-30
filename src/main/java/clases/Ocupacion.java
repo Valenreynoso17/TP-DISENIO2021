@@ -2,9 +2,28 @@ package main.java.clases;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
+
+import javax.persistence.CascadeType;
 
 @Entity
 @Table(name="disenio.ocupacion")
@@ -19,7 +38,7 @@ public class Ocupacion {
 	@Column(name = "egreso", nullable = false, unique = false)
 	private LocalDate egreso;
 	
-	@Column(name = "horayfechasalidareal", nullable = false, unique = false)
+	@Column(name = "horayfechasalidareal", nullable = true, unique = false)
 	private LocalDateTime horaYFechaSalidaReal;
 	
 	@Column(name = "precio", nullable = false, unique = false)
@@ -29,30 +48,33 @@ public class Ocupacion {
 	@JoinColumn(name = "idhabitacion", referencedColumnName = "id")
 	private Habitacion habitacion;
 	
-	@ManyToMany
+	// TODO falta hacer que se guarden los pasajeros cuando se guarda la ocupacion
+	@ManyToMany(cascade =  {
+			CascadeType.PERSIST,
+			CascadeType.MERGE
+	})
 	@JoinTable(
-			name = "disenio.ocupacionpasajeros",
+			schema = "disenio",
+			name = "ocupacionpasajeros",
 			joinColumns = @JoinColumn(name = "idocupacion", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "idpasajero", referencedColumnName = "id")
-			)	
-	private List<Pasajero> pasajeros;
+			)
+	private Set<Pasajero> pasajeros;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "idpasajeroresponsable", referencedColumnName = "id")
 	private Pasajero responsable;
 	
-	/*@OneToMany
-	@JoinColumn(name = "idocupacion", referencedColumnName = "id")*/
-	@Transient
+	@OneToMany(mappedBy = "ocupacion")
 	private List<ItemOcupacion> itemsOcupacion;
 	
-	@Transient
+	@OneToMany(mappedBy = "ocupacion")
 	private List<Consumo> consumos;
 
 	
 	
 	public Ocupacion(Integer id, LocalDate ingreso, LocalDate egreso, LocalDateTime horaYFechaSalidaReal,
-			Double precioPorDia, Habitacion habitacion, List<Pasajero> pasajeros, Pasajero responsable,
+			Double precioPorDia, Habitacion habitacion, Set<Pasajero> pasajeros, Pasajero responsable,
 			List<ItemOcupacion> itemsOcupacion, List<Consumo> consumos) {
 		super();
 		this.id = id;
@@ -68,7 +90,7 @@ public class Ocupacion {
 	}
 	
 	public Ocupacion() {
-		super();
+		super();	
 	}
 	
 	
@@ -97,7 +119,7 @@ public class Ocupacion {
 		return habitacion;
 	}
 
-	public List<Pasajero> getPasajeros() {
+	public Set<Pasajero> getPasajeros() {
 		return pasajeros;
 	}
 
@@ -139,7 +161,7 @@ public class Ocupacion {
 		this.habitacion = habitacion;
 	}
 
-	public void setPasajeros(List<Pasajero> pasajeros) {
+	public void setPasajeros(Set<Pasajero> pasajeros) {
 		this.pasajeros = pasajeros;
 	}
 
@@ -155,8 +177,8 @@ public class Ocupacion {
 		this.consumos = consumos;
 	}
 	
-	
-	
-	
+	public void agregarItemOcupacion(ItemOcupacion item) {
+		this.itemsOcupacion.add(item);
+	}
 	
 }

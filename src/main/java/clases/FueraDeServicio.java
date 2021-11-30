@@ -23,4 +23,64 @@ public class FueraDeServicio {
 	@ManyToOne
 	@JoinColumn(name = "idhabitacion", referencedColumnName = "id")
 	private Habitacion habitacion;
+
+	
+	
+	public FueraDeServicio() {
+		super();
+	}
+	
+	public FueraDeServicio(Integer id, LocalDateTime fechaInicio, LocalDateTime fechaFin, String descripcion,
+			Habitacion habitacion) {
+		super();
+		this.id = id;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
+		this.descripcion = descripcion;
+		this.habitacion = habitacion;
+	}
+	
+	
+
+	public Integer getId() {
+		return id;
+	}
+
+	public LocalDateTime getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public LocalDateTime getFechaFin() {
+		return fechaFin;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public Habitacion getHabitacion() {
+		return habitacion;
+	}
+	
+	
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setFechaInicio(LocalDateTime fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public void setFechaFin(LocalDateTime fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public void setHabitacion(Habitacion habitacion) {
+		this.habitacion = habitacion;
+	}
 }

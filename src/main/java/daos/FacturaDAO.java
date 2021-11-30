@@ -1,5 +1,8 @@
 package main.java.daos;
 
-public interface FacturaDAO {
+import main.java.clases.Factura;
 
+public interface FacturaDAO {
+	public Factura buscar(Integer id);
+	public Integer guardar(Factura factura);
 }

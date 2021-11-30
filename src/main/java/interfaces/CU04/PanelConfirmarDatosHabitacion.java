@@ -72,7 +72,6 @@ public class PanelConfirmarDatosHabitacion extends JPanel implements PanelPermit
 		scrollPane = new JScrollPane(panelConfirmarDatosHabitacionGroupBox, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBorder(new TitledBorder (new LineBorder (Color.black, 1), " Confirmar los datos de la habitación", 0, 0, fuenteGroupBox));
 		scrollPane.setBackground(Color.WHITE);
-		c.fill = GridBagConstraints.BOTH;
 		this.add(scrollPane, c);
 		c.weightx = 0.4; c.weighty = 0.6;			this.add(scrollPane, c);
 		

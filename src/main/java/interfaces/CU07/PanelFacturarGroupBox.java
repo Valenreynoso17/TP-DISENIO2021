@@ -10,6 +10,10 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -23,6 +27,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 
 import main.java.enums.TipoMensaje;
+import main.java.excepciones.FechaInvalidaException;
+import main.java.excepciones.InputInvalidaException;
 import main.java.excepciones.InputVacioException;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.CU02.FrameGestionarPasajero;
@@ -78,11 +84,11 @@ public class PanelFacturarGroupBox extends JPanel{
 			
 		labelNumeroDeHabitacionVacio = new JLabel(" Campo incompleto ");	labelNumeroDeHabitacionVacio.setFont(fuenteLabelError); c.gridx = 1;
 		labelNumeroDeHabitacionVacio.setOpaque(true);	labelNumeroDeHabitacionVacio.setBackground(Color.decode("#cc0000")); labelNumeroDeHabitacionVacio.setForeground(Color.WHITE);
-		this.add(labelNumeroDeHabitacionVacio, c); labelNumeroDeHabitacionVacio.setVisible(true);	//Empieza invisible
+		this.add(labelNumeroDeHabitacionVacio, c); labelNumeroDeHabitacionVacio.setVisible(false);	//Empieza invisible
 		
 		labelNumeroDeHabitacionFormatoInvalido = new JLabel(" Formato inválido ");	labelNumeroDeHabitacionFormatoInvalido.setFont(fuenteLabelError); c.gridx = 1; 
 		labelNumeroDeHabitacionFormatoInvalido.setOpaque(true);	labelNumeroDeHabitacionFormatoInvalido.setBackground(Color.decode("#cc0000")); labelNumeroDeHabitacionFormatoInvalido.setForeground(Color.WHITE);
-		this.add(labelNumeroDeHabitacionFormatoInvalido, c); labelNumeroDeHabitacionFormatoInvalido.setVisible(true);	//Empieza invisible
+		this.add(labelNumeroDeHabitacionFormatoInvalido, c); labelNumeroDeHabitacionFormatoInvalido.setVisible(false);	//Empieza invisible
 		
 			c.fill = GridBagConstraints.HORIZONTAL;	c.insets = insetCampo; c.anchor = GridBagConstraints.CENTER;
 		
@@ -114,17 +120,23 @@ public class PanelFacturarGroupBox extends JPanel{
 			
 		labelHoraDeSalidaVacio = new JLabel(" Campo incompleto ");	labelHoraDeSalidaVacio.setFont(fuenteLabelError); c.gridx = 3;
 		labelHoraDeSalidaVacio.setOpaque(true);	labelHoraDeSalidaVacio.setBackground(Color.decode("#cc0000")); labelHoraDeSalidaVacio.setForeground(Color.WHITE);
-		this.add(labelHoraDeSalidaVacio, c); labelHoraDeSalidaVacio.setVisible(true);	//Empieza invisible
+		this.add(labelHoraDeSalidaVacio, c); labelHoraDeSalidaVacio.setVisible(false);	//Empieza invisible
 		
 		labelHoraDeSalidaFormatoInvalido = new JLabel(" Formato inválido ");	labelHoraDeSalidaFormatoInvalido.setFont(fuenteLabelError); c.gridx = 3; 
 		labelHoraDeSalidaFormatoInvalido.setOpaque(true);	labelHoraDeSalidaFormatoInvalido.setBackground(Color.decode("#cc0000")); labelHoraDeSalidaFormatoInvalido.setForeground(Color.WHITE);
-		this.add(labelHoraDeSalidaFormatoInvalido, c); labelHoraDeSalidaFormatoInvalido.setVisible(true);	//Empieza invisible
+		this.add(labelHoraDeSalidaFormatoInvalido, c); labelHoraDeSalidaFormatoInvalido.setVisible(false);	//Empieza invisible
 		
 			c.insets = insetCampo;	c.fill = GridBagConstraints.HORIZONTAL;	c.anchor = GridBagConstraints.CENTER;
-		
-		numeroDeHabitacion = new JTextField(); numeroDeHabitacion.setFont(fuenteLabelCampo);	numeroDeHabitacion.setBorder(bordeCampo);	
-		numeroDeHabitacion.setDocument(new JTextFieldLimitado(5));
-		numeroDeHabitacion.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
+ 
+		try {
+			MaskFormatter mascaraHoraSalida = new MaskFormatter("##':##");
+			horaDeSalida = new JFormattedTextField(mascaraHoraSalida);
+	    	
+	    }catch (ParseException e) {
+	    	e.printStackTrace();
+	    }
+		horaDeSalida.setFont(fuenteLabelCampo);	horaDeSalida.setBorder(bordeCampo);	
+		horaDeSalida.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelHoraDeSalidaVacio.setVisible(false);
 				  labelHoraDeSalidaFormatoInvalido.setVisible(false);
@@ -138,23 +150,104 @@ public class PanelFacturarGroupBox extends JPanel{
 				  labelHoraDeSalidaFormatoInvalido.setVisible(false);
 			  }
 		});
-		fondoJTextField = new TextPrompt("Ingrese hora de salida",numeroDeHabitacion); fondoJTextField.setForeground(Color.GRAY);
-		c.gridx = 3; numeroDeHabitacion.setMinimumSize(dimensionCampo);	numeroDeHabitacion.setPreferredSize(dimensionCampo);	
-		this.add(numeroDeHabitacion, c); 	
+		c.gridx = 3; horaDeSalida.setMinimumSize(dimensionCampo);	horaDeSalida.setPreferredSize(dimensionCampo);	
+		this.add(horaDeSalida, c); 	
 
 	}
 
+	
+
 	public void inputNoEsVacia() throws InputVacioException{
+		
+		String inputsVacios = "";
+		boolean alMenosUnoInvalido = false;
 
-		if(this.numeroDeHabitacion.getText().isEmpty() || this.horaDeSalida.getText().isEmpty()) {
+		if(this.numeroDeHabitacion.getText().isEmpty()) {	
+			inputsVacios += "n";
+			alMenosUnoInvalido = true;
+		}
+			
+		if(this.horaDeSalida.getText().contains(" ")) {	//Por el formato que tiene
+			inputsVacios += "h";
+			alMenosUnoInvalido = true;
+		}
+		
+		if(alMenosUnoInvalido) {
+			throw new InputVacioException(inputsVacios);
+		}
+	}
+	
+	public void inputEsValida() throws InputInvalidaException{
 
-			throw new InputVacioException();
+		String inputsInvalidos = "";
+		boolean alMenosUnoInvalido = false;
+
+		if(!this.esTotalmenteNumero(numeroDeHabitacion)) {
+			inputsInvalidos += "d";
+			alMenosUnoInvalido = true;
+		}
+			
+		if(!this.esValidaHora(horaDeSalida)) {
+			inputsInvalidos += "h";
+			alMenosUnoInvalido = true;
+		}
+		
+		if(alMenosUnoInvalido) {
+			throw new InputInvalidaException(inputsInvalidos);
+		}
+	}
+	
+	private boolean esValidaHora(JTextField hora) {
+		
+		boolean resultado = true;
+		String horaString = hora.getText();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm");
+
+		try {
+			
+			LocalTime localTime = LocalTime.parse(horaString, formatter);	//Si se puede convertir a LocalTime, es una hora válida [00:00, 23:59]
+			
+		}
+		catch(DateTimeParseException e) {
+			resultado = false;
+		}
+		
+		return resultado;
+	}
+	
+	private boolean esTotalmenteNumero(JTextField field) {	//TRUE: La cadena es totalmente numérica / FALSE: La cadena tiene al menos 1 caracter que no es número
+
+	    boolean resultado = true;
+
+        for (char c : field.getText().toCharArray()) {
+            if (!Character.isDigit(c)) {
+            	resultado = false;
+                break;
+            }
+        }
+
+        return resultado;
+	}
+
+	public void colocarLabelVacio(String inputs) {
+		
+		if(inputs.contains("n")) {
+			labelNumeroDeHabitacionVacio.setVisible(true);
+		}
+		if(inputs.contains("h")) {
+			labelHoraDeSalidaVacio.setVisible(true);
 		}
 		
 	}
-
-	public void colocarLabelIncompleto() {
+	
+	public void colocarLabelInvalido(String inputs) {
 		
-		//this.labelCampoVacio.setVisible(true);
+		if(inputs.contains("n")) {
+			labelNumeroDeHabitacionFormatoInvalido.setVisible(true);
+		}
+		if(inputs.contains("h")) {
+			labelHoraDeSalidaFormatoInvalido.setVisible(true);
+		}
+	
 	}
 }
