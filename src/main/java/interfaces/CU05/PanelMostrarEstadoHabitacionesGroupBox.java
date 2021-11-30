@@ -31,9 +31,10 @@ import main.java.interfaces.clasesExtra.RoundedBorder;
 public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 	
 	private JLabel label;
-	private JLabel labelFechaDesdeVacio;
+	private JLabel labelFechaDesdeVacio;		//Muestran mensaje "Campo incompleto"
 	private JLabel labelFechaHastaVacio;
-	private JLabel labelFechaDesdeInvalida;
+	
+	private JLabel labelFechaDesdeInvalida;		//Muestran mensaje "Fecha inválida"
 	private JLabel labelFechaHastaInvalida;
 	
 	private JTextField fechaDesde;
@@ -89,8 +90,8 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 			c.anchor = GridBagConstraints.WEST;  c.insets = insetCampo;	
 		
 		try {
-			MaskFormatter mascaraFechaNacimiento = new MaskFormatter("##'/##'/####");
-			fechaDesde = new JFormattedTextField(mascaraFechaNacimiento);
+			MaskFormatter mascaraFecha = new MaskFormatter("##'/##'/####");
+			fechaDesde = new JFormattedTextField(mascaraFecha);
 	    	
 	    }catch (ParseException e) {
 	    	e.printStackTrace();
@@ -141,8 +142,8 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 		
 		//fechaHasta = new JTextField(); 
 			try {
-				MaskFormatter mascaraFechaNacimiento = new MaskFormatter("##'/##'/####");
-				fechaHasta = new JFormattedTextField(mascaraFechaNacimiento);
+				MaskFormatter mascaraFecha = new MaskFormatter("##'/##'/####");
+				fechaHasta = new JFormattedTextField(mascaraFecha);
 		    	
 		    }catch (ParseException e) {
 		    	e.printStackTrace();
@@ -256,7 +257,6 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 			
 		}
 		catch(DateTimeParseException e) {
-			System.out.println("Lanza excepcion datetimeparse");
 			resultado = false;
 		}
 		
@@ -266,18 +266,16 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 	private boolean fechaEnRango(LocalDate fecha) {
 
 			LocalDate fechaMaxima = LocalDate.now().plusMonths(2);	//Fecha máxima
-			LocalDate fechaMinima = LocalDate.now().minusDays(2);	//Fecha mínima (ayer)
+			LocalDate fechaMinima = LocalDate.now().minusDays(1);	//Fecha mínima (hoy)
 		return (fecha.isBefore(fechaMaxima) && fecha.isAfter(fechaMinima));
 	}
 
 	public void colocarLabelVacio(String inputs) {
 		
 		if(inputs.contains("d")) {
-			System.out.println("Desde vacio");
 			labelFechaDesdeVacio.setVisible(true);
 		}
 		if(inputs.contains("h")) {
-			System.out.println("Hasta vacio");
 			labelFechaHastaVacio.setVisible(true);
 		}
 		
@@ -286,11 +284,9 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 	public void colocarLabelInvalido(String inputs) {
 		
 		if(inputs.contains("d")) {
-			System.out.println("Desde invalido");
 			labelFechaDesdeInvalida.setVisible(true);
 		}
 		if(inputs.contains("h")) {
-			System.out.println("Hasta invalido");
 			labelFechaHastaInvalida.setVisible(true);
 		}
 	
