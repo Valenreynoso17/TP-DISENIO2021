@@ -22,7 +22,11 @@ public class HabitacionPostgreSQLImpl implements HabitacionDAO {
 	public Integer guardar(Habitacion habitacion) {
 		Session sesion = sessionFactory.openSession();
 		
+		sesion.beginTransaction();
+		
 		sesion.saveOrUpdate(habitacion);
+		
+		sesion.getTransaction().commit();
 		
 		sesion.close();
 		

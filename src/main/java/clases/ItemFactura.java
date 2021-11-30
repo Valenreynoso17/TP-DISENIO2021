@@ -25,20 +25,20 @@ public abstract class ItemFactura {
 	@Column(name = "descripcion", nullable = false, unique = false)
 	private String descripcion;
 	
-	@ManyToOne(optional = true)
+	/*@ManyToOne(optional = true)
 	@JoinColumn(name = "idfactura", referencedColumnName = "id")
-	private Factura factura;
+	private Factura factura;*/
 
 	public ItemFactura() {
 		super();
 	}
 	
-	public ItemFactura(Integer id, Double precioUnitario, String descripcion, Factura factura) {
+	public ItemFactura(Integer id, Double precioUnitario, String descripcion) {
 		super();
 		this.id = id;
 		this.precioUnitario = precioUnitario;
 		this.descripcion = descripcion;
-		this.factura = factura;
+		//this.factura = factura;
 	}
 
 
@@ -55,9 +55,9 @@ public abstract class ItemFactura {
 		return descripcion;
 	}
 	
-	public Factura getFactura() {
+	/*public Factura getFactura() {
 		return factura;
-	}
+	}*/
 
 
 
@@ -73,7 +73,7 @@ public abstract class ItemFactura {
 		this.descripcion = descripcion;
 	}
 
-	public void setFactura(Factura factura) {
+	/*public void setFactura(Factura factura) {
 		this.factura = factura;
-	}
+	}*/
 }

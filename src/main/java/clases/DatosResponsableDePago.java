@@ -51,6 +51,10 @@ public class DatosResponsableDePago {
 		this.reponsable = reponsable;
 	}
 	
+	public DatosResponsableDePago(ResponsableDePago r) {
+		this(null, r.getRazonSocial(), r.getCuit(), r.getTelefono(), r.getDireccion(), r);
+	}
+	
 	
 
 	public Integer getId() {
