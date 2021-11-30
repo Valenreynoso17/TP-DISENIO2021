@@ -10,6 +10,7 @@ import javax.swing.SortOrder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import main.java.clases.Factura;
 import main.java.clases.Pasajero;
 import main.java.daos.PasajeroDAO;
 import main.java.dtos.PasajeroDTO;
@@ -167,6 +168,17 @@ public class PasajeroPostgreSQLImpl implements PasajeroDAO {
 		sesion.close();
 		
 		return cantInteger;
+	}
+
+	@Override
+	public Pasajero buscar(Integer id) {
+		Session sesion = sessionFactory.openSession();
+		
+		Pasajero pasajero = sesion.get(Pasajero.class, id);
+		
+		sesion.close();
+		
+		return pasajero;
 	}
 	
 	

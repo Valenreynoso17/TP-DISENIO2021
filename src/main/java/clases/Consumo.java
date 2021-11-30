@@ -116,4 +116,8 @@ public class Consumo {
 	public void setItems(List<ItemConsumo> items) {
 		this.items = items;
 	}	
+	
+	public void agregarItemConsumo(ItemConsumo item) {
+		this.items.add(item);
+	}
 }

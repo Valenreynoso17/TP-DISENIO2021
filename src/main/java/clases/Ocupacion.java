@@ -177,8 +177,8 @@ public class Ocupacion {
 		this.consumos = consumos;
 	}
 	
-	
-	
-	
+	public void agregarItemOcupacion(ItemOcupacion item) {
+		this.itemsOcupacion.add(item);
+	}
 	
 }

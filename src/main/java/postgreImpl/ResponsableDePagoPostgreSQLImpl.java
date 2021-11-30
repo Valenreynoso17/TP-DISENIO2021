@@ -28,7 +28,7 @@ public class ResponsableDePagoPostgreSQLImpl implements ResponsableDePagoDAO {
 	}
 
 	@Override
-	public ResponsableDePago buscarPorPasajero(Integer idPasajero) {
+	public ResponsableDePago buscarResponsableAsociadoAPasajero(Integer idPasajero) {
 		String stringQuery = "SELECT r FROM ResponsableDePago r WHERE idpasajero = :id";
 		
 		Session sesion = sessionFactory.openSession();
