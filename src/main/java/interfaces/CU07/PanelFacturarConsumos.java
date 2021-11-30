@@ -86,6 +86,9 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 			public void actionPerformed(ActionEvent e) {
 				
 				//TODO: Imprimir	
+				
+				//Si no seleccionó ningún consumo hay que mostrar: 
+				mensajeNadaSeleccionado.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,20,60);
