@@ -13,12 +13,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.FechaInvalidaException;
 import main.java.excepciones.HabitacionInexistenteException;
 import main.java.excepciones.HabitacionSinFacturasPendientesException;
 import main.java.excepciones.InputInvalidaException;
 import main.java.excepciones.InputVacioException;
+import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.gestores.GestorOcupacion;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
@@ -37,16 +39,23 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	private JButton siguiente;
 	private JButton cancelar;
 	
-	private JLabel label;
-	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
-	private String textoHabitacionInexistente = "<html><p>El número de habitación no se corresponde con ninguna habitación en el sistema.</p><html>";
-	private Mensaje mensajeHabitacionInexistente = new Mensaje(2, textoHabitacionInexistente, TipoMensaje.ERROR, "Aceptar", null);
+	private String textoPasajeroMenorDeEdad = "<html><p>La persona ingresada como 'Responsable de pago' es menor de edad."
+											+ " Por favor, seleccione otra persona.</p><html>";
+	private Mensaje mensajePasajeroMenorDeEdad = new Mensaje(2, textoPasajeroMenorDeEdad, TipoMensaje.ERROR, "Aceptar", null);
 	
-	private String textoHabitacionSinFacturasPendientes = "<html><p>La habitación no tiene facturas pendientes de pago.</p><html>";
-	private Mensaje mensajeHabitacionSinFacturasPendientes = new Mensaje(3, textoHabitacionSinFacturasPendientes, TipoMensaje.ERROR, "Aceptar", null);
+	private String textoHabitacionSinDeudaAsociada = "<html><p>La habitación " + "Luego se reemplaza" + " no tiene ninguna deuda asociada.</p><html>";
+	private Mensaje mensajeHabitacionSinDeudaAsociada = new Mensaje(3, textoHabitacionSinDeudaAsociada, TipoMensaje.ERROR, "Aceptar", null);
+	
+	private String textoHabitacionInexsistente = "<html><p>La habitación " + "Luego se reemplaza" + " no existe. Por favor, ingrese un número de una habitación"
+											   + " existente en el sistema.</p><html>";
+	private Mensaje mensajeHabitacionInexsistente = new Mensaje(4, textoHabitacionInexsistente, TipoMensaje.ERROR, "Aceptar", null);
+	
+	private String textoResponsableNoSeleccionado = "<html><p>No ha seleccionado ningún pasajero como responsable de pago. Por favor, "
+			   + "seleccione uno de la tabla y luego presione 'Siguiente'.</p><html>";
+	private Mensaje mensajeResponsableNoSeleccionado = new Mensaje(5, textoResponsableNoSeleccionado, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
@@ -57,17 +66,17 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	
 	private FrameMenuPrincipal frameAnterior;
 	private FrameFacturar frameActual;
-	private JFrame frameSiguiente;	//Dependiendo quien lo llame, cambia el frame que se mostrara al presionar "Siguiente"
+	private FrameFacturarConsumos frameSiguiente;
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
-	private GestorOcupacion gestorOcupacion;
+	//private GestorOcupacion gestorOcupacion;
 	
 	public PanelFacturar(final FrameFacturar frame) {
 		
 		this.frameActual = frame;
 		
-		gestorOcupacion = GestorOcupacion.getInstance();
+		//gestorOcupacion = GestorOcupacion.getInstance();
 		
 		this.setBackground(Color.WHITE);
 		
@@ -90,30 +99,13 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		buscar.setFont(fuenteBoton);
 		buscar.setBorder(bordeBoton);
 		buscar.addActionListener(e -> {
-
-//			try{
-//					this.panelMostrarEstadoHabitacionesGroupBox.inputNoEsVacia();
-//////				gestorPasajero.validarDatosBusqueda(filtros);	//TODO: Buscar si la habitacion tiene facturas y conforme a eso tirar las excepciones
-//////				Integer cantResultados = gestorPasajero.buscarCantidadPasajeros(filtros);
-//////				
-//////				panelGestionarPasajeroTabla.buscarResultados(filtros, cantResultados);
-////				
-//			}
-//			catch(InputVacioException exc) {
-//				
-//				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelIncompleto();
-//			}
-//			catch (HabitacionInexistenteException exc) {
-//				mensajeHabitacionInexistente.mostrar(getPanel(), frame);
-//				exc.printStackTrace();
-//			}
-//			catch (HabitacionSinFacturasPendientesException exc) {
-//				mensajeHabitacionSinFacturasPendientes.mostrar(getPanel(), frameActual);
-//			}	
-
 				try{
 						this.panelFacturarGroupBox.inputNoEsVacia();
 						this.panelFacturarGroupBox.inputEsValida();
+				
+						//Si la habitación no tiene ninguna deuda asociada, PEDIR EL NUMERO DE HABITACION y mostrar:
+						mensajeHabitacionSinDeudaAsociada.setTextoMensaje("<html><p>La habitación " + this.panelFacturarGroupBox.getNumeroHabitacion() + " no tiene ninguna deuda asociada.</p><html>");
+						mensajeHabitacionSinDeudaAsociada.mostrar(getPanel(), frame);
 				}
 				catch(InputVacioException exc) {
 					
@@ -124,7 +116,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 					this.panelFacturarGroupBox.colocarLabelInvalido(exc.getInputsInvalidos());
 				}	
 		});
-		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
+		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 1; c.gridy = 1;
 		this.add(buscar, c);
 		
@@ -160,22 +152,22 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		siguiente.setBorder(bordeBoton);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				//frame.apretoSiguiente();
-				//frame.dispose();
-				//frameSiguiente = new FrameIngresarDatosPago();
+				try {
+					//PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();	//Esto estaba en el GESTIONAR PASAJERO que hizo FEDE
+					
+					panelResultadosDeBusquedaFacturarGroupBox.seleccionoUnPasajero();
+					
+					//Si la persona seleccionada es menor de edad, se debe mostrar (descomentar):
+					//mensajePasajeroMenorDeEdad.mostrar(getPanel(), frame);
+					
+					frameActual.dispose();
+					frameSiguiente = new FrameFacturarConsumos();
+				}
+				catch (PasajeroNoSeleccionadoException exc) {
+					mensajeResponsableNoSeleccionado.mostrar(getPanel(), frame);
+				}
+
 			}
-//				try {
-//					PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();
-//					
-//					mensajeModificarPasajero.mostrar(getPanel(), frame);
-//				}
-//				catch (PasajeroNoSeleccionadoException exc) {
-//					mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
-//				}
-//				
-//				//mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
-//			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
 		c.gridx = 2; c.gridy = 3;
@@ -193,10 +185,14 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 			frameActual.dispose();
 			frameAnterior = new FrameMenuPrincipal();	
 			break;
-		case 2:	//Si la habitación no existe, simplemente muestra el mensaje
+		case 2:	//Si el responsable es menor de edad, simplemente muestra el mensaje
 			break;
-		case 3:	//Si la habitación no posee facturas, simplemente muestra el mensaje
+		case 3:	//Si la habitación no posee deudas, simplemente muestra el mensaje
 			break;		
+		case 4:	//Si la habitación no existe, simplemente muestra el mensaje
+			break;	
+		case 5:	//Si no selecciona un pasajero, simplemente muestra el mensaje
+			break;	
 		}
 	}
 

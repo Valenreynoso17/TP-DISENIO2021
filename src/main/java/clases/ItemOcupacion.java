@@ -8,7 +8,7 @@ public class ItemOcupacion extends ItemFactura {
 	@Column(name = "cantidaddias", nullable = false, unique = false)
 	private Integer cantidadDias;
 	
-	@ManyToOne()
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "idocupacion", referencedColumnName = "id")
 	private Ocupacion ocupacion;
 	
@@ -18,7 +18,11 @@ public class ItemOcupacion extends ItemFactura {
 		this.cantidadDias = cantidadDias;
 		this.ocupacion = ocupacion;
 		
-		ocupacion.agregarItemOcupacion(this);
+		//ocupacion.agregarItemOcupacion(this);
+	}
+	
+	public ItemOcupacion() {
+		super();
 	}
 	
 	public Integer getCantidadDias() {

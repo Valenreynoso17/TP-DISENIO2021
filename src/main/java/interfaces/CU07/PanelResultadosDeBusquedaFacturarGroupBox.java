@@ -26,7 +26,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoDocumento;
+import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.CU02.PanelPaginacion;
@@ -145,5 +147,20 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		this.add(facturarANombreDeUnTercero, c);
 		
 		
+	}
+	
+//	public PasajeroDTO pasajeroSeleccionado() throws PasajeroNoSeleccionadoException {	//Estaba en el GESTIONAR PASAJERO que hizo Fede
+//		Integer indice = tabla.getSelectedRow();
+//		
+//		if (indice < 0) throw new PasajeroNoSeleccionadoException();
+//		return ultimosResultados.get(tabla.getSelectedRow());
+//	}
+	
+	public void seleccionoUnPasajero() throws PasajeroNoSeleccionadoException{
+		
+		if(tabla.getSelectedRow() < 0) {
+			
+			throw new PasajeroNoSeleccionadoException();
+		}
 	}
 }

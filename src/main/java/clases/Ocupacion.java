@@ -48,7 +48,6 @@ public class Ocupacion {
 	@JoinColumn(name = "idhabitacion", referencedColumnName = "id")
 	private Habitacion habitacion;
 	
-	// TODO falta hacer que se guarden los pasajeros cuando se guarda la ocupacion
 	@ManyToMany(cascade =  {
 			CascadeType.PERSIST,
 			CascadeType.MERGE
@@ -70,7 +69,7 @@ public class Ocupacion {
 	
 	@OneToMany(mappedBy = "ocupacion")
 	private List<Consumo> consumos;
-
+	
 	
 	
 	public Ocupacion(Integer id, LocalDate ingreso, LocalDate egreso, LocalDateTime horaYFechaSalidaReal,

@@ -2,6 +2,7 @@ package main.java.clases;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class DatosResponsableDePago {
 	@JoinColumn(name = "iddireccion", referencedColumnName = "id")
 	private Direccion direccion;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idresponsabledepago", referencedColumnName = "id")
 	private ResponsableDePago reponsable;
 

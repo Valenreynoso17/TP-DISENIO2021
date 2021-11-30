@@ -20,6 +20,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 
+import main.java.excepciones.InputVacioException;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
@@ -109,5 +110,17 @@ private JLabel label;
 		c.gridx = 1; razonSocial.setMinimumSize(dimensionCampo);	razonSocial.setPreferredSize(dimensionCampo);	
 		this.add(razonSocial, c); 	
 
+	}
+	
+	public void CUITNoEsVacio() throws InputVacioException{
+		
+		if(this.CUITDeUnTercero.getText().contains(" "))	//Por el formato que tiene
+		{
+			throw new InputVacioException();
+		}
+	}
+	
+	public String getCUIT(){
+		return this.CUITDeUnTercero.getText();
 	}
 }
