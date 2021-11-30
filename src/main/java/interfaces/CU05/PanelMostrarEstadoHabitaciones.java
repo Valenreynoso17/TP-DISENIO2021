@@ -85,21 +85,17 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			
 			try{
 					this.panelMostrarEstadoHabitacionesGroupBox.inputNoEsVacia();
-					this.panelMostrarEstadoHabitacionesGroupBox.inputEsValida();
-////				gestorPasajero.validarDatosBusqueda(filtros);	//TODO: Buscar si la habitacion tiene facturas y conforme a eso tirar las excepciones
-////				Integer cantResultados = gestorPasajero.buscarCantidadPasajeros(filtros);
-////				
-////				panelGestionarPasajeroTabla.buscarResultados(filtros, cantResultados);
-//				
+					this.panelMostrarEstadoHabitacionesGroupBox.inputEsValida();			
 			}
 			catch(InputVacioException exc) {
 				
-				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelVacio(exc.inputsVacios);
+				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelVacio(exc.getInputsVacios());
 			}
 			catch (FechaInvalidaException exc) {
-				System.out.println("FechaInvalida");
-				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelInvalido(exc.inputsInvalidos);
+
+				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelInvalido(exc.getFechasInvalidas());
 			}	
+			
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
 		c.gridx = 1; c.gridy = 1;

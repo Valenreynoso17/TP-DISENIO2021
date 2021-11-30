@@ -105,9 +105,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 			}
 		});
 		
-		Object[] prueba = {"Perez", "Juan", TipoDocumento.DNI, "32333444", LocalDate.now()};
-		
-		miModelo.addRow(prueba);	//TODO: Borrar
+		Object[] prueba = {"Perez", "Juan", TipoDocumento.DNI, "32333444", LocalDate.now()};	miModelo.addRow(prueba);	//TODO: Borrar
 		
 		//PARA CENTRAR
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();

@@ -27,7 +27,7 @@ public class App {
 		
 			//FrameReservaANombreDe fRAND = new FrameReservaANombreDe();
 		
-			//FrameFacturar fF = new FrameFacturar();
+			FrameFacturar fF = new FrameFacturar();
 		
 			//FrameFacturarANombreDeUnTercero fFANDUT = new FrameFacturarANombreDeUnTercero();<html>- Reserva 1 a nombre de Juan.<br/>- Reserva 2 a nombe de Pancho.</html>
 		
@@ -47,7 +47,7 @@ public class App {
 //																		 "- Entre los días 26/03/2021 y 30/03/2021 reservó Julio Chort.\n"
 //);
 		
-			FrameFacturarConsumos fFC = new FrameFacturarConsumos();
+			//FrameFacturarConsumos fFC = new FrameFacturarConsumos();
 	}
 
 }
