@@ -144,4 +144,8 @@ public class Mensaje extends JFrame{
 		}
 	}
 	
+	public void setTextoMensaje(String s) {
+		this.texto = s;
+	}
+	
 }

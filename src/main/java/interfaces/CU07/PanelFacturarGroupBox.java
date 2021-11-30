@@ -250,4 +250,10 @@ public class PanelFacturarGroupBox extends JPanel{
 		}
 	
 	}
+
+
+
+	public String getNumeroHabitacion() {
+		return this.numeroDeHabitacion.getText();
+	}
 }
