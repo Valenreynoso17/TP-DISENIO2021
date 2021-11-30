@@ -50,7 +50,8 @@ public class Factura extends DocumentoLegal {
 	@ManyToOne(optional = false)
 	private Habitacion habitacion;
 	
-	@OneToMany(mappedBy = "factura")
+	@OneToMany
+	@JoinColumn(name = "idfactura", referencedColumnName = "id")
 	private List<ItemFactura> items;
 
 	

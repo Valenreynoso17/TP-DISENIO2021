@@ -34,6 +34,12 @@ public class ResponsableDePago {
 		this.razonSocial = razonSocial;
 	}
 	
+	public ResponsableDePago(Pasajero pasajero) {
+		super();
+		this.razonSocial = pasajero.getNombre() + " " + pasajero.getApellido();
+		this.setPasajero(pasajero);
+	}
+	
 	
 
 	public Integer getId() {
@@ -52,6 +58,32 @@ public class ResponsableDePago {
 		return pasajero;
 	}
 	
+	public String getCuit() {
+		if (pasajero != null) {
+			return pasajero.getCuit();
+		}
+		else {
+			return personaJuridica.getCuit();
+		}
+	}
+	
+	public String getTelefono() {
+		if (pasajero != null) {
+			return pasajero.getTelefono();
+		}
+		else {
+			return personaJuridica.getTelefono();
+		}
+	}
+	
+	public Direccion getDireccion() {
+		if (pasajero != null) {
+			return pasajero.getDireccion();
+		}
+		else {
+			return personaJuridica.getDireccion();
+		}
+	}
 
 
 	public void setId(Integer id) {

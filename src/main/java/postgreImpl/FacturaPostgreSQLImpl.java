@@ -25,7 +25,7 @@ public class FacturaPostgreSQLImpl implements FacturaDAO {
 	}
 
 	@Override
-	public Integer cargar(Factura factura) {
+	public Integer guardar(Factura factura) {
 		Session sesion = sessionFactory.openSession();
 		
 		sesion.beginTransaction();
