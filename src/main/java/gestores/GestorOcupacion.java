@@ -115,16 +115,7 @@ public class GestorOcupacion {
 		
 		calcularValorEstadia(listaItemsFila, ocupacionDTO);
 		
-		for(ConsumoDTO unConsumo : ocupacionDTO.getListaConsumosDTO()) {
-			
-			Integer cantidadFacturada = 0;
-			
-			for(ItemConsumoDTO unItem : unConsumo.getListaItems()) {
-				cantidadFacturada += unItem.getCantidad();
-			}
-			
-			// if(cantidadFacturada < unConsumo.get)
-		}
+		calcularValorConsumos(listaItemsFila, ocupacionDTO);
 		
 		return listaItemsFila;
 	}
@@ -139,6 +130,21 @@ public class GestorOcupacion {
 		
 		if (cantDiasFacturados < cantDiasOcupacion) {
 			listaItemsFila.add(new ItemFilaDTO("VALOR DE LA ESTADIA", ocupacionDTO.getPrecioPorDia(), cantDiasOcupacion - cantDiasFacturados, true));
+		}
+	}
+	
+	private void calcularValorConsumos(List<ItemFilaDTO> listaItemsFila, OcupacionDTO ocupacionDTO) {
+		for(ConsumoDTO unConsumo : ocupacionDTO.getListaConsumosDTO()) {
+			
+			Integer cantidadFacturada = 0;
+			
+			for(ItemConsumoDTO unItem : unConsumo.getListaItems()) {
+				cantidadFacturada += unItem.getCantidad();
+			}
+			
+			if(cantidadFacturada < unConsumo.getCantidadTotal()) {
+				listaItemsFila.add(new ItemFilaDTO(unConsumo.getDescripcion(), ocupacionDTO.getPrecioPorDia(), unConsumo.getCantidadTotal() - cantidadFacturada, false));
+			}
 		}
 	}
 	

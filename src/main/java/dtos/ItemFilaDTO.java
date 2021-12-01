@@ -3,6 +3,7 @@ package main.java.dtos;
 public class ItemFilaDTO {
 	private String nombre;
 	private Double precioUnitario;
+	private Integer cantidadSeleccionada;
 	private Integer cantidadMax;
 	private Boolean esItemOcupacion;
 	
@@ -10,6 +11,7 @@ public class ItemFilaDTO {
 		super();
 		this.nombre = nombre;
 		this.precioUnitario = precioUnitario;
+		this.cantidadSeleccionada = 0;
 		this.cantidadMax = cantidadMax;
 		this.esItemOcupacion = esItemOcupacion;
 	}	
