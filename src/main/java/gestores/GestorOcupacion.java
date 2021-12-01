@@ -129,4 +129,6 @@ public class GestorOcupacion {
 			listaItemsFila.add(new ItemFilaDTO("VALOR DE LA ESTADIA", ocupacionDTO.getPrecioPorDia(), cantDiasOcupacion - cantDiasFacturados, true));
 		}
 	}
+	
+	
 }
