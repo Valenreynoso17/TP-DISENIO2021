@@ -22,8 +22,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import main.java.interfaces.clasesExtra.ModeloTablaConsumos;
-import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.clasesExtra.*;
 
 public class PanelFacturarConsumosGroupBox extends JPanel{
 	
@@ -151,6 +150,11 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
 		
+		RenderParaTablas a = new RenderParaTablas(tabla.getDefaultRenderer(Object.class));
+		
+		tabla.setDefaultRenderer(Object.class, a);
+		tabla.getTableHeader().setDefaultRenderer(a);
+		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
 		tabla.setRowSelectionAllowed(false);
@@ -171,8 +175,6 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 			}
 		});
 		
-		//JSpinner j = new JSpinner();
-		
 		
 		Object[] prueba = new Object[] {"VALOR DE LA ESTADÍA","", valorCantidad.toString()+"/3", "", 1400.00, 4200.00}; 
 		
@@ -182,12 +184,14 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		
 		miModelo.addRow(new Object[] {"TOTAL","","","","", 4200.00});
 		
-		tabla.getTableHeader().setOpaque(false);
-		tabla.getTableHeader().setBackground(Color.decode("#424242"));		//Para que el fondo de la cabecera sea de un color en específico
-		tabla.getTableHeader().setForeground(Color.WHITE);					//Para que la fuente de la cabecera sea blanca
-		tabla.getTableHeader().setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
+//		tabla.getTableHeader().setOpaque(false);
+//		tabla.getTableHeader().setBackground(Color.decode("#424242"));		//Para que el fondo de la cabecera sea de un color en específico
+//		tabla.getTableHeader().setForeground(Color.WHITE);					//Para que la fuente de la cabecera sea blanca
+//		tabla.getTableHeader().setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
+//		
+//		tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
 		
-		tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
+		
 		
 		tabla.getColumnModel().getColumn(1).setCellRenderer(renderBotonMenos);
 		tabla.getColumnModel().getColumn(1).setCellEditor(editorBotonMenos);
@@ -211,6 +215,10 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		
 		tabla.setBackground(Color.white);
 		tabla.setGridColor(Color.black);
+		tabla.setBorder(new LineBorder(Color.BLACK));
+		
+		tabla.setAutoCreateRowSorter(true);
+		
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;

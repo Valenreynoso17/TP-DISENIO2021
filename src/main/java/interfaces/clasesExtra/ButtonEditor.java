@@ -1,4 +1,4 @@
-package main.java.interfaces.CU07;
+package main.java.interfaces.clasesExtra;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 
-class ButtonEditor extends DefaultCellEditor {
+public class ButtonEditor extends DefaultCellEditor {
 
     protected JButton button;
     private String label;
