@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -68,7 +69,7 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		paginaActual = 1;
 		cantResultados = 0;
 		
-		gestorPasajero = GestorPasajero.getInstance();
+		//gestorPasajero = GestorPasajero.getInstance();
 		
 		columnaFiltro = ColumnaBuscarPasajeros.NOMBRE;
 		orden = SortOrder.ASCENDING;
@@ -134,6 +135,13 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 			
 		});
 		
+		tabla.getTableHeader().setOpaque(false);
+		tabla.getTableHeader().setBackground(Color.decode("#424242"));		//Para que el fondo de la cabecera sea de un color en específico
+		tabla.getTableHeader().setForeground(Color.WHITE);					//Para que la fuente de la cabecera sea blanca
+		tabla.getTableHeader().setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
+		
+		tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
+		
 		
 		//PARA CENTRAR
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -141,7 +149,7 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		tabla.setDefaultRenderer(Object.class, centerRenderer);
 		
 		tabla.setBackground(Color.white);
-		tabla.setGridColor(Color.white);
+		tabla.setGridColor(Color.black);
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;

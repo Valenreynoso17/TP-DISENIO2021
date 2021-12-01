@@ -17,9 +17,6 @@ public class TipoHabitacion {
 	
 	@Column(name = "capacidad", nullable = false, unique = false)
 	private Integer capacidad;
-
-	// private List<Habitacion> habitacion
-	// lo ponemos o no?
 	
 	
 	

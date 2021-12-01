@@ -56,6 +56,25 @@ public class ResponsableDePagoPostgreSQLImpl implements ResponsableDePagoDAO {
 		
 		return responsable.getId();
 	}
+
+	@Override
+	public ResponsableDePago buscarPorCuit(Integer cuit) {
+		
+		return null;
+		
+		/*
+		String stringQuery = "SELECT r FROM ResponsableDePago r WHERE idpasajero = :id";
+		
+		Session sesion = sessionFactory.openSession();
+		
+		TypedQuery<ResponsableDePago> query = sesion.createQuery(stringQuery, ResponsableDePago.class);
+		
+		ResponsableDePago responsable = query.setParameter("id", idPasajero).getSingleResult();
+		
+		sesion.close();
+		
+		return responsable;*/
+	}
 	
 	
 }

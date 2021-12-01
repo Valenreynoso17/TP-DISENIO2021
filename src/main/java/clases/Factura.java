@@ -3,6 +3,7 @@ package main.java.clases;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import main.java.enums.EstadoFactura;
 import main.java.enums.TipoFactura;
@@ -21,8 +23,7 @@ import main.java.enums.TipoFactura;
 @Entity
 @Table(name="disenio.factura")
 public class Factura extends DocumentoLegal {
-	@Column(name = "numero", nullable = false, unique = true)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "numero", insertable = false, nullable = true, columnDefinition = "serial")
 	private Integer numero;
 	
 	@Enumerated(EnumType.STRING)
@@ -45,13 +46,14 @@ public class Factura extends DocumentoLegal {
 	@Column(name = "fechafacturacion", nullable = false, unique = false)
 	private LocalDate fechaFacturacion;
 	
+	@Transient
 	private static Double iva = 0.21;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "idhabitacion", referencedColumnName = "id")
 	private Habitacion habitacion;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idfactura", referencedColumnName = "id")
 	private List<ItemFactura> items;
 

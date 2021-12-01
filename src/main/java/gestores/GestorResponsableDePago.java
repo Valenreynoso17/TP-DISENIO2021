@@ -49,7 +49,7 @@ public class GestorResponsableDePago {
 		
 		// if cuit invalido -> tirar excepcion
 		
-		ResponsableDePago responsable = responsableDAO.buscar(cuit);
+		ResponsableDePago responsable = responsableDAO.buscarPorCuit(cuit);
 		
 		// if no existe -> tirar excepcion
 		

@@ -8,7 +8,10 @@ public class ItemOcupacion extends ItemFactura {
 	@Column(name = "cantidaddias", nullable = false, unique = false)
 	private Integer cantidadDias;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, cascade = {
+			CascadeType.PERSIST,
+			CascadeType.MERGE
+	})
 	@JoinColumn(name = "idocupacion", referencedColumnName = "id")
 	private Ocupacion ocupacion;
 	
@@ -18,7 +21,7 @@ public class ItemOcupacion extends ItemFactura {
 		this.cantidadDias = cantidadDias;
 		this.ocupacion = ocupacion;
 		
-		//ocupacion.agregarItemOcupacion(this);
+		ocupacion.agregarItemOcupacion(this);
 	}
 	
 	public ItemOcupacion() {
@@ -28,4 +31,6 @@ public class ItemOcupacion extends ItemFactura {
 	public Integer getCantidadDias() {
 		return this.cantidadDias;
 	}
+	
+	
 }

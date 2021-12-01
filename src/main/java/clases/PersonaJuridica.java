@@ -1,5 +1,6 @@
 package main.java.clases;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ public class PersonaJuridica {
 	@Column(name = "telefono", nullable = false, unique = false)
 	private String telefono;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "iddireccion", referencedColumnName = "id")
 	private Direccion direccion;
 	

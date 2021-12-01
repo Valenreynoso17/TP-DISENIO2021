@@ -1,5 +1,6 @@
 package main.java.clases;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +28,7 @@ public class DatosResponsableDePago {
 	@Column(name = "telefono", nullable = false, unique = false)
 	private String telefono;
 	
-	@OneToOne(optional = false)
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "iddireccion", referencedColumnName = "id")
 	private Direccion direccion;
 	
@@ -53,7 +54,7 @@ public class DatosResponsableDePago {
 	}
 	
 	public DatosResponsableDePago(ResponsableDePago r) {
-		this(null, r.getRazonSocial(), r.getCuit(), r.getTelefono(), r.getDireccion(), r);
+		this(null, r.getRazonSocial(), r.getCuit(), r.getTelefono(), r.getDireccion().clonar(), r);
 	}
 	
 	

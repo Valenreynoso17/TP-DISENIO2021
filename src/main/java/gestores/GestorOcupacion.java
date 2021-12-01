@@ -38,6 +38,8 @@ public class GestorOcupacion {
 
 	public OcupacionDTO buscarUltimaOcupacionDTO(Integer nroHabitacion, LocalTime horaSalida) {
 		
+		// Validar datos
+		
 		Ocupacion ocupacion = ocupacionDAO.buscarUltimaOcupacion(nroHabitacion);
 		
 		OcupacionDTO ocupacionDTO = crearOcupacionDTO(ocupacion);
@@ -53,9 +55,9 @@ public class GestorOcupacion {
 		
 		List<ItemOcupacionDTO> listaItemOcupacionDTO = crearListaItemsOcupacion(ocupacion);
 		
-		// Faltaria recuperar el pasajero responsable
+		PasajeroDTO responsable = new PasajeroDTO(ocupacion.getResponsable());
 		
-		OcupacionDTO ocupacionDTO = new OcupacionDTO(ocupacion, listaPasajerosDTO, listaConsumosDTO, listaItemOcupacionDTO);
+		OcupacionDTO ocupacionDTO = new OcupacionDTO(ocupacion, listaPasajerosDTO, listaConsumosDTO, listaItemOcupacionDTO, responsable);
 		
 		return ocupacionDTO;
 	}
@@ -81,7 +83,7 @@ public class GestorOcupacion {
 				listaItemsAux.add(new ItemConsumoDTO(unItem));
 			}
 			
-			retorno.add(new ConsumoDTO(listaItemsAux));
+			retorno.add(new ConsumoDTO(listaItemsAux, unConsumo));
 		}
 		
 		return retorno;
@@ -111,7 +113,7 @@ public class GestorOcupacion {
 				cantidadFacturada += unItem.getCantidad();
 			}
 			
-			//if(cantidadFacturada < unConsumo.get)
+			// if(cantidadFacturada < unConsumo.get)
 		}
 		
 		return listaItemsFila;
@@ -129,4 +131,6 @@ public class GestorOcupacion {
 			listaItemsFila.add(new ItemFilaDTO("VALOR DE LA ESTADIA", ocupacionDTO.getPrecioPorDia(), cantDiasOcupacion - cantDiasFacturados, true));
 		}
 	}
+	
+	
 }
