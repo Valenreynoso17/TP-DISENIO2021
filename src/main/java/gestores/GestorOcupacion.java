@@ -3,13 +3,17 @@ package main.java.gestores;
 import java.time.LocalTime;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import main.java.clases.Consumo;
+import main.java.clases.Habitacion;
 import main.java.clases.ItemConsumo;
 import main.java.clases.ItemOcupacion;
 import main.java.clases.Ocupacion;
 import main.java.clases.Pasajero;
+import main.java.clases.ResponsableDePago;
 import main.java.daos.OcupacionDAO;
 import main.java.dtos.ConsumoDTO;
 import main.java.dtos.ItemConsumoDTO;
@@ -25,8 +29,13 @@ public class GestorOcupacion {
 		
 	private OcupacionDAO ocupacionDAO;
 	
+	private GestorHabitacion gestorHabitacion;
+	private GestorPasajero gestorPasajero;
+	
 	private GestorOcupacion() {
 		ocupacionDAO = new OcupacionPostgreSQLImpl();
+		gestorHabitacion = GestorHabitacion.getInstance();
+		gestorPasajero = GestorPasajero.getInstance();
 	}
 	
 	public static GestorOcupacion getInstance() {
@@ -130,6 +139,36 @@ public class GestorOcupacion {
 		if (cantDiasFacturados < cantDiasOcupacion) {
 			listaItemsFila.add(new ItemFilaDTO("VALOR DE LA ESTADIA", ocupacionDTO.getPrecioPorDia(), cantDiasOcupacion - cantDiasFacturados, true));
 		}
+	}
+	
+	/*
+		Crea una ocupacion a partir de un DTO y la guarda
+		Para que funcione el metodo el DTO debe tener: idHabitacion, ingreso, egreso, listaPasajeros, Responsable
+		La hora de salida se setea en null
+	*/
+	public void guardarOcupacion(OcupacionDTO o) {
+		Habitacion habitacion = gestorHabitacion.buscarHabitacion(o.getIdHabitacion());
+		
+		List<Pasajero> pasajeros = gestorPasajero.buscarPasajeros(o.getListaPasajerosDTO());
+		Set<Pasajero> setPasajeros = new HashSet<>();
+		
+		Pasajero responsable = null;
+		
+		for (Pasajero p : pasajeros) {
+			setPasajeros.add(p);
+			
+			if (p.getId().equals(o.getIdHabitacion())) responsable = p;
+		}
+		
+		Ocupacion ocupacion = new Ocupacion(null, 
+											o.getFechaIngreso(), 
+											o.getFechaEgreso(),  
+											o.getPrecioPorDia(), 
+											habitacion, 
+											setPasajeros, 
+											responsable);
+		
+		ocupacionDAO.guardar(ocupacion);		
 	}
 	
 	

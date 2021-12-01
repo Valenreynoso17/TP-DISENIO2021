@@ -15,5 +15,6 @@ public interface PasajeroDAO {
 	public List<Pasajero> buscarPorDocumento(TipoDocumento tipoDoc, String numeroDoc);
 	public Integer cantidadPasajeros(PasajeroDTO filtros);
 	public Pasajero buscar(Integer id);
+	public List<Pasajero> buscarPasajeros(List<Integer> idsPasajeros);
 
 }
