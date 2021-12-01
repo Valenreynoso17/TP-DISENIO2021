@@ -1,5 +1,6 @@
 package main.java.clases;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public abstract class DocumentoLegal {
 	@Column(name = "id", updatable = false, nullable = false)
 	protected Integer id;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "iddatosresponsable", referencedColumnName = "id")
 	protected DatosResponsableDePago datosResponsable;
 

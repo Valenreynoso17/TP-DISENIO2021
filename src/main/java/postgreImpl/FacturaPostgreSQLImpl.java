@@ -51,14 +51,13 @@ public class FacturaPostgreSQLImpl implements FacturaDAO {
 	public Factura buscarConItems(Integer id) {
 		String stringQuery = 	"SELECT f FROM Factura f "
 							+	"	LEFT JOIN FETCH f.items "
-							+ 	"WHERE f.numero = :id ";
+							+ 	"WHERE f.id = :id ";
 		
 		Session sesion = sessionFactory.openSession();
 		
 		TypedQuery<Factura> query = sesion.createQuery(stringQuery, Factura.class);
 		
 		query.setParameter("id", id);
-		//Factura factura = sesion.get(Factura.class, id);
 		
 		Factura factura = query.getSingleResult();
 		

@@ -1,5 +1,6 @@
 package main.java.clases;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,7 +13,10 @@ public class ItemConsumo extends ItemFactura {
 	@Column(name = "cantidad", nullable = false, unique = false)
 	private Integer cantidad;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, cascade = {
+			CascadeType.PERSIST,
+			CascadeType.MERGE
+	})
 	@JoinColumn(name = "idconsumo", referencedColumnName = "id")
 	private Consumo consumo;
 
