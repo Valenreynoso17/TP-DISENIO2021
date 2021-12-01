@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import main.java.enums.TipoMensaje;
+import main.java.excepciones.InputVacioException;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
@@ -32,6 +33,9 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	private String textoMensajeNoExisteResponsable = "<html><p>El CUIT ingresado es inválido/No coincide con ningún responsable"
 													+ " de pago del sistema. ¿Desea dar de alta un nuevo responsable de pago?</p><html>";
 	private Mensaje mensajeNoExisteResponsable = new Mensaje(2, textoMensajeNoExisteResponsable, TipoMensaje.CONFIRMACION, "Si", "No");
+	
+	private String textoAltaResponsableDePago = "<html><p>El caso de uso 13 'Dar de alta nuevo responsable de pago' no se implementa en esta etapa.</p><html>";
+	private Mensaje mensajeAltaResponsableDePago = new Mensaje(3, textoAltaResponsableDePago, TipoMensaje.ERROR, "Aceptar", null);
 
 	private Insets insetPanelGroupBox = new Insets(0,0,0,0);
 	private Insets insetCancelar = new Insets(0,30,0,0);
@@ -45,7 +49,7 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	
 	private FrameFacturar frameAnterior;
 	private FrameFacturarANombreDeUnTercero frameActual;
-	private FrameMenuPrincipal frameSiguiente;	//TODO: Cambiar
+	private FrameFacturarConsumos frameSiguiente;
 	
 	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FrameFacturar frameA) {
 		
@@ -90,16 +94,30 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 		aceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//mensajeCancelar.mostrar(getPanel(), frame);
-				frameActual.dispose();
-				frameAnterior.dispose();
-				frameSiguiente = new FrameMenuPrincipal();
+				try {
+					
+					panelGroupBox.CUITNoEsVacio();
+					
+					frameAnterior.dispose();
+					frameActual.dispose();
+					frameSiguiente = new FrameFacturarConsumos();
+				}
+				catch(InputVacioException exc) {
+					
+					mensajeCUITVacio.mostrar(getPanel(), frameActual);
+				}
+				
+				
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = insetAceptar;
 		c.gridx = 1; c.gridy = 1;
 		this.add(aceptar, c);
 
+	}
+	
+	public PanelPermiteMensajes getPanel() {
+		return this;
 	}
 
 	@Override
@@ -108,8 +126,10 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 		switch(idMensaje) {
 		case 1:
 		case 2:	//En ambos mensajes al apretar "Si" debería ir a "Dar de alta un nuevo responsable de pago"
-			System.out.println("Dar de alta responsable de pago");
+			mensajeAltaResponsableDePago.mostrar(getPanel(), frameActual);
 			break;	
+		case 3:		//Si quiere dar de alta un nuevo responsable de pago, simplemente se muestra el mensaje
+			break;
 		}
 		
 	}

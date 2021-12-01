@@ -15,14 +15,15 @@ public class OcupacionDTO {
 	private List<ConsumoDTO> listaConsumosDTO;
 	private List<ItemOcupacionDTO> listaItemsOcupacionDTO;
 	private List<PasajeroDTO> listaPasajerosDTO;
-	private PasajeroDTO responsableDTO;
+	private PasajeroDTO responsable;
 	
-	public OcupacionDTO(Ocupacion ocupacion, List<PasajeroDTO> listaPasajerosDTO, List<ConsumoDTO> listaConsumosDTO, List<ItemOcupacionDTO> listaItemOcupacionDTO) {
+	public OcupacionDTO(Ocupacion ocupacion, List<PasajeroDTO> listaPasajerosDTO, List<ConsumoDTO> listaConsumosDTO, List<ItemOcupacionDTO> listaItemOcupacionDTO, PasajeroDTO responsable) {
 		this.id = ocupacion.getId();
 		this.fechaEgreso = ocupacion.getEgreso();
 		this.fechaIngreso = ocupacion.getIngreso();
 		this.fechaHoraSalidaReal = ocupacion.getHoraYFechaSalidaReal();
 		this.precioPorDia = ocupacion.getPrecioPorDia();
+		this.responsable = responsable;
 		this.listaPasajerosDTO = listaPasajerosDTO;
 		this.listaConsumosDTO = listaConsumosDTO;
 		this.listaItemsOcupacionDTO = listaItemOcupacionDTO;
@@ -60,8 +61,8 @@ public class OcupacionDTO {
 		return listaPasajerosDTO;
 	}
 
-	public PasajeroDTO getResponsableDTO() {
-		return responsableDTO;
+	public PasajeroDTO getResponsable() {
+		return responsable;
 	}
 	
 	

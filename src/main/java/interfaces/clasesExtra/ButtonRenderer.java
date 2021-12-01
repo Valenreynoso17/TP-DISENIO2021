@@ -1,4 +1,4 @@
-package main.java.interfaces.CU07;
+package main.java.interfaces.clasesExtra;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-class ButtonRenderer extends JButton implements TableCellRenderer {
+public class ButtonRenderer extends JButton implements TableCellRenderer {
 	
 	private Character tipo;
 
@@ -23,7 +23,7 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
 		setBorder(null);
 		this.setBorder(null);
         setForeground(Color.BLACK);	
-        setBackground(Color.WHITE);	
+        setBackground(Color.decode("#e0e0e0"));	
         
         if(value == null) {	//Si es una fila en blanco
         	return null;

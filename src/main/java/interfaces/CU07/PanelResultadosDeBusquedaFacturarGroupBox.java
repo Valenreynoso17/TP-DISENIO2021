@@ -21,12 +21,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoDocumento;
+import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.CU02.PanelPaginacion;
@@ -34,6 +37,7 @@ import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.ModeloTablaFacturar;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
+import main.java.interfaces.clasesExtra.RenderParaTablas;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
@@ -85,6 +89,11 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
 		
+		RenderParaTablas a = new RenderParaTablas(tabla.getDefaultRenderer(Object.class));
+		
+		tabla.setDefaultRenderer(Object.class, a);
+		tabla.getTableHeader().setDefaultRenderer(a);
+		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
 		tabla.setRowSelectionAllowed(true);
@@ -105,7 +114,18 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 			}
 		});
 		
+		//tabla.getTableHeader().setOpaque(false);
+		//tabla.getTableHeader().setBackground(Color.decode("#424242"));		//Para que el fondo de la cabecera sea de un color en específico
+		//tabla.getTableHeader().setForeground(Color.WHITE);					//Para que la fuente de la cabecera sea blanca
+		//tabla.getTableHeader().setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
+		
+		//tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
+		
+
+		
 		Object[] prueba = {"Perez", "Juan", TipoDocumento.DNI, "32333444", LocalDate.now()};	miModelo.addRow(prueba);	//TODO: Borrar
+		Object[] prueba1 = {"Gomez", "Pedro", TipoDocumento.DNI, "5435634634", LocalDate.now()};	miModelo.addRow(prueba1);	//TODO: Borrar
+		Object[] prueba2 = {"Pereira", "María", TipoDocumento.DNI, "12412444", LocalDate.now()};	miModelo.addRow(prueba2);	//TODO: Borrar
 		
 		//PARA CENTRAR
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -113,7 +133,9 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		tabla.setDefaultRenderer(Object.class, centerRenderer);
 		
 		tabla.setBackground(Color.white);
-		tabla.setGridColor(Color.white);
+		tabla.setGridColor(Color.black);
+		tabla.setBorder(new LineBorder(Color.BLACK));
+		
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;
@@ -145,5 +167,20 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		this.add(facturarANombreDeUnTercero, c);
 		
 		
+	}
+	
+//	public PasajeroDTO pasajeroSeleccionado() throws PasajeroNoSeleccionadoException {	//Estaba en el GESTIONAR PASAJERO que hizo Fede
+//		Integer indice = tabla.getSelectedRow();
+//		
+//		if (indice < 0) throw new PasajeroNoSeleccionadoException();
+//		return ultimosResultados.get(tabla.getSelectedRow());
+//	}
+	
+	public void seleccionoUnPasajero() throws PasajeroNoSeleccionadoException{
+		
+		if(tabla.getSelectedRow() < 0) {
+			
+			throw new PasajeroNoSeleccionadoException();
+		}
 	}
 }
