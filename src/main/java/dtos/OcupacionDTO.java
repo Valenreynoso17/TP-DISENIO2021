@@ -14,8 +14,13 @@ public class OcupacionDTO {
 	private Double precioPorDia;
 	private List<ConsumoDTO> listaConsumosDTO;
 	private List<ItemOcupacionDTO> listaItemsOcupacionDTO;
-	private List<PasajeroDTO> listaPasajerosDTO;
+	private List<PasajeroDTO> listaPasajerosDTO;	// TODO Hace falta o con los ids ya alcanza? Mismo para responsable
 	private PasajeroDTO responsable;
+	private Integer idHabitacion;
+	
+	public OcupacionDTO() {
+		super();
+	}
 	
 	public OcupacionDTO(Ocupacion ocupacion, List<PasajeroDTO> listaPasajerosDTO, List<ConsumoDTO> listaConsumosDTO, List<ItemOcupacionDTO> listaItemOcupacionDTO, PasajeroDTO responsable) {
 		this.id = ocupacion.getId();
@@ -63,6 +68,10 @@ public class OcupacionDTO {
 
 	public PasajeroDTO getResponsable() {
 		return responsable;
+	}
+	
+	public Integer getIdHabitacion() {
+		return idHabitacion;
 	}
 	
 	
