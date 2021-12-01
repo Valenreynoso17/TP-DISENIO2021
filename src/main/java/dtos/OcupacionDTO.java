@@ -22,6 +22,14 @@ public class OcupacionDTO {
 		super();
 	}
 	
+	public OcupacionDTO(Integer idHabitacion, LocalDate ingreso, LocalDate egreso, List<PasajeroDTO> listaPasajeros, PasajeroDTO responsable) {
+		this.idHabitacion = idHabitacion;
+		this.fechaIngreso = ingreso;
+		this.fechaEgreso = egreso;
+		this.listaPasajerosDTO = listaPasajeros;
+		this.responsable = responsable;
+	}
+	
 	public OcupacionDTO(Ocupacion ocupacion, List<PasajeroDTO> listaPasajerosDTO, List<ConsumoDTO> listaConsumosDTO, List<ItemOcupacionDTO> listaItemOcupacionDTO, PasajeroDTO responsable) {
 		this.id = ocupacion.getId();
 		this.fechaEgreso = ocupacion.getEgreso();

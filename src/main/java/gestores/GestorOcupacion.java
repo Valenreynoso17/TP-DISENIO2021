@@ -169,7 +169,7 @@ public class GestorOcupacion {
 		Ocupacion ocupacion = new Ocupacion(null, 
 											o.getFechaIngreso(), 
 											o.getFechaEgreso(),  
-											o.getPrecioPorDia(), 
+											habitacion.getTipo().getCostoPorNoche(), 
 											habitacion, 
 											setPasajeros, 
 											responsable);
