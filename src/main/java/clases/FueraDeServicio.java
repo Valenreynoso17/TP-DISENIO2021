@@ -83,4 +83,8 @@ public class FueraDeServicio {
 	public void setHabitacion(Habitacion habitacion) {
 		this.habitacion = habitacion;
 	}
+	
+	
+	
+	
 }

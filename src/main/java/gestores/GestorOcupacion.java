@@ -1,5 +1,6 @@
 package main.java.gestores;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
 import java.util.ArrayList;
@@ -171,5 +172,19 @@ public class GestorOcupacion {
 		ocupacionDAO.guardar(ocupacion);		
 	}
 	
-	
+	public List<OcupacionDTO> buscarOcupaciones(LocalDate fechaDesde, LocalDate fechaHasta) {
+		List<Ocupacion> ocupaciones = ocupacionDAO.buscar(fechaDesde, fechaHasta);
+		List<OcupacionDTO> ocupacionesDTO = new ArrayList<>();
+		
+		for (Ocupacion o : ocupaciones) {
+			OcupacionDTO dto = new OcupacionDTO();
+			dto.setId(o.getId());
+			dto.setFechaIngreso(o.getIngreso());
+			dto.setFechaEgreso(o.getEgreso());
+			
+			ocupacionesDTO.add(dto);
+		}
+		
+		return ocupacionesDTO;
+	}
 }
