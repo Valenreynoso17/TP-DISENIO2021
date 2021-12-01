@@ -17,6 +17,18 @@ public class HabitacionPostgreSQLImpl implements HabitacionDAO {
 	public HabitacionPostgreSQLImpl() {
 		sessionFactory = HibernateManager.Configure();
 	}
+
+
+	@Override
+	public Habitacion buscarHabitacion(Integer id) {
+		Session sesion = sessionFactory.openSession();
+		
+		Habitacion habitacion = sesion.get(Habitacion.class, id);
+		
+		sesion.close();
+		
+		return habitacion;
+	}
 	
 	@Override
 	public Integer guardar(Habitacion habitacion) {
@@ -37,7 +49,7 @@ public class HabitacionPostgreSQLImpl implements HabitacionDAO {
 	public TipoHabitacion buscarTipoHabitacion(Integer id) {
 		Session sesion = sessionFactory.openSession();
 		
-		TipoHabitacion tipo = sesion.load(TipoHabitacion.class, id);
+		TipoHabitacion tipo = sesion.get(TipoHabitacion.class, id);
 		
 		sesion.close();
 		

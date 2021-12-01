@@ -6,7 +6,7 @@ import main.java.dtos.DireccionDTO;
 
 @Entity
 @Table(name="disenio.direccion")
-public class Direccion {
+public class Direccion implements Cloneable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -157,7 +157,17 @@ public class Direccion {
 	}
 	
 	
-	
+	protected Direccion clonar() {
+		Direccion direccion = new Direccion();
+		
+		direccion.setDireccionDomicilio(this.direccionDomicilio);
+		direccion.setPiso(this.piso);
+		direccion.setDepartamento(this.departamento);
+		direccion.setCodigoPostal(this.codigoPostal);
+		direccion.setLocalidad(this.localidad);
+		
+		return direccion;
+	}
 	
 	
 	

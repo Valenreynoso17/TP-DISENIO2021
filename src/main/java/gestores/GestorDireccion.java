@@ -9,7 +9,7 @@ public class GestorDireccion {
 	private GestorPaisProvincia gestorPaisProvincia;
 	
 	private GestorDireccion() {
-		
+		gestorPaisProvincia = GestorPaisProvincia.getInstance();
 	}
 	
 	public static GestorDireccion getInstance() {
@@ -19,9 +19,6 @@ public class GestorDireccion {
 	}
 	
 	public Direccion crearDireccion(DireccionDTO direccionDTO) {
-		
-		gestorPaisProvincia = GestorPaisProvincia.getInstance();
-		
 		Localidad localidad = gestorPaisProvincia.buscarLocalidadPorID(direccionDTO.getIdLocalidad());
 		
 		Direccion direccion = new Direccion(direccionDTO);
