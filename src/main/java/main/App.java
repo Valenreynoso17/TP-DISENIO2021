@@ -1,5 +1,7 @@
 package main.java.main;
 
+import javax.swing.JFrame;
+
 import main.java.interfaces.CU01.FrameAutenticarUsuario;
 import main.java.interfaces.CU04.FrameConfirmarDatosHabitacion;
 import main.java.interfaces.CU04.FrameReservaANombreDe;
@@ -12,7 +14,7 @@ import main.java.interfaces.CU17.FrameOcuparHabitacion;
 import main.java.interfaces.CU18.FrameBuscarFacturasHabitacion;
 import main.java.interfaces.clasesExtra.MensajeYaExistenReservas;
 
-public class App {
+public class App extends JFrame{
 
 	public static void main(String[] args) {
 			//FrameAutenticarUsuario fAU = new FrameAutenticarUsuario();
@@ -48,7 +50,16 @@ public class App {
 //);
 		
 			FrameFacturarConsumos fFC = new FrameFacturarConsumos();
+		
+		
+//		new App().setVisible(true);
 	}
+	
+//	public App() {
+//	    PRUEBA_GRID xyz = new PRUEBA_GRID(200, 200, 20, 20);
+//	    add(xyz);
+//	    pack();
+//	  }
 
 }
 
