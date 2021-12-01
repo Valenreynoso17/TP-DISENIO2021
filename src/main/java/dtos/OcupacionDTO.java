@@ -83,4 +83,46 @@ public class OcupacionDTO {
 	}
 	
 	
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setFechaEgreso(LocalDate fechaEgreso) {
+		this.fechaEgreso = fechaEgreso;
+	}
+
+	public void setFechaIngreso(LocalDate fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+
+	public void setFechaHoraSalidaReal(LocalDateTime fechaHoraSalidaReal) {
+		this.fechaHoraSalidaReal = fechaHoraSalidaReal;
+	}
+
+	public void setPrecioPorDia(Double precioPorDia) {
+		this.precioPorDia = precioPorDia;
+	}
+
+	public void setListaConsumosDTO(List<ConsumoDTO> listaConsumosDTO) {
+		this.listaConsumosDTO = listaConsumosDTO;
+	}
+
+	public void setListaItemsOcupacionDTO(List<ItemOcupacionDTO> listaItemsOcupacionDTO) {
+		this.listaItemsOcupacionDTO = listaItemsOcupacionDTO;
+	}
+
+	public void setListaPasajerosDTO(List<PasajeroDTO> listaPasajerosDTO) {
+		this.listaPasajerosDTO = listaPasajerosDTO;
+	}
+
+	public void setResponsable(PasajeroDTO responsable) {
+		this.responsable = responsable;
+	}
+
+	public void setIdHabitacion(Integer idHabitacion) {
+		this.idHabitacion = idHabitacion;
+	}
+	
+	
 }
