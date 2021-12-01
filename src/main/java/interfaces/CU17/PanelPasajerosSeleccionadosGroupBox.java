@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -77,13 +78,20 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 			}
 		});
 		
+		tabla.getTableHeader().setOpaque(false);
+		tabla.getTableHeader().setBackground(Color.decode("#424242"));		//Para que el fondo de la cabecera sea de un color en específico
+		tabla.getTableHeader().setForeground(Color.WHITE);					//Para que la fuente de la cabecera sea blanca
+		tabla.getTableHeader().setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
+		
+		tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
+		
 		//PARA CENTRAR
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 		tabla.setDefaultRenderer(Object.class, centerRenderer);
 		
 		tabla.setBackground(Color.white);
-		tabla.setGridColor(Color.white);
+		tabla.setGridColor(Color.black);
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;

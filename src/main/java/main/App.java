@@ -21,7 +21,7 @@ public class App extends JFrame{
 		
 			//FrameBuscarFacturasHabitacion fBH = new FrameBuscarFacturasHabitacion();
 		
-			//FrameOcuparHabitacion fOH = new FrameOcuparHabitacion();
+			FrameOcuparHabitacion fOH = new FrameOcuparHabitacion();
 		
 			//FrameConfirmarDatosHabitacion fCDH = new FrameConfirmarDatosHabitacion();
 		
@@ -49,7 +49,7 @@ public class App extends JFrame{
 //																		 "- Entre los días 26/03/2021 y 30/03/2021 reservó Julio Chort.\n"
 //);
 		
-			FrameFacturarConsumos fFC = new FrameFacturarConsumos();
+			//FrameFacturarConsumos fFC = new FrameFacturarConsumos();
 		
 		
 //		new App().setVisible(true);
