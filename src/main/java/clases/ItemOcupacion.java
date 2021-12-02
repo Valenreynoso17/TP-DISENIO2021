@@ -2,6 +2,8 @@ package main.java.clases;
 
 import javax.persistence.*;
 
+import main.java.dtos.ItemFilaDTO;
+
 @Entity
 @Table(name="disenio.itemocupacion")
 public class ItemOcupacion extends ItemFactura {
@@ -19,6 +21,14 @@ public class ItemOcupacion extends ItemFactura {
 			Integer cantidadDias, Ocupacion ocupacion) {
 		super(id, precioUnitario, descripcion);
 		this.cantidadDias = cantidadDias;
+		this.ocupacion = ocupacion;
+		
+		ocupacion.agregarItemOcupacion(this);
+	}
+	
+	public ItemOcupacion(ItemFilaDTO unItem, Ocupacion ocupacion) {
+		super(unItem.getPrecioUnitario(), unItem.getDescripcion());
+		this.cantidadDias = unItem.getCantidadSeleccionada();
 		this.ocupacion = ocupacion;
 		
 		ocupacion.agregarItemOcupacion(this);

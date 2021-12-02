@@ -13,7 +13,7 @@ public class ConsumoDTO {
 	private Integer cantidadTotal;
 	private List<ItemConsumoDTO> listaItemsConsumoDTO;
 	
-	public ConsumoDTO(List<ItemConsumoDTO> listaItemsDTO, Consumo consumo) {
+	public ConsumoDTO(Consumo consumo, List<ItemConsumoDTO> listaItemsDTO) {
 		this.id = consumo.getId();
 		this.descripcion = consumo.getDescripcion();
 		this.valorUnitario = consumo.getValorUnitario();

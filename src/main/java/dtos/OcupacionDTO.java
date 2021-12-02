@@ -14,12 +14,20 @@ public class OcupacionDTO {
 	private Double precioPorDia;
 	private List<ConsumoDTO> listaConsumosDTO;
 	private List<ItemOcupacionDTO> listaItemsOcupacionDTO;
-	private List<PasajeroDTO> listaPasajerosDTO;	// TODO Hace falta o con los ids ya alcanza? Mismo para responsable
+	private List<PasajeroDTO> listaPasajerosDTO;	
 	private PasajeroDTO responsable;
 	private Integer idHabitacion;
 	
 	public OcupacionDTO() {
 		super();
+	}
+	
+	public OcupacionDTO(Integer idHabitacion, LocalDate ingreso, LocalDate egreso, List<PasajeroDTO> listaPasajeros, PasajeroDTO responsable) {
+		this.idHabitacion = idHabitacion;
+		this.fechaIngreso = ingreso;
+		this.fechaEgreso = egreso;
+		this.listaPasajerosDTO = listaPasajeros;
+		this.responsable = responsable;
 	}
 	
 	public OcupacionDTO(Ocupacion ocupacion, List<PasajeroDTO> listaPasajerosDTO, List<ConsumoDTO> listaConsumosDTO, List<ItemOcupacionDTO> listaItemOcupacionDTO, PasajeroDTO responsable) {
@@ -28,6 +36,7 @@ public class OcupacionDTO {
 		this.fechaIngreso = ocupacion.getIngreso();
 		this.fechaHoraSalidaReal = ocupacion.getHoraYFechaSalidaReal();
 		this.precioPorDia = ocupacion.getPrecioPorDia();
+		this.idHabitacion = ocupacion.getHabitacion().getId();
 		this.responsable = responsable;
 		this.listaPasajerosDTO = listaPasajerosDTO;
 		this.listaConsumosDTO = listaConsumosDTO;
@@ -72,6 +81,48 @@ public class OcupacionDTO {
 	
 	public Integer getIdHabitacion() {
 		return idHabitacion;
+	}
+	
+	
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setFechaEgreso(LocalDate fechaEgreso) {
+		this.fechaEgreso = fechaEgreso;
+	}
+
+	public void setFechaIngreso(LocalDate fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+
+	public void setFechaHoraSalidaReal(LocalDateTime fechaHoraSalidaReal) {
+		this.fechaHoraSalidaReal = fechaHoraSalidaReal;
+	}
+
+	public void setPrecioPorDia(Double precioPorDia) {
+		this.precioPorDia = precioPorDia;
+	}
+
+	public void setListaConsumosDTO(List<ConsumoDTO> listaConsumosDTO) {
+		this.listaConsumosDTO = listaConsumosDTO;
+	}
+
+	public void setListaItemsOcupacionDTO(List<ItemOcupacionDTO> listaItemsOcupacionDTO) {
+		this.listaItemsOcupacionDTO = listaItemsOcupacionDTO;
+	}
+
+	public void setListaPasajerosDTO(List<PasajeroDTO> listaPasajerosDTO) {
+		this.listaPasajerosDTO = listaPasajerosDTO;
+	}
+
+	public void setResponsable(PasajeroDTO responsable) {
+		this.responsable = responsable;
+	}
+
+	public void setIdHabitacion(Integer idHabitacion) {
+		this.idHabitacion = idHabitacion;
 	}
 	
 	

@@ -1,5 +1,6 @@
 package main.java.gestores;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import main.java.clases.Consumo;
+import main.java.clases.Factura;
 import main.java.clases.Habitacion;
 import main.java.clases.ItemConsumo;
 import main.java.clases.ItemOcupacion;
@@ -22,6 +24,7 @@ import main.java.dtos.ItemOcupacionDTO;
 import main.java.dtos.OcupacionDTO;
 import main.java.dtos.PasajeroDTO;
 import main.java.dtos.ResponsableDePagoDTO;
+import main.java.enums.PosicionFrenteIva;
 import main.java.postgreImpl.OcupacionPostgreSQLImpl;
 
 public class GestorOcupacion {
@@ -51,6 +54,8 @@ public class GestorOcupacion {
 		
 		Ocupacion ocupacion = ocupacionDAO.buscarUltimaOcupacion(nroHabitacion);
 		
+		// preguntar si es no es null
+		
 		OcupacionDTO ocupacionDTO = crearOcupacionDTO(ocupacion);
 		
 		return ocupacionDTO;
@@ -60,11 +65,11 @@ public class GestorOcupacion {
 	public OcupacionDTO crearOcupacionDTO(Ocupacion ocupacion) {
 		List<PasajeroDTO> listaPasajerosDTO = crearListaPasajerosDTO(ocupacion);
 		
-		List<ConsumoDTO> listaConsumosDTO = crearListaConsumosDTO(ocupacion.getConsumos());
+		List<ConsumoDTO> listaConsumosDTO = crearListaConsumosDTO(ocupacion);
 		
 		List<ItemOcupacionDTO> listaItemOcupacionDTO = crearListaItemsOcupacion(ocupacion);
 		
-		PasajeroDTO responsable = new PasajeroDTO(ocupacion.getResponsable());
+		PasajeroDTO responsable = listaPasajerosDTO.stream().filter(p -> p.getId() == ocupacion.getResponsable().getId()).findFirst().get();
 		
 		OcupacionDTO ocupacionDTO = new OcupacionDTO(ocupacion, listaPasajerosDTO, listaConsumosDTO, listaItemOcupacionDTO, responsable);
 		
@@ -81,10 +86,10 @@ public class GestorOcupacion {
 		return retorno;
 	}
 	
-	public List<ConsumoDTO> crearListaConsumosDTO(List<Consumo> listaConsumos){
+	public List<ConsumoDTO> crearListaConsumosDTO(Ocupacion ocupacion){
 		List<ConsumoDTO> retorno = new ArrayList<ConsumoDTO>();
 		
-		for(Consumo unConsumo : listaConsumos) {
+		for(Consumo unConsumo : ocupacion.getConsumos()) {
 			
 			List<ItemConsumoDTO> listaItemsAux = new ArrayList<ItemConsumoDTO>();
 			
@@ -92,7 +97,7 @@ public class GestorOcupacion {
 				listaItemsAux.add(new ItemConsumoDTO(unItem));
 			}
 			
-			retorno.add(new ConsumoDTO(listaItemsAux, unConsumo));
+			retorno.add(new ConsumoDTO(unConsumo, listaItemsAux));
 		}
 		
 		return retorno;
@@ -111,24 +116,16 @@ public class GestorOcupacion {
 	public List<ItemFilaDTO> calcularCosto(OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsableDTO) {
 		
 		List<ItemFilaDTO> listaItemsFila = new ArrayList<ItemFilaDTO>();
+		Double multiplicadorIVA = (responsableDTO.getPosicionFrenteIva() == PosicionFrenteIva.CONSUMIDOR_FINAL) ? 1 : 1 + Factura.getIVA();
 		
-		calcularValorEstadia(listaItemsFila, ocupacionDTO);
+		calcularValorEstadia(listaItemsFila, ocupacionDTO, multiplicadorIVA);
 		
-		for(ConsumoDTO unConsumo : ocupacionDTO.getListaConsumosDTO()) {
-			
-			Integer cantidadFacturada = 0;
-			
-			for(ItemConsumoDTO unItem : unConsumo.getListaItems()) {
-				cantidadFacturada += unItem.getCantidad();
-			}
-			
-			// if(cantidadFacturada < unConsumo.get)
-		}
+		calcularValorConsumos(listaItemsFila, ocupacionDTO, multiplicadorIVA);
 		
 		return listaItemsFila;
 	}
 	
-	private void calcularValorEstadia(List<ItemFilaDTO> listaItemsFila, OcupacionDTO ocupacionDTO) {
+	private void calcularValorEstadia(List<ItemFilaDTO> listaItemsFila, OcupacionDTO ocupacionDTO, Double multiplicadorIVA) {
 		Integer cantDiasOcupacion = Period.between(ocupacionDTO.getFechaIngreso(), ocupacionDTO.getFechaEgreso()).getDays();
 		Integer cantDiasFacturados = 0;
 		
@@ -137,7 +134,22 @@ public class GestorOcupacion {
 		}
 		
 		if (cantDiasFacturados < cantDiasOcupacion) {
-			listaItemsFila.add(new ItemFilaDTO("VALOR DE LA ESTADIA", ocupacionDTO.getPrecioPorDia(), cantDiasOcupacion - cantDiasFacturados, true));
+			listaItemsFila.add(new ItemFilaDTO(ocupacionDTO.getId(), "VALOR DE LA ESTADIA", ocupacionDTO.getPrecioPorDia() * multiplicadorIVA, cantDiasOcupacion - cantDiasFacturados, true));
+		}
+	}
+	
+	private void calcularValorConsumos(List<ItemFilaDTO> listaItemsFila, OcupacionDTO ocupacionDTO, Double multiplicadorIVA) {
+		for(ConsumoDTO unConsumo : ocupacionDTO.getListaConsumosDTO()) {
+			Integer cantidadTotal = unConsumo.getCantidadTotal();
+			Integer cantidadFacturada = 0;
+			
+			for(ItemConsumoDTO unItem : unConsumo.getListaItems()) {
+				cantidadFacturada += unItem.getCantidad();
+			}
+			
+			if(cantidadFacturada < cantidadTotal) {
+				listaItemsFila.add(new ItemFilaDTO(unConsumo.getId(), unConsumo.getDescripcion(), ocupacionDTO.getPrecioPorDia() * multiplicadorIVA, cantidadTotal - cantidadFacturada, false));
+			}
 		}
 	}
 	
@@ -163,7 +175,7 @@ public class GestorOcupacion {
 		Ocupacion ocupacion = new Ocupacion(null, 
 											o.getFechaIngreso(), 
 											o.getFechaEgreso(),  
-											o.getPrecioPorDia(), 
+											habitacion.getTipo().getCostoPorNoche(), 
 											habitacion, 
 											setPasajeros, 
 											responsable);
@@ -171,5 +183,20 @@ public class GestorOcupacion {
 		ocupacionDAO.guardar(ocupacion);		
 	}
 	
-	
+	public List<OcupacionDTO> buscarOcupaciones(LocalDate fechaDesde, LocalDate fechaHasta) {
+		List<Ocupacion> ocupaciones = ocupacionDAO.buscar(fechaDesde, fechaHasta);
+		List<OcupacionDTO> ocupacionesDTO = new ArrayList<>();
+		
+		for (Ocupacion o : ocupaciones) {
+			OcupacionDTO dto = new OcupacionDTO();
+			dto.setId(o.getId());
+			dto.setFechaIngreso(o.getIngreso());
+			dto.setFechaEgreso(o.getEgreso());
+			dto.setIdHabitacion(o.getHabitacion().getId());
+			
+			ocupacionesDTO.add(dto);
+		}
+		
+		return ocupacionesDTO;
+	}
 }

@@ -19,4 +19,18 @@ public class ItemFacturaDTO {
 		this.precioUnitario = itemConsumo.getPrecioUnitario();
 		this.descripcion = itemConsumo.getDescripcion();
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public Double getPrecioUnitario() {
+		return precioUnitario;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+	
+	
 }

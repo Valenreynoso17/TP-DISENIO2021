@@ -37,6 +37,11 @@ public abstract class DocumentoLegal {
 		this.datosResponsable = datosResponsable;
 	}
 	
+	public DocumentoLegal(DatosResponsableDePago datosResponsable) {
+		super();
+		this.datosResponsable = datosResponsable;
+	}
+	
 	
 
 	public Integer getId() {
