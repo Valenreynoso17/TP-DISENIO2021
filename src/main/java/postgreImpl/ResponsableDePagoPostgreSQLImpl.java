@@ -58,7 +58,7 @@ public class ResponsableDePagoPostgreSQLImpl implements ResponsableDePagoDAO {
 	}
 
 	@Override
-	public ResponsableDePago buscarPorCuit(Integer cuit) {
+	public ResponsableDePago buscarPorCuit(String cuit) {
 		
 		String stringQuery = "SELECT r FROM ResponsableDePago r WHERE cuitPersonaJuridica = :cuit";
 		

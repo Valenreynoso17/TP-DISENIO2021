@@ -8,12 +8,22 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import main.java.dtos.OcupacionDTO;
+import main.java.dtos.ResponsableDePagoDTO;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.InputInvalidaException;
 import main.java.excepciones.InputVacioException;
+import main.java.excepciones.OcupacionYaFacturadaException;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
+import main.java.excepciones.ReponsablePagoMenorDeEdadException;
+import main.java.gestores.GestorOcupacion;
+import main.java.gestores.GestorResponsableDePago;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
@@ -61,7 +71,11 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
-	//private GestorOcupacion gestorOcupacion;
+	private GestorOcupacion gestorOcupacion;
+	
+	private GestorResponsableDePago gestorResponsablePago;
+	
+	private OcupacionDTO ocupacionDTO;
 	
 	public PanelFacturar(final FrameFacturar frame) {
 		
@@ -93,10 +107,12 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 				try{
 						this.panelFacturarGroupBox.inputNoEsVacia();
 						this.panelFacturarGroupBox.inputEsValida();
-				
-						//Si la habitación no tiene ninguna deuda asociada, PEDIR EL NUMERO DE HABITACION y mostrar:
-						mensajeHabitacionSinDeudaAsociada.setTextoMensaje("<html><p>La habitación " + this.panelFacturarGroupBox.getNumeroHabitacion() + " no tiene ninguna deuda asociada.</p><html>");
-						mensajeHabitacionSinDeudaAsociada.mostrar(getPanel(), frame);
+						
+						Integer numeroHabitacion = Integer.parseInt(this.panelFacturarGroupBox.getNumeroHabitacion());
+						LocalTime horaSalida = LocalTime.parse(this.panelFacturarGroupBox.getHoraSalida());
+						
+						ocupacionDTO = gestorOcupacion.buscarUltimaOcupacionDTO(numeroHabitacion, horaSalida);
+						
 				}
 				catch(InputVacioException exc) {
 					
@@ -105,13 +121,19 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 				catch (InputInvalidaException exc) {
 					
 					this.panelFacturarGroupBox.colocarLabelInvalido(exc.getInputsInvalidos());
-				}	
+				}
+				catch(OcupacionYaFacturadaException exc) {
+					
+					//Si la habitación no tiene ninguna deuda asociada, PEDIR EL NUMERO DE HABITACION y mostrar:
+					mensajeHabitacionSinDeudaAsociada.setTextoMensaje("<html><p>La habitación " + this.panelFacturarGroupBox.getNumeroHabitacion() + " no tiene ninguna deuda asociada.</p><html>");
+					mensajeHabitacionSinDeudaAsociada.mostrar(getPanel(), frame);
+				}
 		});
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 1; c.gridy = 1;
 		this.add(buscar, c);
 		
-		panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox(frame);
+		panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox(frame, ocupacionDTO);
 		c.insets = insetPanelTabla;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 2;	c.gridwidth = 3;
 		c.weightx = 0.8; c.weighty = 0.8;			this.add(panelResultadosDeBusquedaFacturarGroupBox, c);
@@ -148,14 +170,18 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 					
 					panelResultadosDeBusquedaFacturarGroupBox.seleccionoUnPasajero();
 					
-					//Si la persona seleccionada es menor de edad, se debe mostrar (descomentar):
-					//mensajePasajeroMenorDeEdad.mostrar(getPanel(), frame);
+					ResponsableDePagoDTO responsablePagoDTO = gestorResponsablePago.obtenerResponsableDePagoDTO(null); // TODO se le tieen que pasar un pasajeroDTO
+					
 					
 					frameActual.dispose();
-					new FrameFacturarConsumos();
+					new FrameFacturarConsumos(ocupacionDTO, responsablePagoDTO);
 				}
 				catch (PasajeroNoSeleccionadoException exc) {
 					mensajeResponsableNoSeleccionado.mostrar(getPanel(), frame);
+				}
+				catch (ReponsablePagoMenorDeEdadException exc) {
+					//Si la persona seleccionada es menor de edad, se debe mostrar (descomentar):
+					mensajePasajeroMenorDeEdad.mostrar(getPanel(), frame);
 				}
 
 			}

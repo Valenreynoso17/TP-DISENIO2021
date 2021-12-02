@@ -10,8 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import main.java.dtos.OcupacionDTO;
+import main.java.dtos.ResponsableDePagoDTO;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.InputVacioException;
+import main.java.excepciones.NoExisteResponsableCuitException;
+import main.java.gestores.GestorResponsableDePago;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
@@ -30,7 +35,6 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	
 	private String textoMensajeNoExisteResponsable = "<html><p>El CUIT ingresado es inválido/No coincide con ningún responsable"
 													+ " de pago del sistema. ¿Desea dar de alta un nuevo responsable de pago?</p><html>";
-	@SuppressWarnings("unused")
 	private Mensaje mensajeNoExisteResponsable = new Mensaje(2, textoMensajeNoExisteResponsable, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoAltaResponsableDePago = "<html><p>El CU13 'Dar de alta nuevo Responsable de Pago' no se implementa en esta etapa.</p><html>";
@@ -49,7 +53,9 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	private FrameFacturar frameAnterior;
 	private FrameFacturarANombreDeUnTercero frameActual;
 	
-	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FrameFacturar frameA) {
+	private GestorResponsableDePago gestorResponsablePago;
+	
+	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FrameFacturar frameA, OcupacionDTO ocupacionDTO) {
 		
 		this.frameActual = frame;
 		this.frameAnterior = frameA;
@@ -96,13 +102,19 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 					
 					panelGroupBox.CUITNoEsVacio();
 					
+					ResponsableDePagoDTO responsablePagoDTO = gestorResponsablePago.buscarResponsableDePago(panelGroupBox.getCUIT());
+					
 					frameAnterior.dispose();
 					frameActual.dispose();
-					new FrameFacturarConsumos();
+					new FrameFacturarConsumos(ocupacionDTO, responsablePagoDTO);
 				}
 				catch(InputVacioException exc) {
 					
 					mensajeCUITVacio.mostrar(getPanel(), frameActual);
+				}
+				catch(NoExisteResponsableCuitException exc) {
+					
+					mensajeNoExisteResponsable.mostrar(getPanel(), frameA);
 				}
 				
 				

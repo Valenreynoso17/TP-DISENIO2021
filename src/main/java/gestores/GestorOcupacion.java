@@ -26,6 +26,7 @@ import main.java.dtos.OcupacionDTO;
 import main.java.dtos.PasajeroDTO;
 import main.java.dtos.ResponsableDePagoDTO;
 import main.java.enums.PosicionFrenteIva;
+import main.java.excepciones.OcupacionYaFacturadaException;
 import main.java.postgreImpl.OcupacionPostgreSQLImpl;
 
 public class GestorOcupacion {
@@ -49,7 +50,7 @@ public class GestorOcupacion {
 		return instance;
 	}
 
-	public OcupacionDTO buscarUltimaOcupacionDTO(Integer nroHabitacion, LocalTime horaSalida) {
+	public OcupacionDTO buscarUltimaOcupacionDTO(Integer nroHabitacion, LocalTime horaSalida) throws OcupacionYaFacturadaException{
 		
 		// Validar datos
 		
@@ -57,7 +58,7 @@ public class GestorOcupacion {
 		
 		// preguntar si es no es null
 		if (optOcupacion.isEmpty()) {
-			
+			throw new OcupacionYaFacturadaException();
 		}
 		
 		OcupacionDTO ocupacionDTO = crearOcupacionDTO(optOcupacion.get());

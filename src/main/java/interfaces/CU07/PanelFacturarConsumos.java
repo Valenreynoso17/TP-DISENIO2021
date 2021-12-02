@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import main.java.dtos.OcupacionDTO;
+import main.java.dtos.ResponsableDePagoDTO;
 import main.java.enums.TipoMensaje;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
@@ -43,7 +45,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
-	public PanelFacturarConsumos(final FrameFacturarConsumos frame) {
+	public PanelFacturarConsumos(final FrameFacturarConsumos frame, OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsablePagoDTO) {
 		
 		this.frameActual = frame;
 		

@@ -19,6 +19,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+
+import main.java.dtos.OcupacionDTO;
 import main.java.enums.TipoDocumento;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.interfaces.clasesExtra.ModeloTablaFacturar;
@@ -51,7 +53,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	
 	private Dimension dimensionBoton = new Dimension(250, 33);
 	
-	public PanelResultadosDeBusquedaFacturarGroupBox(FrameFacturar frame) {
+	public PanelResultadosDeBusquedaFacturarGroupBox(FrameFacturar frame, OcupacionDTO ocupacionDTO) {
 		
 		this.frameActual = frame;
 		
@@ -138,7 +140,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		facturarANombreDeUnTercero.addActionListener(e -> {
 			
 			frameActual.setEnabled(false);
-			new FrameFacturarANombreDeUnTercero(frame);
+			new FrameFacturarANombreDeUnTercero(frame, ocupacionDTO);
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
 		c.gridy = 1;
