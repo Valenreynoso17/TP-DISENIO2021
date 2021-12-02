@@ -89,7 +89,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
 		
-		RenderParaTablas a = new RenderParaTablas(tabla.getDefaultRenderer(Object.class));
+		RenderParaTablas a = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
 		
 		tabla.setDefaultRenderer(Object.class, a);
 		tabla.getTableHeader().setDefaultRenderer(a);

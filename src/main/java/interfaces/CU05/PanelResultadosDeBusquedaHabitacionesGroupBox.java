@@ -1,6 +1,7 @@
 package main.java.interfaces.CU05;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -19,20 +20,29 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
+
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.CU02.PanelPaginacion;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.clasesExtra.ColumnaAgrupada;
 import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
+import main.java.interfaces.clasesExtra.HeaderTablaAgrupable;
+import main.java.interfaces.clasesExtra.ModeloTablaEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
+import main.java.interfaces.clasesExtra.RenderParaTablaEstadoColores;
+import main.java.interfaces.clasesExtra.RenderParaTablas;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	
-	private JButton facturarANombreDeUnTercero;
-	
 	private JTable tabla;
-	private ModeloTablaPasajeros miModelo;
-	private PanelPaginacion paginacion;
+	private ModeloTablaEstadoHabitaciones miModelo;
+	private RenderParaTablas renderTabla;
+	private TableCellRenderer renderTablaEstadoColores;
 	
 	private Vector filaSeleccionada = null;
 	private Integer nroFilaSeleccionada;
@@ -41,23 +51,6 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	private Insets insetTabla = new Insets(15, 100, 15, 100);
 
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
-	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
-	
-	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
-	
-	private Insets insetPanelBusqueda = new Insets(30,30,5,30);
-	private Insets insetPanelTabla = new Insets(0,30,0,30);
-	
-	private FrameMenuPrincipal frameAnterior;
-	private FrameMuestraEstadoHabitaciones frameActual;
-	private JFrame frameSiguiente;	//Dependiendo quien lo llame, cambia el frame que se mostrara al presionar "Siguiente"
-	
-	private Dimension dimensionBoton = new Dimension(90, 33);
-	
-	private GestorPasajero gestorPasajero;
-	
-	final private Integer tamPagina = 10;
-	
 	public PanelResultadosDeBusquedaHabitacionesGroupBox() {
 		
 		this.setBackground(Color.white);
@@ -67,10 +60,63 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		miModelo = new ModeloTablaPasajeros();
+		miModelo = new ModeloTablaEstadoHabitaciones();
 		
-		tabla = new JTable(miModelo);
-		tableContainer = new JScrollPane(tabla);
+		miModelo.cargarEstados();
+		
+		tabla = new JTable(miModelo){
+			
+			int ultimaFilaSeleccionada = 0;
+			int ultimaColumnaSeleccionada = 0;
+			
+	      protected JTableHeader createDefaultTableHeader() {
+	          return new HeaderTablaAgrupable(columnModel);
+	      }
+	  };
+	  
+		tableContainer = new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		
+		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), true);
+		
+		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
+		
+		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
+		
+		tabla.getTableHeader().setDefaultRenderer(renderTabla);
+		
+	    TableColumnModel cm = tabla.getColumnModel();
+	    ColumnaAgrupada colIndvidualEstandar = new ColumnaAgrupada("Individual Estándar", renderTabla);
+	    colIndvidualEstandar.add(cm.getColumn(1));	//Habria que poner "for" hasta que toque el primer "2..."
+	    colIndvidualEstandar.add(cm.getColumn(2));
+	    colIndvidualEstandar.add(cm.getColumn(3));
+	    colIndvidualEstandar.add(cm.getColumn(4));
+	    ColumnaAgrupada colDobleEstandar = new ColumnaAgrupada("Doble Estándar");
+	    colDobleEstandar.add(cm.getColumn(5));	//Habria que poner "for" hasta que toque el primer "3..."
+	    colDobleEstandar.add(cm.getColumn(6));
+	    colDobleEstandar.add(cm.getColumn(7));
+	    colDobleEstandar.add(cm.getColumn(8));
+	    ColumnaAgrupada colDobleSuperior = new ColumnaAgrupada("Doble Superior");
+	    colDobleSuperior.add(cm.getColumn(9));	//Habria que poner "for" hasta que toque el primer "4..."
+	    colDobleSuperior.add(cm.getColumn(10));
+	    colDobleSuperior.add(cm.getColumn(11));
+	    colDobleSuperior.add(cm.getColumn(12));
+	    ColumnaAgrupada colSuperiorFamilyPlan = new ColumnaAgrupada("Superior Family Plan");
+	    colSuperiorFamilyPlan.add(cm.getColumn(13));	//Habria que poner "for" hasta que toque el primer "5..."
+	    colSuperiorFamilyPlan.add(cm.getColumn(14));
+	    colSuperiorFamilyPlan.add(cm.getColumn(15));
+	    colSuperiorFamilyPlan.add(cm.getColumn(16));
+	    ColumnaAgrupada colSuiteDouble = new ColumnaAgrupada("Suite Double");
+	    colSuiteDouble.add(cm.getColumn(17));	//Habria que poner "for" hasta que toque el ultimo "5..."
+	    colSuiteDouble.add(cm.getColumn(18));
+	    colSuiteDouble.add(cm.getColumn(19));
+	    colSuiteDouble.add(cm.getColumn(20));
+
+	    HeaderTablaAgrupable header = (HeaderTablaAgrupable)tabla.getTableHeader();
+	    header.addColumnGroup(colIndvidualEstandar);
+	    header.addColumnGroup(colDobleEstandar);
+	    header.addColumnGroup(colDobleSuperior);
+	    header.addColumnGroup(colSuperiorFamilyPlan);	
+	    header.addColumnGroup(colSuiteDouble);
 		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
@@ -83,7 +129,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		tabla.setAutoCreateRowSorter(true);	//Para que se ordenen
+		tabla.setAutoCreateRowSorter(false);	//Para que se ordenen
 		
 		tabla.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {				
@@ -92,23 +138,34 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 			}
 		});
 		
+		tabla.setRowHeight(30);
+		cm.getColumn(0).setPreferredWidth(100);
+		
+	    for (int i = 1; i < cm.getColumnCount(); i++) {
+	    	cm.getColumn(i).setPreferredWidth(30);
+	    }
+	    
+	    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
 		//PARA CENTRAR
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 		tabla.setDefaultRenderer(Object.class, centerRenderer);
 		
 		tabla.setBackground(Color.white);
-		tabla.setGridColor(Color.white);
-		//this.add(tableContainer, BorderLayout.CENTER);
+		tabla.setGridColor(Color.black);
+		tabla.setBorder(new LineBorder(Color.BLACK));
+		
+		
+		
 		c.fill = GridBagConstraints.BOTH;
-		//c.anchor = GridBagConstraints.CENTER;
 		c.insets = insetTabla;
 		c.weightx = 1.0;
 		c.weighty = 1.0;
 		c.gridwidth = 3;
 		c.gridx = 0;
 		c.gridy = 0;
-		this.add(tableContainer, c);
+		this.add(this.tableContainer, c);
 		c.fill = GridBagConstraints.NONE;
 		c.weightx = 0.1;
 		c.weighty = 0.1;
