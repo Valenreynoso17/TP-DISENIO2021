@@ -53,8 +53,6 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		
 		miModelo = new ModeloTablaEstadoHabitaciones();
 		
-		miModelo.cargarEstados();
-		
 		tabla = new JTable(miModelo){
 			
 			private static final long serialVersionUID = 1L;
@@ -68,9 +66,9 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		
 		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), true);
 		
-		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
+//		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
 		
-		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
+//		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 		
 		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
@@ -119,13 +117,13 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		tabla.setAutoCreateRowSorter(false);	//Para que se ordenen
+		tabla.setAutoCreateRowSorter(false);	//Para que NO se ordenen
 		
 		tabla.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseReleased(MouseEvent e) {
 		    	
-		    	if(e.isPopupTrigger() && e.getComponent() instanceof JTable) {	//Si pulsa el boton derecho dentro de la tabla
+		    	if(e.isPopupTrigger() && e.getComponent() instanceof JTable) {	//Si pulsa el boton derecho dentro de la tabla, se limpia y carga la tabla desde 0 y se agrega otro Render
 		    		
 		    		if(((RenderParaTablaEstadoColores) tabla.getDefaultRenderer(String.class)).celdaYaSeleccionada(tabla.rowAtPoint(e.getPoint()), tabla.columnAtPoint(e.getPoint()))) {
 		    			
@@ -195,6 +193,21 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		c.weighty = 0.1;
 		c.gridwidth = 1;
 		
+	}
+	
+	public void activarTabla() {
+		
+		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
+		
+		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
+		
+		miModelo.cargarEstados();
+	}
+	
+	public void desactivarTabla() {
+//		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
+		
+		miModelo.limpiarTabla();
 	}
 		
 }

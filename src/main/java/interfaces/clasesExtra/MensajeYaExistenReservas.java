@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -132,5 +134,16 @@ public class MensajeYaExistenReservas extends JFrame{
 
 			setContentPane(contentPane);
 		}
+															//TODO: VER
+		protected void processWindowEvent(WindowEvent e) {	//Para que al cerrarse con la cruz (arriba a la derecha) no se cierren todos los frames
+			
+			super.processWindowEvent(e);
+	        if(e.getID() == WindowEvent.WINDOW_CLOSING) {
+	        	
+	            this.dispose();
+//	            frameActual.toFront();	
+//	            frameActual.setEnabled(true);
+	        }
+		} 
 		
 	}

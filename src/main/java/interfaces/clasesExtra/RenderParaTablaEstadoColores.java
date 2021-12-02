@@ -44,28 +44,38 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	    	  !celdasFueraDeServicio.contains(filaYColumnaParaRePintar) &&		 // No debe estar fuera de servicio
 	    	  (banderaPrimeraVez || column == columnaSeleccion)) {			 // Debe permanecer siempre en una misma columna
 	    	  
-	    	  c.setBackground(colorSeleccionado);
-	    	  
 	    	  banderaPrimeraVez = false;	// La bandera se pone en falso porque ya cumplio su funcion (dejar entrar la primera vez al if)
 	    	  columnaSeleccion = column;
 	    	  
-//	    	  if(celdasSeleccionadas.isEmpty()) {
+	    	  if(celdasSeleccionadas.isEmpty()) {
 	    		  
 		    	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
 		    	  celdasSeleccionadas.add(filaYColumna);
-//	    	  }
-//	    	  else {
-//		    	  int ultimaFilaSeleccionada = celdasSeleccionadas.get(celdasSeleccionadas.size()-1).get(0);
-//		    	  this.mostrarArrayList(celdasSeleccionadas);
-//		    	  if(table.getSelectedRow() > ultimaFilaSeleccionada) {	//Si la fila seleccionada ahora es mayor que la ultima fila seleccionada
-//		    		  
+		    	  
+		    	  c.setBackground(colorSeleccionado);
+	    	  }
+	    	  else {
+		    	  int ultimaFilaSeleccionada = celdasSeleccionadas.get(celdasSeleccionadas.size()-1).get(0);
+		    	  System.out.println("UltimaFilaSeleccionada: "+ultimaFilaSeleccionada);
+		    	  this.mostrarArrayList(celdasSeleccionadas);
+		    	  
+		    	 	//Si la fila seleccionada ahora es igual a la siguiente fila que habia seleccionado antes
+		    	  	if(table.getSelectedRow() == ultimaFilaSeleccionada+1) {
+		    		  
+		    		  c.setBackground(colorSeleccionado);	//Para que no pueda seleccionar fechas anteriores a la primera seleccion
+		    		  
+		    		  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
+	    			  celdasSeleccionadas.add(filaYColumna);
+		    		  
 //		    		  for(int i = 1; i <= (table.getSelectedRow()-ultimaFilaSeleccionada); i++) {
 //		    			  
 //		    			  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(i); filaYColumna.add(column);
 //		    			  celdasSeleccionadas.add(filaYColumna);
+//		    	    	  
+//		    	    	  
 //		    		  }
-//		    	  }
-//	    	  }
+		    	  }
+	    	  }
 	    	  
 	
 	      }
@@ -100,12 +110,14 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	      }
 	}
 	
+	public List<ArrayList<Integer>> getCeldasSeleccionadas(){
+		
+		return this.celdasSeleccionadas;
+	}
+	
 	public boolean celdaYaSeleccionada(int r, int c) {
 		
 		boolean resultado = false;
-		
-//		System.out.println("FILA: "+r+" COLUMNA: "+c);
-//		mostrarArrayList(celdasSeleccionadas);
 		
 		ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(r); filaYColumna.add(c);
 		

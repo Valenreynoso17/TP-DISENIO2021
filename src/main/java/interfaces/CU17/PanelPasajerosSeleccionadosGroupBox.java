@@ -19,6 +19,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import main.java.interfaces.clasesExtra.ModeloPasajerosSeleccionadosOcuparHabitacion;
+import main.java.interfaces.clasesExtra.RenderParaTablas;
 
 public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 	
@@ -26,6 +27,7 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 	
 	private JTable tabla;
 	private ModeloPasajerosSeleccionadosOcuparHabitacion miModelo;
+	private RenderParaTablas renderTabla;
 	
 	@SuppressWarnings({ "unused", "rawtypes" })
 	private Vector filaSeleccionada = null;
@@ -48,8 +50,14 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 		
 		miModelo = new ModeloPasajerosSeleccionadosOcuparHabitacion();
 		
+		miModelo.cargarPasajeros();
+		
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
+		
+		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
+		
+		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
@@ -71,13 +79,6 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 			}
 		});
 		
-		tabla.getTableHeader().setOpaque(false);
-		tabla.getTableHeader().setBackground(Color.decode("#424242"));		//Para que el fondo de la cabecera sea de un color en específico
-		tabla.getTableHeader().setForeground(Color.WHITE);					//Para que la fuente de la cabecera sea blanca
-		tabla.getTableHeader().setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
-		
-		tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
-		
 		//PARA CENTRAR
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
@@ -85,6 +86,8 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 		
 		tabla.setBackground(Color.white);
 		tabla.setGridColor(Color.black);
+		tabla.setBorder(new LineBorder(Color.BLACK));
+		
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;

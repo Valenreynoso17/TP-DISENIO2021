@@ -32,11 +32,20 @@ public class ModeloPasajerosSeleccionadosOcuparHabitacion extends DefaultTableMo
 		this.setRowCount(0); //Elimino todas las filas de la tabla
 	}
 	
-	public void cargarPasajeros(List<PasajeroDTO> pasajeros) {	//TODO: Ver
+//	public void cargarPasajeros(List<PasajeroDTO> pasajeros) {	//TODO: Ver
+//		
+//		for(PasajeroDTO p : pasajeros) {
+//			this.addRow(new Object[] {p.getApellido()
+//									, p.getNombre()});
+//		}
+//
+//	}
+	
+	public void cargarPasajeros() {	//TODO: Ver
 		
-		for(PasajeroDTO p : pasajeros) {
-			this.addRow(new Object[] {p.getApellido()
-									, p.getNombre()});
+		for(int i = 0; i < 5; i++) {
+			this.addRow(new Object[] {"Rodriguez"
+									, "Juan"});
 		}
 
 	}

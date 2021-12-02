@@ -16,6 +16,7 @@ import main.java.excepciones.InputVacioException;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.Mensaje;
+import main.java.interfaces.clasesExtra.MensajeYaExistenReservas;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
@@ -33,13 +34,15 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
-	private String textoHabitacionInexistente = "<html><p>El número de habitación no se corresponde con ninguna habitación en el sistema.</p><html>";
+	private String textoNoExistenHabitacionesEnPeriodo = "<html><p>No existen habitaciones disponibles para el período seleccionado.</p><html>";
 	@SuppressWarnings("unused")
-	private Mensaje mensajeHabitacionInexistente = new Mensaje(2, textoHabitacionInexistente, TipoMensaje.ERROR, "Aceptar", null);
+	private Mensaje mensajeNoExistenHabitacionesEnPeriodo = new Mensaje(2, textoNoExistenHabitacionesEnPeriodo, TipoMensaje.ERROR, "Aceptar", null);
 	
-	private String textoHabitacionSinFacturasPendientes = "<html><p>La habitación no tiene facturas pendientes de pago.</p><html>";
+	private String textoRangoNoSeleccionado = "<html><p>Por favor, seleccione al menos un rango de fechas para ocupar una habitación.</p><html>";
 	@SuppressWarnings("unused")
-	private Mensaje mensajeHabitacionSinFacturasPendientes = new Mensaje(3, textoHabitacionSinFacturasPendientes, TipoMensaje.ERROR, "Aceptar", null);
+	private Mensaje mensajeRangoNoSeleccionado = new Mensaje(3, textoRangoNoSeleccionado, TipoMensaje.ERROR, "Aceptar", null);
+	
+	//private MensajeYaExistenReservas mensajeYaExistenReservas = new MensajeYaExistenReservas();
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
@@ -80,8 +83,12 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		buscar.addActionListener(e -> {
 			
 			try{
+					panelResultadosDeBusquedaHabitacionesGroupBox.desactivarTabla();
+				
 					this.panelMostrarEstadoHabitacionesGroupBox.inputNoEsVacia();
-					this.panelMostrarEstadoHabitacionesGroupBox.inputEsValida();			
+					this.panelMostrarEstadoHabitacionesGroupBox.inputEsValida();
+					
+					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla();
 			}
 			catch(InputVacioException exc) {
 				
