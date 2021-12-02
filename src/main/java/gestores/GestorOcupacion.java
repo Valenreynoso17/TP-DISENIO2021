@@ -37,7 +37,6 @@ public class GestorOcupacion {
 	
 	private GestorOcupacion() {
 		ocupacionDAO = new OcupacionPostgreSQLImpl();
-		gestorHabitacion = GestorHabitacion.getInstance();
 		gestorPasajero = GestorPasajero.getInstance();
 	}
 	
@@ -159,6 +158,7 @@ public class GestorOcupacion {
 		La hora de salida se setea en null
 	*/
 	public void guardarOcupacion(OcupacionDTO o) {
+		gestorHabitacion = GestorHabitacion.getInstance();
 		Habitacion habitacion = gestorHabitacion.buscarHabitacion(o.getIdHabitacion());
 		
 		List<Pasajero> pasajeros = gestorPasajero.buscarPasajeros(o.getListaPasajerosDTO());
