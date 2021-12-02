@@ -53,7 +53,7 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 	public void cargarEstados() {	//TODO: Ver
 		
 		for(int i = 0; i < 10; i++) {
-			this.addRow(new Object[] {"","","","","","","","","","","","","","","","","","","",""});
+			this.addRow(new Object[] {"1"+i+"/03/2021","","","","","","","","","","","","","","","","","","",""});
 		}
 
 	}

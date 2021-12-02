@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -42,7 +43,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	private JTable tabla;
 	private ModeloTablaEstadoHabitaciones miModelo;
 	private RenderParaTablas renderTabla;
-	private TableCellRenderer renderTablaEstadoColores;
+	private RenderParaTablaEstadoColores renderTablaEstadoColores;
 	
 	private Vector filaSeleccionada = null;
 	private Integer nroFilaSeleccionada;
@@ -132,11 +133,46 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		tabla.setAutoCreateRowSorter(false);	//Para que se ordenen
 		
 		tabla.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {				
-				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
-				nroFilaSeleccionada = tabla.getSelectedRow();
-			}
+		    @Override
+		    public void mouseReleased(MouseEvent e) {
+		    	
+		    	if(e.isPopupTrigger() && e.getComponent() instanceof JTable) {	//Si pulsa el boton derecho dentro de la tabla
+		    		
+		    		if(((RenderParaTablaEstadoColores) tabla.getDefaultRenderer(String.class)).celdaYaSeleccionada(tabla.rowAtPoint(e.getPoint()), tabla.columnAtPoint(e.getPoint()))) {
+		    			
+		    			miModelo.limpiarTabla();
+		    			miModelo.cargarEstados();
+		    			tabla.setDefaultRenderer(String.class, new RenderParaTablaEstadoColores());
+
+		    		}
+		    	}
+
+		        if (tabla.getSelectedRow() >= 0) {
+		        	
+				    int r = tabla.rowAtPoint(e.getPoint());
+			        if (r >= 0 && r < tabla.getRowCount()) {
+			        	try {
+							filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
+							nroFilaSeleccionada = tabla.getSelectedRow();
+			        	} catch(ArrayIndexOutOfBoundsException exc) {		//El "elementAt" fallta debido a que el click derecho busca el elemento -1 en el vector
+			        		
+			        		System.out.println("Click derecho por excepcion");
+			        		//tabla.setDefaultRenderer(String.class, new RenderParaTablaEstadoColores());	//Quizas mas ineficiente, pero mas simple
+			        	}
+			        } else {
+			        	tabla.clearSelection();
+			        }
+		       }
+
+		    }
 		});
+		
+//		tabla.addMouseListener(new MouseAdapter() {
+//			public void mouseReleased(MouseEvent e) {				
+//				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
+//				nroFilaSeleccionada = tabla.getSelectedRow();
+//			}
+//		});
 		
 		tabla.setRowHeight(30);
 		cm.getColumn(0).setPreferredWidth(100);
@@ -155,7 +191,6 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		tabla.setBackground(Color.white);
 		tabla.setGridColor(Color.black);
 		tabla.setBorder(new LineBorder(Color.BLACK));
-		
 		
 		
 		c.fill = GridBagConstraints.BOTH;
