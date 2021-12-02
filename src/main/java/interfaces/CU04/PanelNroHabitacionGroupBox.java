@@ -16,6 +16,8 @@ import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelNroHabitacionGroupBox extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel label;
 	
 	private JTextField tipoHabitacion;					//Campos de texto (no editables)

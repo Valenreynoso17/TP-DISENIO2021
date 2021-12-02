@@ -10,45 +10,33 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.Vector;
-
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
-
-import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoDocumento;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
-import main.java.gestores.GestorPasajero;
-import main.java.interfaces.TextPrompt;
-import main.java.interfaces.CU02.PanelPaginacion;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
-import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.ModeloTablaFacturar;
-import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
 import main.java.interfaces.clasesExtra.RenderParaTablas;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private JButton facturarANombreDeUnTercero;
 	
 	private JTable tabla;
 	private ModeloTablaFacturar miModelo;
-	private PanelPaginacion paginacion;
 	
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private Vector filaSeleccionada = null;
+	@SuppressWarnings("unused")
 	private Integer nroFilaSeleccionada;
 	private JScrollPane tableContainer;
 	
@@ -59,19 +47,9 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
-	private Insets insetPanelBusqueda = new Insets(30,30,5,30);
-	private Insets insetPanelTabla = new Insets(0,30,0,30);
-	
-	private FrameMenuPrincipal frameAnterior;
 	private FrameFacturar frameActual;
 	
-	private FrameFacturarANombreDeUnTercero frameFacturarANombreDeUnTercero;
-	
 	private Dimension dimensionBoton = new Dimension(250, 33);
-	
-	private GestorPasajero gestorPasajero;
-	
-	final private Integer tamPagina = 10;
 	
 	public PanelResultadosDeBusquedaFacturarGroupBox(FrameFacturar frame) {
 		
@@ -160,7 +138,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		facturarANombreDeUnTercero.addActionListener(e -> {
 			
 			frameActual.setEnabled(false);
-			frameFacturarANombreDeUnTercero = new FrameFacturarANombreDeUnTercero(frame);
+			new FrameFacturarANombreDeUnTercero(frame);
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
 		c.gridy = 1;

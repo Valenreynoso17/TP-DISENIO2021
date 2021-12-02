@@ -6,11 +6,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,7 +14,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;
-
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoDocumento;
 import main.java.interfaces.TextPrompt;
@@ -28,7 +22,7 @@ import main.java.interfaces.clasesExtra.UppercaseDocumentFilter;
 
 public class PanelGestionarPasajeroBusqueda extends JPanel{
 	
-	private FrameGestionarPasajero frameActual;
+	private static final long serialVersionUID = 1L;
 	
 	private JComboBox<TipoDocumento> tipoDocumento;
 	
@@ -61,8 +55,6 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 	//cuadradito de arriba
 
 	public PanelGestionarPasajeroBusqueda(FrameGestionarPasajero frame) {
-		
-		this.frameActual = frame;
 		
 		this.setBackground(Color.WHITE);
 		

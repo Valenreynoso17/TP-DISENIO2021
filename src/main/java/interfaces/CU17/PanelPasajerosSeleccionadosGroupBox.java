@@ -9,8 +9,6 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
-
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,23 +18,18 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-
-import main.java.gestores.GestorPasajero;
-import main.java.interfaces.CU02.PanelPaginacion;
-import main.java.interfaces.CU07.FrameFacturar;
-import main.java.interfaces.CU07.FrameFacturarANombreDeUnTercero;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.ModeloPasajerosSeleccionadosOcuparHabitacion;
-import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
-import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private JTable tabla;
 	private ModeloPasajerosSeleccionadosOcuparHabitacion miModelo;
-	private PanelPaginacion paginacion;
 	
+	@SuppressWarnings({ "unused", "rawtypes" })
 	private Vector filaSeleccionada = null;
+	@SuppressWarnings("unused")
 	private Integer nroFilaSeleccionada;
 	private JScrollPane tableContainer;
 	

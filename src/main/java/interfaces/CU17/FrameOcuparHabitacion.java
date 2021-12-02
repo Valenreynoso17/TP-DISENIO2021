@@ -3,16 +3,14 @@ package main.java.interfaces.CU17;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-
-import main.java.interfaces.CU04.FrameConfirmarDatosHabitacion;
 import main.java.interfaces.CU05.PanelMostrarEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
 
 public class FrameOcuparHabitacion extends FrameMuestraEstadoHabitaciones {
+	
+	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
-	
-	private FrameOcuparHabitacionConPasajeros frameSiguiente;
 
 	public FrameOcuparHabitacion() {
 		super("Sistema Hotel Premier");
@@ -30,7 +28,7 @@ public class FrameOcuparHabitacion extends FrameMuestraEstadoHabitaciones {
 	public void apretoSiguiente() {
 		
 		this.dispose();
-		frameSiguiente = new FrameOcuparHabitacionConPasajeros();
+		new FrameOcuparHabitacionConPasajeros();
 	}
 
 }

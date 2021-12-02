@@ -3,23 +3,21 @@ package main.java.interfaces.CU04;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-
 import main.java.enums.TipoMensaje;
 import main.java.interfaces.CU05.PanelMostrarEstadoHabitaciones;
-import main.java.interfaces.CU11.PanelAltaPasajero;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 
 public class FrameReservarHabitacion extends FrameMuestraEstadoHabitaciones implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
 	
 	private String textoMensajeCUNoImplementado = "<html><p>El CU04 'Reservar habitación' fue removido de esta entrega.</p><html>";
 	private Mensaje mensajeCUNoImplementado = new Mensaje(0, textoMensajeCUNoImplementado, TipoMensaje.ERROR, "Aceptar", null); 
-	
-	private FrameConfirmarDatosHabitacion frameConfirmarDatosHabitacion;
 
 	public FrameReservarHabitacion() {
 		super("Sistema Hotel Premier");
@@ -40,7 +38,7 @@ public class FrameReservarHabitacion extends FrameMuestraEstadoHabitaciones impl
 		
 		
 		this.dispose();
-		frameConfirmarDatosHabitacion = new FrameConfirmarDatosHabitacion();
+		new FrameConfirmarDatosHabitacion();
 	}
 	
 	public PanelPermiteMensajes getPanel() {

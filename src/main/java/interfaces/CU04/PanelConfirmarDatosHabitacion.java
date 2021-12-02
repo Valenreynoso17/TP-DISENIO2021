@@ -8,20 +8,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 import main.java.enums.TipoMensaje;
-import main.java.interfaces.TextPrompt;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
@@ -29,13 +21,13 @@ import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelConfirmarDatosHabitacion extends JPanel implements PanelPermiteMensajes{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private PanelConfirmarDatosHabitacionGroupBox panelConfirmarDatosHabitacionGroupBox = new PanelConfirmarDatosHabitacionGroupBox();
 	
 	private JButton atras;
 	private JButton aceptar;
 	private JButton cancelar;
-	
-	private JLabel label;
 	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
@@ -45,12 +37,8 @@ public class PanelConfirmarDatosHabitacion extends JPanel implements PanelPermit
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
 	private Insets insetPanelDatosFactura = new Insets(20,30,0,30);
-	private Insets insetPanelDatosDelPago = new Insets(10,30,20,30);
-	
-	private FrameMenuPrincipal frameMenuPrincipal;
-	private FrameReservarHabitacion frameAnterior;
+
 	private FrameConfirmarDatosHabitacion frameActual;
-	private FrameReservaANombreDe frameSiguiente;
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
@@ -104,7 +92,7 @@ public class PanelConfirmarDatosHabitacion extends JPanel implements PanelPermit
 		atras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				frameAnterior = new FrameReservarHabitacion();
+				new FrameReservarHabitacion();
 			}
 //				try {
 //					PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();
@@ -132,7 +120,7 @@ public class PanelConfirmarDatosHabitacion extends JPanel implements PanelPermit
 			public void actionPerformed(ActionEvent e) {
 				
 				frameActual.setEnabled(false);
-				frameSiguiente = new FrameReservaANombreDe(frameActual);
+				new FrameReservaANombreDe(frameActual);
 				
 //				try {
 //					PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();
@@ -160,7 +148,7 @@ public class PanelConfirmarDatosHabitacion extends JPanel implements PanelPermit
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a MenuPrincipal
 			frameActual.dispose();
-			frameMenuPrincipal = new FrameMenuPrincipal();	
+			new FrameMenuPrincipal();	
 			break;
 //		case 2:	//Si no se encontro ningún pasajero, va a la pantalla de AltaPasajero
 //			frameActual.dispose();

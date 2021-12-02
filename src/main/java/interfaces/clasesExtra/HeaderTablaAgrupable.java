@@ -12,7 +12,7 @@ import javax.swing.table.TableColumnModel;
 public class HeaderTablaAgrupable extends JTableHeader {
 
     @SuppressWarnings("unused")
-    private static final String uiClassID = "GroupableTableHeaderUI";
+    private static final String uiClassID = "HeaderTablaAgrupable";
 
     protected List<ColumnaAgrupada> columnGroups = new ArrayList<ColumnaAgrupada>();
 

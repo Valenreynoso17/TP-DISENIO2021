@@ -8,19 +8,17 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.InputVacioException;
-import main.java.interfaces.TextPrompt;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private PanelFacturarANombreDeUnTerceroGroupBox panelGroupBox = new PanelFacturarANombreDeUnTerceroGroupBox();
 	
@@ -32,6 +30,7 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	
 	private String textoMensajeNoExisteResponsable = "<html><p>El CUIT ingresado es inválido/No coincide con ningún responsable"
 													+ " de pago del sistema. ¿Desea dar de alta un nuevo responsable de pago?</p><html>";
+	@SuppressWarnings("unused")
 	private Mensaje mensajeNoExisteResponsable = new Mensaje(2, textoMensajeNoExisteResponsable, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoAltaResponsableDePago = "<html><p>El CU13 'Dar de alta nuevo Responsable de Pago' no se implementa en esta etapa.</p><html>";
@@ -49,7 +48,6 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	
 	private FrameFacturar frameAnterior;
 	private FrameFacturarANombreDeUnTercero frameActual;
-	private FrameFacturarConsumos frameSiguiente;
 	
 	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FrameFacturar frameA) {
 		
@@ -100,7 +98,7 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 					
 					frameAnterior.dispose();
 					frameActual.dispose();
-					frameSiguiente = new FrameFacturarConsumos();
+					new FrameFacturarConsumos();
 				}
 				catch(InputVacioException exc) {
 					

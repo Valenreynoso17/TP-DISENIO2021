@@ -8,20 +8,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-
-import main.java.enums.TipoMensaje;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
-import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelReservaANombreDe extends JPanel{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private PanelReservaANombreDeGroupBox panelReservaANombreDeGroupBox = new PanelReservaANombreDeGroupBox();
 	
@@ -38,7 +32,6 @@ public class PanelReservaANombreDe extends JPanel{
 	private Insets insetPanel = new Insets(30,40,0,40);
 	
 	private FrameReservaANombreDe frameActual;
-	private FrameMenuPrincipal frameSiguiente;
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
@@ -87,7 +80,7 @@ public class PanelReservaANombreDe extends JPanel{
 				
 				frameAnterior.dispose();
 				frameActual.dispose();
-				frameSiguiente = new FrameMenuPrincipal();
+				new FrameMenuPrincipal();
 //				try {
 //					PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();
 //					

@@ -3,14 +3,14 @@ package main.java.interfaces.CU18;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-
 import main.java.enums.TipoMensaje;
-import main.java.interfaces.CU11.PanelAltaPasajero;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 
 public class FrameBuscarFacturasHabitacion extends JFrame implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
 	
