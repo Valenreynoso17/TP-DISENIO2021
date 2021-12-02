@@ -43,6 +43,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	
 	private JTable tabla;
 	private ModeloTablaConsumos miModelo;	
+	private RenderParaTablas renderTabla; 
 	
 	private Vector filaSeleccionada = null;
 	private Integer nroFilaSeleccionada;
@@ -150,10 +151,10 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
 		
-		RenderParaTablas a = new RenderParaTablas(tabla.getDefaultRenderer(Object.class));
+		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
 		
-		tabla.setDefaultRenderer(Object.class, a);
-		tabla.getTableHeader().setDefaultRenderer(a);
+		tabla.setDefaultRenderer(Object.class, renderTabla);
+		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
@@ -191,8 +192,6 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 //		
 //		tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
 		
-		
-		
 		tabla.getColumnModel().getColumn(1).setCellRenderer(renderBotonMenos);
 		tabla.getColumnModel().getColumn(1).setCellEditor(editorBotonMenos);
 		
@@ -216,8 +215,6 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		tabla.setBackground(Color.white);
 		tabla.setGridColor(Color.black);
 		tabla.setBorder(new LineBorder(Color.BLACK));
-		
-		tabla.setAutoCreateRowSorter(true);
 		
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
