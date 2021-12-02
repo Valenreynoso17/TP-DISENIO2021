@@ -6,6 +6,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import main.java.clases.Consumo;
@@ -52,11 +53,14 @@ public class GestorOcupacion {
 		
 		// Validar datos
 		
-		Ocupacion ocupacion = ocupacionDAO.buscarUltimaOcupacion(nroHabitacion);
+		Optional<Ocupacion> optOcupacion = Optional.ofNullable(ocupacionDAO.buscarUltimaOcupacion(nroHabitacion));
 		
 		// preguntar si es no es null
+		if (optOcupacion.isEmpty()) {
+			
+		}
 		
-		OcupacionDTO ocupacionDTO = crearOcupacionDTO(ocupacion);
+		OcupacionDTO ocupacionDTO = crearOcupacionDTO(optOcupacion.get());
 		
 		return ocupacionDTO;
 		
@@ -113,7 +117,7 @@ public class GestorOcupacion {
 		return retorno;
 	}
 	
-	public List<ItemFilaDTO> calcularCosto(OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsableDTO) {
+	public List<ItemFilaDTO> calcularItemsAPagar(OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsableDTO) {
 		
 		List<ItemFilaDTO> listaItemsFila = new ArrayList<ItemFilaDTO>();
 		Double multiplicadorIVA = (responsableDTO.getPosicionFrenteIva() == PosicionFrenteIva.CONSUMIDOR_FINAL) ? 1 : 1 + Factura.getIVA();

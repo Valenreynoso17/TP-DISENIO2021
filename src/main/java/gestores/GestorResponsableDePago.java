@@ -49,10 +49,13 @@ public class GestorResponsableDePago {
 		
 		// if cuit invalido -> tirar excepcion
 		
-		ResponsableDePago responsable = responsableDAO.buscarPorCuit(cuit);
+		Optional<ResponsableDePago> optResponsable = Optional.ofNullable(responsableDAO.buscarPorCuit(cuit));
 		
 		// if no existe -> tirar excepcion
+		if(optResponsable.isEmpty()) {
+			
+		}
 		
-		return new ResponsableDePagoDTO(responsable);
+		return new ResponsableDePagoDTO(optResponsable.get());
 	}
 }
