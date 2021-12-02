@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class ReservaDTO {
 	private Integer id;
+	private Integer idHabitacion;
 	private LocalDateTime ingreso;
 	private LocalDateTime egreso;
 	
@@ -13,6 +14,10 @@ public class ReservaDTO {
 
 	public Integer getId() {
 		return id;
+	}
+
+	public Integer getIdHabitacion() {
+		return idHabitacion;
 	}
 
 	public LocalDateTime getIngreso() {
@@ -27,6 +32,10 @@ public class ReservaDTO {
 		this.id = id;
 	}
 
+	public void setIdHabitacion(Integer idHabitacion) {
+		this.idHabitacion = idHabitacion;
+	}
+
 	public void setIngreso(LocalDateTime ingreso) {
 		this.ingreso = ingreso;
 	}
@@ -34,6 +43,8 @@ public class ReservaDTO {
 	public void setEgreso(LocalDateTime egreso) {
 		this.egreso = egreso;
 	}
+
+	
 	
 	
 }

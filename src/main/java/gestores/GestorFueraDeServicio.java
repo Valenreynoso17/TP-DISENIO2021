@@ -37,6 +37,7 @@ public class GestorFueraDeServicio {
 			dto.setId(f.getId());
 			dto.setFechaInicio(f.getFechaInicio());
 			dto.setFechaFin(f.getFechaFin());
+			dto.setIdHabitacion(f.getHabitacion().getId());
 			
 			fuerasDeServicioDTO.add(dto);
 		}

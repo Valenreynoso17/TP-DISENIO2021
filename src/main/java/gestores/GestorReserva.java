@@ -39,6 +39,7 @@ public class GestorReserva {
 			dto.setId(r.getId());
 			dto.setIngreso(r.getIngreso());
 			dto.setEgreso(r.getEgreso());
+			dto.setIdHabitacion(r.getHabitacion().getId());
 			
 			reservasDTO.add(dto);
 		}

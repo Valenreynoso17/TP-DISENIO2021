@@ -1,5 +1,6 @@
 package main.java.dtos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HabitacionDTO {
@@ -13,6 +14,9 @@ public class HabitacionDTO {
 	
 	public HabitacionDTO() {
 		super();
+		ocupaciones = new ArrayList<>();
+		reservas = new ArrayList<>();
+		fuerasDeServicio = new ArrayList<>();
 	}
 	
 	public HabitacionDTO(Integer id, Integer nroHabitacion, TipoHabitacionDTO tipo, List<OcupacionDTO> ocupaciones, List<ReservaDTO> reservas,
@@ -78,7 +82,17 @@ public class HabitacionDTO {
 		this.fuerasDeServicio = fuerasDeServicio;
 	}
 	
+	public void agregarOcupacion(OcupacionDTO o) {
+		ocupaciones.add(o);
+	}
 	
+	public void agregarReserva(ReservaDTO r) {
+		reservas.add(r);
+	}
+	
+	public void agregarFueraDeServicio(FueraDeServicioDTO f) {
+		fuerasDeServicio.add(f);
+	}
 	
 	
 }
