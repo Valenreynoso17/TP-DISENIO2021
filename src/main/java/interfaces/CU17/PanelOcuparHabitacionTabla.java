@@ -1,7 +1,6 @@
 package main.java.interfaces.CU17;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -17,7 +16,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
 import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import main.java.dtos.PasajeroDTO;
@@ -25,7 +23,6 @@ import main.java.enums.ColumnaBuscarPasajeros;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
-import main.java.interfaces.clasesExtra.RenderParaTablaEstadoColores;
 import main.java.interfaces.clasesExtra.RenderParaTablas;
 
 public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
