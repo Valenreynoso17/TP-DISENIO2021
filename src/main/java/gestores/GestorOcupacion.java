@@ -187,6 +187,7 @@ public class GestorOcupacion {
 			dto.setId(o.getId());
 			dto.setFechaIngreso(o.getIngreso());
 			dto.setFechaEgreso(o.getEgreso());
+			dto.setIdHabitacion(o.getHabitacion().getId());
 			
 			ocupacionesDTO.add(dto);
 		}

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class FueraDeServicioDTO {
 	private Integer id;
+	private Integer idHabitacion;
 	private LocalDateTime fechaInicio;
 	private LocalDateTime fechaFin;
 	
@@ -13,6 +14,10 @@ public class FueraDeServicioDTO {
 
 	public Integer getId() {
 		return id;
+	}
+
+	public Integer getIdHabitacion() {
+		return idHabitacion;
 	}
 
 	public LocalDateTime getFechaInicio() {
@@ -27,11 +32,17 @@ public class FueraDeServicioDTO {
 		this.id = id;
 	}
 
-	public void setFechaInicio(LocalDateTime ingreso) {
-		this.fechaInicio = ingreso;
+	public void setIdHabitacion(Integer idHabitacion) {
+		this.idHabitacion = idHabitacion;
 	}
 
-	public void setFechaFin(LocalDateTime egreso) {
-		this.fechaFin = egreso;
+	public void setFechaInicio(LocalDateTime fechaInicio) {
+		this.fechaInicio = fechaInicio;
 	}
+
+	public void setFechaFin(LocalDateTime fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+	
 }
