@@ -1,6 +1,7 @@
 package main.java.postgreImpl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -20,7 +21,7 @@ public class ReservaPostgreSQLImpl implements ReservaDAO {
 	}
 	
 	@Override
-	public List<Reserva> buscar(LocalDate fechaDesde, LocalDate fechaHasta) {
+	public List<Reserva> buscar(LocalDateTime fechaDesde, LocalDateTime fechaHasta) {
 		String stringQuery = 	"SELECT r FROM Reserva r "
 							+ 	"WHERE r.ingreso BETWEEN :desde1 AND :hasta1 "
 							+ 	"	OR r.egreso BETWEEN :desde2 AND :hasta2 ";

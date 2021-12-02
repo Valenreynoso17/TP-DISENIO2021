@@ -1,6 +1,7 @@
 package main.java.gestores;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class GestorReserva {
 		return instance;
 	}
 	
-	public List<ReservaDTO> buscarReservas(LocalDate fechaDesde, LocalDate fechaHasta) {
+	public List<ReservaDTO> buscarReservas(LocalDateTime fechaDesde, LocalDateTime fechaHasta) {
 		List<Reserva> reservas = reservaDAO.buscar(fechaDesde, fechaHasta);
 		List<ReservaDTO> reservasDTO = new ArrayList<>();
 		
