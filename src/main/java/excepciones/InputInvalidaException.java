@@ -3,6 +3,9 @@ package main.java.excepciones;
 import java.util.List;
 
 public class InputInvalidaException extends Exception {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private List<String> camposInvalidos;
 	
 	private String inputsInvalidos;

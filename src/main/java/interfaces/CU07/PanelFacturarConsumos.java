@@ -19,6 +19,8 @@ import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensajes{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private PanelFacturarConsumosGroupBox panelFacturarConsumosGroupBox = new PanelFacturarConsumosGroupBox();
 	
 	private JButton aceptar;
@@ -36,9 +38,8 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	
 	private Insets insetPanelFacturarConsumos = new Insets(30,30,20,30);
 	
-	private FrameFacturar frameAnterior;
 	private FrameFacturarConsumos frameActual;
-	//private JFrame frameSiguiente;	TODO: Imprimir
+	//TODO: Imprimir
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
@@ -105,7 +106,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve al frame anterior
 			frameActual.dispose();
-			frameAnterior = new FrameFacturar();	
+			new FrameFacturar();	
 			break;
 		case 2:	//Si no selecciona ningún consumo a facturar, simplemente muestra el mensaje
 			break;

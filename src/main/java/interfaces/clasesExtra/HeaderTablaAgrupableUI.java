@@ -9,9 +9,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JComponent;
-import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicTableHeaderUI;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;

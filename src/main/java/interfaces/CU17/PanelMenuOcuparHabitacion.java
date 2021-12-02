@@ -19,17 +19,15 @@ import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelMenuOcuparHabitacion extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private JButton cargarOtroPasajero;
 	private JButton cargarOtraHabitacion;
 	private JButton salir;
 	
 	private JLabel label;
 	
-	//private FrameAutenticarUsuario frameAnterior;
 	private FrameMenuOcuparHabitacion frameActual;
-	private FrameMenuPrincipal frameMenuPrincipal;
-	private FrameOcuparHabitacion frameOcuparHabitacion;
-	private FrameOcuparHabitacionConPasajeros frameAnterior;
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 20);	
@@ -84,7 +82,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				
 				frameActual.dispose();
-				frameOcuparHabitacion = new FrameOcuparHabitacion();
+				new FrameOcuparHabitacion();
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
@@ -101,7 +99,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				
 				frameActual.dispose();
-				frameMenuPrincipal = new FrameMenuPrincipal();
+				new FrameMenuPrincipal();
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;	c.insets = new Insets(0,0,30,0);

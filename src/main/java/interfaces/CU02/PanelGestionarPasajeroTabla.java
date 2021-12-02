@@ -1,7 +1,6 @@
 package main.java.interfaces.CU02;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,16 +8,11 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.Vector;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
 import javax.swing.border.LineBorder;
@@ -30,23 +24,19 @@ import main.java.enums.ColumnaBuscarPasajeros;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
-import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 
+	private static final long serialVersionUID = 1L;
+	
 	private JTable tabla;
 	private ModeloTablaPasajeros miModelo;
 	private PanelPaginacion paginacion;
-	
-	private JLabel label;
-	
-	private Vector filaSeleccionada = null;
-	private Integer nroFilaSeleccionada;
+
 	private JScrollPane tableContainer;
 	
 	private Insets insetTabla = new Insets(15, 100, 15, 100);
 	
-	private Font fuenteLabelCampo =new Font("SourceSansPro", Font.PLAIN, 14);
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	
 	private PasajeroDTO filtros;
@@ -99,13 +89,6 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		tabla.setAutoCreateRowSorter(true);	//Para que se ordenen
-		
-		tabla.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {				
-				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
-				nroFilaSeleccionada = tabla.getSelectedRow();
-			}
-		});
 		
 		tabla.getTableHeader().addMouseListener(new MouseAdapter() {
 			@Override

@@ -8,19 +8,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 import main.java.enums.TipoMensaje;
-import main.java.interfaces.TextPrompt;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
@@ -28,14 +18,14 @@ import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelIngresarDatosPago extends JPanel implements PanelPermiteMensajes{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private PanelDatosFacturaGroupBox panelDatosFacturaGroupBox = new PanelDatosFacturaGroupBox();
 	private PanelDatosDelPagoGroupBox panelDatosDelPagoGroupBox = new PanelDatosDelPagoGroupBox();
 	
 	private JButton atras;
 	private JButton siguiente;
 	private JButton cancelar;
-	
-	private JLabel label;
 	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
@@ -47,10 +37,7 @@ public class PanelIngresarDatosPago extends JPanel implements PanelPermiteMensaj
 	private Insets insetPanelDatosFactura = new Insets(20,30,0,30);
 	private Insets insetPanelDatosDelPago = new Insets(10,30,20,30);
 	
-	private FrameMenuPrincipal frameMenuPrincipal;
-	private FrameBuscarFacturasHabitacion frameAnterior;
 	private FrameIngresarDatosPago frameActual;
-	private FrameMenuPrincipal frameSiguiente;
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
@@ -100,7 +87,7 @@ public class PanelIngresarDatosPago extends JPanel implements PanelPermiteMensaj
 		atras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				frameAnterior = new FrameBuscarFacturasHabitacion();
+				new FrameBuscarFacturasHabitacion();
 			}
 //				try {
 //					PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();
@@ -152,7 +139,7 @@ public class PanelIngresarDatosPago extends JPanel implements PanelPermiteMensaj
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a MenuPrincipal
 			frameActual.dispose();
-			frameMenuPrincipal = new FrameMenuPrincipal();	
+			new FrameMenuPrincipal();	
 			break;
 //		case 2:	//Si no se encontro ningún pasajero, va a la pantalla de AltaPasajero
 //			frameActual.dispose();

@@ -6,23 +6,20 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import main.java.enums.TipoMensaje;
-import main.java.interfaces.CU02.FrameGestionarPasajero;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
-
-
 public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private PanelAutenticarUsuarioGroupBox panelAutenticarUsuarioGroupBox = new PanelAutenticarUsuarioGroupBox();
 	
@@ -35,6 +32,7 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 	private Mensaje mensajeSalir = new Mensaje(1, textoMensajeSalir, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoMensajeInputInvalido = "<html><p>La contraseña y/o el nombre ingresados son inválidos. Por favor, vuelva a ingresarlos.</p><html>";
+	@SuppressWarnings("unused")
 	private Mensaje mensajeInputInvalido = new Mensaje(2, textoMensajeInputInvalido, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private Font fuenteTitulo = new Font("SourceSansPro", Font.PLAIN, 46);	
@@ -43,7 +41,6 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
 	private FrameAutenticarUsuario frameActual;
-	private FrameMenuPrincipal frameSiguiente;
 	
 	public PanelAutenticarUsuario(final FrameAutenticarUsuario frame) {
 		
@@ -98,7 +95,7 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 
 				if(panelAutenticarUsuarioGroupBox.inputEsNoVacio()) {
 					frame.dispose();
-					frameSiguiente = new FrameMenuPrincipal();
+					new FrameMenuPrincipal();
 				}
 				else {
 					//mensajeInputInvalido.mostrar(getPanel(), frame);

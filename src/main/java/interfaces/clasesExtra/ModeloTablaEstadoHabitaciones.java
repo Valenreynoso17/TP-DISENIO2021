@@ -1,14 +1,10 @@
 package main.java.interfaces.clasesExtra;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import javax.swing.table.DefaultTableModel;
 
-import main.java.dtos.PasajeroDTO;
-import main.java.enums.TipoDocumento;
-
 public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
+	
+	private static final long serialVersionUID = 1L;
 	
 	public ModeloTablaEstadoHabitaciones() {	//TODO: Reemplazar
 		this.addColumn("Fecha"); 
@@ -34,7 +30,8 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 		this.addColumn("..."); 
 	}
 	
-	   public Class getColumnClass(int columna)
+	   @SuppressWarnings({ "unchecked", "rawtypes" })
+	public Class getColumnClass(int columna)
 	   {
 		  return String.class;
 	   }

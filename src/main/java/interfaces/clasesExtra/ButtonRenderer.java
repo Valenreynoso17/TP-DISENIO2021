@@ -9,6 +9,8 @@ import javax.swing.table.TableCellRenderer;
 
 public class ButtonRenderer extends JButton implements TableCellRenderer {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private Character tipo;
 
     public ButtonRenderer(Character c) {

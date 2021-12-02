@@ -25,8 +25,10 @@ import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
+	
+	private static final long serialVersionUID = 1L;
 
-private JLabel label;
+	private JLabel label;
 	
 	private JTextField CUITDeUnTercero;
 	private JTextField razonSocial = new JTextField();

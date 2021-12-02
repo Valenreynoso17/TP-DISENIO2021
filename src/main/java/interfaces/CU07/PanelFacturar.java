@@ -9,28 +9,19 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoMensaje;
-import main.java.excepciones.FechaInvalidaException;
-import main.java.excepciones.HabitacionInexistenteException;
-import main.java.excepciones.HabitacionSinFacturasPendientesException;
 import main.java.excepciones.InputInvalidaException;
 import main.java.excepciones.InputVacioException;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
-import main.java.gestores.GestorOcupacion;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
-import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
-
-
 public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private PanelFacturarGroupBox panelFacturarGroupBox = new PanelFacturarGroupBox();
 	private PanelResultadosDeBusquedaFacturarGroupBox panelResultadosDeBusquedaFacturarGroupBox;
@@ -44,6 +35,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	
 	private String textoPasajeroMenorDeEdad = "<html><p>La persona ingresada como 'Responsable de pago' es menor de edad."
 											+ " Por favor, seleccione otra persona.</p><html>";
+	@SuppressWarnings("unused")
 	private Mensaje mensajePasajeroMenorDeEdad = new Mensaje(2, textoPasajeroMenorDeEdad, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private String textoHabitacionSinDeudaAsociada = "<html><p>La habitación " + "Luego se reemplaza" + " no tiene ninguna deuda asociada.</p><html>";
@@ -51,6 +43,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	
 	private String textoHabitacionInexsistente = "<html><p>La habitación " + "Luego se reemplaza" + " no existe. Por favor, ingrese un número de una habitación"
 											   + " existente en el sistema.</p><html>";
+	@SuppressWarnings("unused")
 	private Mensaje mensajeHabitacionInexsistente = new Mensaje(4, textoHabitacionInexsistente, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private String textoResponsableNoSeleccionado = "<html><p>No ha seleccionado ningún pasajero como responsable de pago. Por favor, "
@@ -64,9 +57,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	private Insets insetPanelBusqueda = new Insets(30,30,5,30);
 	private Insets insetPanelTabla = new Insets(0,30,0,30);
 	
-	private FrameMenuPrincipal frameAnterior;
 	private FrameFacturar frameActual;
-	private FrameFacturarConsumos frameSiguiente;
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
@@ -161,7 +152,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 					//mensajePasajeroMenorDeEdad.mostrar(getPanel(), frame);
 					
 					frameActual.dispose();
-					frameSiguiente = new FrameFacturarConsumos();
+					new FrameFacturarConsumos();
 				}
 				catch (PasajeroNoSeleccionadoException exc) {
 					mensajeResponsableNoSeleccionado.mostrar(getPanel(), frame);
@@ -183,7 +174,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a MenuPrincipal
 			frameActual.dispose();
-			frameAnterior = new FrameMenuPrincipal();	
+			new FrameMenuPrincipal();	
 			break;
 		case 2:	//Si el responsable es menor de edad, simplemente muestra el mensaje
 			break;

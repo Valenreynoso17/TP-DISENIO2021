@@ -9,7 +9,6 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
-
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,14 +17,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-
 import main.java.interfaces.clasesExtra.*;
 
 public class PanelFacturarConsumosGroupBox extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
 	
 	Integer valorCantidad = 3;
 	
@@ -45,7 +43,9 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	private ModeloTablaConsumos miModelo;	
 	private RenderParaTablas renderTabla; 
 	
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private Vector filaSeleccionada = null;
+	@SuppressWarnings("unused")
 	private Integer nroFilaSeleccionada;
 	private JScrollPane tableContainer;
 	

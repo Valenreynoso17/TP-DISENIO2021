@@ -1,47 +1,22 @@
 package main.java.interfaces.CU04;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.text.ParseException;
-import java.util.List;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.MaskFormatter;
-
-import main.java.dtos.LocalidadDTO;
-import main.java.dtos.PaisDTO;
-import main.java.dtos.ProvinciaDTO;
-import main.java.enums.TipoDocumento;
-import main.java.interfaces.TextPrompt;
-import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelConfirmarDatosHabitacionGroupBox extends JPanel{
 	
-	//private PanelConDatosDeHabitaciones panelConDatosDeHabitaciones = new PanelConDatosDeHabitaciones();
+	private static final long serialVersionUID = 1L;
 	
-	private JLabel labelInvisible = new JLabel("");
+	//private PanelConDatosDeHabitaciones panelConDatosDeHabitaciones = new PanelConDatosDeHabitaciones();
 	
 	private PanelNroHabitacionGroupBox panelNroHabitacionGroupBox = new PanelNroHabitacionGroupBox();
 	private PanelNroHabitacionGroupBox panelNroHabitacionGroupBox2 = new PanelNroHabitacionGroupBox();
 	private PanelNroHabitacionGroupBox panelNroHabitacionGroupBox3 = new PanelNroHabitacionGroupBox();
 	private PanelNroHabitacionGroupBox panelNroHabitacionGroupBox4 = new PanelNroHabitacionGroupBox();
 	private PanelNroHabitacionGroupBox panelNroHabitacionGroupBox5 = new PanelNroHabitacionGroupBox();
-	private PanelNroHabitacionGroupBox panelNroHabitacionGroupBox6 = new PanelNroHabitacionGroupBox();
 	
 	private Insets insetPanelesDatosHabitacion = new Insets(10,10,10,10);
 	

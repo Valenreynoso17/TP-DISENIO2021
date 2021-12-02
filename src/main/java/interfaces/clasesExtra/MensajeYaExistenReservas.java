@@ -8,7 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,12 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-
-import main.java.enums.TipoMensaje;
 
 public class MensajeYaExistenReservas extends JFrame{
+	
+	private static final long serialVersionUID = 1L;
 
 		private JPanel contentPane;
 		

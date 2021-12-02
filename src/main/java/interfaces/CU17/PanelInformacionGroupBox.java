@@ -13,6 +13,8 @@ import javax.swing.border.TitledBorder;
 
 public class PanelInformacionGroupBox extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel texto;
 	private JLabel numeroHabitacion;
 	private JLabel personasSeleccionadas;

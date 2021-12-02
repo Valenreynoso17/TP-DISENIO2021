@@ -8,49 +8,40 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoMensaje;
-import main.java.excepciones.InputInvalidaException;
-import main.java.excepciones.PasajeroNoSeleccionadoException;
-import main.java.excepciones.SinResultadosException;
-import main.java.gestores.GestorPasajero;
-import main.java.interfaces.CU11.FrameAltaPasajero;
-import main.java.interfaces.CU11.PanelAltaPasajeroDatos;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
+	
 	// en este panel estan los botones y los dos otros paneles
 	private PanelOcuparHabitacionBusqueda panelOcuparHabitacionBusqueda;
 	private PanelOcuparHabitacionTabla panelOcuparHabitacionTabla;
 	private PanelPasajerosSeleccionadosGroupBox panelPasajerosSeleccionadosGroupBox;
 	private PanelInformacionGroupBox panelInformacionGroupBox;
-	
-	//public GestorPasajero gestorPasajero;
-	
-	private FrameOcuparHabitacion frameAnterior;
+
 	private JFrame frameActual;
-	private FrameAltaPasajero frameAltaPasajero;
 	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoMensajeNoExistePasajeroBuscar = "<html><p>No existe ningún pasajero con los criterios de búsqueda"
 														+ " seleccionados. ¿Desea agregar un nuevo pasajero?</p><html>";
+	@SuppressWarnings("unused")
 	private Mensaje mensajeNoExistePasajeroBuscar = new Mensaje(2, textoMensajeNoExistePasajeroBuscar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoModificarPasajero = 	"<html><p>Modificar pasajero en proximas versiones</p><html>";
+	@SuppressWarnings("unused")
 	private Mensaje mensajeModificarPasajero = new Mensaje(4, textoModificarPasajero, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private String textoMensajeNoExistePasajeroSiguiente = "<html><p>No seleccionó ningún pasajero. ¿Desea agregar un nuevo pasajero?</p><html>";
+	@SuppressWarnings("unused")
 	private Mensaje mensajeNoExistePasajeroSiguiente = new Mensaje(3, textoMensajeNoExistePasajeroSiguiente, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private JButton buscar;
@@ -190,7 +181,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve al frame anterior
 			frameActual.dispose();
-			frameAnterior = new FrameOcuparHabitacion();	//TODO: Ver si no es mejor mostrar el frame anterior en vez de uno nuevo
+			new FrameOcuparHabitacion();	//TODO: Ver si no es mejor mostrar el frame anterior en vez de uno nuevo
 			break;
 		case 2:	//Si no se encontro ningún pasajero, va a la pantalla de AltaPasajero
 			//frameActual.dispose();
