@@ -5,6 +5,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class ModeloTablaConsumos extends DefaultTableModel{
 	
+	private static final long serialVersionUID = 1L;
+	
 	public ModeloTablaConsumos() {
 		this.addColumn("Consumos"); 
 		this.addColumn("");
@@ -14,7 +16,8 @@ public class ModeloTablaConsumos extends DefaultTableModel{
 		this.addColumn("Total neto"); 
 	}
 	
-	   public Class getColumnClass(int columna)
+	   @SuppressWarnings({ "unchecked", "rawtypes" })
+	public Class getColumnClass(int columna)
 	   {
 	      if (columna == 0) return String.class;
 	      if (columna == 1) return JButton.class;

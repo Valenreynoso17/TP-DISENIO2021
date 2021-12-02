@@ -1,8 +1,6 @@
 package main.java.interfaces.CU05;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,42 +8,34 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
-
-import main.java.gestores.GestorPasajero;
-import main.java.interfaces.CU02.PanelPaginacion;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.ColumnaAgrupada;
-import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.HeaderTablaAgrupable;
 import main.java.interfaces.clasesExtra.ModeloTablaEstadoHabitaciones;
-import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
 import main.java.interfaces.clasesExtra.RenderParaTablaEstadoColores;
 import main.java.interfaces.clasesExtra.RenderParaTablas;
-import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private JTable tabla;
 	private ModeloTablaEstadoHabitaciones miModelo;
 	private RenderParaTablas renderTabla;
 	private RenderParaTablaEstadoColores renderTablaEstadoColores;
 	
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private Vector filaSeleccionada = null;
+	@SuppressWarnings("unused")
 	private Integer nroFilaSeleccionada;
 	private JScrollPane tableContainer;
 	
@@ -67,8 +57,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		
 		tabla = new JTable(miModelo){
 			
-			int ultimaFilaSeleccionada = 0;
-			int ultimaColumnaSeleccionada = 0;
+			private static final long serialVersionUID = 1L;
 			
 	      protected JTableHeader createDefaultTableHeader() {
 	          return new HeaderTablaAgrupable(columnModel);

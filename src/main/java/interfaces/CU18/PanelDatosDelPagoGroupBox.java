@@ -7,34 +7,28 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.text.ParseException;
-import java.util.List;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
-
-import main.java.dtos.LocalidadDTO;
-import main.java.dtos.PaisDTO;
-import main.java.dtos.ProvinciaDTO;
-import main.java.enums.TipoDocumento;
-import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelDatosDelPagoGroupBox extends JPanel{
+	
+	private static final long serialVersionUID = 1L;
 	
 	//private List<PaisDTO> paises;
 	//private List<ProvinciaDTO> provincias;
 	//private List<LocalidadDTO> localidades;
 	
+	@SuppressWarnings("unused")
 	private DefaultComboBoxModel<String> medioDePagoModel = new DefaultComboBoxModel<String>();	
 	//private DefaultComboBoxModel<LocalidadDTO> localidadModel = new DefaultComboBoxModel<LocalidadDTO>();
 	

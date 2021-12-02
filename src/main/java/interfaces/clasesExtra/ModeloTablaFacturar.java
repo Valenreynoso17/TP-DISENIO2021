@@ -9,6 +9,8 @@ import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoDocumento;
 
 public class ModeloTablaFacturar extends DefaultTableModel{
+	
+	private static final long serialVersionUID = 1L;
 
 		public ModeloTablaFacturar() {
 			this.addColumn("Apellido"); 
@@ -18,7 +20,8 @@ public class ModeloTablaFacturar extends DefaultTableModel{
 			this.addColumn("Fecha de nacimiento"); 
 		}
 		
-		   public Class getColumnClass(int columna)
+		   @SuppressWarnings({ "unchecked", "rawtypes" })
+		public Class getColumnClass(int columna)
 		   {
 		      if (columna == 0) return String.class;
 		      if (columna == 1) return String.class;

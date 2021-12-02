@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import main.java.dtos.PasajeroDTO;
@@ -21,22 +20,22 @@ import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.excepciones.SinResultadosException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.CU11.FrameAltaPasajero;
-import main.java.interfaces.CU11.PanelAltaPasajeroDatos;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
+	
 	// en este panel estan los botones y los dos otros paneles
 	private PanelGestionarPasajeroBusqueda panelGestionarPasajeroBusqueda;
 	private PanelGestionarPasajeroTabla panelGestionarPasajeroTabla;
 	
 	public GestorPasajero gestorPasajero;
-	
-	private FrameMenuPrincipal frameAnterior;
+
 	private JFrame frameActual;
-	private FrameAltaPasajero frameAltaPasajero;
 	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
@@ -145,6 +144,7 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					@SuppressWarnings("unused")
 					PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();
 					
 					mensajeModificarPasajero.mostrar(getPanel(), frame);
@@ -169,15 +169,15 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a MenuPrincipal
 			frameActual.dispose();
-			frameAnterior = new FrameMenuPrincipal();	
+			new FrameMenuPrincipal();	
 			break;
 		case 2:	//Si no se encontro ningún pasajero, va a la pantalla de AltaPasajero
 			frameActual.dispose();
-			frameAltaPasajero = new FrameAltaPasajero();
+			new FrameAltaPasajero();
 			break;
 		case 3:	//Si no se seleccionó ningún pasajero, va a la pantalla de AltaPasajero
 			frameActual.dispose();
-			frameAltaPasajero = new FrameAltaPasajero();	
+			new FrameAltaPasajero();	
 			break;		
 		}
 	}

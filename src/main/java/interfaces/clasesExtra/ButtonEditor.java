@@ -2,7 +2,6 @@ package main.java.interfaces.clasesExtra;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultCellEditor;
@@ -11,6 +10,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JTable;
 
 public class ButtonEditor extends DefaultCellEditor {
+	
+	private static final long serialVersionUID = 1L;
 
     protected JButton button;
     private String label;

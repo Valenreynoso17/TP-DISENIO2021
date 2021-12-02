@@ -1,7 +1,5 @@
 package main.java.main;
 
-import javax.swing.JFrame;
-
 import main.java.interfaces.CU01.FrameAutenticarUsuario;
 import main.java.interfaces.CU04.FrameConfirmarDatosHabitacion;
 import main.java.interfaces.CU04.FrameReservaANombreDe;
@@ -14,7 +12,7 @@ import main.java.interfaces.CU17.FrameOcuparHabitacion;
 import main.java.interfaces.CU18.FrameBuscarFacturasHabitacion;
 import main.java.interfaces.clasesExtra.MensajeYaExistenReservas;
 
-public class App extends JFrame{
+public class App{
 
 	public static void main(String[] args) {
 			//FrameAutenticarUsuario fAU = new FrameAutenticarUsuario();

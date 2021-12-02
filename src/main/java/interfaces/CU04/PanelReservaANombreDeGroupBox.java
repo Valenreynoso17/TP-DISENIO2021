@@ -23,7 +23,9 @@ import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelReservaANombreDeGroupBox extends JPanel{
 	
-private JLabel label;
+	private static final long serialVersionUID = 1L;
+	
+	private JLabel label;
 	
 	private JTextField apellido;					//Campos de texto
 	private JTextField nombre;

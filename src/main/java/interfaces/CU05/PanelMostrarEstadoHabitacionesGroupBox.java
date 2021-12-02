@@ -26,9 +26,9 @@ import main.java.excepciones.InputVacioException;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
-
-
 public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private JLabel label;
 	private JLabel labelFechaDesdeVacio;		//Muestran mensaje "Campo incompleto"
