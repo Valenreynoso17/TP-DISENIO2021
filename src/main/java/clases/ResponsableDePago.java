@@ -2,6 +2,7 @@ package main.java.clases;
 
 import javax.persistence.*;
 
+import main.java.enums.PosicionFrenteIva;
 import main.java.excepciones.YaAsociadoConPasajeroException;
 import main.java.excepciones.YaAsociadoConPersonaJuridicaException;
 
@@ -82,6 +83,15 @@ public class ResponsableDePago {
 		}
 		else {
 			return personaJuridica.getDireccion();
+		}
+	}
+	
+	public PosicionFrenteIva getPosicionFrenteIva() {
+		if (pasajero != null && pasajero.getPosicionFrenteIva() == PosicionFrenteIva.CONSUMIDOR_FINAL) {
+			return PosicionFrenteIva.CONSUMIDOR_FINAL;
+		}
+		else {
+			return PosicionFrenteIva.RESPONSABLE_INSCRIPTO;
 		}
 	}
 

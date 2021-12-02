@@ -36,6 +36,13 @@ public abstract class ItemFactura {
 		this.descripcion = descripcion;
 		//this.factura = factura;
 	}
+	
+	public ItemFactura(Double precioUnitario, String descripcion) {
+		super();
+		this.precioUnitario = precioUnitario;
+		this.descripcion = descripcion;
+		//this.factura = factura;
+	}
 
 
 

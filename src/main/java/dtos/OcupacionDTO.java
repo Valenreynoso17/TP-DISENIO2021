@@ -14,7 +14,7 @@ public class OcupacionDTO {
 	private Double precioPorDia;
 	private List<ConsumoDTO> listaConsumosDTO;
 	private List<ItemOcupacionDTO> listaItemsOcupacionDTO;
-	private List<PasajeroDTO> listaPasajerosDTO;	// TODO Hace falta o con los ids ya alcanza? Mismo para responsable
+	private List<PasajeroDTO> listaPasajerosDTO;	
 	private PasajeroDTO responsable;
 	private Integer idHabitacion;
 	
@@ -36,6 +36,7 @@ public class OcupacionDTO {
 		this.fechaIngreso = ocupacion.getIngreso();
 		this.fechaHoraSalidaReal = ocupacion.getHoraYFechaSalidaReal();
 		this.precioPorDia = ocupacion.getPrecioPorDia();
+		this.idHabitacion = ocupacion.getHabitacion().getId();
 		this.responsable = responsable;
 		this.listaPasajerosDTO = listaPasajerosDTO;
 		this.listaConsumosDTO = listaConsumosDTO;

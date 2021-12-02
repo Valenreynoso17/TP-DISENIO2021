@@ -13,4 +13,6 @@ public class ItemOcupacionDTO extends ItemFacturaDTO{
 	public Integer getCantidadDias() {
 		return cantidadDias;
 	}
+	
+	
 }

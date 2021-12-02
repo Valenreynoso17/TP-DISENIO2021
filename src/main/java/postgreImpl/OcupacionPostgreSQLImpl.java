@@ -97,7 +97,6 @@ public class OcupacionPostgreSQLImpl implements OcupacionDAO {
 							+ 	"WHERE o.idHabitacion = :nroHabitacion "
 							+ 	"AND o.horaYFechaSalidaReal IS NULL;";
 
-
 		Session sesion = sessionFactory.openSession();
 		
 		TypedQuery<Ocupacion> q = sesion.createQuery(stringQuery, Ocupacion.class);

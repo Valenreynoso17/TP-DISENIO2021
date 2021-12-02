@@ -27,7 +27,7 @@ public class GestorResponsableDePago {
 		return instance;
 	}
 	
-	public ResponsableDePagoDTO obtenerResponsableDePago(PasajeroDTO seleccionado){
+	public ResponsableDePagoDTO obtenerResponsableDePagoDTO(PasajeroDTO seleccionado){
 		Optional<ResponsableDePago> optResponsable = Optional.ofNullable(responsableDAO.buscarResponsableAsociadoAPasajero(seleccionado.getId()));
 		
 		if(optResponsable.isEmpty()) {

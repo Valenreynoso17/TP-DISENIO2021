@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import main.java.dtos.FacturaDTO;
 import main.java.enums.EstadoFactura;
 import main.java.enums.TipoFactura;
 
@@ -78,6 +79,18 @@ public class Factura extends DocumentoLegal {
 		this.items = items;
 	}
 	
+	public Factura(FacturaDTO facturaDTO, Habitacion habitacion, ResponsableDePago responsablePago, DatosResponsableDePago datosResponsable, List<ItemFactura> items) {
+		super(datosResponsable);
+		this.tipo = facturaDTO.getTipoFactura();
+		this.montoTotal = facturaDTO.getMontoTotal();
+		this.montoNeto = facturaDTO.getMontoNeto();
+		this.vuelto = 0.0;
+		this.estado = EstadoFactura.PENDIENTE_DE_PAGO;
+		this.fechaFacturacion = facturaDTO.getFechaFacturacion();
+		this.habitacion = habitacion;
+		this.items = items;
+	}
+	
 	
 
 	public Integer getNumero() {
@@ -114,6 +127,10 @@ public class Factura extends DocumentoLegal {
 
 	public List<ItemFactura> getItems() {
 		return items;
+	}
+	
+	public static Double getIVA() {
+		return iva;
 	}
 	
 	
