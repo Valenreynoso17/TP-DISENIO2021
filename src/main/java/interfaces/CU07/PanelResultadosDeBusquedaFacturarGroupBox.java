@@ -8,7 +8,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,13 +18,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SortOrder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import main.java.dtos.OcupacionDTO;
+import main.java.dtos.PasajeroDTO;
+import main.java.enums.ColumnaBuscarPasajeros;
 import main.java.enums.TipoDocumento;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
+import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaFacturar;
 import main.java.interfaces.clasesExtra.RenderParaTablas;
 import main.java.interfaces.clasesExtra.RoundedBorder;
@@ -53,7 +59,23 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	
 	private Dimension dimensionBoton = new Dimension(250, 33);
 	
+	private ColumnaBuscarPasajeros columnaFiltro;		//TODO: Charlar con fede
+	private SortOrder orden;
+	private List<PasajeroDTO> ultimosResultados;
+	
+	private GestorPasajero gestorPasajero;
+	
+	//private RoundedBorder bordeCampo = new RoundedBorder(5, Color.decode("#BDBDBD"));
+	
+	//Predicate<Pasajero> FiltroApellido, FiltroNombre, FiltroTipoDocumento, FiltroNumeroDocumento;
+
+	@SuppressWarnings("serial")
 	public PanelResultadosDeBusquedaFacturarGroupBox(FrameFacturar frame, OcupacionDTO ocupacionDTO) {
+	
+		//gestorPasajero = GestorPasajero.getInstance();
+		
+		columnaFiltro = ColumnaBuscarPasajeros.NOMBRE;
+		orden = SortOrder.ASCENDING;
 		
 		this.frameActual = frame;
 		
@@ -94,14 +116,32 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 			}
 		});
 		
-		//tabla.getTableHeader().setOpaque(false);
-		//tabla.getTableHeader().setBackground(Color.decode("#424242"));		//Para que el fondo de la cabecera sea de un color en específico
-		//tabla.getTableHeader().setForeground(Color.WHITE);					//Para que la fuente de la cabecera sea blanca
-		//tabla.getTableHeader().setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
-		
-		//tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
-		
+		tabla.getTableHeader().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int col = tabla.columnAtPoint(e.getPoint());	
+				
+				switch (col) {
+				case 0:
+					columnaFiltro = ColumnaBuscarPasajeros.APELLIDO;
+					break;
+				case 1:
+					columnaFiltro = ColumnaBuscarPasajeros.NOMBRE;
+					break;
+				case 2:
+					columnaFiltro = ColumnaBuscarPasajeros.TIPO_DOCUMENTO;
+					break;
+				case 3:
+					columnaFiltro = ColumnaBuscarPasajeros.NUMERO_DOCUMENTO;
+				}
+				
+				orden = tabla.getRowSorter().getSortKeys().get(0).getSortOrder();
 
+					actualizarTabla();				
+				
+			}
+			
+		});
 		
 		Object[] prueba = {"Perez", "Juan", TipoDocumento.DNI, "32333444", LocalDate.now()};	miModelo.addRow(prueba);	//TODO: Borrar
 		Object[] prueba1 = {"Gomez", "Pedro", TipoDocumento.DNI, "5435634634", LocalDate.now()};	miModelo.addRow(prueba1);	//TODO: Borrar
@@ -140,7 +180,19 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		facturarANombreDeUnTercero.addActionListener(e -> {
 			
 			frameActual.setEnabled(false);
-			new FrameFacturarANombreDeUnTercero(frame, ocupacionDTO);
+			new FrameFacturarANombreDeUnTercero(frame, ocupacionDTO); 
+//			{  
+//				protected void processWindowEvent(WindowEvent e) {
+//					
+//					super.processWindowEvent(e);
+//		            if(e.getID() == WindowEvent.WINDOW_CLOSING) {
+//		            	
+//		                this.dispose();
+//		                frameActual.toFront();	
+//		                frameActual.setEnabled(true);
+//		            }
+//				}     
+//	        };
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
 		c.gridy = 1;
@@ -148,19 +200,27 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		
 		
 	}
-	
-//	public PasajeroDTO pasajeroSeleccionado() throws PasajeroNoSeleccionadoException {	//Estaba en el GESTIONAR PASAJERO que hizo Fede
-//		Integer indice = tabla.getSelectedRow();
-//		
-//		if (indice < 0) throw new PasajeroNoSeleccionadoException();
-//		return ultimosResultados.get(tabla.getSelectedRow());
-//	}
-	
-	public void seleccionoUnPasajero() throws PasajeroNoSeleccionadoException{
+//		public PasajeroDTO pasajeroSeleccionado() throws PasajeroNoSeleccionadoException {	//Estaba en el GESTIONAR PASAJERO que hizo Fede
+//			Integer indice = tabla.getSelectedRow();
+//			
+//			if (indice < 0) throw new PasajeroNoSeleccionadoException();
+//			return ultimosResultados.get(tabla.getSelectedRow());
+//		}
 		
-		if(tabla.getSelectedRow() < 0) {
+		public void actualizarTabla() {
+			//ultimosResultados = gestorPasajero.buscarPaginado(filtros, tamPagina, paginaActual, columnaFiltro, orden);
 			
-			throw new PasajeroNoSeleccionadoException();
+			miModelo.limpiarTabla();
+			miModelo.cargarPasajeros(ultimosResultados);
+			
+		}
+
+	
+		public void seleccionoUnPasajero() throws PasajeroNoSeleccionadoException{
+		
+			if(tabla.getSelectedRow() < 0) {
+			
+				throw new PasajeroNoSeleccionadoException();
 		}
 	}
 }

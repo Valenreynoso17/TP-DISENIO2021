@@ -112,7 +112,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 						LocalTime horaSalida = LocalTime.parse(this.panelFacturarGroupBox.getHoraSalida());
 						
 						ocupacionDTO = gestorOcupacion.buscarUltimaOcupacionDTO(numeroHabitacion, horaSalida);
-						
+
 				}
 				catch(InputVacioException exc) {
 					

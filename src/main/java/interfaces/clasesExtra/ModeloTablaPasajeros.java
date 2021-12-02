@@ -39,13 +39,24 @@ public class ModeloTablaPasajeros extends DefaultTableModel{
 		this.setRowCount(0); //Elimino todas las filas de la tabla
 	}
 	
-	public void cargarPasajeros(List<PasajeroDTO> pasajeros) {
+//	public void cargarPasajeros(List<PasajeroDTO> pasajeros) {
+//		
+//		for(PasajeroDTO p : pasajeros) {
+//			this.addRow(new Object[] {p.getApellido()
+//									, p.getNombre()
+//									, p.getTipoDocumento()
+//									, p.getNumeroDoc()});
+//		}
+//
+//	}
+	
+	public void cargarPasajeros() {
 		
-		for(PasajeroDTO p : pasajeros) {
-			this.addRow(new Object[] {p.getApellido()
-									, p.getNombre()
-									, p.getTipoDocumento()
-									, p.getNumeroDoc()});
+		for(int i = 0; i < 100; i++) {
+			this.addRow(new Object[] {"Perez"
+									, "Manuel"
+									, TipoDocumento.LE
+									, "123456789"});
 		}
 
 	}

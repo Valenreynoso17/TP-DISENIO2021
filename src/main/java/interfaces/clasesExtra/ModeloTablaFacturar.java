@@ -42,7 +42,7 @@ public class ModeloTablaFacturar extends DefaultTableModel{
 			this.setRowCount(0); //Elimino todas las filas de la tabla
 		}
 		
-		public void cargarPasajeros(List<PasajeroDTO> pasajeros) {	//TODO: Ver
+		public void cargarPasajeros(List<PasajeroDTO> pasajeros) {
 			
 			for(PasajeroDTO p : pasajeros) {
 				this.addRow(new Object[] {p.getApellido()
