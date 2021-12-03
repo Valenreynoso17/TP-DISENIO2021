@@ -81,7 +81,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		
 		this.frameActual = frame;
 		
-		//gestorOcupacion = GestorOcupacion.getInstance();
+		gestorOcupacion = GestorOcupacion.getInstance();
 		
 		this.setBackground(Color.WHITE);
 		

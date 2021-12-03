@@ -94,17 +94,31 @@ public class OcupacionPostgreSQLImpl implements OcupacionDAO {
 	@Override
 	public Ocupacion buscarUltimaOcupacion(Integer nroHabitacion) {
 		
+		System.out.println("1 "+nroHabitacion);	
+		
 		String stringQuery = 	"SELECT o FROM Ocupacion o "
-							+ 	"WHERE o.idHabitacion = :nroHabitacion "
-							+ 	"AND o.horaYFechaSalidaReal IS NULL;";
+							+	"	JOIN Habitacion h " 
+							+ 	"WHERE o.idHabitacion = h.id "
+							+ 	"AND h.numero = :nroHabitacion "
+							+ 	"AND o.horaYFechaSalidaReal IS NULL";
 
+		System.out.println("2");
+		
 		Session sesion = sessionFactory.openSession();
+		
+		System.out.println("3");
 		
 		TypedQuery<Ocupacion> q = sesion.createQuery(stringQuery, Ocupacion.class);
 		
+		System.out.println("4");
+		
 		q.setParameter("id", nroHabitacion);
 		
+		System.out.println("5");
+		
 		Ocupacion ocupacion = q.getSingleResult();
+		
+		System.out.println("6");
 		
 		sesion.close();
 		
