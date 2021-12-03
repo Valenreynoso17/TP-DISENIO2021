@@ -19,6 +19,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import main.java.dtos.HabitacionDTO;
 import main.java.dtos.PasajeroDTO;
 import main.java.interfaces.clasesExtra.ModeloPasajerosSeleccionadosOcuparHabitacion;
 import main.java.interfaces.clasesExtra.RenderParaTablaEstadoColores;
@@ -44,7 +45,7 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	
-	public PanelPasajerosSeleccionadosGroupBox() {
+	public PanelPasajerosSeleccionadosGroupBox(HabitacionDTO habitacion) {
 		
 		this.setBackground(Color.white);
 		
@@ -53,7 +54,7 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		miModelo = new ModeloPasajerosSeleccionadosOcuparHabitacion();
+		miModelo = new ModeloPasajerosSeleccionadosOcuparHabitacion(habitacion.getTipo().getCapacidad());
 		
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
