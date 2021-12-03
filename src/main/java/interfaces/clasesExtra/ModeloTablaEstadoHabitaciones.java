@@ -1,33 +1,33 @@
 package main.java.interfaces.clasesExtra;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.swing.table.DefaultTableModel;
+
+import main.java.dtos.FueraDeServicioDTO;
+import main.java.dtos.HabitacionDTO;
+import main.java.dtos.OcupacionDTO;
+import main.java.dtos.ReservaDTO;
+import main.java.dtos.TipoHabitacionDTO;
 
 public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public ModeloTablaEstadoHabitaciones() {	//TODO: Reemplazar
-		this.addColumn("Fecha"); 
-		this.addColumn("101"); 
-		this.addColumn("102");
-		this.addColumn("103"); 
-		this.addColumn("..."); 
-		this.addColumn("201"); 
-		this.addColumn("202");
-		this.addColumn("203"); 
-		this.addColumn("..."); 
-		this.addColumn("301"); 
-		this.addColumn("302");
-		this.addColumn("303"); 
-		this.addColumn("..."); 
-		this.addColumn("401"); 
-		this.addColumn("402");
-		this.addColumn("403"); 
-		this.addColumn("..."); 
-		this.addColumn("501"); 
-		this.addColumn("502");
-		this.addColumn("503"); 
-		this.addColumn("..."); 
+	public ModeloTablaEstadoHabitaciones(Map<TipoHabitacionDTO, List<HabitacionDTO>> mapHabitacionesTipo) {
+		
+		this.addColumn("Fecha");
+		
+		for(TipoHabitacionDTO tipo : mapHabitacionesTipo.keySet()) {
+			
+			for(HabitacionDTO h : mapHabitacionesTipo.get(tipo)) {
+				
+				this.addColumn(h.getNroHabitacion());	//Creo que funciona
+			}
+		}
 	}
 	
 	   @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -47,12 +47,39 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 		this.setRowCount(0); //Elimino todas las filas de la tabla
 	}
 	
-	public void cargarEstados() {	//TODO: Ver
+	public void cargarEstados(Map<String, List<HabitacionDTO>> mapEstadoHabitaciones) {	//TODO: Ver
 		
-		for(int i = 0; i < 10; i++) {
-			this.addRow(new Object[] {"1"+i+"/03/2021","","","","","","","","","","","","","","","","","","",""});
-		}
+		//Map<LocalDate, Object>
+		List<Object[]> matrizTabla = new ArrayList<Object[]>();
+		
+		cargarMatriz(matrizTabla, mapEstadoHabitaciones);
+		
+		
+	}
+	
+	public void cargarMatriz(List<Object[]> matrizTabla, Map<String, List<HabitacionDTO>> mapEstadoHabitaciones) {
+		
+		for(String tipo : mapEstadoHabitaciones.keySet()) {
+			
+			for(HabitacionDTO h : mapEstadoHabitaciones.get(tipo)) {
+					
+				for(FueraDeServicioDTO f : h.getFuerasDeServicio()) {
+					
+					
+				}
+				
+				for(ReservaDTO h : mapEstadoHabitaciones.get(tipo)) {
+					
+					
+				}
+				
+				for(OcupacionDTO h : mapEstadoHabitaciones.get(tipo)) {
+					
+					
+				}
+			}
 
+		}
 	}
 
 }

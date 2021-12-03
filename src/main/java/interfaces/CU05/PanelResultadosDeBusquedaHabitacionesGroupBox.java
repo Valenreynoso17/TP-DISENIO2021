@@ -7,8 +7,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.*;
-import java.util.Vector;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,8 +20,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
+import main.java.dtos.HabitacionDTO;
+import main.java.dtos.TipoHabitacionDTO;
 import main.java.excepciones.ContieneFechasReservadasException;
 import main.java.excepciones.RangoNoSeleccionadoException;
+import main.java.gestores.GestorHabitacion;
 import main.java.interfaces.clasesExtra.ColumnaAgrupada;
 import main.java.interfaces.clasesExtra.HeaderTablaAgrupable;
 import main.java.interfaces.clasesExtra.ModeloTablaEstadoHabitaciones;
@@ -30,6 +34,8 @@ import main.java.interfaces.clasesExtra.RenderParaTablas;
 public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
+	
+	private boolean esPrimero = true;	//Valida que la primera vez que se cargan las columnas, la primera no sea parte de una habitacion (porque es la Fecha)
 	
 	private JTable tabla;
 	private ModeloTablaEstadoHabitaciones miModelo;
@@ -43,9 +49,18 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	private JScrollPane tableContainer;
 	
 	private Insets insetTabla = new Insets(15, 100, 15, 100);
+	
+	private GestorHabitacion gestorHabitacion;
 
+	private Map<TipoHabitacionDTO, List<HabitacionDTO>> mapHabitacionesTipo;
+	
+	private LocalDate fechaDesde;
+	private LocalDate fechaHasta;
+	
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	public PanelResultadosDeBusquedaHabitacionesGroupBox() {
+		
+		gestorHabitacion = GestorHabitacion.getInstance();
 		
 		this.setBackground(Color.white);
 		
@@ -54,7 +69,9 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		miModelo = new ModeloTablaEstadoHabitaciones();
+		mapHabitacionesTipo = gestorHabitacion.buscarHabitaciones();
+		
+		miModelo = new ModeloTablaEstadoHabitaciones(mapHabitacionesTipo);
 		
 		tabla = new JTable(miModelo){
 			
@@ -71,39 +88,29 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 
 		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
-	    TableColumnModel cm = tabla.getColumnModel();
-	    ColumnaAgrupada colIndvidualEstandar = new ColumnaAgrupada("Individual Estándar", renderTabla);
-	    colIndvidualEstandar.add(cm.getColumn(1));	//Habria que poner "for" hasta que toque el primer "2..."
-	    colIndvidualEstandar.add(cm.getColumn(2));
-	    colIndvidualEstandar.add(cm.getColumn(3));
-	    colIndvidualEstandar.add(cm.getColumn(4));
-	    ColumnaAgrupada colDobleEstandar = new ColumnaAgrupada("Doble Estándar");
-	    colDobleEstandar.add(cm.getColumn(5));	//Habria que poner "for" hasta que toque el primer "3..."
-	    colDobleEstandar.add(cm.getColumn(6));
-	    colDobleEstandar.add(cm.getColumn(7));
-	    colDobleEstandar.add(cm.getColumn(8));
-	    ColumnaAgrupada colDobleSuperior = new ColumnaAgrupada("Doble Superior");
-	    colDobleSuperior.add(cm.getColumn(9));	//Habria que poner "for" hasta que toque el primer "4..."
-	    colDobleSuperior.add(cm.getColumn(10));
-	    colDobleSuperior.add(cm.getColumn(11));
-	    colDobleSuperior.add(cm.getColumn(12));
-	    ColumnaAgrupada colSuperiorFamilyPlan = new ColumnaAgrupada("Superior Family Plan");
-	    colSuperiorFamilyPlan.add(cm.getColumn(13));	//Habria que poner "for" hasta que toque el primer "5..."
-	    colSuperiorFamilyPlan.add(cm.getColumn(14));
-	    colSuperiorFamilyPlan.add(cm.getColumn(15));
-	    colSuperiorFamilyPlan.add(cm.getColumn(16));
-	    ColumnaAgrupada colSuiteDouble = new ColumnaAgrupada("Suite Double");
-	    colSuiteDouble.add(cm.getColumn(17));	//Habria que poner "for" hasta que toque el ultimo "5..."
-	    colSuiteDouble.add(cm.getColumn(18));
-	    colSuiteDouble.add(cm.getColumn(19));
-	    colSuiteDouble.add(cm.getColumn(20));
-
+		TableColumnModel cm = tabla.getColumnModel();
+		
 	    HeaderTablaAgrupable header = (HeaderTablaAgrupable)tabla.getTableHeader();
-	    header.addColumnGroup(colIndvidualEstandar);
-	    header.addColumnGroup(colDobleEstandar);
-	    header.addColumnGroup(colDobleSuperior);
-	    header.addColumnGroup(colSuperiorFamilyPlan);	
-	    header.addColumnGroup(colSuiteDouble);
+		
+		Integer tamanioAnterior = 0;
+		
+		for(TipoHabitacionDTO tipo : mapHabitacionesTipo.keySet()) {
+			
+			ColumnaAgrupada cA = new ColumnaAgrupada(tipo.getTipo());
+			
+			for(int i = 0; i <= mapHabitacionesTipo.get(tipo).size(); i++) {
+				
+				if(esPrimero) {
+					i++;
+					esPrimero = false;
+				}
+				
+				cA.add(cm.getColumn(i+tamanioAnterior));
+			}
+			
+			tamanioAnterior += mapHabitacionesTipo.get(tipo).size();
+		    header.addColumnGroup(cA);
+		}
 		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
@@ -126,8 +133,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		    		
 		    		if(((RenderParaTablaEstadoColores) tabla.getDefaultRenderer(String.class)).celdaYaSeleccionada(tabla.rowAtPoint(e.getPoint()), tabla.columnAtPoint(e.getPoint()))) {
 		    			
-		    			miModelo.limpiarTabla();
-		    			miModelo.cargarEstados();
+		    			actualizarTabla();
 		    			renderTablaEstadoColores = new RenderParaTablaEstadoColores();
 		    			renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
 		    			tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
@@ -189,13 +195,16 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		
 	}
 	
-	public void activarTabla() {
+	public void activarTabla(LocalDate fechaDesde, LocalDate fechaHasta) {
+		
+		this.fechaDesde = fechaDesde;
+		this.fechaHasta = fechaHasta;
 		
 		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
 		renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
 		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 		
-		miModelo.cargarEstados();
+		miModelo.cargarEstados(gestorHabitacion.buscarEstadoHabitaciones(fechaDesde, fechaHasta));
 	}
 	
 	public void desactivarTabla() {
@@ -222,11 +231,17 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 
 	public void deseleccionarPeriodo() {
 		
-		miModelo.limpiarTabla();
-		miModelo.cargarEstados();
+		actualizarTabla();
 		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
 		renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
 		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 	}
+	
+
 		
+	public void actualizarTabla() {
+		
+		miModelo.limpiarTabla();
+		miModelo.cargarEstados(gestorHabitacion.buscarEstadoHabitaciones(fechaDesde, fechaHasta));
+	}
 }

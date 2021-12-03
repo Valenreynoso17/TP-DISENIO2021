@@ -60,7 +60,7 @@ public class HabitacionPostgreSQLImpl implements HabitacionDAO {
 	public List<Habitacion> buscarHabitaciones() {
 		Session sesion = sessionFactory.openSession();
 		
-		String stringQuery = "SELECT h FROM Habitacion h ";	
+		String stringQuery = "SELECT h FROM Habitacion h ORDER BY h.numero";	
 		
 		TypedQuery<Habitacion> q = sesion.createQuery(stringQuery, Habitacion.class);
 		List<Habitacion> habitaciones = q.getResultList();
