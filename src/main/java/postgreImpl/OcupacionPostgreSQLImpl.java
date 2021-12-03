@@ -97,6 +97,7 @@ public class OcupacionPostgreSQLImpl implements OcupacionDAO {
 		Ocupacion ocupacion = null;
 		
 		String stringQuery = 	"SELECT o FROM Ocupacion o "
+							+ 	"	LEFT JOIN FETCH o.pasajeros "
 							+ 	"WHERE o.habitacion.numero = :nroHabitacion "
 							+ 	"	AND o.horaYFechaSalidaReal IS NULL";
 

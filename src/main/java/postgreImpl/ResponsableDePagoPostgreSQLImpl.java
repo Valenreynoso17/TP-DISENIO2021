@@ -1,5 +1,7 @@
 package main.java.postgreImpl;
 
+import java.util.List;
+
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
@@ -59,6 +61,7 @@ public class ResponsableDePagoPostgreSQLImpl implements ResponsableDePagoDAO {
 
 	@Override
 	public ResponsableDePago buscarPorCuit(String cuit) {
+		ResponsableDePago responsable = null;
 		
 		String stringQuery = "SELECT r FROM ResponsableDePago r WHERE cuitPersonaJuridica = :cuit";
 		
@@ -66,9 +69,11 @@ public class ResponsableDePagoPostgreSQLImpl implements ResponsableDePagoDAO {
 		
 		TypedQuery<ResponsableDePago> query = sesion.createQuery(stringQuery, ResponsableDePago.class);
 		
-		ResponsableDePago responsable = query.setParameter("cuit", cuit).getSingleResult();
+		List<ResponsableDePago> responsables = query.setParameter("cuit", cuit).getResultList();
 		
 		sesion.close();
+		
+		if (responsables.size() == 1) responsable = responsables.get(0);
 		
 		return responsable;
 	}
