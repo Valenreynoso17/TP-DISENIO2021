@@ -25,6 +25,8 @@ import main.java.enums.ColumnaBuscarPasajeros;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
+import main.java.interfaces.clasesExtra.RenderParaTablaEstadoColores;
+import main.java.interfaces.clasesExtra.RenderParaTablas;
 
 public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 	
@@ -33,6 +35,7 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 	private JTable tabla;
 	private ModeloTablaPasajeros miModelo;
 	private PanelPaginacion paginacion;
+	private RenderParaTablas renderTabla;
 	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	private Vector filaSeleccionada = null;
@@ -77,8 +80,14 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		
 		miModelo = new ModeloTablaPasajeros();
 		
+		miModelo.cargarPasajeros();
+		
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
+		
+		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
+		
+		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
@@ -98,6 +107,30 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
 				nroFilaSeleccionada = tabla.getSelectedRow();
 			}
+		});
+		
+		tabla.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseReleased(MouseEvent e) {
+
+		        if (tabla.getSelectedRow() >= 0) {
+		        	
+				    int r = tabla.rowAtPoint(e.getPoint());
+			        if (r >= 0 && r < tabla.getRowCount()) {
+			        	try {
+							filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
+							nroFilaSeleccionada = tabla.getSelectedRow();
+			        	} catch(ArrayIndexOutOfBoundsException exc) {		//El "elementAt" fallta debido a que el click derecho busca el elemento -1 en el vector
+			        		
+			        		System.out.println("Click derecho por excepcion");
+			        		//tabla.setDefaultRenderer(String.class, new RenderParaTablaEstadoColores());	//Quizas mas ineficiente, pero mas simple
+			        	}
+			        } else {
+			        	tabla.clearSelection();
+			        }
+		       }
+
+		    }
 		});
 		
 		tabla.getTableHeader().addMouseListener(new MouseAdapter() {
@@ -127,15 +160,7 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 				
 			}
 			
-		});
-		
-		tabla.getTableHeader().setOpaque(false);
-		tabla.getTableHeader().setBackground(Color.decode("#424242"));		//Para que el fondo de la cabecera sea de un color en específico
-		tabla.getTableHeader().setForeground(Color.WHITE);					//Para que la fuente de la cabecera sea blanca
-		tabla.getTableHeader().setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
-		
-		tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
-		
+		});		
 		
 		//PARA CENTRAR
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -144,6 +169,8 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		
 		tabla.setBackground(Color.white);
 		tabla.setGridColor(Color.black);
+		tabla.setBorder(new LineBorder(Color.BLACK));
+		
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;
@@ -159,7 +186,7 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		c.weighty = 0.1;
 		c.gridwidth = 1;
 		
-			c.anchor = GridBagConstraints.CENTER; c.insets = new Insets(0,0,0,0);
+			c.anchor = GridBagConstraints.CENTER; c.insets = new Insets(0,0,0,0);	c.gridy = 1;
 		
 		//label = new JLabel("PAGINACIÓN");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 1;	this.add(label, c);
 		paginacion = new PanelPaginacion(this, tamPagina);	c.gridx = 0;	c.gridy = 1;
@@ -193,7 +220,7 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		ultimosResultados = gestorPasajero.buscarPaginado(filtros, tamPagina, paginaActual, columnaFiltro, orden);
 		
 		miModelo.limpiarTabla();
-		miModelo.cargarPasajeros(ultimosResultados);
+		//miModelo.cargarPasajeros(ultimosResultados);
 		
 	}
 	

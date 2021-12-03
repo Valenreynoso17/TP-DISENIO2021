@@ -1,6 +1,8 @@
 package main.java.gestores;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,8 +64,10 @@ public class GestorHabitacion {
 		}
 		
 		List<OcupacionDTO> ocupaciones = gestorOcupacion.buscarOcupaciones(fechaDesde, fechaHasta);
-		List<ReservaDTO> reservas = gestorReserva.buscarReservas(fechaDesde, fechaHasta);
-		List<FueraDeServicioDTO> fuerasDeServicio = gestorFueraDeServicio.buscarFuerasDeServicio(fechaDesde, fechaHasta);
+		List<ReservaDTO> reservas = gestorReserva.buscarReservas(LocalDateTime.of(fechaDesde, LocalTime.of(0, 0)), LocalDateTime.of(fechaHasta, LocalTime.of(0, 0)));
+		List<FueraDeServicioDTO> fuerasDeServicio = gestorFueraDeServicio.buscarFuerasDeServicio(LocalDateTime.of(fechaDesde, LocalTime.of(0, 0)), LocalDateTime.of(fechaHasta, LocalTime.of(0, 0)));
+		
+		
 		
 		for (OcupacionDTO o : ocupaciones) {
 			mapHabitaciones.get(o.getIdHabitacion()).agregarOcupacion(o);
@@ -77,21 +81,29 @@ public class GestorHabitacion {
 			mapHabitaciones.get(f.getIdHabitacion()).agregarFueraDeServicio(f);
 		}
 		
+		
 		for (Integer id : mapHabitaciones.keySet()) {
 			String tipo = mapHabitaciones.get(id).getTipo().getTipo();
 			
-			if (!mapTipoHabitacion.containsKey(tipo)) mapTipoHabitacion.put(tipo, new ArrayList<>());
+			
+			if (!mapTipoHabitacion.containsKey(tipo)) mapTipoHabitacion.put(tipo, new ArrayList<>());			
 			
 			mapTipoHabitacion.get(tipo).add(mapHabitaciones.get(id));
+			
+			
 		}
-		
 		return mapTipoHabitacion;
 	}
 	
 	public HabitacionDTO crearDTOMostrarEstado(Habitacion h) {
+		TipoHabitacionDTO tipo = new TipoHabitacionDTO();
+		tipo.setId(h.getTipo().getId());
+		tipo.setTipo(h.getTipo().getTipo());
+		
 		HabitacionDTO dto = new HabitacionDTO();
 		dto.setId(h.getId());
 		dto.setNroHabitacion(h.getNumero());
+		dto.setTipo(tipo);
 		
 		return dto;
 	}

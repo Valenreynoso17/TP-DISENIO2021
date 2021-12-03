@@ -117,6 +117,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 						
 						ocupacionDTO = gestorOcupacion.buscarUltimaOcupacionDTO(numeroHabitacion, fechaHora);
 						
+
 				}
 				catch(InputVacioException exc) {
 					

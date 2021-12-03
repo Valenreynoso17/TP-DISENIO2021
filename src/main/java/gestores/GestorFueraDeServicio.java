@@ -1,6 +1,7 @@
 package main.java.gestores;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class GestorFueraDeServicio {
 		return instance;
 	}
 	
-	public List<FueraDeServicioDTO> buscarFuerasDeServicio(LocalDate fechaDesde, LocalDate fechaHasta) {
+	public List<FueraDeServicioDTO> buscarFuerasDeServicio(LocalDateTime fechaDesde, LocalDateTime fechaHasta) {
 		List<FueraDeServicio> fuerasDeServicio = fueraDeServicioDAO.buscar(fechaDesde, fechaHasta);
 		List<FueraDeServicioDTO> fuerasDeServicioDTO = new ArrayList<>();
 		

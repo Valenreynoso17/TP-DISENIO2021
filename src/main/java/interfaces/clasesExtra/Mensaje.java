@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,6 +45,8 @@ public class Mensaje extends JFrame{
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
+	
+	private JFrame frameActual;
 
 	public Mensaje(Integer id, String texto, TipoMensaje tipo, String opcionAceptar, final String opcionCancelar) {
 		super("Sistema Hotel Premier");
@@ -55,6 +58,8 @@ public class Mensaje extends JFrame{
 	}
 	
 	public void mostrar(final PanelPermiteMensajes panel, JFrame frame) {
+		
+		frameActual = frame;
 		
 		frame.setEnabled(false);	//Para que solo se pueda clickear el mensaje
 		
@@ -149,5 +154,16 @@ public class Mensaje extends JFrame{
 	public void setTextoMensaje(String s) {
 		this.texto = s;
 	}
+	
+	protected void processWindowEvent(WindowEvent e) {	//Para que al cerrarse con la cruz (arriba a la derecha) no se cierren todos los frames
+		
+		super.processWindowEvent(e);
+        if(e.getID() == WindowEvent.WINDOW_CLOSING) {
+        	
+            this.dispose();
+            frameActual.toFront();	
+            frameActual.setEnabled(true);
+        }
+	} 
 	
 }
