@@ -13,7 +13,8 @@ public class ModeloPasajerosSeleccionadosOcuparHabitacion extends DefaultTableMo
 	
 	private Integer capacidadHabitacion;
 
-	public ModeloPasajerosSeleccionadosOcuparHabitacion() {
+	public ModeloPasajerosSeleccionadosOcuparHabitacion(Integer capacidad) {
+		this.capacidadHabitacion = capacidad;
 		this.addColumn("Apellido"); 
 		this.addColumn("Nombre"); 
 		pasajerosSeleccionados = new ArrayList<PasajeroDTO>();
@@ -44,7 +45,7 @@ public class ModeloPasajerosSeleccionadosOcuparHabitacion extends DefaultTableMo
 	
 	public void cargarPasajero(PasajeroDTO p) {	
 		
-		if(this.getRowCount() < 5) {	//TODO: Poner el limite de la habitacion
+		if(this.getRowCount() < capacidadHabitacion) {	//TODO: Poner el limite de la habitacion
 			
 			if(!this.pasajerosSeleccionados.contains(p)) {	//Si ya contiene al pasajero, no hay que volver a agregarlo
 				

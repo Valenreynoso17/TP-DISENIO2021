@@ -78,7 +78,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	private HabitacionDTO habitacion;
 	
 	// TODO valores temporales
-	private Integer idHabitacion = 1;
+	private Integer idHabitacion = 11;
 	private LocalDate ingreso = LocalDate.of(2021, 12, 3);
 	private LocalDate egreso = LocalDate.of(2021, 12, 6);
 	
@@ -136,8 +136,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		c.gridx = 1; c.gridy = 1;
 		this.add(buscar, c);
 		
-		//TODO: Pasarle la habitacion (para numero y capacidad)
-		panelPasajerosSeleccionadosGroupBox = new PanelPasajerosSeleccionadosGroupBox();	//Los cambie de orden para que al panel de abajo se le pase un panel no null
+		panelPasajerosSeleccionadosGroupBox = new PanelPasajerosSeleccionadosGroupBox(habitacion);	//Los cambie de orden para que al panel de abajo se le pase un panel no null
 		c.insets = insetPanelPasajerosSeleccionados;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 2; c.gridy = 2;
 		c.weightx = 0.3; c.weighty = 0.6;			this.add(panelPasajerosSeleccionadosGroupBox, c);	
