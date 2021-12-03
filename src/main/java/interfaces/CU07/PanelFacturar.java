@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -111,7 +113,9 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 						Integer numeroHabitacion = Integer.parseInt(this.panelFacturarGroupBox.getNumeroHabitacion());
 						LocalTime horaSalida = LocalTime.parse(this.panelFacturarGroupBox.getHoraSalida());
 						
-						ocupacionDTO = gestorOcupacion.buscarUltimaOcupacionDTO(numeroHabitacion, horaSalida);
+						LocalDateTime fechaHora = LocalDateTime.of(LocalDate.now(), horaSalida);
+						
+						ocupacionDTO = gestorOcupacion.buscarUltimaOcupacionDTO(numeroHabitacion, fechaHora);
 						
 				}
 				catch(InputVacioException exc) {

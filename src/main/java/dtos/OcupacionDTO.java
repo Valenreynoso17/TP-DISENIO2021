@@ -2,6 +2,7 @@ package main.java.dtos;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import main.java.clases.Ocupacion;
@@ -17,6 +18,7 @@ public class OcupacionDTO {
 	private List<PasajeroDTO> listaPasajerosDTO;	
 	private PasajeroDTO responsable;
 	private Integer idHabitacion;
+	private LocalDateTime posibleFechaHoraDeSalida;
 	
 	public OcupacionDTO() {
 		super();
@@ -30,13 +32,15 @@ public class OcupacionDTO {
 		this.responsable = responsable;
 	}
 	
-	public OcupacionDTO(Ocupacion ocupacion, List<PasajeroDTO> listaPasajerosDTO, List<ConsumoDTO> listaConsumosDTO, List<ItemOcupacionDTO> listaItemOcupacionDTO, PasajeroDTO responsable) {
+	public OcupacionDTO(Ocupacion ocupacion, List<PasajeroDTO> listaPasajerosDTO, List<ConsumoDTO> listaConsumosDTO,
+						List<ItemOcupacionDTO> listaItemOcupacionDTO, PasajeroDTO responsable, LocalDateTime posibleFechaHoraDeSalida) {
 		this.id = ocupacion.getId();
 		this.fechaEgreso = ocupacion.getEgreso();
 		this.fechaIngreso = ocupacion.getIngreso();
 		this.fechaHoraSalidaReal = ocupacion.getHoraYFechaSalidaReal();
 		this.precioPorDia = ocupacion.getPrecioPorDia();
 		this.idHabitacion = ocupacion.getHabitacion().getId();
+		this.posibleFechaHoraDeSalida = posibleFechaHoraDeSalida;
 		this.responsable = responsable;
 		this.listaPasajerosDTO = listaPasajerosDTO;
 		this.listaConsumosDTO = listaConsumosDTO;
@@ -81,6 +85,10 @@ public class OcupacionDTO {
 	
 	public Integer getIdHabitacion() {
 		return idHabitacion;
+	}
+	
+	public LocalDateTime getPosibleFechaHoraDeSalida() {
+		return posibleFechaHoraDeSalida;
 	}
 	
 	
