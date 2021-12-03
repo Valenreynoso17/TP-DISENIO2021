@@ -65,11 +65,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		tableContainer = new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
 		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), true);
-		
-//		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
-		
-//		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
-		
+
 		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
 	    TableColumnModel cm = tabla.getColumnModel();
@@ -154,12 +150,6 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		    }
 		});
 		
-//		tabla.addMouseListener(new MouseAdapter() {
-//			public void mouseReleased(MouseEvent e) {				
-//				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
-//				nroFilaSeleccionada = tabla.getSelectedRow();
-//			}
-//		});
 		
 		tabla.setRowHeight(30);
 		cm.getColumn(0).setPreferredWidth(100);
@@ -171,9 +161,9 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		//PARA CENTRAR
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-		tabla.setDefaultRenderer(Object.class, centerRenderer);
+//		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+//		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+//		tabla.setDefaultRenderer(Object.class, centerRenderer);
 		
 		tabla.setBackground(Color.white);
 		tabla.setGridColor(Color.black);
@@ -198,7 +188,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	public void activarTabla() {
 		
 		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
-		
+		renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
 		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 		
 		miModelo.cargarEstados();

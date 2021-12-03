@@ -1,6 +1,7 @@
 package main.java.interfaces.CU17;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -23,6 +24,8 @@ import main.java.enums.ColumnaBuscarPasajeros;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
+import main.java.interfaces.clasesExtra.RenderParaTablaEstadoColores;
+import main.java.interfaces.clasesExtra.RenderParaTablaOcuparHabitacion;
 import main.java.interfaces.clasesExtra.RenderParaTablas;
 
 public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
@@ -34,13 +37,12 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 	private PanelPaginacion paginacion;
 	private RenderParaTablas renderTabla;
 	
-	@SuppressWarnings({ "rawtypes", "unused" })
+	@SuppressWarnings("rawtypes")
 	private Vector filaSeleccionada = null;
-	@SuppressWarnings("unused")
 	private Integer nroFilaSeleccionada;
 	private JScrollPane tableContainer;
 	
-	private Insets insetTabla = new Insets(10,10,10,10);
+	private Insets insetTabla = new Insets(10,10,0,10);
 	
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	
@@ -59,11 +61,11 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 	
 	//Predicate<Pasajero> FiltroApellido, FiltroNombre, FiltroTipoDocumento, FiltroNumeroDocumento;
 	
-	public PanelOcuparHabitacionTabla(FrameOcuparHabitacionConPasajeros frame) {
+	public PanelOcuparHabitacionTabla(PanelPasajerosSeleccionadosGroupBox panelPasajerosSeleccionados) {
 		paginaActual = 1;
 		cantResultados = 0;
 		
-		//gestorPasajero = GestorPasajero.getInstance();
+		gestorPasajero = GestorPasajero.getInstance();
 		
 		columnaFiltro = ColumnaBuscarPasajeros.NOMBRE;
 		orden = SortOrder.ASCENDING;
@@ -77,10 +79,10 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		
 		miModelo = new ModeloTablaPasajeros();
 		
-		miModelo.cargarPasajeros();
-		
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
+		
+		tabla.setSelectionBackground(Color.decode("#e0e0e0"));
 		
 		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
 		
@@ -100,13 +102,6 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		tabla.setAutoCreateRowSorter(true);	//Para que se ordenen
 		
 		tabla.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {				
-				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
-				nroFilaSeleccionada = tabla.getSelectedRow();
-			}
-		});
-		
-		tabla.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseReleased(MouseEvent e) {
 
@@ -115,12 +110,21 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 				    int r = tabla.rowAtPoint(e.getPoint());
 			        if (r >= 0 && r < tabla.getRowCount()) {
 			        	try {
+			        		
 							filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
 							nroFilaSeleccionada = tabla.getSelectedRow();
+							System.out.println(nroFilaSeleccionada);
+							System.out.println(filaSeleccionada);
+							
+							//Cuando selecciona a alguien, se copia tambien en la otra tabla pero NO desaparece de ésta
+							panelPasajerosSeleccionados.seleccionaronPasajero(pasajeroSeleccionado());
+							
 			        	} catch(ArrayIndexOutOfBoundsException exc) {		//El "elementAt" fallta debido a que el click derecho busca el elemento -1 en el vector
 			        		
-			        		System.out.println("Click derecho por excepcion");
-			        		//tabla.setDefaultRenderer(String.class, new RenderParaTablaEstadoColores());	//Quizas mas ineficiente, pero mas simple
+			        		System.out.println("Excepcion");
+			        	} catch(PasajeroNoSeleccionadoException exc) {
+			        		
+			        		//TODO: Creo que nunca va a llegar aca
 			        	}
 			        } else {
 			        	tabla.clearSelection();
@@ -168,6 +172,12 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		tabla.setGridColor(Color.black);
 		tabla.setBorder(new LineBorder(Color.BLACK));
 		
+		tabla.setRowHeight(17);	//Para que ocupe mejor el espacio de la tabla
+		
+		//tabla.setPreferredScrollableViewportSize(tabla.getPreferredSize());	//TODO: Ver si se puede arreglar, en el peor de los casos quedara asi
+		
+		//tabla.setvi
+		
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;
@@ -183,7 +193,7 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		c.weighty = 0.1;
 		c.gridwidth = 1;
 		
-			c.anchor = GridBagConstraints.CENTER; c.insets = new Insets(0,0,0,0);	c.gridy = 1;
+			c.anchor = GridBagConstraints.CENTER; c.insets = new Insets(0,0,0,0);
 		
 		//label = new JLabel("PAGINACIÓN");	label.setFont(fuenteLabelCampo);	c.gridx = 0; c.gridy = 1;	this.add(label, c);
 		paginacion = new PanelPaginacion(this, tamPagina);	c.gridx = 0;	c.gridy = 1;
@@ -217,7 +227,7 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		ultimosResultados = gestorPasajero.buscarPaginado(filtros, tamPagina, paginaActual, columnaFiltro, orden);
 		
 		miModelo.limpiarTabla();
-		//miModelo.cargarPasajeros(ultimosResultados);
+		miModelo.cargarPasajeros(ultimosResultados);
 		
 	}
 	
@@ -238,32 +248,5 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		
 	}
 }
-
-//public void actualizarTabla(String[] campos) {
-//	
-//	miModelo.limpiarTabla();
-//	
-//	filtroId = (campos[0] == null) ? e -> true : e -> e.getId().toString().contains(campos[0]);
-//	
-//	filtroNombre = (campos[1] == null) ? e -> true : e -> e.getNombre().toUpperCase().contains(campos[1].toUpperCase()); 
-//	
-//	filtroHoraApertura = (campos[2] == null) ? e -> true : e -> ((Integer) e.getHorarioApertura().getHour()).toString().contains(campos[2]); // == (Integer.parseInt(campos[2]));
-//	
-//	filtroMinutoApertura = (campos[3] == null) ? e -> true : e -> ((Integer) e.getHorarioApertura().getMinute()).toString().contains(campos[3]); // == (Integer.parseInt(campos[3]));
-//	
-//	filtroHoraCierre = (campos[4] == null) ? e -> true : e -> ((Integer) e.getHorarioCierre().getHour()).toString().contains(campos[4]); // == (Integer.parseInt(campos[4]));
-//	
-//	filtroMinutoCierre = (campos[5] == null) ? e -> true : e -> ((Integer)e.getHorarioCierre().getMinute()).toString().contains(campos[5]); // == (Integer.parseInt(campos[5])); 
-//	
-//	List<Estacion> estaciones = gestorEstacion.getEstaciones().stream().filter(filtroId)
-//																	   .filter(filtroNombre)
-//																	   .filter(filtroHoraApertura)
-//																	   .filter(filtroMinutoApertura)
-//																	   .filter(filtroHoraCierre)
-//																	   .filter(filtroMinutoCierre)
-//																	   .collect(Collectors.toList());
-//	miModelo.cargarEstaciones(estaciones);
-//	
-//}
 	
 	

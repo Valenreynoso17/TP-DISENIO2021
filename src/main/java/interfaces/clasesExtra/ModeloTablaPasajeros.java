@@ -42,6 +42,7 @@ public class ModeloTablaPasajeros extends DefaultTableModel{
 	public void cargarPasajeros(List<PasajeroDTO> pasajeros) {
 		
 		for(PasajeroDTO p : pasajeros) {
+			
 			this.addRow(new Object[] {p.getApellido()
 									, p.getNombre()
 									, p.getTipoDocumento()
@@ -49,16 +50,5 @@ public class ModeloTablaPasajeros extends DefaultTableModel{
 		}
 
 	}
-	
-//	public void cargarPasajeros() {
-//		
-//		for(int i = 0; i < 100; i++) {
-//			this.addRow(new Object[] {"Perez"
-//									, "Manuel"
-//									, TipoDocumento.LE
-//									, "123456789"});
-//		}
-//
-//	}
 	
 }

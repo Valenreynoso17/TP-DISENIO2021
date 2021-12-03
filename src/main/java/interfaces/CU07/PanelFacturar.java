@@ -117,8 +117,9 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 						
 						ocupacionDTO = gestorOcupacion.buscarUltimaOcupacionDTO(numeroHabitacion, fechaHora);
 						
-
 						panelResultadosDeBusquedaFacturarGroupBox.ocupacionSeleccionada(ocupacionDTO);
+						
+						siguiente.setEnabled(true);
 				}
 				catch(InputVacioException exc) {
 					
@@ -164,6 +165,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		this.add(cancelar, c);
 
 		siguiente = new JButton("Siguiente");
+		siguiente.setEnabled(false);			//Se habilita cuando se aprieta Buscar con campos validos
 		siguiente.setMinimumSize(dimensionBoton);
 		siguiente.setPreferredSize(dimensionBoton);
 		siguiente.setBackground(Color.decode("#E0E0E0"));

@@ -38,7 +38,7 @@ public class RenderParaTablas implements TableCellRenderer{
         JComponent result = (JComponent)render.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         result.setBorder(b);
         result.setOpaque(true);
-        result.setPreferredSize(new Dimension(400, 40));
+        result.setPreferredSize(new Dimension(400, 36));	//Para tabla GestionarPasajero
 
         if(this.esParaTipoHabitacion) {
         	result.setBackground(colorFondoTipoHabitacion);

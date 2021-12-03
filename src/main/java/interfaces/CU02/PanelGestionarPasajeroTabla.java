@@ -1,6 +1,7 @@
 package main.java.interfaces.CU02;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -24,6 +25,7 @@ import main.java.enums.ColumnaBuscarPasajeros;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
+import main.java.interfaces.clasesExtra.RenderParaTablas;
 
 public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 
@@ -32,10 +34,13 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 	private JTable tabla;
 	private ModeloTablaPasajeros miModelo;
 	private PanelPaginacion paginacion;
+	private RenderParaTablas renderTabla;
 
 	private JScrollPane tableContainer;
 	
 	private Insets insetTabla = new Insets(15, 100, 15, 100);
+	
+	//private Dimension dimensionTabla = new Dimension(0,200);
 	
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	
@@ -54,7 +59,7 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 	
 	//Predicate<Pasajero> FiltroApellido, FiltroNombre, FiltroTipoDocumento, FiltroNumeroDocumento;
 	
-	public PanelGestionarPasajeroTabla(FrameGestionarPasajero frame) {
+	public PanelGestionarPasajeroTabla() {
 		paginaActual = 1;
 		cantResultados = 0;
 		
@@ -75,7 +80,13 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		//miModelo.cargarEstaciones(gestorEstacion.getEstaciones());
 		
 		tabla = new JTable(miModelo);
-		tableContainer = new JScrollPane(tabla);
+		tableContainer = new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		tabla.setSelectionBackground(Color.decode("#e0e0e0"));
+		
+		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
+		
+		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
@@ -126,7 +137,11 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		tabla.setDefaultRenderer(Object.class, centerRenderer);
 		
 		tabla.setBackground(Color.white);
-		tabla.setGridColor(Color.white);
+		tabla.setGridColor(Color.black);
+		tabla.setBorder(new LineBorder(Color.BLACK));
+		
+		//tabla.setPreferredSize(dimensionTabla);
+		
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;
@@ -198,32 +213,5 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		
 	}
 }
-
-//public void actualizarTabla(String[] campos) {
-//	
-//	miModelo.limpiarTabla();
-//	
-//	filtroId = (campos[0] == null) ? e -> true : e -> e.getId().toString().contains(campos[0]);
-//	
-//	filtroNombre = (campos[1] == null) ? e -> true : e -> e.getNombre().toUpperCase().contains(campos[1].toUpperCase()); 
-//	
-//	filtroHoraApertura = (campos[2] == null) ? e -> true : e -> ((Integer) e.getHorarioApertura().getHour()).toString().contains(campos[2]); // == (Integer.parseInt(campos[2]));
-//	
-//	filtroMinutoApertura = (campos[3] == null) ? e -> true : e -> ((Integer) e.getHorarioApertura().getMinute()).toString().contains(campos[3]); // == (Integer.parseInt(campos[3]));
-//	
-//	filtroHoraCierre = (campos[4] == null) ? e -> true : e -> ((Integer) e.getHorarioCierre().getHour()).toString().contains(campos[4]); // == (Integer.parseInt(campos[4]));
-//	
-//	filtroMinutoCierre = (campos[5] == null) ? e -> true : e -> ((Integer)e.getHorarioCierre().getMinute()).toString().contains(campos[5]); // == (Integer.parseInt(campos[5])); 
-//	
-//	List<Estacion> estaciones = gestorEstacion.getEstaciones().stream().filter(filtroId)
-//																	   .filter(filtroNombre)
-//																	   .filter(filtroHoraApertura)
-//																	   .filter(filtroMinutoApertura)
-//																	   .filter(filtroHoraCierre)
-//																	   .filter(filtroMinutoCierre)
-//																	   .collect(Collectors.toList());
-//	miModelo.cargarEstaciones(estaciones);
-//	
-//}
 	
 	

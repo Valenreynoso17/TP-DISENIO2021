@@ -84,11 +84,16 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			
 			try{
 					panelResultadosDeBusquedaHabitacionesGroupBox.desactivarTabla();
+					
+					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla();	//TODO: Cuando terminemos de probar, sacar estas dos lineas y descomentar las de abajo
+					siguiente.setEnabled(true);
 				
 					this.panelMostrarEstadoHabitacionesGroupBox.inputNoEsVacia();
 					this.panelMostrarEstadoHabitacionesGroupBox.inputEsValida();
 					
-					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla();
+//					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla();
+//					
+//					siguiente.setEnabled(true);
 			}
 			catch(InputVacioException exc) {
 				
@@ -128,6 +133,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		this.add(cancelar, c);
 
 		siguiente = new JButton("Siguiente");
+		siguiente.setEnabled(false);			//Se habilita cuando se aprieta Buscar con campos validos
 		siguiente.setMinimumSize(dimensionBoton);
 		siguiente.setPreferredSize(dimensionBoton);
 		siguiente.setBackground(Color.decode("#E0E0E0"));
