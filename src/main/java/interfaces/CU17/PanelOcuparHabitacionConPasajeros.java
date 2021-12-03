@@ -8,14 +8,18 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import main.java.dtos.HabitacionDTO;
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.InputInvalidaException;
 import main.java.excepciones.SinResultadosException;
+import main.java.gestores.GestorHabitacion;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.CU02.PanelGestionarPasajeroTabla;
 import main.java.interfaces.clasesExtra.Mensaje;
@@ -38,6 +42,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	private JFrame frameActual;
 	
 	public GestorPasajero gestorPasajero;
+	private GestorHabitacion gestorHabitacion;
 	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
@@ -70,8 +75,18 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
+	private HabitacionDTO habitacion;
+	
+	// TODO valores temporales
+	private Integer idHabitacion = 1;
+	private LocalDate ingreso = LocalDate.of(2021, 12, 3);
+	private LocalDate egreso = LocalDate.of(2021, 12, 6);
+	
 	public PanelOcuparHabitacionConPasajeros(final FrameOcuparHabitacionConPasajeros frame) {
 		gestorPasajero = GestorPasajero.getInstance();
+		gestorHabitacion = GestorHabitacion.getInstance();
+		
+		habitacion = gestorHabitacion.buscarHabitacionDTO(idHabitacion);
 		
 		this.frameActual = frame;
 		
@@ -137,7 +152,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		c.gridwidth = 1;	c.gridheight = 1;
 		c.fill = GridBagConstraints.NONE;
 		
-		panelInformacionGroupBox = new PanelInformacionGroupBox();
+		panelInformacionGroupBox = new PanelInformacionGroupBox(habitacion);
 		c.insets = insetPanelInformacion;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 2; c.gridy = 3;
 		c.weightx = 0.3; c.weighty = 0.2;			this.add(panelInformacionGroupBox, c);

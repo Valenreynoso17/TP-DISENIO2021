@@ -19,6 +19,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import main.java.dtos.HabitacionDTO;
 import main.java.dtos.PasajeroDTO;
 import main.java.interfaces.clasesExtra.ModeloPasajerosSeleccionadosOcuparHabitacion;
 import main.java.interfaces.clasesExtra.RenderParaTablaEstadoColores;

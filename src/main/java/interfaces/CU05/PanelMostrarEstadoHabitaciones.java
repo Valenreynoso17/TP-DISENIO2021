@@ -143,6 +143,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		siguiente.setBorder(bordeBoton);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("NOSE");
 				try {
 						panelResultadosDeBusquedaHabitacionesGroupBox.seleccionoUnRango();
 					
