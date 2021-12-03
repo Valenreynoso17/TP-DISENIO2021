@@ -87,15 +87,15 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			try{
 					panelResultadosDeBusquedaHabitacionesGroupBox.desactivarTabla();
 					
-					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla();	//TODO: Cuando terminemos de probar, sacar estas dos lineas y descomentar las de abajo
-					siguiente.setEnabled(true);
+//					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla();	//TODO: Cuando terminemos de probar, sacar estas dos lineas y descomentar las de abajo
+//					siguiente.setEnabled(true);
 				
 					this.panelMostrarEstadoHabitacionesGroupBox.inputNoEsVacia();
 					this.panelMostrarEstadoHabitacionesGroupBox.inputEsValida();
 					
-//					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla();
-//					
-//					siguiente.setEnabled(true);
+					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla(panelMostrarEstadoHabitacionesGroupBox.getFechaDesde(), panelMostrarEstadoHabitacionesGroupBox.getFechaHasta());
+					
+					siguiente.setEnabled(true);
 			}
 			catch(InputVacioException exc) {
 				

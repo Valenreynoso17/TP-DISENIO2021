@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import main.java.clases.Habitacion;
 import main.java.daos.HabitacionDAO;
@@ -44,7 +45,7 @@ public class GestorHabitacion {
 	public HabitacionDTO buscarHabitacionDTO(Integer id) {
 		Habitacion habitacion = this.buscarHabitacion(id);
 		
-		return this.crearDTO(habitacion);
+		return this.crearDTOMostrarEstado(habitacion);
 	}
 	
 	
@@ -52,7 +53,24 @@ public class GestorHabitacion {
 		return habitacionDao.buscarHabitacion(id);
 	}
 	
-	// TODO probar si anda
+	public Map<TipoHabitacionDTO, List<HabitacionDTO>> buscarHabitaciones() {
+		Map<TipoHabitacionDTO, List<HabitacionDTO>> mapTipoHabitacion = new TreeMap<>((t1, t2) -> t1.getCostoPorNoche().compareTo(t2.getCostoPorNoche()));
+		
+		List<Habitacion> habitaciones = habitacionDao.buscarHabitaciones();
+		
+		for (Habitacion h : habitaciones) {
+
+			TipoHabitacionDTO tipoHabitacionDTO = new TipoHabitacionDTO(h.getTipo());
+			
+			if (!mapTipoHabitacion.containsKey(tipoHabitacionDTO)) mapTipoHabitacion.put(tipoHabitacionDTO, new ArrayList<>());			
+				
+				mapTipoHabitacion.get(tipoHabitacionDTO).add(this.crearDTOMostrarEstado(h));	
+		}
+		
+		return mapTipoHabitacion;
+	}
+	
+	// TODO probar si anda 
 	public Map<String, List<HabitacionDTO>> buscarEstadoHabitaciones(LocalDate fechaDesde, LocalDate fechaHasta) {
 		Map<String, List<HabitacionDTO>> mapTipoHabitacion = new HashMap<>();
 		Map<Integer, HabitacionDTO> mapHabitaciones = new HashMap<>();
@@ -95,26 +113,27 @@ public class GestorHabitacion {
 		return mapTipoHabitacion;
 	}
 	
+//	public HabitacionDTO crearDTOMostrarEstado(Habitacion h) {
+//		TipoHabitacionDTO tipo = new TipoHabitacionDTO();
+//		tipo.setId(h.getTipo().getId());
+//		tipo.setTipo(h.getTipo().getTipo());
+//		
+//		HabitacionDTO dto = new HabitacionDTO();
+//		dto.setId(h.getId());
+//		dto.setNroHabitacion(h.getNumero());
+//		dto.setTipo(tipo);
+//		
+//		return dto;
+//	}
+	
+	
 	public HabitacionDTO crearDTOMostrarEstado(Habitacion h) {
-		TipoHabitacionDTO tipo = new TipoHabitacionDTO();
-		tipo.setId(h.getTipo().getId());
-		tipo.setTipo(h.getTipo().getTipo());
+		TipoHabitacionDTO tipo = new TipoHabitacionDTO(h.getTipo().getId(), h.getTipo().getTipo(), h.getTipo().getCostoPorNoche(), h.getTipo().getCapacidad());
 		
-		HabitacionDTO dto = new HabitacionDTO();
-		dto.setId(h.getId());
-		dto.setNroHabitacion(h.getNumero());
-		dto.setTipo(tipo);
-		
-		return dto;
-	}
-	
-	
-	public HabitacionDTO crearDTO(Habitacion h) {
-		TipoHabitacionDTO tipo = new TipoHabitacionDTO();
-		tipo.setId(h.getTipo().getId());
-		tipo.setTipo(h.getTipo().getTipo());
-		tipo.setCapacidad(h.getTipo().getCapacidad());
-		tipo.setCostoPorNoche(h.getTipo().getCostoPorNoche());
+//		tipo.setId(h.getTipo().getId());
+//		tipo.setTipo(h.getTipo().getTipo());
+//		tipo.setCapacidad(h.getTipo().getCapacidad());
+//		tipo.setCostoPorNoche(h.getTipo().getCostoPorNoche());
 		
 		
 		HabitacionDTO dto = new HabitacionDTO();
