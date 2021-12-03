@@ -12,6 +12,7 @@ import org.hibernate.annotations.QueryHints;
 import main.java.clases.Ocupacion;
 import main.java.clases.Pasajero;
 import main.java.daos.OcupacionDAO;
+import main.java.excepciones.DataBaseException;
 
 public class OcupacionPostgreSQLImpl implements OcupacionDAO {
 	private SessionFactory sessionFactory;
@@ -93,34 +94,25 @@ public class OcupacionPostgreSQLImpl implements OcupacionDAO {
 
 	@Override
 	public Ocupacion buscarUltimaOcupacion(Integer nroHabitacion) {
-		
-		System.out.println("1 "+nroHabitacion);	
+		Ocupacion ocupacion = null;
 		
 		String stringQuery = 	"SELECT o FROM Ocupacion o "
-							+	"	JOIN Habitacion h " 
-							+ 	"WHERE o.idHabitacion = h.id "
-							+ 	"AND h.numero = :nroHabitacion "
-							+ 	"AND o.horaYFechaSalidaReal IS NULL";
+							+ 	"WHERE o.habitacion.numero = :nroHabitacion "
+							+ 	"	AND o.horaYFechaSalidaReal IS NULL";
 
-		System.out.println("2");
-		
 		Session sesion = sessionFactory.openSession();
-		
-		System.out.println("3");
 		
 		TypedQuery<Ocupacion> q = sesion.createQuery(stringQuery, Ocupacion.class);
 		
-		System.out.println("4");
+		q.setParameter("nroHabitacion", nroHabitacion);
 		
-		q.setParameter("id", nroHabitacion);
-		
-		System.out.println("5");
-		
-		Ocupacion ocupacion = q.getSingleResult();
-		
-		System.out.println("6");
+		List<Ocupacion> ocupaciones = q.getResultList();
 		
 		sesion.close();
+		
+		if (ocupaciones.size() == 1) ocupacion = ocupaciones.get(0); 
+		else if (ocupaciones.size() > 1) throw new DataBaseException("Existen varias ocupaciones sin horario de salida");
+				
 		
 		return ocupacion;
 	}
