@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.*;
 import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,9 +16,11 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
+
+import main.java.excepciones.ContieneFechasReservadasException;
+import main.java.excepciones.RangoNoSeleccionadoException;
 import main.java.interfaces.clasesExtra.ColumnaAgrupada;
 import main.java.interfaces.clasesExtra.HeaderTablaAgrupable;
 import main.java.interfaces.clasesExtra.ModeloTablaEstadoHabitaciones;
@@ -65,11 +68,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		tableContainer = new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
 		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), true);
-		
-//		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
-		
-//		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
-		
+
 		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
 	    TableColumnModel cm = tabla.getColumnModel();
@@ -129,37 +128,32 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		    			
 		    			miModelo.limpiarTabla();
 		    			miModelo.cargarEstados();
-		    			tabla.setDefaultRenderer(String.class, new RenderParaTablaEstadoColores());
-
+		    			renderTablaEstadoColores = new RenderParaTablaEstadoColores();
+		    			renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
+		    			tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 		    		}
 		    	}
-
-		        if (tabla.getSelectedRow() >= 0) {
-		        	
-				    int r = tabla.rowAtPoint(e.getPoint());
-			        if (r >= 0 && r < tabla.getRowCount()) {
-			        	try {
-							filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
-							nroFilaSeleccionada = tabla.getSelectedRow();
-			        	} catch(ArrayIndexOutOfBoundsException exc) {		//El "elementAt" fallta debido a que el click derecho busca el elemento -1 en el vector
-			        		
-			        		System.out.println("Click derecho por excepcion");
-			        		//tabla.setDefaultRenderer(String.class, new RenderParaTablaEstadoColores());	//Quizas mas ineficiente, pero mas simple
-			        	}
-			        } else {
-			        	tabla.clearSelection();
-			        }
-		       }
-
+//
+//		        if (tabla.getSelectedRow() >= 0) {
+//		        	
+//				    int r = tabla.rowAtPoint(e.getPoint());
+//			        if (r >= 0 && r < tabla.getRowCount()) {
+//			        	try {
+//							filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
+//							nroFilaSeleccionada = tabla.getSelectedRow();
+//			        	} catch(ArrayIndexOutOfBoundsException exc) {		//El "elementAt" fallta debido a que el click derecho busca el elemento -1 en el vector
+//			        		
+//			        		System.out.println("Click derecho por excepcion");
+//			        		//tabla.setDefaultRenderer(String.class, new RenderParaTablaEstadoColores());	//Quizas mas ineficiente, pero mas simple
+//			        	}
+//			        } else {
+//			        	tabla.clearSelection();
+//			        }
+//		       }
+//
 		    }
 		});
 		
-//		tabla.addMouseListener(new MouseAdapter() {
-//			public void mouseReleased(MouseEvent e) {				
-//				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
-//				nroFilaSeleccionada = tabla.getSelectedRow();
-//			}
-//		});
 		
 		tabla.setRowHeight(30);
 		cm.getColumn(0).setPreferredWidth(100);
@@ -171,9 +165,9 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		//PARA CENTRAR
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-		tabla.setDefaultRenderer(Object.class, centerRenderer);
+//		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+//		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+//		tabla.setDefaultRenderer(Object.class, centerRenderer);
 		
 		tabla.setBackground(Color.white);
 		tabla.setGridColor(Color.black);
@@ -198,16 +192,41 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	public void activarTabla() {
 		
 		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
-		
+		renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
 		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 		
 		miModelo.cargarEstados();
 	}
 	
 	public void desactivarTabla() {
-//		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 		
 		miModelo.limpiarTabla();
+	}
+	
+	public void seleccionoUnRango() throws RangoNoSeleccionadoException{
+		
+		if(this.renderTablaEstadoColores.getCeldasSeleccionadas().isEmpty()) {	//Si la lista de celdas seleccionadas es vacia, tirar excepcion
+			
+			throw new RangoNoSeleccionadoException();
+		}
+	}
+	
+	public void validacionContieneFechasReservadas() throws ContieneFechasReservadasException{
+		
+		//Si CeldasReservadas tiene algun elemento que esta dentro de CeldasSeleccionadas, entonces debe tirar la excepcion y posteriormente el mensaje
+		if(!Collections.disjoint(this.renderTablaEstadoColores.getCeldasReservadas(),this.renderTablaEstadoColores.getCeldasSeleccionadas())) {	
+			
+			throw new ContieneFechasReservadasException();
+		}
+	}
+
+	public void deseleccionarPeriodo() {
+		
+		miModelo.limpiarTabla();
+		miModelo.cargarEstados();
+		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
+		renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
+		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 	}
 		
 }

@@ -11,8 +11,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import main.java.enums.TipoMensaje;
+import main.java.excepciones.ContieneFechasReservadasException;
 import main.java.excepciones.FechaInvalidaException;
 import main.java.excepciones.InputVacioException;
+import main.java.excepciones.RangoNoSeleccionadoException;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.Mensaje;
@@ -42,7 +44,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	@SuppressWarnings("unused")
 	private Mensaje mensajeRangoNoSeleccionado = new Mensaje(3, textoRangoNoSeleccionado, TipoMensaje.ERROR, "Aceptar", null);
 	
-	//private MensajeYaExistenReservas mensajeYaExistenReservas = new MensajeYaExistenReservas();
+	private MensajeYaExistenReservas mensajeYaExistenReservas = new MensajeYaExistenReservas(4);
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
@@ -84,11 +86,16 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			
 			try{
 					panelResultadosDeBusquedaHabitacionesGroupBox.desactivarTabla();
+					
+					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla();	//TODO: Cuando terminemos de probar, sacar estas dos lineas y descomentar las de abajo
+					siguiente.setEnabled(true);
 				
 					this.panelMostrarEstadoHabitacionesGroupBox.inputNoEsVacia();
 					this.panelMostrarEstadoHabitacionesGroupBox.inputEsValida();
 					
-					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla();
+//					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla();
+//					
+//					siguiente.setEnabled(true);
 			}
 			catch(InputVacioException exc) {
 				
@@ -128,6 +135,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		this.add(cancelar, c);
 
 		siguiente = new JButton("Siguiente");
+		siguiente.setEnabled(false);			//Se habilita cuando se aprieta Buscar con campos validos
 		siguiente.setMinimumSize(dimensionBoton);
 		siguiente.setPreferredSize(dimensionBoton);
 		siguiente.setBackground(Color.decode("#E0E0E0"));
@@ -135,22 +143,22 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		siguiente.setBorder(bordeBoton);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				frame.apretoSiguiente();
-				//frame.dispose();
-				//frameSiguiente = new FrameIngresarDatosPago();
+				try {
+						panelResultadosDeBusquedaHabitacionesGroupBox.seleccionoUnRango();
+					
+						panelResultadosDeBusquedaHabitacionesGroupBox.validacionContieneFechasReservadas();
+						
+						frame.apretoSiguiente();
+				}
+				catch (RangoNoSeleccionadoException exc) {
+					mensajeRangoNoSeleccionado.mostrar(getPanel(), frame);
+				}
+				catch (ContieneFechasReservadasException exc) {
+					System.out.println("Periodo reservado");
+					frame.setEnabled(false);
+					mensajeYaExistenReservas.mostrar(getPanel(), frame, "a");
+				}
 			}
-//				try {
-//					PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();
-//					
-//					mensajeModificarPasajero.mostrar(getPanel(), frame);
-//				}
-//				catch (PasajeroNoSeleccionadoException exc) {
-//					mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
-//				}
-//				
-//				//mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
-//			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
 		c.gridx = 2; c.gridy = 3;
@@ -172,13 +180,19 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			break;
 		case 3:	//Si la habitación no posee facturas, simplemente muestra el mensaje
 			break;		
+		case 4:
+			break;
 		}
 	}
 
 
 	public void confirmoCancelar(Integer idMensaje) {
 
-		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
+		switch(idMensaje) {	//El unico que hace una acción al presionar el botón de la izquierda es el "MensajeYaExistenReservas"
+		case 4:
+			this.panelResultadosDeBusquedaHabitacionesGroupBox.deseleccionarPeriodo();
+			break;
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 package main.java.interfaces.clasesExtra;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import main.java.dtos.PasajeroDTO;
@@ -7,18 +8,21 @@ import main.java.dtos.PasajeroDTO;
 public class ModeloPasajerosSeleccionadosOcuparHabitacion extends DefaultTableModel{
 	
 	private static final long serialVersionUID = 1L;
+	
+	public List<PasajeroDTO> pasajerosSeleccionados;
+	
+	private Integer capacidadHabitacion;
 
 	public ModeloPasajerosSeleccionadosOcuparHabitacion() {
 		this.addColumn("Apellido"); 
 		this.addColumn("Nombre"); 
+		pasajerosSeleccionados = new ArrayList<PasajeroDTO>();
 	}
 	
 	   @SuppressWarnings({ "unchecked", "rawtypes" })
 	public Class getColumnClass(int columna)
 	   {
-	      if (columna == 0) return String.class;
-	      if (columna == 1) return String.class;
-	      return Object.class;
+	      return String.class;
 	   }
 	   
 	    @Override
@@ -32,22 +36,26 @@ public class ModeloPasajerosSeleccionadosOcuparHabitacion extends DefaultTableMo
 		this.setRowCount(0); //Elimino todas las filas de la tabla
 	}
 	
-//	public void cargarPasajeros(List<PasajeroDTO> pasajeros) {	//TODO: Ver
-//		
-//		for(PasajeroDTO p : pasajeros) {
-//			this.addRow(new Object[] {p.getApellido()
-//									, p.getNombre()});
-//		}
-//
-//	}
-	
-	public void cargarPasajeros() {	//TODO: Ver
+	public void eliminarPasajero(int fila) {
 		
-		for(int i = 0; i < 5; i++) {
-			this.addRow(new Object[] {"Rodriguez"
-									, "Juan"});
+		this.removeRow(fila);
+		pasajerosSeleccionados.remove(fila);
+	}
+	
+	public void cargarPasajero(PasajeroDTO p) {	
+		
+		if(this.getRowCount() < 5) {	//TODO: Poner el limite de la habitacion
+			
+			if(!this.pasajerosSeleccionados.contains(p)) {	//Si ya contiene al pasajero, no hay que volver a agregarlo
+				
+				this.addRow(new Object[] {p.getApellido(), p.getNombre()});
+				this.pasajerosSeleccionados.add(p);
+			}
 		}
-
+	}
+	
+	public List<PasajeroDTO> getPasajerosSeleccionados(){
+		return  this.pasajerosSeleccionados;
 	}
 
 }

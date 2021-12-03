@@ -27,8 +27,6 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 	
 	private JLabel label;
 	
-	private FrameMenuOcuparHabitacion frameActual;
-	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 20);	
 	
@@ -36,9 +34,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 	
 	private Dimension dimensionBoton = new Dimension(200, 50);
 	
-	public PanelMenuOcuparHabitacion(FrameMenuOcuparHabitacion frame) {
-		
-		this.frameActual = frame;
+	public PanelMenuOcuparHabitacion(FrameMenuOcuparHabitacion frame, FrameOcuparHabitacionConPasajeros frameA) {
 		
 		this.setBackground(Color.white);
 		
@@ -65,7 +61,8 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		cargarOtroPasajero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
+				frame.dispose();
+				frameA.setVisible(true);
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;	
@@ -81,7 +78,8 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		cargarOtraHabitacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frameActual.dispose();
+				frame.dispose();
+				frameA.dispose();	//Estaba invisible, hay que cerrarla
 				new FrameOcuparHabitacion();
 			}
 		});
@@ -96,9 +94,10 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		salir.setFont(fuenteBoton);
 		salir.setBorder(bordeBoton);
 		salir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {	//TODO: Hacer aca el pasaje de todos los datos para cargar la ocupacion
 				
-				frameActual.dispose();
+				frame.dispose();
+				frameA.dispose();	//Estaba invisible, hay que cerrarla
 				new FrameMenuPrincipal();
 			}
 		});

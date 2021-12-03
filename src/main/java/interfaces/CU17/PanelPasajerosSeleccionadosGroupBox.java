@@ -18,7 +18,11 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+
+import main.java.dtos.PasajeroDTO;
 import main.java.interfaces.clasesExtra.ModeloPasajerosSeleccionadosOcuparHabitacion;
+import main.java.interfaces.clasesExtra.RenderParaTablaEstadoColores;
+import main.java.interfaces.clasesExtra.RenderParaTablaPasajerosSeleccionados;
 import main.java.interfaces.clasesExtra.RenderParaTablas;
 
 public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
@@ -28,6 +32,7 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 	private JTable tabla;
 	private ModeloPasajerosSeleccionadosOcuparHabitacion miModelo;
 	private RenderParaTablas renderTabla;
+	private RenderParaTablaPasajerosSeleccionados renderParaTablaPasajerosSeleccionados;
 	
 	@SuppressWarnings({ "unused", "rawtypes" })
 	private Vector filaSeleccionada = null;
@@ -50,10 +55,12 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 		
 		miModelo = new ModeloPasajerosSeleccionadosOcuparHabitacion();
 		
-		miModelo.cargarPasajeros();
-		
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
+		
+		renderParaTablaPasajerosSeleccionados = new RenderParaTablaPasajerosSeleccionados();
+		renderParaTablaPasajerosSeleccionados.setHorizontalAlignment(JLabel.CENTER);
+		tabla.setDefaultRenderer(String.class, renderParaTablaPasajerosSeleccionados);
 		
 		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
 		
@@ -61,7 +68,7 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
-		tabla.setRowSelectionAllowed(true);
+		tabla.setRowSelectionAllowed(false);		//Para que no pueda seleccionar una fila
 		tabla.setColumnSelectionAllowed(false);
 		
 		tabla.setFocusable(false); //Para que no seleccione una sola columna
@@ -70,20 +77,24 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 		
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		tabla.setAutoCreateRowSorter(true);	//Para que se ordenen
+		tabla.setAutoCreateRowSorter(false);	//Para que NO se ordenen
 		
 		tabla.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {				
-				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
-				nroFilaSeleccionada = tabla.getSelectedRow();
-			}
+		    @Override
+		    public void mouseReleased(MouseEvent e) {
+		    	
+		    	if(e.isPopupTrigger() && e.getComponent() instanceof JTable) {	//Si pulsa el boton derecho dentro de la tabla, el pasajero se elimina de ella
+		    		
+		    		miModelo.eliminarPasajero(tabla.rowAtPoint(e.getPoint()));
+		    	}
+		    }
 		});
 		
 		//PARA CENTRAR
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-		tabla.setDefaultRenderer(Object.class, centerRenderer);
-		
+//		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+//		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+//		tabla.setDefaultRenderer(String.class, centerRenderer);
+//		
 		tabla.setBackground(Color.white);
 		tabla.setGridColor(Color.black);
 		tabla.setBorder(new LineBorder(Color.BLACK));
@@ -103,5 +114,15 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 		c.weighty = 0.1;
 		c.gridwidth = 1;
 		
+	}
+	
+	public void seleccionaronPasajero(PasajeroDTO pasajeroSeleccionado) {
+		
+		miModelo.cargarPasajero(pasajeroSeleccionado);
+		
+		if(!miModelo.getPasajerosSeleccionados().isEmpty()) {	//Si la lista no es vacia
+			
+			
+		}
 	}
 }

@@ -83,7 +83,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		
 		this.frameActual = frame;
 		
-		//gestorOcupacion = GestorOcupacion.getInstance();
+		gestorOcupacion = GestorOcupacion.getInstance();
 		
 		this.setBackground(Color.WHITE);
 		
@@ -117,7 +117,9 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 						
 						ocupacionDTO = gestorOcupacion.buscarUltimaOcupacionDTO(numeroHabitacion, fechaHora);
 						
-
+						panelResultadosDeBusquedaFacturarGroupBox.ocupacionSeleccionada(ocupacionDTO);
+						
+						siguiente.setEnabled(true);
 				}
 				catch(InputVacioException exc) {
 					
@@ -138,7 +140,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		c.gridx = 1; c.gridy = 1;
 		this.add(buscar, c);
 		
-		panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox(frame, ocupacionDTO);
+		panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox(frame);
 		c.insets = insetPanelTabla;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 2;	c.gridwidth = 3;
 		c.weightx = 0.8; c.weighty = 0.8;			this.add(panelResultadosDeBusquedaFacturarGroupBox, c);
@@ -163,6 +165,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		this.add(cancelar, c);
 
 		siguiente = new JButton("Siguiente");
+		siguiente.setEnabled(false);			//Se habilita cuando se aprieta Buscar con campos validos
 		siguiente.setMinimumSize(dimensionBoton);
 		siguiente.setPreferredSize(dimensionBoton);
 		siguiente.setBackground(Color.decode("#E0E0E0"));

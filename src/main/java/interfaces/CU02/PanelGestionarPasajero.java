@@ -111,7 +111,7 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		c.gridx = 1; c.gridy = 1;
 		this.add(buscar, c);
 		
-		panelGestionarPasajeroTabla = new PanelGestionarPasajeroTabla(frame);
+		panelGestionarPasajeroTabla = new PanelGestionarPasajeroTabla();
 		c.insets = insetPanelTabla;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 2;	c.gridwidth = 3;
 		c.weightx = 0.8; c.weighty = 0.8;			this.add(panelGestionarPasajeroTabla, c);

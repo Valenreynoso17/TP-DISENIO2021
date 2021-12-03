@@ -4,10 +4,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
+public class RenderParaTablaOcuparHabitacion extends DefaultTableCellRenderer{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -20,7 +21,6 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	Component c;
 	
 	List<ArrayList<Integer>> celdasSeleccionadas = new ArrayList<ArrayList<Integer>>();
-	List<ArrayList<Integer>> celdasReservadas = new ArrayList<ArrayList<Integer>>();
 	List<ArrayList<Integer>> celdasOcupadas = new ArrayList<ArrayList<Integer>>();			//TODO: Ver si vale la pena, quizas mas adelante no haga falta
 	List<ArrayList<Integer>> celdasFueraDeServicio = new ArrayList<ArrayList<Integer>>();	//TODO: Ver si vale la pena, quizas mas adelante no haga falta
 	
@@ -91,20 +91,19 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	
 	public void pintarTodasLasCeldas(Component c, int row, int column) {
 		
-  	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
-		
 	    	if (column == 0) {
 	    	  c.setBackground(Color.white);
 	      } else if (column == 1) {
 	    	  c.setBackground(colorRojo);
+	    	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
 	    	  celdasOcupadas.add(filaYColumna);
 	      } else if (column == 2) {
 	    	  c.setBackground(colorVerde);
 	      } else if (column == 3) {
 	    	  c.setBackground(colorAzul);
-	    	  celdasReservadas.add(filaYColumna);
 	      } else if (column == 4) {
 	    	  c.setBackground(colorAmarillo);
+	    	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
 	    	  celdasFueraDeServicio.add(filaYColumna);
 	      }
 	      else {
@@ -115,11 +114,6 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	public List<ArrayList<Integer>> getCeldasSeleccionadas(){
 		
 		return this.celdasSeleccionadas;
-	}
-	
-	public List<ArrayList<Integer>> getCeldasReservadas(){
-		
-		return this.celdasReservadas;
 	}
 	
 	public boolean celdaYaSeleccionada(int r, int c) {
@@ -143,6 +137,5 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 			System.out.println(lista.get(i)+": fila: "+lista.get(i).get(0)+" columna: "+lista.get(i).get(1));
 		}
 	}
-	
-}
 
+}
