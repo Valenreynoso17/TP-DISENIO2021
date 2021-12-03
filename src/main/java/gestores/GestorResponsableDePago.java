@@ -60,7 +60,6 @@ public class GestorResponsableDePago {
 		
 		Optional<ResponsableDePago> optResponsable = Optional.ofNullable(responsableDAO.buscarPorCuit(cuit));
 		
-		// if no existe -> tirar excepcion
 		if(optResponsable.isEmpty()) {
 			throw new NoExisteResponsableCuitException();
 		}

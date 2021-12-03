@@ -40,7 +40,6 @@ public class GestorOcupacion {
 	
 	private GestorOcupacion() {
 		ocupacionDAO = new OcupacionPostgreSQLImpl();
-		gestorPasajero = GestorPasajero.getInstance();
 	}
 	
 	public static GestorOcupacion getInstance() {
@@ -52,11 +51,9 @@ public class GestorOcupacion {
 
 	public OcupacionDTO buscarUltimaOcupacionDTO(Integer nroHabitacion, LocalDateTime horaSalida) throws OcupacionYaFacturadaException{
 		
-		// Validar datos
-		
 		Optional<Ocupacion> optOcupacion = Optional.ofNullable(ocupacionDAO.buscarUltimaOcupacion(nroHabitacion));
 		
-			if (optOcupacion.isEmpty()) {
+		if (optOcupacion.isEmpty()) {
 			throw new OcupacionYaFacturadaException();
 		}
 		
@@ -182,6 +179,7 @@ public class GestorOcupacion {
 		gestorHabitacion = GestorHabitacion.getInstance();
 		Habitacion habitacion = gestorHabitacion.buscarHabitacion(o.getIdHabitacion());
 		
+		gestorPasajero = GestorPasajero.getInstance();
 		List<Pasajero> pasajeros = gestorPasajero.buscarPasajeros(o.getListaPasajerosDTO());
 		Set<Pasajero> setPasajeros = new HashSet<>();
 		
