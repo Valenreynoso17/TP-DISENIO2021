@@ -19,6 +19,7 @@ import main.java.daos.ResponsableDePagoDAO;
 import main.java.dtos.FacturaDTO;
 import main.java.dtos.ItemFilaDTO;
 import main.java.dtos.OcupacionDTO;
+import main.java.excepciones.NingunElementoSeleccionadoFacturacionException;
 import main.java.postgreImpl.FacturaPostgreSQLImpl;
 import main.java.postgreImpl.HabitacionPostgreSQLImpl;
 import main.java.postgreImpl.OcupacionPostgreSQLImpl;
@@ -46,14 +47,27 @@ private static GestorFactura instance;
 		return instance;
 	}
 	
-	public void crearFactura(FacturaDTO facturaDTO, OcupacionDTO ocupacionDTO, List<ItemFilaDTO> listaItems) {
+	public void crearFactura(FacturaDTO facturaDTO, OcupacionDTO ocupacionDTO) throws NingunElementoSeleccionadoFacturacionException {
+		
+		Boolean seFacturaronTodosLosItems = false;
 		
 		Ocupacion ocupacion = ocupacionDAO.buscar(ocupacionDTO.getId());
+		List<ItemFactura> listaItemsFactura = crearListaItemsFactura(facturaDTO.getListaItemsFila(), ocupacion, seFacturaronTodosLosItems);
+		
+		if(listaItemsFactura.isEmpty()) {
+			throw new NingunElementoSeleccionadoFacturacionException();
+		}
+		
+		if(seFacturaronTodosLosItems) {
+			ocupacion.setHoraYFechaSalidaReal(ocupacionDTO.getPosibleFechaHoraDeSalida());
+			ocupacionDAO.guardar(ocupacion);
+		}
+		
 		Habitacion habitacion = ocupacion.getHabitacion();
 		ResponsableDePago responsablePago = responsableDAO.buscar(facturaDTO.getResponsablePagoDTO().getId());
-		DatosResponsableDePago datosResponsable = new DatosResponsableDePago(responsablePago);
 		
-		List<ItemFactura> listaItemsFactura = crearListaItemsFactura(listaItems, ocupacion);
+		// Lo necesito crear? No existiria ya en la BD?
+		DatosResponsableDePago datosResponsable = new DatosResponsableDePago(responsablePago);
 		
 		Factura factura = new Factura(facturaDTO, habitacion, responsablePago, datosResponsable, listaItemsFactura);
 		
@@ -61,13 +75,22 @@ private static GestorFactura instance;
 		// faltaria la parte de imprimir
 	}
 	
-	public List<ItemFactura> crearListaItemsFactura(List<ItemFilaDTO> listaItems, Ocupacion ocupacion){
+	public List<ItemFactura> crearListaItemsFactura(List<ItemFilaDTO> listaItems, Ocupacion ocupacion, Boolean seFacturaronTodosLosItems){
 		
 		List<ItemFactura> retorno = new ArrayList<ItemFactura>();
+		Integer cantCosasAFacturar = 0;
+		Integer cantCosasFacturadas = 0;
+		Integer cantSeleccionadaEnItem;
 		
 		for(ItemFilaDTO unItem : listaItems) {
 			
-			if(unItem.getCantidadSeleccionada() > 0) {
+			cantCosasAFacturar += unItem.getCantidadMax();
+			
+			cantSeleccionadaEnItem = unItem.getCantidadSeleccionada();
+			
+			if(cantSeleccionadaEnItem > 0) {
+				
+				cantCosasFacturadas += cantSeleccionadaEnItem;
 			
 				ItemFactura itemFactura;
 				
@@ -87,7 +110,12 @@ private static GestorFactura instance;
 			}
 		}
 		
-		// Habria que ver que pasa si el usuario no selecciono ningun objeto		
+		/* Significa que facturó todos los items que tenia pendiente, la ocupacion debería darse por terminada
+		 y se debería setar la fecha y hora final*/
+		if (cantCosasAFacturar == cantCosasFacturadas) {
+			seFacturaronTodosLosItems = true;
+		}
+		
 		return retorno;
 	}
 }

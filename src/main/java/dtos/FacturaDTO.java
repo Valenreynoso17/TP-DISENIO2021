@@ -12,7 +12,7 @@ public class FacturaDTO {
 	Double montoNeto;
 	Double montoTotal;
 	ResponsableDePagoDTO responsablePagoDTO;
-	List<ItemFilaDTO> listaItems;
+	List<ItemFilaDTO> listaItemsFila;
 	
 	public FacturaDTO(ResponsableDePagoDTO responsablePagoDTO, TipoFactura tipoFactura, Double montoTotal, List<ItemFilaDTO> listaItems) {
 		super();
@@ -21,7 +21,7 @@ public class FacturaDTO {
 		this.fechaFacturacion = LocalDate.now();
 		this.montoNeto = 0.0;
 		this.montoTotal = montoTotal;
-		this.listaItems = listaItems;
+		this.listaItemsFila = listaItems;
 	}
 
 	public TipoFactura getTipoFactura() {
@@ -44,8 +44,8 @@ public class FacturaDTO {
 		return responsablePagoDTO;
 	}
 
-	public List<ItemFilaDTO> getListaItems() {
-		return listaItems;
+	public List<ItemFilaDTO> getListaItemsFila() {
+		return listaItemsFila;
 	}
 	
 	
