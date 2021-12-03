@@ -174,12 +174,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					//PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();	//Esto estaba en el GESTIONAR PASAJERO que hizo FEDE
-					
-					panelResultadosDeBusquedaFacturarGroupBox.seleccionoUnPasajero();
-					
-					ResponsableDePagoDTO responsablePagoDTO = gestorResponsablePago.obtenerResponsableDePagoDTO(null); // TODO se le tieen que pasar un pasajeroDTO
-					
+					ResponsableDePagoDTO responsablePagoDTO = gestorResponsablePago.obtenerResponsableDePagoDTO(panelResultadosDeBusquedaFacturarGroupBox.pasajeroSeleccionado()); 
 					
 					frameActual.dispose();
 					new FrameFacturarConsumos(ocupacionDTO, responsablePagoDTO);

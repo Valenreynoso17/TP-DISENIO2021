@@ -28,6 +28,7 @@ import main.java.dtos.PasajeroDTO;
 import main.java.enums.ColumnaBuscarPasajeros;
 import main.java.enums.TipoDocumento;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
+import main.java.excepciones.ReponsablePagoMenorDeEdadException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaFacturar;
 import main.java.interfaces.clasesExtra.RenderParaTablas;
@@ -56,6 +57,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
 	private FrameFacturar frameActual;
+	private FrameFacturarANombreDeUnTercero frameSiguiente;
 	
 	private Dimension dimensionBoton = new Dimension(250, 33);
 
@@ -141,7 +143,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		facturarANombreDeUnTercero.addActionListener(e -> {
 			
 			frameActual.setEnabled(false);
-			//new FrameFacturarANombreDeUnTercero(frame, ocupacionDTO); 
+			frameSiguiente = new FrameFacturarANombreDeUnTercero(frame); 
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
 		c.gridy = 1;
@@ -150,16 +152,23 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		
 	}
 	
-		public void seleccionoUnPasajero() throws PasajeroNoSeleccionadoException{
+		public PasajeroDTO pasajeroSeleccionado() throws PasajeroNoSeleccionadoException{
 		
 			if(tabla.getSelectedRow() < 0) {
-			
+				
 				throw new PasajeroNoSeleccionadoException();
-		}
+			}				
+
+			System.out.println("getSelectedRow: "+tabla.getSelectedRow());
+			System.out.println("converRowIndexToModel: "+tabla.convertRowIndexToModel(tabla.getSelectedRow()));
+			System.out.println("PasajeroDTO: "+this.miModelo.getPasajerosHabitacion().get(tabla.convertRowIndexToModel(tabla.getSelectedRow())));
+			
+			return this.miModelo.getPasajerosHabitacion().get(tabla.convertRowIndexToModel(tabla.getSelectedRow()));
 	}
 		
 		public void ocupacionSeleccionada(OcupacionDTO ocupacionDTO) {
 			
 			miModelo.cargarPasajeros(ocupacionDTO.getListaPasajerosDTO());
+			frameSiguiente.ocupacionSeleccionada(ocupacionDTO);
 		}
 }

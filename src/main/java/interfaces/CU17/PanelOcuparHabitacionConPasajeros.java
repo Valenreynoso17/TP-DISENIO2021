@@ -169,7 +169,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frameActual.setVisible(false);	//Por si quiere cagar otro pasajero
+				frameActual.setEnabled(false);	//Por si quiere cagar otro pasajero
 				new FrameMenuOcuparHabitacion(frame);
 			}
 		});

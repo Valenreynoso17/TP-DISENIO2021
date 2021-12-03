@@ -25,6 +25,8 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	
 	private static final long serialVersionUID = 1L;
 	
+	private OcupacionDTO ocupacion;
+	
 	private PanelFacturarANombreDeUnTerceroGroupBox panelGroupBox = new PanelFacturarANombreDeUnTerceroGroupBox();
 	
 	private JButton aceptar;
@@ -55,7 +57,7 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	
 	private GestorResponsableDePago gestorResponsablePago;
 	
-	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FrameFacturar frameA, OcupacionDTO ocupacionDTO) {
+	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FrameFacturar frameA) {
 		
 		this.frameActual = frame;
 		this.frameAnterior = frameA;
@@ -106,7 +108,7 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 					
 					frameAnterior.dispose();
 					frameActual.dispose();
-					new FrameFacturarConsumos(ocupacionDTO, responsablePagoDTO);
+					new FrameFacturarConsumos(ocupacion, responsablePagoDTO);
 				}
 				catch(InputVacioException exc) {
 					
@@ -148,6 +150,11 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	public void confirmoCancelar(Integer idMensaje) {
 		
 		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
+	}
+
+	public void ocupacionSeleccionada(OcupacionDTO o) {
+		
+		this.ocupacion = o;
 	}
 
 }
