@@ -263,7 +263,7 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 		return resultado;
 	}
 	
-	private boolean fechaEnRango(LocalDate fecha) {
+	private boolean fechaEnRango(LocalDate fecha) {	//TODO: Cambiar para que el periodo no sea mayor a 2 meses
 
 			LocalDate fechaMaxima = LocalDate.now().plusMonths(2);	//Fecha máxima
 			LocalDate fechaMinima = LocalDate.now().minusDays(1);	//Fecha mínima (hoy)
@@ -290,6 +290,20 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 			labelFechaHastaInvalida.setVisible(true);
 		}
 	
+	}
+	
+	public LocalDate getFechaDesde() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		LocalDate localDate = LocalDate.parse(this.fechaDesde.getText(), formatter);
+		
+		return localDate;
+	}
+	
+	public LocalDate getFechaHasta() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		LocalDate localDate = LocalDate.parse(this.fechaHasta.getText(), formatter);
+		
+		return localDate;
 	}
 
 }

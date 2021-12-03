@@ -62,7 +62,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				
 				frame.dispose();
-				frameA.setVisible(true);
+				frameA.setEnabled(true);
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;	
