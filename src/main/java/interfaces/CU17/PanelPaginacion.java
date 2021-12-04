@@ -1,15 +1,15 @@
 package main.java.interfaces.CU17;
 
 import java.awt.Color;
-import java.awt.Label;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
 public class PanelPaginacion extends JPanel {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private Paginable panelPadre;
 	private Integer tamPagina;
 	private Integer cantPaginas;

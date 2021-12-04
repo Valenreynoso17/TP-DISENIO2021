@@ -25,8 +25,10 @@ import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
+	
+	private static final long serialVersionUID = 1L;
 
-private JLabel label;
+	private JLabel label;
 	
 	private JTextField CUITDeUnTercero;
 	private JTextField razonSocial = new JTextField();
@@ -75,16 +77,19 @@ private JLabel label;
 				  public void removeUpdate(DocumentEvent e)  {
 				  }
 				  public void insertUpdate(DocumentEvent e) {
-					  
-					  if(CUITDeUnTercero.getText().equals("11-11111111-1")) {
+
+					  if(!CUITDeUnTercero.getText().contains(" ")) {	//Si no contiene espacios, el CUIT esta escrito completamente
+						  
+						  if(CUITDeUnTercero.getText().equals("11-11111111-1")) {
 						  //Si es igual a algun CUIT de un responsable de pago, muestra el nombre. Sino, cuando apriete "Aceptar" salta la validacion
 						  System.out.println("IGUAL");
 						  
 						  razonSocial.setText("Juan Perez");
-					  }
-					  else {
-						  
-						  razonSocial.setText("");
+						  }
+						  else {
+							  
+							  razonSocial.setText("");
+						  }
 					  }
 				  }
 			});

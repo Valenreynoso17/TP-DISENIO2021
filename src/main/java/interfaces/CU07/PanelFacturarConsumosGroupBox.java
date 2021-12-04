@@ -9,7 +9,6 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
-
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,14 +17,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-
 import main.java.interfaces.clasesExtra.*;
 
 public class PanelFacturarConsumosGroupBox extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
 	
 	Integer valorCantidad = 3;
 	
@@ -43,8 +41,11 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	
 	private JTable tabla;
 	private ModeloTablaConsumos miModelo;	
+	private RenderParaTablas renderTabla; 
 	
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private Vector filaSeleccionada = null;
+	@SuppressWarnings("unused")
 	private Integer nroFilaSeleccionada;
 	private JScrollPane tableContainer;
 	
@@ -150,10 +151,10 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
 		
-		RenderParaTablas a = new RenderParaTablas(tabla.getDefaultRenderer(Object.class));
+		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
 		
-		tabla.setDefaultRenderer(Object.class, a);
-		tabla.getTableHeader().setDefaultRenderer(a);
+		tabla.setDefaultRenderer(Object.class, renderTabla);
+		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
@@ -191,8 +192,6 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 //		
 //		tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
 		
-		
-		
 		tabla.getColumnModel().getColumn(1).setCellRenderer(renderBotonMenos);
 		tabla.getColumnModel().getColumn(1).setCellEditor(editorBotonMenos);
 		
@@ -216,8 +215,6 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		tabla.setBackground(Color.white);
 		tabla.setGridColor(Color.black);
 		tabla.setBorder(new LineBorder(Color.BLACK));
-		
-		tabla.setAutoCreateRowSorter(true);
 		
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;

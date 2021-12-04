@@ -88,6 +88,21 @@ public class Ocupacion {
 		this.consumos = consumos;
 	}
 	
+	public Ocupacion(Integer id, LocalDate ingreso, LocalDate egreso,
+			Double precioPorDia, Habitacion habitacion, Set<Pasajero> pasajeros, Pasajero responsable) {
+		super();
+		this.id = id;
+		this.ingreso = ingreso;
+		this.egreso = egreso;
+		this.horaYFechaSalidaReal = null;
+		this.precioPorDia = precioPorDia;
+		this.habitacion = habitacion;
+		this.pasajeros = pasajeros;
+		this.responsable = responsable;
+		this.itemsOcupacion = null;
+		this.consumos = null;
+	}
+	
 	public Ocupacion() {
 		super();	
 	}

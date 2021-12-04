@@ -6,16 +6,10 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
-import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,22 +19,15 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
-
-import main.java.enums.TipoMensaje;
-import main.java.excepciones.FechaInvalidaException;
 import main.java.excepciones.InputInvalidaException;
 import main.java.excepciones.InputVacioException;
 import main.java.interfaces.TextPrompt;
-import main.java.interfaces.CU02.FrameGestionarPasajero;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.JTextFieldLimitado;
-import main.java.interfaces.clasesExtra.Mensaje;
-import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
-
-
 public class PanelFacturarGroupBox extends JPanel{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private JLabel label;
 	
@@ -205,6 +192,7 @@ public class PanelFacturarGroupBox extends JPanel{
 
 		try {
 			
+			@SuppressWarnings("unused")
 			LocalTime localTime = LocalTime.parse(horaString, formatter);	//Si se puede convertir a LocalTime, es una hora válida [00:00, 23:59]
 			
 		}
@@ -255,5 +243,9 @@ public class PanelFacturarGroupBox extends JPanel{
 
 	public String getNumeroHabitacion() {
 		return this.numeroDeHabitacion.getText();
+	}
+	
+	public String getHoraSalida() {
+		return this.horaDeSalida.getText();
 	}
 }

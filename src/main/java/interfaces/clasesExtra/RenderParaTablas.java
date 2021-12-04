@@ -16,7 +16,15 @@ public class RenderParaTablas implements TableCellRenderer{
 	
 	DefaultTableCellRenderer render;
     Border b;
-    public RenderParaTablas(TableCellRenderer r){
+    Color colorFondo = Color.decode("#424242");
+    Color colorLetra = Color.WHITE;
+    
+    Color colorFondoTipoHabitacion = Color.decode("#9a9a9a");
+    Color colorLetraTipoHabitacion = Color.BLACK;
+    boolean esParaTipoHabitacion;
+    
+    public RenderParaTablas(TableCellRenderer r, boolean bool){
+    	this.esParaTipoHabitacion = bool;
         render = (DefaultTableCellRenderer) r;
         render.setHorizontalAlignment(JLabel.CENTER);
         //It looks funky to have a different color on each side - but this is what you asked
@@ -30,10 +38,17 @@ public class RenderParaTablas implements TableCellRenderer{
         JComponent result = (JComponent)render.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         result.setBorder(b);
         result.setOpaque(true);
-        result.setBackground(Color.decode("#424242"));
-        result.setForeground(Color.WHITE);
-        result.setPreferredSize(new Dimension(400, 40));
-       // result.setAlignmentX(JLabel.CENTER);
+        result.setPreferredSize(new Dimension(400, 36));	//Para tabla GestionarPasajero
+
+        if(this.esParaTipoHabitacion) {
+        	result.setBackground(colorFondoTipoHabitacion);
+            result.setForeground(colorLetraTipoHabitacion);
+        }
+        else {
+	    	result.setBackground(colorFondo);
+	        result.setForeground(colorLetra);
+        }
+
         
         return result;
 	}

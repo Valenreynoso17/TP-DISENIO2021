@@ -8,19 +8,24 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import main.java.dtos.OcupacionDTO;
+import main.java.dtos.ResponsableDePagoDTO;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.InputVacioException;
-import main.java.interfaces.TextPrompt;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.excepciones.NoExisteResponsableCuitException;
+import main.java.gestores.GestorResponsableDePago;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
+	
+	private OcupacionDTO ocupacion;
 	
 	private PanelFacturarANombreDeUnTerceroGroupBox panelGroupBox = new PanelFacturarANombreDeUnTerceroGroupBox();
 	
@@ -34,7 +39,7 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 													+ " de pago del sistema. ¿Desea dar de alta un nuevo responsable de pago?</p><html>";
 	private Mensaje mensajeNoExisteResponsable = new Mensaje(2, textoMensajeNoExisteResponsable, TipoMensaje.CONFIRMACION, "Si", "No");
 	
-	private String textoAltaResponsableDePago = "<html><p>El caso de uso 13 'Dar de alta nuevo responsable de pago' no se implementa en esta etapa.</p><html>";
+	private String textoAltaResponsableDePago = "<html><p>El CU13 'Dar de alta nuevo Responsable de Pago' no se implementa en esta etapa.</p><html>";
 	private Mensaje mensajeAltaResponsableDePago = new Mensaje(3, textoAltaResponsableDePago, TipoMensaje.ERROR, "Aceptar", null);
 
 	private Insets insetPanelGroupBox = new Insets(0,0,0,0);
@@ -49,7 +54,8 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	
 	private FrameFacturar frameAnterior;
 	private FrameFacturarANombreDeUnTercero frameActual;
-	private FrameFacturarConsumos frameSiguiente;
+	
+	private GestorResponsableDePago gestorResponsablePago;
 	
 	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FrameFacturar frameA) {
 		
@@ -98,13 +104,19 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 					
 					panelGroupBox.CUITNoEsVacio();
 					
+					ResponsableDePagoDTO responsablePagoDTO = gestorResponsablePago.buscarResponsableDePago(panelGroupBox.getCUIT());
+					
 					frameAnterior.dispose();
 					frameActual.dispose();
-					frameSiguiente = new FrameFacturarConsumos();
+					new FrameFacturarConsumos(ocupacion, responsablePagoDTO);
 				}
 				catch(InputVacioException exc) {
 					
 					mensajeCUITVacio.mostrar(getPanel(), frameActual);
+				}
+				catch(NoExisteResponsableCuitException exc) {
+					
+					mensajeNoExisteResponsable.mostrar(getPanel(), frameA);
 				}
 				
 				
@@ -138,6 +150,11 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	public void confirmoCancelar(Integer idMensaje) {
 		
 		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
+	}
+
+	public void ocupacionSeleccionada(OcupacionDTO o) {
+		
+		this.ocupacion = o;
 	}
 
 }

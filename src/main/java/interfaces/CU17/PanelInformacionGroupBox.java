@@ -11,7 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import main.java.dtos.HabitacionDTO;
+
 public class PanelInformacionGroupBox extends JPanel{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private JLabel texto;
 	private JLabel numeroHabitacion;
@@ -24,7 +28,12 @@ public class PanelInformacionGroupBox extends JPanel{
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 20);	
 	private Font fuenteLabelCampo = new Font("SourceSansPro", Font.PLAIN, 14);
 	
-	public PanelInformacionGroupBox() {
+	private HabitacionDTO habitacion;
+	
+	private Integer seleccionados = 0;
+	
+	public PanelInformacionGroupBox(HabitacionDTO habitacion) {
+		this.habitacion = habitacion;
 		
 		this.setBackground(Color.white);
 		
@@ -40,11 +49,21 @@ public class PanelInformacionGroupBox extends JPanel{
 		texto.setFont(fuenteLabelCampo);	c.gridy = 0; this.add(texto, c);
 		
 		numeroHabitacion = new JLabel();	
-		numeroHabitacion.setText("Habitación número: XXX");	//TODO: Agregar numero de la habitacion
+		numeroHabitacion.setText("Habitación número: " + habitacion.getNroHabitacion());	
 		numeroHabitacion.setFont(fuenteLabelCampo);	c.gridy = 1; this.add(numeroHabitacion, c);
 		
 		personasSeleccionadas = new JLabel();
-		personasSeleccionadas.setText("X/Y personas seleccionadas");	//TODO: Agregar personas seleccionadas
+		personasSeleccionadas.setText(seleccionados + "/" + habitacion.getTipo().getCapacidad() + " personas seleccionadas");	
 		personasSeleccionadas.setFont(fuenteLabelCampo);	c.gridy = 2; this.add(personasSeleccionadas, c);
+	}
+	
+	public void setSeleccionados(Integer seleccionados) {
+		this.seleccionados = seleccionados;
+		
+		personasSeleccionadas.setText(seleccionados + "/" + habitacion.getTipo().getCapacidad() + " personas seleccionadas");
+	}
+	
+	public Integer getSeleccionados() {
+		return seleccionados;
 	}
 }

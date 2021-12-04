@@ -8,14 +8,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import main.java.enums.TipoMensaje;
 import main.java.interfaces.CU01.FrameAutenticarUsuario;
-import main.java.interfaces.CU01.PanelAutenticarUsuarioGroupBox;
 import main.java.interfaces.CU02.FrameGestionarPasajero;
 import main.java.interfaces.CU04.FrameReservarHabitacion;
 import main.java.interfaces.CU07.FrameFacturar;
@@ -28,7 +25,7 @@ import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 	
-	private PanelAutenticarUsuarioGroupBox panelAutenticarUsuarioGroupBox = new PanelAutenticarUsuarioGroupBox();
+	private static final long serialVersionUID = 1L;
 	
 	private JButton cerrarSesion;
 	private JButton button;
@@ -61,14 +58,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 	private String textoMensajeCU21 = "<html><p>El CU21 'Ingresar Nota de Crédito' no debe ser implementado.</p><html>";
 	private Mensaje mensajeCU21 = new Mensaje(5, textoMensajeCU21, TipoMensaje.ERROR, "Aceptar", null); 
 	
-	private FrameAutenticarUsuario frameAnterior;
 	private FrameMenuPrincipal frameActual;
-	
-	private FrameGestionarPasajero frameGestionarPasajero;
-	private FrameReservarHabitacion frameReservarHabitacion;
-	private FrameOcuparHabitacion frameOcuparHabitacion;
-	private FrameFacturar frameFacturar;
-	private FrameBuscarFacturasHabitacion frameIngresarPago;
 	
 	public PanelMenuPrincipal(final FrameMenuPrincipal frame) {
 		
@@ -99,7 +89,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 			public void actionPerformed(ActionEvent e) {
 				
 				frame.dispose();
-				frameGestionarPasajero = new FrameGestionarPasajero();
+				new FrameGestionarPasajero();
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
@@ -130,7 +120,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 			public void actionPerformed(ActionEvent e) {
 				
 				frame.dispose();
-				frameReservarHabitacion = new FrameReservarHabitacion();
+				new FrameReservarHabitacion();
 			}
 		});
 		c.anchor = GridBagConstraints.EAST; c.insets = izq;
@@ -144,7 +134,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 			public void actionPerformed(ActionEvent e) {
 				
 				frame.dispose();
-				frameOcuparHabitacion = new FrameOcuparHabitacion();
+				new FrameOcuparHabitacion();
 			}
 		});
 		button.setBorder(bordeBoton);
@@ -192,7 +182,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 			public void actionPerformed(ActionEvent e) {
 				
 				frameActual.dispose();
-				frameFacturar = new FrameFacturar();
+				new FrameFacturar();
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
@@ -238,7 +228,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 			public void actionPerformed(ActionEvent e) {
 				
 				frame.dispose();
-				frameIngresarPago = new FrameBuscarFacturasHabitacion();
+				new FrameBuscarFacturasHabitacion();
 			}
 		});
 		c.anchor = GridBagConstraints.WEST; c.insets = derF;
@@ -255,7 +245,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a AutenticarUsuario
 			frameActual.dispose();
-			frameAnterior = new FrameAutenticarUsuario();	
+			new FrameAutenticarUsuario();	
 			break;
 		case 2:	//No pasa nada
 		case 3:	//No pasa nada

@@ -19,17 +19,13 @@ import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelMenuOcuparHabitacion extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private JButton cargarOtroPasajero;
 	private JButton cargarOtraHabitacion;
 	private JButton salir;
 	
 	private JLabel label;
-	
-	//private FrameAutenticarUsuario frameAnterior;
-	private FrameMenuOcuparHabitacion frameActual;
-	private FrameMenuPrincipal frameMenuPrincipal;
-	private FrameOcuparHabitacion frameOcuparHabitacion;
-	private FrameOcuparHabitacionConPasajeros frameAnterior;
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 20);	
@@ -38,9 +34,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 	
 	private Dimension dimensionBoton = new Dimension(200, 50);
 	
-	public PanelMenuOcuparHabitacion(FrameMenuOcuparHabitacion frame) {
-		
-		this.frameActual = frame;
+	public PanelMenuOcuparHabitacion(FrameMenuOcuparHabitacion frame, FrameOcuparHabitacionConPasajeros frameA) {
 		
 		this.setBackground(Color.white);
 		
@@ -67,7 +61,8 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		cargarOtroPasajero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
+				frame.dispose();
+				frameA.setEnabled(true);
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;	
@@ -83,8 +78,9 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		cargarOtraHabitacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frameActual.dispose();
-				frameOcuparHabitacion = new FrameOcuparHabitacion();
+				frame.dispose();
+				frameA.dispose();	//Estaba invisible, hay que cerrarla
+				new FrameOcuparHabitacion();
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
@@ -98,10 +94,11 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		salir.setFont(fuenteBoton);
 		salir.setBorder(bordeBoton);
 		salir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {	//TODO: Hacer aca el pasaje de todos los datos para cargar la ocupacion
 				
-				frameActual.dispose();
-				frameMenuPrincipal = new FrameMenuPrincipal();
+				frame.dispose();
+				frameA.dispose();	//Estaba invisible, hay que cerrarla
+				new FrameMenuPrincipal();
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;	c.insets = new Insets(0,0,30,0);

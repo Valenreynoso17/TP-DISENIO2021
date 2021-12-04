@@ -21,7 +21,7 @@ public class PasajeroPostgreSQLImpl implements PasajeroDAO {
 	private SessionFactory sessionFactory;
 	
 	public PasajeroPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 
 	@Override
@@ -179,6 +179,22 @@ public class PasajeroPostgreSQLImpl implements PasajeroDAO {
 		sesion.close();
 		
 		return pasajero;
+	}
+	
+	@Override
+	public List<Pasajero> buscarPasajeros(List<Integer> idsPasajeros) {
+		String stringQuery = 	"SELECT p FROM Pasajero p "
+							+ 	"WHERE p.id IN :ids ";
+		
+		Session sesion = sessionFactory.openSession();
+		
+		TypedQuery<Pasajero> query = sesion.createQuery(stringQuery, Pasajero.class);
+		query.setParameter("ids", idsPasajeros);
+		List<Pasajero> pasajeros = query.getResultList();		
+		
+		sesion.close();
+		
+		return pasajeros;
 	}
 	
 	

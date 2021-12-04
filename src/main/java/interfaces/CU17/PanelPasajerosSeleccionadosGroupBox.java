@@ -9,8 +9,6 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
-
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,22 +19,27 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import main.java.gestores.GestorPasajero;
-import main.java.interfaces.CU02.PanelPaginacion;
-import main.java.interfaces.CU07.FrameFacturar;
-import main.java.interfaces.CU07.FrameFacturarANombreDeUnTercero;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.dtos.HabitacionDTO;
+import main.java.dtos.PasajeroDTO;
 import main.java.interfaces.clasesExtra.ModeloPasajerosSeleccionadosOcuparHabitacion;
-import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
-import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.clasesExtra.RenderParaTablaEstadoColores;
+import main.java.interfaces.clasesExtra.RenderParaTablaPasajerosSeleccionados;
+import main.java.interfaces.clasesExtra.RenderParaTablas;
 
 public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
+	
+	private PanelOcuparHabitacionConPasajeros padre;
+	
 	private JTable tabla;
 	private ModeloPasajerosSeleccionadosOcuparHabitacion miModelo;
-	private PanelPaginacion paginacion;
+	private RenderParaTablas renderTabla;
+	private RenderParaTablaPasajerosSeleccionados renderParaTablaPasajerosSeleccionados;
 	
+	@SuppressWarnings({ "unused", "rawtypes" })
 	private Vector filaSeleccionada = null;
+	@SuppressWarnings("unused")
 	private Integer nroFilaSeleccionada;
 	private JScrollPane tableContainer;
 	
@@ -44,23 +47,34 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	
-	public PanelPasajerosSeleccionadosGroupBox() {
+	public PanelPasajerosSeleccionadosGroupBox(PanelOcuparHabitacionConPasajeros padre, HabitacionDTO habitacion) {
 		
 		this.setBackground(Color.white);
 		
 		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), " Resultados de búsqueda", 0, 0, fuenteGroupBox));
 		
 		this.setLayout(new GridBagLayout());
+		
+		this.padre = padre;
+		
 		GridBagConstraints c = new GridBagConstraints();
 		
-		miModelo = new ModeloPasajerosSeleccionadosOcuparHabitacion();
+		miModelo = new ModeloPasajerosSeleccionadosOcuparHabitacion(habitacion.getTipo().getCapacidad());
 		
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
 		
+		renderParaTablaPasajerosSeleccionados = new RenderParaTablaPasajerosSeleccionados();
+		renderParaTablaPasajerosSeleccionados.setHorizontalAlignment(JLabel.CENTER);
+		tabla.setDefaultRenderer(String.class, renderParaTablaPasajerosSeleccionados);
+		
+		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
+		
+		tabla.getTableHeader().setDefaultRenderer(renderTabla);
+		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
-		tabla.setRowSelectionAllowed(true);
+		tabla.setRowSelectionAllowed(false);		//Para que no pueda seleccionar una fila
 		tabla.setColumnSelectionAllowed(false);
 		
 		tabla.setFocusable(false); //Para que no seleccione una sola columna
@@ -69,29 +83,30 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 		
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		tabla.setAutoCreateRowSorter(true);	//Para que se ordenen
+		tabla.setAutoCreateRowSorter(false);	//Para que NO se ordenen
 		
 		tabla.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {				
-				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
-				nroFilaSeleccionada = tabla.getSelectedRow();
-			}
+		    @Override
+		    public void mouseReleased(MouseEvent e) {
+		    	
+		    	if(e.isPopupTrigger() && e.getComponent() instanceof JTable) {	//Si pulsa el boton derecho dentro de la tabla, el pasajero se elimina de ella
+		    		
+		    		miModelo.eliminarPasajero(tabla.rowAtPoint(e.getPoint()));
+		    		
+		    		padre.setCantPasajerosSeleccionados(miModelo.getRowCount());
+		    	}
+		    }
 		});
 		
-		tabla.getTableHeader().setOpaque(false);
-		tabla.getTableHeader().setBackground(Color.decode("#424242"));		//Para que el fondo de la cabecera sea de un color en específico
-		tabla.getTableHeader().setForeground(Color.WHITE);					//Para que la fuente de la cabecera sea blanca
-		tabla.getTableHeader().setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
-		
-		tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
-		
 		//PARA CENTRAR
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-		tabla.setDefaultRenderer(Object.class, centerRenderer);
-		
+//		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+//		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+//		tabla.setDefaultRenderer(String.class, centerRenderer);
+//		
 		tabla.setBackground(Color.white);
 		tabla.setGridColor(Color.black);
+		tabla.setBorder(new LineBorder(Color.BLACK));
+		
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;
@@ -107,5 +122,16 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 		c.weighty = 0.1;
 		c.gridwidth = 1;
 		
+	}
+	
+	public void seleccionaronPasajero(PasajeroDTO pasajeroSeleccionado) {
+		
+		miModelo.cargarPasajero(pasajeroSeleccionado);
+		padre.setCantPasajerosSeleccionados(miModelo.getRowCount());
+		
+		if(!miModelo.getPasajerosSeleccionados().isEmpty()) {	//Si la lista no es vacia
+			
+			
+		}
 	}
 }

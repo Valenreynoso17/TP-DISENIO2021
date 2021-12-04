@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 public class FrameGestionarPasajero extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
 

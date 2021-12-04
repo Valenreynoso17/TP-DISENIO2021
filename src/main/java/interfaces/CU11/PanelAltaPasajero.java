@@ -8,11 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
-import main.java.dtos.DireccionDTO;
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.DocumentoRepetidoException;
@@ -24,6 +21,8 @@ import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private PanelAltaPasajeroDatos panelDarAltaPasajero;
 	
@@ -38,9 +37,7 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
-	private FrameGestionarPasajero frameAnterior;
 	private FrameAltaPasajero frameActual;
-	private FrameMenuPrincipal frameMenuprincipal;
 	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
@@ -138,7 +135,7 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a GestionarPasajero
 			frameActual.dispose();
-			frameAnterior = new FrameGestionarPasajero();	
+			new FrameGestionarPasajero();	
 			break;
 		case 2:	//Si tiene documento repetido, se guarda igualmente (primero muestra el mensaje de que se creó el pasajero)
 			gestorPasajero.crearPasajero(pasajeroDTO);
@@ -146,7 +143,7 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 			break;
 		case 3:	//Si se creo el pasajero, vuelve al MenuPrincpal
 			frameActual.dispose();
-			frameMenuprincipal = new FrameMenuPrincipal();	
+			new FrameMenuPrincipal();	
 			break;		
 		}
 		

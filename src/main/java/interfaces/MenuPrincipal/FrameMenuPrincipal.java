@@ -1,14 +1,13 @@
 package main.java.interfaces.MenuPrincipal;
 
 import java.awt.Color;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import main.java.interfaces.CU11.PanelAltaPasajero;
-
 public class FrameMenuPrincipal extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
 

@@ -1,5 +1,7 @@
 package main.java.postgreImpl;
 
+import java.util.List;
+
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
@@ -13,7 +15,7 @@ public class ResponsableDePagoPostgreSQLImpl implements ResponsableDePagoDAO {
 	private SessionFactory sessionFactory;
 	
 	public ResponsableDePagoPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 
 	@Override
@@ -29,14 +31,19 @@ public class ResponsableDePagoPostgreSQLImpl implements ResponsableDePagoDAO {
 
 	@Override
 	public ResponsableDePago buscarResponsableAsociadoAPasajero(Integer idPasajero) {
+		ResponsableDePago responsable = null;
+		
 		String stringQuery = "SELECT r FROM ResponsableDePago r WHERE idpasajero = :id";
 		
 		Session sesion = sessionFactory.openSession();
 		
 		TypedQuery<ResponsableDePago> query = sesion.createQuery(stringQuery, ResponsableDePago.class);
 		
-		ResponsableDePago responsable = query.setParameter("id", idPasajero).getSingleResult();
+		List<ResponsableDePago> responsables = query.setParameter("id", idPasajero).getResultList();
 		
+		sesion.close();
+		
+		if (responsables.size() == 1) responsable = responsables.get(0);
 		sesion.close();
 		
 		return responsable;
@@ -58,22 +65,22 @@ public class ResponsableDePagoPostgreSQLImpl implements ResponsableDePagoDAO {
 	}
 
 	@Override
-	public ResponsableDePago buscarPorCuit(Integer cuit) {
+	public ResponsableDePago buscarPorCuit(String cuit) {
+		ResponsableDePago responsable = null;
 		
-		return null;
-		
-		/*
-		String stringQuery = "SELECT r FROM ResponsableDePago r WHERE idpasajero = :id";
+		String stringQuery = "SELECT r FROM ResponsableDePago r WHERE cuitPersonaJuridica = :cuit";
 		
 		Session sesion = sessionFactory.openSession();
 		
 		TypedQuery<ResponsableDePago> query = sesion.createQuery(stringQuery, ResponsableDePago.class);
 		
-		ResponsableDePago responsable = query.setParameter("id", idPasajero).getSingleResult();
+		List<ResponsableDePago> responsables = query.setParameter("cuit", cuit).getResultList();
 		
 		sesion.close();
 		
-		return responsable;*/
+		if (responsables.size() == 1) responsable = responsables.get(0);
+		
+		return responsable;
 	}
 	
 	

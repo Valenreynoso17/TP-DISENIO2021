@@ -9,16 +9,11 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.Vector;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
 import javax.swing.border.LineBorder;
@@ -30,23 +25,36 @@ import main.java.enums.ColumnaBuscarPasajeros;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
-import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.clasesExtra.RenderParaTablas;
 
 public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 
+	private static final long serialVersionUID = 1L;
+	
 	private JTable tabla;
 	private ModeloTablaPasajeros miModelo;
 <<<<<<< HEAD
 =======
 	private PanelPaginacion paginacion;
+<<<<<<< HEAD
 	
 >>>>>>> 0db6a6f87cabe890fa7c6701dd5875cba6eec031
 	private JLabel label;
 	private Vector filaSeleccionada = null;
 	private Integer nroFilaSeleccionada;
+=======
+	private RenderParaTablas renderTabla;
+
+>>>>>>> 6cc6d324f8645fa4635ed99aa9acb1e920e11f91
 	private JScrollPane tableContainer;
 	private Insets insetTabla = new Insets(15, 100, 15, 100);
+<<<<<<< HEAD
 	private Font fuenteLabelCampo =new Font("SourceSansPro", Font.PLAIN, 14);
+=======
+	
+	//private Dimension dimensionTabla = new Dimension(0,200);
+	
+>>>>>>> 6cc6d324f8645fa4635ed99aa9acb1e920e11f91
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	
 	private PasajeroDTO filtros;
@@ -64,7 +72,7 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 	
 	//Predicate<Pasajero> FiltroApellido, FiltroNombre, FiltroTipoDocumento, FiltroNumeroDocumento;
 	
-	public PanelGestionarPasajeroTabla(FrameGestionarPasajero frame) {
+	public PanelGestionarPasajeroTabla() {
 		paginaActual = 1;
 		cantResultados = 0;
 		
@@ -85,7 +93,13 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		//miModelo.cargarEstaciones(gestorEstacion.getEstaciones());
 		
 		tabla = new JTable(miModelo);
-		tableContainer = new JScrollPane(tabla);
+		tableContainer = new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		tabla.setSelectionBackground(Color.decode("#e0e0e0"));
+		
+		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
+		
+		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
@@ -99,13 +113,6 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		tabla.setAutoCreateRowSorter(true);	//Para que se ordenen
-		
-		tabla.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {				
-				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
-				nroFilaSeleccionada = tabla.getSelectedRow();
-			}
-		});
 		
 		tabla.getTableHeader().addMouseListener(new MouseAdapter() {
 			@Override
@@ -143,7 +150,11 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		tabla.setDefaultRenderer(Object.class, centerRenderer);
 		
 		tabla.setBackground(Color.white);
-		tabla.setGridColor(Color.white);
+		tabla.setGridColor(Color.black);
+		tabla.setBorder(new LineBorder(Color.BLACK));
+		
+		//tabla.setPreferredSize(dimensionTabla);
+		
 		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;
@@ -215,32 +226,5 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		
 	}
 }
-
-//public void actualizarTabla(String[] campos) {
-//	
-//	miModelo.limpiarTabla();
-//	
-//	filtroId = (campos[0] == null) ? e -> true : e -> e.getId().toString().contains(campos[0]);
-//	
-//	filtroNombre = (campos[1] == null) ? e -> true : e -> e.getNombre().toUpperCase().contains(campos[1].toUpperCase()); 
-//	
-//	filtroHoraApertura = (campos[2] == null) ? e -> true : e -> ((Integer) e.getHorarioApertura().getHour()).toString().contains(campos[2]); // == (Integer.parseInt(campos[2]));
-//	
-//	filtroMinutoApertura = (campos[3] == null) ? e -> true : e -> ((Integer) e.getHorarioApertura().getMinute()).toString().contains(campos[3]); // == (Integer.parseInt(campos[3]));
-//	
-//	filtroHoraCierre = (campos[4] == null) ? e -> true : e -> ((Integer) e.getHorarioCierre().getHour()).toString().contains(campos[4]); // == (Integer.parseInt(campos[4]));
-//	
-//	filtroMinutoCierre = (campos[5] == null) ? e -> true : e -> ((Integer)e.getHorarioCierre().getMinute()).toString().contains(campos[5]); // == (Integer.parseInt(campos[5])); 
-//	
-//	List<Estacion> estaciones = gestorEstacion.getEstaciones().stream().filter(filtroId)
-//																	   .filter(filtroNombre)
-//																	   .filter(filtroHoraApertura)
-//																	   .filter(filtroMinutoApertura)
-//																	   .filter(filtroHoraCierre)
-//																	   .filter(filtroMinutoCierre)
-//																	   .collect(Collectors.toList());
-//	miModelo.cargarEstaciones(estaciones);
-//	
-//}
 	
 	

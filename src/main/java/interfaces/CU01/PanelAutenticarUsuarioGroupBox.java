@@ -21,6 +21,8 @@ import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelAutenticarUsuarioGroupBox extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel label;
 	
 	private JLabel labelNombreVacio;

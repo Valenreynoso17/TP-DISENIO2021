@@ -2,6 +2,8 @@ package main.java.excepciones;
 
 public class InputVacioException extends Exception{
 	
+	private static final long serialVersionUID = 1L;
+	
 	public String inputsVacios;
 	
 	public InputVacioException() {

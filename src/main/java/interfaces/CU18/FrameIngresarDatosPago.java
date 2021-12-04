@@ -6,6 +6,8 @@ import javax.swing.WindowConstants;
 
 public class FrameIngresarDatosPago extends JFrame{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 
 	public FrameIngresarDatosPago() {

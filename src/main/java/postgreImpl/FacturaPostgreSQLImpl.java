@@ -17,7 +17,7 @@ public class FacturaPostgreSQLImpl implements FacturaDAO {
 	private SessionFactory sessionFactory;
 	
 	public FacturaPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 	
 	@Override

@@ -9,21 +9,17 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import main.java.enums.TipoMensaje;
-import main.java.excepciones.HabitacionInexistenteException;
-import main.java.excepciones.HabitacionSinFacturasPendientesException;
 import main.java.excepciones.InputVacioException;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
-
-
 public class PanelBuscarFacturasHabitacion extends JPanel implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private PanelHabitacionAPagarGroupBox panelHabitacionAPagarGroupBox = new PanelHabitacionAPagarGroupBox();
 	private PanelResultadosDeBusquedaGroupBox panelResultadosDeBusquedaGroupBox = new PanelResultadosDeBusquedaGroupBox();
@@ -32,15 +28,15 @@ public class PanelBuscarFacturasHabitacion extends JPanel implements PanelPermit
 	private JButton siguiente;
 	private JButton cancelar;
 	
-	private JLabel label;
-	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoHabitacionInexistente = "<html><p>El número de habitación no se corresponde con ninguna habitación en el sistema.</p><html>";
+	@SuppressWarnings("unused")
 	private Mensaje mensajeHabitacionInexistente = new Mensaje(2, textoHabitacionInexistente, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private String textoHabitacionSinFacturasPendientes = "<html><p>La habitación no tiene facturas pendientes de pago.</p><html>";
+	@SuppressWarnings("unused")
 	private Mensaje mensajeHabitacionSinFacturasPendientes = new Mensaje(3, textoHabitacionSinFacturasPendientes, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
@@ -50,9 +46,7 @@ public class PanelBuscarFacturasHabitacion extends JPanel implements PanelPermit
 	private Insets insetPanelBusqueda = new Insets(30,30,5,30);
 	private Insets insetPanelTabla = new Insets(0,30,0,30);
 	
-	private FrameMenuPrincipal frameAnterior;
 	private FrameBuscarFacturasHabitacion frameActual;
-	private FrameIngresarDatosPago frameSiguiente;
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
@@ -138,7 +132,7 @@ public class PanelBuscarFacturasHabitacion extends JPanel implements PanelPermit
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				frameSiguiente = new FrameIngresarDatosPago();
+				new FrameIngresarDatosPago();
 			}
 //				try {
 //					PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();
@@ -166,7 +160,7 @@ public class PanelBuscarFacturasHabitacion extends JPanel implements PanelPermit
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a MenuPrincipal
 			frameActual.dispose();
-			frameAnterior = new FrameMenuPrincipal();	
+			new FrameMenuPrincipal();	
 			break;
 		case 2:	//Si la habitación no existe, simplemente muestra el mensaje
 			break;

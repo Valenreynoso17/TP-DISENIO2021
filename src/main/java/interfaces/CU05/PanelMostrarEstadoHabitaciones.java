@@ -9,22 +9,22 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import main.java.enums.TipoMensaje;
+import main.java.excepciones.ContieneFechasReservadasException;
 import main.java.excepciones.FechaInvalidaException;
 import main.java.excepciones.InputVacioException;
+import main.java.excepciones.RangoNoSeleccionadoException;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.Mensaje;
+import main.java.interfaces.clasesExtra.MensajeYaExistenReservas;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
-
-
 public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private PanelMostrarEstadoHabitacionesGroupBox panelMostrarEstadoHabitacionesGroupBox = new PanelMostrarEstadoHabitacionesGroupBox();
 	private PanelResultadosDeBusquedaHabitacionesGroupBox panelResultadosDeBusquedaHabitacionesGroupBox = new PanelResultadosDeBusquedaHabitacionesGroupBox();
@@ -33,16 +33,18 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	private JButton siguiente;
 	private JButton cancelar;
 	
-	private JLabel label;
-	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
-	private String textoHabitacionInexistente = "<html><p>El número de habitación no se corresponde con ninguna habitación en el sistema.</p><html>";
-	private Mensaje mensajeHabitacionInexistente = new Mensaje(2, textoHabitacionInexistente, TipoMensaje.ERROR, "Aceptar", null);
+	private String textoNoExistenHabitacionesEnPeriodo = "<html><p>No existen habitaciones disponibles para el período seleccionado.</p><html>";
+	@SuppressWarnings("unused")
+	private Mensaje mensajeNoExistenHabitacionesEnPeriodo = new Mensaje(2, textoNoExistenHabitacionesEnPeriodo, TipoMensaje.ERROR, "Aceptar", null);
 	
-	private String textoHabitacionSinFacturasPendientes = "<html><p>La habitación no tiene facturas pendientes de pago.</p><html>";
-	private Mensaje mensajeHabitacionSinFacturasPendientes = new Mensaje(3, textoHabitacionSinFacturasPendientes, TipoMensaje.ERROR, "Aceptar", null);
+	private String textoRangoNoSeleccionado = "<html><p>Por favor, seleccione al menos un rango de fechas para ocupar una habitación.</p><html>";
+	@SuppressWarnings("unused")
+	private Mensaje mensajeRangoNoSeleccionado = new Mensaje(3, textoRangoNoSeleccionado, TipoMensaje.ERROR, "Aceptar", null);
+	
+	private MensajeYaExistenReservas mensajeYaExistenReservas = new MensajeYaExistenReservas(4);
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
@@ -51,9 +53,8 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	private Insets insetPanelBusqueda = new Insets(30,30,5,30);
 	private Insets insetPanelTabla = new Insets(0,30,0,30);
 	
-	private FrameMenuPrincipal frameAnterior;
 	private FrameMuestraEstadoHabitaciones frameActual;
-	private JFrame frameSiguiente;	//Dependiendo quien lo llame, cambia el frame que se mostrara al presionar "Siguiente"
+	//Dependiendo quien lo llame, cambia el frame que se mostrara al presionar "Siguiente"
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
@@ -84,8 +85,17 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		buscar.addActionListener(e -> {
 			
 			try{
+					panelResultadosDeBusquedaHabitacionesGroupBox.desactivarTabla();
+					
+//					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla();	//TODO: Cuando terminemos de probar, sacar estas dos lineas y descomentar las de abajo
+//					siguiente.setEnabled(true);
+				
 					this.panelMostrarEstadoHabitacionesGroupBox.inputNoEsVacia();
-					this.panelMostrarEstadoHabitacionesGroupBox.inputEsValida();			
+					this.panelMostrarEstadoHabitacionesGroupBox.inputEsValida();
+					
+					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla(panelMostrarEstadoHabitacionesGroupBox.getFechaDesde(), panelMostrarEstadoHabitacionesGroupBox.getFechaHasta());
+					
+					siguiente.setEnabled(true);
 			}
 			catch(InputVacioException exc) {
 				
@@ -125,6 +135,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		this.add(cancelar, c);
 
 		siguiente = new JButton("Siguiente");
+		siguiente.setEnabled(false);			//Se habilita cuando se aprieta Buscar con campos validos
 		siguiente.setMinimumSize(dimensionBoton);
 		siguiente.setPreferredSize(dimensionBoton);
 		siguiente.setBackground(Color.decode("#E0E0E0"));
@@ -132,22 +143,23 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		siguiente.setBorder(bordeBoton);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				frame.apretoSiguiente();
-				//frame.dispose();
-				//frameSiguiente = new FrameIngresarDatosPago();
+				System.out.println("NOSE");
+				try {
+						panelResultadosDeBusquedaHabitacionesGroupBox.seleccionoUnRango();
+					
+						panelResultadosDeBusquedaHabitacionesGroupBox.validacionContieneFechasReservadas();
+						
+						frame.apretoSiguiente();
+				}
+				catch (RangoNoSeleccionadoException exc) {
+					mensajeRangoNoSeleccionado.mostrar(getPanel(), frame);
+				}
+				catch (ContieneFechasReservadasException exc) {
+					System.out.println("Periodo reservado");
+					frame.setEnabled(false);
+					mensajeYaExistenReservas.mostrar(getPanel(), frame, "a");
+				}
 			}
-//				try {
-//					PasajeroDTO pasajero = panelGestionarPasajeroTabla.pasajeroSeleccionado();
-//					
-//					mensajeModificarPasajero.mostrar(getPanel(), frame);
-//				}
-//				catch (PasajeroNoSeleccionadoException exc) {
-//					mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
-//				}
-//				
-//				//mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
-//			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
 		c.gridx = 2; c.gridy = 3;
@@ -163,19 +175,25 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a MenuPrincipal
 			frameActual.dispose();
-			frameAnterior = new FrameMenuPrincipal();	
+			new FrameMenuPrincipal();	
 			break;
 		case 2:	//Si la habitación no existe, simplemente muestra el mensaje
 			break;
 		case 3:	//Si la habitación no posee facturas, simplemente muestra el mensaje
 			break;		
+		case 4:
+			break;
 		}
 	}
 
 
 	public void confirmoCancelar(Integer idMensaje) {
 
-		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
+		switch(idMensaje) {	//El unico que hace una acción al presionar el botón de la izquierda es el "MensajeYaExistenReservas"
+		case 4:
+			this.panelResultadosDeBusquedaHabitacionesGroupBox.deseleccionarPeriodo();
+			break;
+		}
 	}
 
 }

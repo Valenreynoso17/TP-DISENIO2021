@@ -1,5 +1,6 @@
 package main.java.postgreImpl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -11,12 +12,13 @@ import org.hibernate.annotations.QueryHints;
 import main.java.clases.Ocupacion;
 import main.java.clases.Pasajero;
 import main.java.daos.OcupacionDAO;
+import main.java.excepciones.DataBaseException;
 
 public class OcupacionPostgreSQLImpl implements OcupacionDAO {
 	private SessionFactory sessionFactory;
 	
 	public OcupacionPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 	
 	@Override
@@ -92,23 +94,50 @@ public class OcupacionPostgreSQLImpl implements OcupacionDAO {
 
 	@Override
 	public Ocupacion buscarUltimaOcupacion(Integer nroHabitacion) {
+		Ocupacion ocupacion = null;
 		
 		String stringQuery = 	"SELECT o FROM Ocupacion o "
-							+ 	"WHERE o.idHabitacion = :nroHabitacion "
-							+ 	"AND o.horaYFechaSalidaReal IS NULL;";
-
+							+ 	"	LEFT JOIN FETCH o.pasajeros "
+							+ 	"WHERE o.habitacion.numero = :nroHabitacion "
+							+ 	"	AND o.horaYFechaSalidaReal IS NULL";
 
 		Session sesion = sessionFactory.openSession();
 		
 		TypedQuery<Ocupacion> q = sesion.createQuery(stringQuery, Ocupacion.class);
 		
-		q.setParameter("id", nroHabitacion);
+		q.setParameter("nroHabitacion", nroHabitacion);
 		
-		Ocupacion ocupacion = q.getSingleResult();
+		List<Ocupacion> ocupaciones = q.getResultList();
 		
 		sesion.close();
 		
+		if (ocupaciones.size() == 1) ocupacion = ocupaciones.get(0); 
+		else if (ocupaciones.size() > 1) throw new DataBaseException("Existen varias ocupaciones sin horario de salida");
+				
+		
 		return ocupacion;
+	}
+
+	@Override
+	public List<Ocupacion> buscar(LocalDate fechaDesde, LocalDate fechaHasta) {
+		String stringQuery = 	"SELECT o FROM Ocupacion o "
+							+ 	"WHERE o.ingreso BETWEEN :desde1 AND :hasta1 "
+							+ 	"	OR o.egreso BETWEEN :desde2 AND :hasta2 ";
+		
+		Session sesion = sessionFactory.openSession();
+		
+		TypedQuery<Ocupacion> query = sesion.createQuery(stringQuery, Ocupacion.class);
+		
+		query.setParameter("desde1", fechaDesde);
+		query.setParameter("hasta1", fechaHasta);
+		query.setParameter("desde2", fechaDesde);
+		query.setParameter("hasta2", fechaHasta);
+		
+		List<Ocupacion> ocupaciones = query.getResultList();
+		
+		sesion.close();
+		
+		return ocupaciones;
 	}
 	
 	

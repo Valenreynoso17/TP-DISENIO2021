@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import main.java.dtos.ItemFilaDTO;
+
 @Entity
 @Table(name = "disenio.itemconsumo")
 public class ItemConsumo extends ItemFactura {
@@ -24,6 +26,14 @@ public class ItemConsumo extends ItemFactura {
 			Integer cantidad, Consumo consumo) {
 		super(id, precioUnitario, descripcion);
 		this.cantidad = cantidad;
+		this.consumo = consumo;
+		
+		consumo.agregarItemConsumo(this);
+	}
+	
+	public ItemConsumo(ItemFilaDTO unItem, Consumo consumo) {
+		super(unItem.getPrecioUnitario(), unItem.getDescripcion());
+		this.cantidad = unItem.getCantidadSeleccionada();
 		this.consumo = consumo;
 		
 		consumo.agregarItemConsumo(this);

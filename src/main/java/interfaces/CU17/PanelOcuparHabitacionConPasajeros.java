@@ -8,49 +8,56 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import main.java.dtos.HabitacionDTO;
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.InputInvalidaException;
-import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.excepciones.SinResultadosException;
+import main.java.gestores.GestorHabitacion;
 import main.java.gestores.GestorPasajero;
-import main.java.interfaces.CU11.FrameAltaPasajero;
-import main.java.interfaces.CU11.PanelAltaPasajeroDatos;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.CU02.PanelGestionarPasajeroTabla;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
+	
 	// en este panel estan los botones y los dos otros paneles
 	private PanelOcuparHabitacionBusqueda panelOcuparHabitacionBusqueda;
 	private PanelOcuparHabitacionTabla panelOcuparHabitacionTabla;
+	
+	private PanelGestionarPasajeroTabla prueba;
+	
 	private PanelPasajerosSeleccionadosGroupBox panelPasajerosSeleccionadosGroupBox;
 	private PanelInformacionGroupBox panelInformacionGroupBox;
-	
-	//public GestorPasajero gestorPasajero;
-	
-	private FrameOcuparHabitacion frameAnterior;
+
 	private JFrame frameActual;
-	private FrameAltaPasajero frameAltaPasajero;
+	
+	public GestorPasajero gestorPasajero;
+	private GestorHabitacion gestorHabitacion;
 	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoMensajeNoExistePasajeroBuscar = "<html><p>No existe ningún pasajero con los criterios de búsqueda"
 														+ " seleccionados. ¿Desea agregar un nuevo pasajero?</p><html>";
+	@SuppressWarnings("unused")
 	private Mensaje mensajeNoExistePasajeroBuscar = new Mensaje(2, textoMensajeNoExistePasajeroBuscar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoModificarPasajero = 	"<html><p>Modificar pasajero en proximas versiones</p><html>";
+	@SuppressWarnings("unused")
 	private Mensaje mensajeModificarPasajero = new Mensaje(4, textoModificarPasajero, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private String textoMensajeNoExistePasajeroSiguiente = "<html><p>No seleccionó ningún pasajero. ¿Desea agregar un nuevo pasajero?</p><html>";
+	@SuppressWarnings("unused")
 	private Mensaje mensajeNoExistePasajeroSiguiente = new Mensaje(3, textoMensajeNoExistePasajeroSiguiente, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private JButton buscar;
@@ -68,8 +75,18 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
+	private HabitacionDTO habitacion;
+	
+	// TODO valores temporales
+	private Integer idHabitacion = 11;
+	private LocalDate ingreso = LocalDate.of(2021, 12, 3);
+	private LocalDate egreso = LocalDate.of(2021, 12, 6);
+	
 	public PanelOcuparHabitacionConPasajeros(final FrameOcuparHabitacionConPasajeros frame) {
-		//gestorPasajero = GestorPasajero.getInstance();
+		gestorPasajero = GestorPasajero.getInstance();
+		gestorHabitacion = GestorHabitacion.getInstance();
+		
+		habitacion = gestorHabitacion.buscarHabitacionDTO(idHabitacion);
 		
 		this.frameActual = frame;
 		
@@ -95,27 +112,38 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		buscar.setFont(fuenteBoton);
 		buscar.setBorder(bordeBoton);
 		buscar.addActionListener(e -> {
-//			PasajeroDTO filtros = panelOcuparHabitacionBusqueda.getFiltros();
-//			try{
-//				//gestorPasajero.validarDatosBusqueda(filtros);
-//				//Integer cantResultados = gestorPasajero.buscarCantidadPasajeros(filtros);
-//				
-//				//panelOcuparHabitacionTabla.buscarResultados(filtros, cantResultados);
-//				
-//			}
-//			catch (InputInvalidaException exc) {
-//				// TODO falta mensaje de error
-//				exc.printStackTrace();
-//			}
-//			catch (SinResultadosException exc) {
-//				mensajeNoExistePasajeroBuscar.mostrar(getPanel(), frameActual);
-//			}	
+			
+				//panelOcuparHabitacionTabla.activarTabla();
+				//panelPasajerosSeleccionadosGroupBox.activarTabla();
+			PasajeroDTO filtros = panelOcuparHabitacionBusqueda.getFiltros();
+			try{
+				gestorPasajero.validarDatosBusqueda(filtros);
+				Integer cantResultados = gestorPasajero.buscarCantidadPasajeros(filtros);
+				
+				//prueba.buscarResultados(filtros, cantResultados);
+				panelOcuparHabitacionTabla.buscarResultados(filtros, cantResultados);
+				
+			}
+			catch (InputInvalidaException exc) {
+				// TODO falta mensaje de error
+				exc.printStackTrace();
+			}
+			catch (SinResultadosException exc) {
+				mensajeNoExistePasajeroBuscar.mostrar(getPanel(), frameActual);
+			}	
 		});
 		c.anchor = GridBagConstraints.CENTER;		c.insets = new Insets(0,60,0,0);
 		c.gridx = 1; c.gridy = 1;
 		this.add(buscar, c);
 		
-		panelOcuparHabitacionTabla = new PanelOcuparHabitacionTabla(frame);
+		panelPasajerosSeleccionadosGroupBox = new PanelPasajerosSeleccionadosGroupBox(this, habitacion);	//Los cambie de orden para que al panel de abajo se le pase un panel no null
+		c.insets = insetPanelPasajerosSeleccionados;
+		c.fill = GridBagConstraints.BOTH; 		c.gridx = 2; c.gridy = 2;
+		c.weightx = 0.3; c.weighty = 0.6;			this.add(panelPasajerosSeleccionadosGroupBox, c);	
+		c.weightx = 0.1; c.weighty = 0.1;	
+		c.fill = GridBagConstraints.NONE;
+		
+		panelOcuparHabitacionTabla = new PanelOcuparHabitacionTabla(panelPasajerosSeleccionadosGroupBox);	
 		c.insets = insetPanelTabla;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 2;	c.gridwidth = 2;	c.gridheight = 2;
 		c.weightx = 0.8; c.weighty = 0.8;			this.add(panelOcuparHabitacionTabla, c);
@@ -123,14 +151,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		c.gridwidth = 1;	c.gridheight = 1;
 		c.fill = GridBagConstraints.NONE;
 		
-		panelPasajerosSeleccionadosGroupBox = new PanelPasajerosSeleccionadosGroupBox();
-		c.insets = insetPanelPasajerosSeleccionados;
-		c.fill = GridBagConstraints.BOTH; 		c.gridx = 2; c.gridy = 2;
-		c.weightx = 0.3; c.weighty = 0.6;			this.add(panelPasajerosSeleccionadosGroupBox, c);
-		c.weightx = 0.1; c.weighty = 0.1;	
-		c.fill = GridBagConstraints.NONE;
-		
-		panelInformacionGroupBox = new PanelInformacionGroupBox();
+		panelInformacionGroupBox = new PanelInformacionGroupBox(habitacion);
 		c.insets = insetPanelInformacion;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 2; c.gridy = 3;
 		c.weightx = 0.3; c.weighty = 0.2;			this.add(panelInformacionGroupBox, c);
@@ -161,18 +182,11 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		siguiente.setBorder(bordeBoton);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frameActual.setEnabled(false);	//Por si quiere cagar otro pasajero
+				new FrameMenuOcuparHabitacion(frame);
 				
 				
-//				try {
-//					PasajeroDTO pasajero = panelOcuparHabitacionTabla.pasajeroSeleccionado();
-//					
-//					mensajeModificarPasajero.mostrar(getPanel(), frame);
-//				}
-//				catch (PasajeroNoSeleccionadoException exc) {
-//					mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
-//				}
-//				
-//				//mensajeNoExistePasajeroSiguiente.mostrar(getPanel(), frame);
+				
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
@@ -190,7 +204,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve al frame anterior
 			frameActual.dispose();
-			frameAnterior = new FrameOcuparHabitacion();	//TODO: Ver si no es mejor mostrar el frame anterior en vez de uno nuevo
+			new FrameOcuparHabitacion();	//TODO: Ver si no es mejor mostrar el frame anterior en vez de uno nuevo
 			break;
 		case 2:	//Si no se encontro ningún pasajero, va a la pantalla de AltaPasajero
 			//frameActual.dispose();
@@ -206,5 +220,9 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	public void confirmoCancelar(Integer idMensaje) {
 		
 		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
+	}
+	
+	public void setCantPasajerosSeleccionados(Integer cant) {
+		panelInformacionGroupBox.setSeleccionados(cant);
 	}
 }

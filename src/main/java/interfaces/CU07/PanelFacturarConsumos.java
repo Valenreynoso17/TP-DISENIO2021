@@ -12,12 +12,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import main.java.dtos.OcupacionDTO;
+import main.java.dtos.ResponsableDePagoDTO;
 import main.java.enums.TipoMensaje;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensajes{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private PanelFacturarConsumosGroupBox panelFacturarConsumosGroupBox = new PanelFacturarConsumosGroupBox();
 	
@@ -36,13 +40,12 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	
 	private Insets insetPanelFacturarConsumos = new Insets(30,30,20,30);
 	
-	private FrameFacturar frameAnterior;
 	private FrameFacturarConsumos frameActual;
-	//private JFrame frameSiguiente;	TODO: Imprimir
+	//TODO: Imprimir
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
-	public PanelFacturarConsumos(final FrameFacturarConsumos frame) {
+	public PanelFacturarConsumos(final FrameFacturarConsumos frame, OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsablePagoDTO) {
 		
 		this.frameActual = frame;
 		
@@ -105,7 +108,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve al frame anterior
 			frameActual.dispose();
-			frameAnterior = new FrameFacturar();	
+			new FrameFacturar();	
 			break;
 		case 2:	//Si no selecciona ningún consumo a facturar, simplemente muestra el mensaje
 			break;

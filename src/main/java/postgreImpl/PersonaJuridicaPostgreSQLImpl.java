@@ -8,6 +8,6 @@ public class PersonaJuridicaPostgreSQLImpl implements PersonaJuridicaDAO {
 	private SessionFactory sessionFactory;
 	
 	public PersonaJuridicaPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 }

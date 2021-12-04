@@ -2,6 +2,8 @@ package main.java.gestores;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.swing.SortOrder;
 
@@ -106,6 +108,15 @@ public class GestorPasajero {
 		Pasajero pasajero = new Pasajero(pasajeroDTO, direccion, paisNacionalidad);
 		
 		pasajeroDAO.guardar(pasajero);
+	}
+	
+	public List<Pasajero> buscarPasajeros(List<PasajeroDTO> listaPasajerosDTO) {
+		List<Integer> idsPasajeros = listaPasajerosDTO
+										.stream()
+										.map(p -> p.getId())
+										.collect(Collectors.toList());
+		
+		return pasajeroDAO.buscarPasajeros(idsPasajeros);
 	}
 	
 	

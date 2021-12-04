@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +13,6 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -26,29 +23,23 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
 import javax.swing.text.MaskFormatter;
-
 import main.java.dtos.DireccionDTO;
 import main.java.dtos.LocalidadDTO;
 import main.java.dtos.PaisDTO;
 import main.java.dtos.PasajeroDTO;
-
 import main.java.dtos.ProvinciaDTO;
-
 import main.java.enums.PosicionFrenteIva;
 import main.java.enums.TipoDocumento;
 import main.java.gestores.GestorPaisProvincia;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.JTextFieldLimitado;
 import main.java.interfaces.clasesExtra.RoundedBorder;
-import main.java.interfaces.clasesExtra.UppercaseDocumentFilter;
 
 public class PanelAltaPasajeroDatos extends JPanel{
 	
-	private FrameAltaPasajero frameActual;
+	private static final long serialVersionUID = 1L;
 	
 	private GestorPaisProvincia gestorPP;
 	
@@ -67,8 +58,6 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private JComboBox<PosicionFrenteIva> posicionIVA;
 	
 	private JLabel label;
-	
-	private JFormattedTextField fechaNacimientoFormato;
 	
 	private JLabel labelApellidoVacio;				//Muestran mensaje "Campo incompleto"
 	private JLabel labelNombreVacio;
@@ -146,8 +135,6 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private TextPrompt fondoJTextField;
 	
 	public PanelAltaPasajeroDatos(FrameAltaPasajero frame) {
-		
-		this.frameActual = frame;
 		gestorPP =  GestorPaisProvincia.getInstance();
 		
 		this.setBackground(Color.WHITE);
@@ -760,7 +747,8 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		label = new JLabel("*campo obligatorio");	label.setFont(fuenteLabelFinal);	c.gridx = 2; c.gridy = 16;	this.add(label, c);
 	}
 
-	private void cargarComboBoxDesdeEnum(JComboBox comboBox, Object[] values) {
+	@SuppressWarnings("unchecked")
+	private void cargarComboBoxDesdeEnum(@SuppressWarnings("rawtypes") JComboBox comboBox, Object[] values) {
 		
 		for(Object o : values){
 			

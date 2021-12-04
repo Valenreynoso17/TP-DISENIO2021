@@ -3,12 +3,12 @@ package main.java.interfaces.clasesExtra;
 import javax.swing.text.PlainDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
 
 public class JTextFieldLimitado extends PlainDocument{
+	
+	private static final long serialVersionUID = 1L;
+	
   private int limit;
-  
-  private DocumentFilter filter = new UppercaseDocumentFilter();
 
   public JTextFieldLimitado(int limit) {
    super();
