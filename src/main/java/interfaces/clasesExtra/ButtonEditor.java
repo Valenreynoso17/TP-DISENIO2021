@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 
+import main.java.interfaces.CU07.PanelFacturarConsumosGroupBox;
+
 public class ButtonEditor extends DefaultCellEditor {
 	
 	private static final long serialVersionUID = 1L;
@@ -18,16 +20,20 @@ public class ButtonEditor extends DefaultCellEditor {
     private boolean isPushed;
     
     private Character tipo;
+    
+    private PanelFacturarConsumosGroupBox panel;
 
-    public ButtonEditor(JCheckBox checkBox, Character c) {
+    public ButtonEditor(JCheckBox checkBox, Character c, PanelFacturarConsumosGroupBox panel) {
         super(checkBox);
         this.tipo = c;
+        this.panel = panel;
         button = new JButton();
         button.setOpaque(true);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                fireEditingStopped();
+            	
+            	 fireEditingStopped();
             }
         });
     }
@@ -53,12 +59,8 @@ public class ButtonEditor extends DefaultCellEditor {
     @Override
     public Object getCellEditorValue() {
         if (isPushed) {
-            if(this.tipo == '+') {
-            	
-            }
-            else if(this.tipo == '-') {
-            	
-            }
+
+        	panel.actualizarItemsCantidadModificada(tipo);
         }
         isPushed = false;
         return label;

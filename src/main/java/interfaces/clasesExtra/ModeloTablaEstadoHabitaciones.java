@@ -59,27 +59,33 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 	
 	public void cargarMatriz(List<Object[]> matrizTabla, Map<String, List<HabitacionDTO>> mapEstadoHabitaciones) {
 		
-		for(String tipo : mapEstadoHabitaciones.keySet()) {
-			
-			for(HabitacionDTO h : mapEstadoHabitaciones.get(tipo)) {
-					
-				for(FueraDeServicioDTO f : h.getFuerasDeServicio()) {
-					
-					
-				}
-				
-				for(ReservaDTO h : mapEstadoHabitaciones.get(tipo)) {
-					
-					
-				}
-				
-				for(OcupacionDTO h : mapEstadoHabitaciones.get(tipo)) {
-					
-					
-				}
-			}
+//		for(String tipo : mapEstadoHabitaciones.keySet()) {
+//			
+//			for(HabitacionDTO h : mapEstadoHabitaciones.get(tipo)) {
+//					
+//				for(FueraDeServicioDTO f : h.getFuerasDeServicio()) {
+//					
+//					
+//				}
+//				
+//				for(ReservaDTO h : mapEstadoHabitaciones.get(tipo)) {
+//					
+//					
+//				}
+//				
+//				for(OcupacionDTO h : mapEstadoHabitaciones.get(tipo)) {
+//					
+//					
+//				}
+//			}
+//
+//		}
+	}
 
-		}
+	public void actualizarTabla(Map<String, List<HabitacionDTO>> estadoHabitaciones) {
+		
+		this.limpiarTabla();
+		this.cargarEstados(estadoHabitaciones);
 	}
 
 }

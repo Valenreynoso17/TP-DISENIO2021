@@ -5,6 +5,7 @@ public class ItemFilaDTO {
 	private String descripcion;
 	private Double precioUnitario;
 	private Integer cantidadSeleccionada;
+	private Integer cantidadSeleccionadaFinal;
 	private Integer cantidadMax;
 	private Boolean esItemOcupacion;
 	private Boolean esRecargo;
@@ -15,6 +16,7 @@ public class ItemFilaDTO {
 		this.descripcion = descripcion;
 		this.precioUnitario = precioUnitario;
 		this.cantidadSeleccionada = 0;
+		this.cantidadSeleccionadaFinal = 0;
 		this.cantidadMax = cantidadMax;
 		this.esItemOcupacion = esItemOcupacion;
 		this.esRecargo = esRecargo;
@@ -31,9 +33,13 @@ public class ItemFilaDTO {
 	public Double getPrecioUnitario() {
 		return precioUnitario;
 	}
-
+	
 	public Integer getCantidadSeleccionada() {
 		return cantidadSeleccionada;
+	}
+
+	public Integer getCantidadSeleccionadaFinal() {
+		return cantidadSeleccionadaFinal;
 	}
 
 	public Integer getCantidadMax() {
@@ -50,6 +56,10 @@ public class ItemFilaDTO {
 	
 	public void setCantidadSeleccionada(Integer cant) {
 		this.cantidadSeleccionada = cant;
+	}
+	
+	public void setCantidadSeleccionadaFinal(Integer cant) {
+		this.cantidadSeleccionadaFinal = cant;
 	}
 	
 }

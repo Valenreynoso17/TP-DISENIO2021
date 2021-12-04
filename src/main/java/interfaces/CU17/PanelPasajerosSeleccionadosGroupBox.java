@@ -23,9 +23,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import main.java.dtos.HabitacionDTO;
 import main.java.dtos.PasajeroDTO;
 import main.java.interfaces.clasesExtra.ModeloPasajerosSeleccionadosOcuparHabitacion;
+import main.java.interfaces.clasesExtra.RenderParaHeaderTablas;
 import main.java.interfaces.clasesExtra.RenderParaTablaEstadoColores;
 import main.java.interfaces.clasesExtra.RenderParaTablaPasajerosSeleccionados;
-import main.java.interfaces.clasesExtra.RenderParaTablas;
 
 public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 	
@@ -35,7 +35,7 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 	
 	private JTable tabla;
 	private ModeloPasajerosSeleccionadosOcuparHabitacion miModelo;
-	private RenderParaTablas renderTabla;
+	private RenderParaHeaderTablas renderTabla;
 	private RenderParaTablaPasajerosSeleccionados renderParaTablaPasajerosSeleccionados;
 	
 	@SuppressWarnings({ "unused", "rawtypes" })
@@ -69,7 +69,7 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 		renderParaTablaPasajerosSeleccionados.setHorizontalAlignment(JLabel.CENTER);
 		tabla.setDefaultRenderer(String.class, renderParaTablaPasajerosSeleccionados);
 		
-		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
+		renderTabla = new RenderParaHeaderTablas(tabla.getDefaultRenderer(Object.class), false);
 		
 		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		

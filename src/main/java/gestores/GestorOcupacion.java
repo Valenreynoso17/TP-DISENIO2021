@@ -79,6 +79,11 @@ public class GestorOcupacion {
 		
 		List<ItemOcupacionDTO> listaItemOcupacionDTO = crearListaItemsOcupacion(ocupacion);
 		
+		for(int i = 0; i < listaPasajerosDTO.size(); i++)
+			System.out.println(listaPasajerosDTO.get(i));
+		
+		System.out.println(ocupacion.getResponsable());
+		
 		PasajeroDTO responsable = listaPasajerosDTO.stream().filter(p -> p.getId() == ocupacion.getResponsable().getId()).findFirst().get();
 		
 		OcupacionDTO ocupacionDTO = new OcupacionDTO(ocupacion, listaPasajerosDTO, listaConsumosDTO, listaItemOcupacionDTO, responsable, horaSalida);

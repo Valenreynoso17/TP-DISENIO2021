@@ -170,7 +170,7 @@ public class PanelFacturarGroupBox extends JPanel{
 		boolean alMenosUnoInvalido = false;
 
 		if(!this.esTotalmenteNumero(numeroDeHabitacion)) {
-			inputsInvalidos += "d";
+			inputsInvalidos += "n";
 			alMenosUnoInvalido = true;
 		}
 			
@@ -229,7 +229,7 @@ public class PanelFacturarGroupBox extends JPanel{
 	}
 	
 	public void colocarLabelInvalido(String inputs) {
-		
+
 		if(inputs.contains("n")) {
 			labelNumeroDeHabitacionFormatoInvalido.setVisible(true);
 		}

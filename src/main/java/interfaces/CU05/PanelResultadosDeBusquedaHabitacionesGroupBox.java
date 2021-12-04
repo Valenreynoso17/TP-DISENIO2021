@@ -28,8 +28,8 @@ import main.java.gestores.GestorHabitacion;
 import main.java.interfaces.clasesExtra.ColumnaAgrupada;
 import main.java.interfaces.clasesExtra.HeaderTablaAgrupable;
 import main.java.interfaces.clasesExtra.ModeloTablaEstadoHabitaciones;
+import main.java.interfaces.clasesExtra.RenderParaHeaderTablas;
 import main.java.interfaces.clasesExtra.RenderParaTablaEstadoColores;
-import main.java.interfaces.clasesExtra.RenderParaTablas;
 
 public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	
@@ -39,7 +39,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	
 	private JTable tabla;
 	private ModeloTablaEstadoHabitaciones miModelo;
-	private RenderParaTablas renderTabla;
+	private RenderParaHeaderTablas renderTabla;
 	private RenderParaTablaEstadoColores renderTablaEstadoColores;
 	
 	@SuppressWarnings({ "rawtypes", "unused" })
@@ -84,7 +84,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	  
 		tableContainer = new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
-		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), true);
+		renderTabla = new RenderParaHeaderTablas(tabla.getDefaultRenderer(Object.class), true);
 
 		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
@@ -204,7 +204,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
 		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 		
-		miModelo.cargarEstados(gestorHabitacion.buscarEstadoHabitaciones(fechaDesde, fechaHasta));
+		miModelo.actualizarTabla(gestorHabitacion.buscarEstadoHabitaciones(fechaDesde, fechaHasta));
 	}
 	
 	public void desactivarTabla() {

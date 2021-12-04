@@ -12,7 +12,7 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
-public class RenderParaTablas implements TableCellRenderer{
+public class RenderParaHeaderTablas implements TableCellRenderer{
 	
 	DefaultTableCellRenderer render;
     Border b;
@@ -23,7 +23,7 @@ public class RenderParaTablas implements TableCellRenderer{
     Color colorLetraTipoHabitacion = Color.BLACK;
     boolean esParaTipoHabitacion;
     
-    public RenderParaTablas(TableCellRenderer r, boolean bool){
+    public RenderParaHeaderTablas(TableCellRenderer r, boolean bool){
     	this.esParaTipoHabitacion = bool;
         render = (DefaultTableCellRenderer) r;
         render.setHorizontalAlignment(JLabel.CENTER);

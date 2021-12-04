@@ -1,13 +1,25 @@
 package main.java.interfaces.clasesExtra;
 
+import java.text.DecimalFormat;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+
+import main.java.dtos.ItemFilaDTO;
 
 public class ModeloTablaConsumos extends DefaultTableModel{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public ModeloTablaConsumos() {
+	private List<ItemFilaDTO> items;
+	
+	private static final DecimalFormat df = new DecimalFormat("0.00");
+	
+	private Integer cantidadFilasEnBlanco = 10;
+	
+	public ModeloTablaConsumos(List<ItemFilaDTO> itemsDTO) {
+		this.items = itemsDTO;
 		this.addColumn("Consumos"); 
 		this.addColumn("");
 		this.addColumn("Cantidad"); 
@@ -42,16 +54,75 @@ public class ModeloTablaConsumos extends DefaultTableModel{
 		this.setRowCount(0); //Elimino todas las filas de la tabla
 	}
 	
-//	public void cargarConsumos(List<PasajeroDTO> pasajeros) {	//TODO: Ver
-//		
-//		for(PasajeroDTO p : pasajeros) {
-//			this.addRow(new Object[] {p.getApellido()
-//									, p.getNombre()
-//									, p.getTipoDocumento()
-//									, p.getNumeroDoc()
-//									, p.getFechaNacimiento()});
-//		}
-//
-//	}
+	public void cargarConsumos() {
+		
+		for(ItemFilaDTO i : items) {
+			this.addRow(new Object[] {i.getDescripcion()
+									, ""				//Boton -
+									, i.getCantidadSeleccionada() + "/" + i.getCantidadMax()
+									, ""				//Boton +
+									, "$ "+df.format(i.getPrecioUnitario())
+									, "$ 0.00"});		//Se cargan todas con cantidadSeleccionada = 0
+		}
+		
+		cantidadFilasEnBlanco = 10 - items.size();
+		
+		for(int i = 0; i < cantidadFilasEnBlanco; i++)
+			this.addRow(new Object[]{null,null,null,null,null,null});	//Fila en blanco
+		
+		this.addRow(new Object[] {"TOTAL",null,"",null,"", 4200.00});
+
+	}
+
+	public void actualizarFila(Character c, int fila) {
+		
+		ItemFilaDTO itemCambioCantidad = items.get(fila);
+		
+		//Para calcular el "TOTAL" que se muestra en la ultima fila
+		double total = 0.0;
+		
+		//Si la cantidadSeleccionada es distinta de la capacidad maxima (todavia no se llego a seleccionar todas las unidades del item)
+		if(c == '+' && itemCambioCantidad.getCantidadSeleccionada() != itemCambioCantidad.getCantidadMax()) {
+				
+			//Primero le sumo 1 en la cantidad seleccionada, luego abajo simplemente llamo el metodo "get"
+			itemCambioCantidad.setCantidadSeleccionada(itemCambioCantidad.getCantidadSeleccionada()+1);
+			
+			//Aumenta la Cantidad en 1, con respecto a la que tenia anteriormente
+			this.setValueAt(itemCambioCantidad.getCantidadSeleccionada()+"/"+itemCambioCantidad.getCantidadMax(), fila, 2);	
+			
+			//Actualiza el campo "TotalNeto" en funcion de la cantidad y del precio unitario
+			this.setValueAt("$ "+df.format(itemCambioCantidad.getCantidadSeleccionada()*itemCambioCantidad.getPrecioUnitario()), fila, 5);
+			
+			for(ItemFilaDTO i : items) {
+				
+				total += i.getCantidadSeleccionada() * i.getPrecioUnitario();
+			}
+			
+			//Actualiza el campo "TOTAL" en funcion de la cantidad y del precio unitario de todas las filas
+			this.setValueAt("$ "+df.format(total), this.cantidadFilasEnBlanco+items.size(), 5);			
+		}
+		//Si la cantidadSeleccionada es distinta de 0
+		else if(c == '-' && itemCambioCantidad.getCantidadSeleccionada() != 0) {
+			
+			//Primero le resto 1 en la cantidad seleccionada, luego abajo simplemente llamo el metodo "get"
+			itemCambioCantidad.setCantidadSeleccionada(itemCambioCantidad.getCantidadSeleccionada()-1);
+			
+			//Aumenta la Cantidad en 1, con respecto a la que tenia anteriormente
+			this.setValueAt(itemCambioCantidad.getCantidadSeleccionada()+"/"+itemCambioCantidad.getCantidadMax(), fila, 2);	
+			
+			//Actualiza el campo "TotalNeto" en funcion de la cantidad y del precio unitario
+			this.setValueAt("$ "+df.format(itemCambioCantidad.getCantidadSeleccionada()*itemCambioCantidad.getPrecioUnitario()), fila, 5);
+			
+			for(ItemFilaDTO i : items) {
+				
+				total += i.getCantidadSeleccionada() * i.getPrecioUnitario();
+			}
+			
+			//Actualiza el campo "TOTAL" en funcion de la cantidad y del precio unitario de todas las filas
+			this.setValueAt("$ "+df.format(total), this.cantidadFilasEnBlanco+items.size(), 5);
+		}
+		
+		
+	}
 
 }
