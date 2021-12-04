@@ -96,24 +96,44 @@ public class OcupacionPostgreSQLImpl implements OcupacionDAO {
 	public Ocupacion buscarUltimaOcupacion(Integer nroHabitacion) {
 		Ocupacion ocupacion = null;
 		
-		String stringQuery = 	"SELECT o FROM Ocupacion o "
-							+ 	"	LEFT JOIN FETCH o.pasajeros "
+		String stringQuery1 = 	"SELECT DISTINCT o " 
+							+	"FROM Ocupacion o " 	
+							+	"	LEFT JOIN FETCH o.pasajeros " 
+							+ 	"WHERE o.habitacion.numero = :nroHabitacion "
+							+ 	"	AND o.horaYFechaSalidaReal IS NULL";		
+		String stringQuery2 = 	"SELECT DISTINCT o " 
+							+	"FROM Ocupacion o " 	
+							+	"	LEFT JOIN FETCH o.itemsOcupacion " 
+							+ 	"WHERE o.habitacion.numero = :nroHabitacion "
+							+ 	"	AND o.horaYFechaSalidaReal IS NULL";
+		String stringQuery3 = 	"SELECT DISTINCT o " 
+							+	"FROM Ocupacion o " 	
+							+	"	LEFT JOIN FETCH o.consumos " 
 							+ 	"WHERE o.habitacion.numero = :nroHabitacion "
 							+ 	"	AND o.horaYFechaSalidaReal IS NULL";
 
+
 		Session sesion = sessionFactory.openSession();
 		
-		TypedQuery<Ocupacion> q = sesion.createQuery(stringQuery, Ocupacion.class);
+		TypedQuery<Ocupacion> query1 = sesion.createQuery(stringQuery1, Ocupacion.class);
+		TypedQuery<Ocupacion> query2 = sesion.createQuery(stringQuery2, Ocupacion.class);
+		TypedQuery<Ocupacion> query3 = sesion.createQuery(stringQuery3, Ocupacion.class);
 		
-		q.setParameter("nroHabitacion", nroHabitacion);
+		query1.setParameter("nroHabitacion", nroHabitacion);
+		query2.setParameter("nroHabitacion", nroHabitacion);
+		query3.setParameter("nroHabitacion", nroHabitacion);
 		
-		List<Ocupacion> ocupaciones = q.getResultList();
-
-		sesion.close();		
+		query1.setHint(QueryHints.PASS_DISTINCT_THROUGH, false);
+		query2.setHint(QueryHints.PASS_DISTINCT_THROUGH, false);
+		query3.setHint(QueryHints.PASS_DISTINCT_THROUGH, false);
 		
-		for(int i = 0; i < ocupaciones.size(); i++) {
+		List<Ocupacion> ocupaciones = query1.getResultList();
+		ocupaciones = query2.getResultList();
+		ocupaciones = query3.getResultList();
+		
+		/*for(int i = 0; i < ocupaciones.size(); i++) {
 			System.out.println(ocupaciones.get(i).getId());
-		}
+		}*/
 		
 		if (ocupaciones.size() == 1) ocupacion = ocupaciones.get(0); 
 		else if (ocupaciones.size() > 1) throw new DataBaseException("Existen varias ocupaciones sin horario de salida");
