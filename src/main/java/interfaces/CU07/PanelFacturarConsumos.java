@@ -17,6 +17,8 @@ import main.java.dtos.FacturaDTO;
 import main.java.dtos.ItemFilaDTO;
 import main.java.dtos.OcupacionDTO;
 import main.java.dtos.ResponsableDePagoDTO;
+import main.java.enums.PosicionFrenteIva;
+import main.java.enums.TipoFactura;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.NingunElementoSeleccionadoFacturacionException;
 import main.java.excepciones.RecargoNoEstaEnUltimaFacturaException;
@@ -104,8 +106,8 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 		aceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//TODO: Imprimir	
-				FacturaDTO facturaDTO = crearFacturaDTO(responsablePagoDTO);
+				List<ItemFilaDTO> listaItemsFila = panelFacturarConsumosGroupBox.getListaItems();
+				FacturaDTO facturaDTO = crearFacturaDTO(responsablePagoDTO, null); 
 				
 				try {
 					gestorFactura.crearFactura(facturaDTO, ocupacionDTO);
@@ -149,10 +151,13 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
 	}
 	
-	public FacturaDTO crearFacturaDTO(ResponsableDePagoDTO responsablePagoDTO) {
+	public FacturaDTO crearFacturaDTO(ResponsableDePagoDTO responsablePagoDTO, List<ItemFilaDTO> listaItemsFila) {
 		
-		//TipoFactura tipoFactura;
-		return null;
-		//return new FacturaDTO(responsablePagoDTO, );
+		if(responsablePagoDTO.getPosicionFrenteIva() == PosicionFrenteIva.CONSUMIDOR_FINAL) {
+			return new FacturaDTO(responsablePagoDTO, TipoFactura.B, panelFacturarConsumosGroupBox.getIVA(), panelFacturarConsumosGroupBox.getTotalAPagar(), listaItemsFila);
+		}
+		
+		return new FacturaDTO(responsablePagoDTO, TipoFactura.A, panelFacturarConsumosGroupBox.getIVA(), panelFacturarConsumosGroupBox.getTotalAPagar(), listaItemsFila);
+		
 	}
 }
