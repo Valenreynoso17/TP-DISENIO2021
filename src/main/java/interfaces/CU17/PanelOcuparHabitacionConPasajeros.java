@@ -136,7 +136,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		c.gridx = 1; c.gridy = 1;
 		this.add(buscar, c);
 		
-		panelPasajerosSeleccionadosGroupBox = new PanelPasajerosSeleccionadosGroupBox(habitacion);	//Los cambie de orden para que al panel de abajo se le pase un panel no null
+		panelPasajerosSeleccionadosGroupBox = new PanelPasajerosSeleccionadosGroupBox(this, habitacion);	//Los cambie de orden para que al panel de abajo se le pase un panel no null
 		c.insets = insetPanelPasajerosSeleccionados;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 2; c.gridy = 2;
 		c.weightx = 0.3; c.weighty = 0.6;			this.add(panelPasajerosSeleccionadosGroupBox, c);	
@@ -182,9 +182,11 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		siguiente.setBorder(bordeBoton);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				frameActual.setEnabled(false);	//Por si quiere cagar otro pasajero
 				new FrameMenuOcuparHabitacion(frame);
+				
+				
+				
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
@@ -218,5 +220,9 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	public void confirmoCancelar(Integer idMensaje) {
 		
 		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
+	}
+	
+	public void setCantPasajerosSeleccionados(Integer cant) {
+		panelInformacionGroupBox.setSeleccionados(cant);
 	}
 }

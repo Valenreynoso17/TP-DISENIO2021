@@ -45,7 +45,7 @@ public class ModeloPasajerosSeleccionadosOcuparHabitacion extends DefaultTableMo
 	
 	public void cargarPasajero(PasajeroDTO p) {	
 		
-		if(this.getRowCount() < capacidadHabitacion) {	//TODO: Poner el limite de la habitacion
+		if(this.getRowCount() < capacidadHabitacion) {	
 			
 			if(!this.pasajerosSeleccionados.contains(p)) {	//Si ya contiene al pasajero, no hay que volver a agregarlo
 				

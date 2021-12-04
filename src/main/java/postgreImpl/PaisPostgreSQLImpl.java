@@ -17,7 +17,7 @@ public class PaisPostgreSQLImpl implements PaisDAO {
 	private SessionFactory sessionFactory;
 	
 	public PaisPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 
 	public List<Pais> buscar() {

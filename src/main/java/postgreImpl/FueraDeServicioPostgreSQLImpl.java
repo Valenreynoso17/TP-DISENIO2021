@@ -17,7 +17,7 @@ public class FueraDeServicioPostgreSQLImpl implements FueraDeServicioDAO {
 	private SessionFactory sessionFactory;
 	
 	public FueraDeServicioPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 	
 	@Override

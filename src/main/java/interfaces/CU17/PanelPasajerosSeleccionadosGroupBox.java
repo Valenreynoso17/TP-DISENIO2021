@@ -30,6 +30,8 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 	
+	private PanelOcuparHabitacionConPasajeros padre;
+	
 	private JTable tabla;
 	private ModeloPasajerosSeleccionadosOcuparHabitacion miModelo;
 	private RenderParaTablas renderTabla;
@@ -45,13 +47,16 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	
-	public PanelPasajerosSeleccionadosGroupBox(HabitacionDTO habitacion) {
+	public PanelPasajerosSeleccionadosGroupBox(PanelOcuparHabitacionConPasajeros padre, HabitacionDTO habitacion) {
 		
 		this.setBackground(Color.white);
 		
 		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), " Resultados de búsqueda", 0, 0, fuenteGroupBox));
 		
 		this.setLayout(new GridBagLayout());
+		
+		this.padre = padre;
+		
 		GridBagConstraints c = new GridBagConstraints();
 		
 		miModelo = new ModeloPasajerosSeleccionadosOcuparHabitacion(habitacion.getTipo().getCapacidad());
@@ -87,6 +92,8 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 		    	if(e.isPopupTrigger() && e.getComponent() instanceof JTable) {	//Si pulsa el boton derecho dentro de la tabla, el pasajero se elimina de ella
 		    		
 		    		miModelo.eliminarPasajero(tabla.rowAtPoint(e.getPoint()));
+		    		
+		    		padre.setCantPasajerosSeleccionados(miModelo.getRowCount());
 		    	}
 		    }
 		});
@@ -120,6 +127,7 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 	public void seleccionaronPasajero(PasajeroDTO pasajeroSeleccionado) {
 		
 		miModelo.cargarPasajero(pasajeroSeleccionado);
+		padre.setCantPasajerosSeleccionados(miModelo.getRowCount());
 		
 		if(!miModelo.getPasajerosSeleccionados().isEmpty()) {	//Si la lista no es vacia
 			

@@ -17,7 +17,7 @@ public class HabitacionPostgreSQLImpl implements HabitacionDAO {
 	private SessionFactory sessionFactory;
 	
 	public HabitacionPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 
 

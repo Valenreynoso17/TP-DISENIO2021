@@ -21,7 +21,7 @@ public class PasajeroPostgreSQLImpl implements PasajeroDAO {
 	private SessionFactory sessionFactory;
 	
 	public PasajeroPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 
 	@Override

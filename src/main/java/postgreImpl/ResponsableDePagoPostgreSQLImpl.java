@@ -15,7 +15,7 @@ public class ResponsableDePagoPostgreSQLImpl implements ResponsableDePagoDAO {
 	private SessionFactory sessionFactory;
 	
 	public ResponsableDePagoPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 
 	@Override
