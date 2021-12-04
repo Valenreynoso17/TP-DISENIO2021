@@ -6,7 +6,9 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class HibernateManager {
-	public static SessionFactory Configure() {
+	private static SessionFactory instance;
+	
+	private static SessionFactory Configure() {
 		SessionFactory sessionFactory = null;
 		
 		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
@@ -23,5 +25,11 @@ public class HibernateManager {
 		}
 		
 		return sessionFactory;
+	}
+	
+	public static synchronized SessionFactory getInstance() {
+		if (instance == null) instance = HibernateManager.Configure();
+		
+		return instance;
 	}
 }

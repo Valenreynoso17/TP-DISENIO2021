@@ -18,7 +18,7 @@ public class OcupacionPostgreSQLImpl implements OcupacionDAO {
 	private SessionFactory sessionFactory;
 	
 	public OcupacionPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 	
 	@Override

@@ -17,7 +17,7 @@ public class ReservaPostgreSQLImpl implements ReservaDAO {
 	private SessionFactory sessionFactory;
 	
 	public ReservaPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 	
 	@Override

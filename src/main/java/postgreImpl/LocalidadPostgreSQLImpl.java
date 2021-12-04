@@ -14,7 +14,7 @@ public class LocalidadPostgreSQLImpl implements LocalidadDAO {
 	private SessionFactory sessionFactory;
 	
 	public LocalidadPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 
 	public Localidad buscar(Integer id) {

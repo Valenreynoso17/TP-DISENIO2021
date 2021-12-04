@@ -14,7 +14,7 @@ public class ProvinciaPostgreSQLImpl implements ProvinciaDAO {
 	private SessionFactory sessionFactory;
 	
 	public ProvinciaPostgreSQLImpl() {
-		sessionFactory = HibernateManager.Configure();
+		sessionFactory = HibernateManager.getInstance();
 	}
 
 	public Provincia buscar(Integer id) {
