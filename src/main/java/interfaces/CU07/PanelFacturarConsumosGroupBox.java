@@ -19,6 +19,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+
+import main.java.dtos.OcupacionDTO;
+import main.java.dtos.ResponsableDePagoDTO;
 import main.java.interfaces.clasesExtra.*;
 
 public class PanelFacturarConsumosGroupBox extends JPanel{
@@ -73,7 +76,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	private ButtonEditor editorBotonMenos = new ButtonEditor(new JCheckBox(), '-');
 	private ButtonEditor editorBotonMas = new ButtonEditor(new JCheckBox(), '+');
 	
-	public PanelFacturarConsumosGroupBox() {
+	public PanelFacturarConsumosGroupBox(OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsableDTO) {
 		
 		this.setBackground(Color.white);
 		
@@ -153,7 +156,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		
 		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
 		
-		tabla.setDefaultRenderer(Object.class, renderTabla);
+//		tabla.setDefaultRenderer(Object.class, renderTabla);
 		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
@@ -177,20 +180,13 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		});
 		
 		
-		Object[] prueba = new Object[] {"VALOR DE LA ESTADÍA","", valorCantidad.toString()+"/3", "", 1400.00, 4200.00}; 
-		
-		miModelo.addRow(prueba);
-		for(int i = 0; i < 8; i++)
-			miModelo.addRow(new Object[]{null,null,null,null,null,null});	//Fila en blanco
-		
-		miModelo.addRow(new Object[] {"TOTAL","","","","", 4200.00});
-		
-//		tabla.getTableHeader().setOpaque(false);
-//		tabla.getTableHeader().setBackground(Color.decode("#424242"));		//Para que el fondo de la cabecera sea de un color en específico
-//		tabla.getTableHeader().setForeground(Color.WHITE);					//Para que la fuente de la cabecera sea blanca
-//		tabla.getTableHeader().setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
+//		Object[] prueba = new Object[] {"VALOR DE LA ESTADÍA","", valorCantidad.toString()+"/3", "", 1400.00, 4200.00}; 
 //		
-//		tabla.getTableHeader().setPreferredSize(new Dimension(400, 40));	//Dimension de la cabecera
+//		miModelo.addRow(prueba);
+//		for(int i = 0; i < 8; i++)
+//			miModelo.addRow(new Object[]{null,null,null,null,null,null});	//Fila en blanco
+//		
+//		miModelo.addRow(new Object[] {"TOTAL","","","","", 4200.00});
 		
 		tabla.getColumnModel().getColumn(1).setCellRenderer(renderBotonMenos);
 		tabla.getColumnModel().getColumn(1).setCellEditor(editorBotonMenos);
@@ -268,6 +264,21 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		totalAPagar.setFont(fuenteLabelCampo);	totalAPagar.setBorder(bordeCampo);	totalAPagar.setEditable(false);	totalAPagar.setBackground(Color.decode("#edf4b1"));
 		c.gridx = 3; c.gridy = 6;	totalAPagar.setMinimumSize(dimensionCamposFinales);	totalAPagar.setPreferredSize(dimensionCamposFinales);	
 		this.add(totalAPagar, c); 
+	}
+	
+	public double getSubtotal() {
+		
+		return Double.parseDouble(this.subtotal.getText());
+	}
+	
+	public double getIVA() {
+		
+		return Double.parseDouble(this.IVA.getText());
+	}
+	
+	public double getTotalAPagar() {
+		
+		return Double.parseDouble(this.totalAPagar.getText());
 	}
 
 }
