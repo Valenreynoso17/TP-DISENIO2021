@@ -10,16 +10,18 @@ public class FacturaDTO {
 	TipoFactura tipoFactura;
 	LocalDate fechaFacturacion;
 	Double montoNeto;
+	Double montoIva;
 	Double montoTotal;
 	ResponsableDePagoDTO responsablePagoDTO;
 	List<ItemFilaDTO> listaItemsFila;
 	
-	public FacturaDTO(ResponsableDePagoDTO responsablePagoDTO, TipoFactura tipoFactura, Double montoTotal, List<ItemFilaDTO> listaItems) {
+	public FacturaDTO(ResponsableDePagoDTO responsablePagoDTO, TipoFactura tipoFactura, Double montoIva, Double montoTotal, List<ItemFilaDTO> listaItems) {
 		super();
 		this.responsablePagoDTO = responsablePagoDTO;
 		this.tipoFactura = tipoFactura;
 		this.fechaFacturacion = LocalDate.now();
 		this.montoNeto = 0.0;
+		this.montoIva = montoIva;
 		this.montoTotal = montoTotal;
 		this.listaItemsFila = listaItems;
 	}
