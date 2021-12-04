@@ -205,7 +205,7 @@ public class GestorOcupacion {
 		for (Pasajero p : pasajeros) {
 			setPasajeros.add(p);
 			
-			if (p.getId().equals(o.getIdHabitacion())) responsable = p;
+			if (p.getId().equals(o.getResponsable().getId())) responsable = p;
 		}
 		
 		Ocupacion ocupacion = new Ocupacion(null, 

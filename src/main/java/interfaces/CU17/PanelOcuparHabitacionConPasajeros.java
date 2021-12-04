@@ -193,7 +193,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 				else {
 					OcupacionDTO ocupacionDTO = new OcupacionDTO(idHabitacion, ingreso, egreso, pasajeros, pasajeros.get(0));
 					frameActual.setEnabled(false);	//Por si quiere cargar otro pasajero
-					new FrameMenuOcuparHabitacion(frame);
+					new FrameMenuOcuparHabitacion(ocupacionDTO, frame);
 				}
 				
 				

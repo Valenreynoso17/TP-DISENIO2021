@@ -9,13 +9,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import main.java.dtos.OcupacionDTO;
+
 public class FrameMenuOcuparHabitacion extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel contentPane;
 
-	public FrameMenuOcuparHabitacion(FrameOcuparHabitacionConPasajeros frameA) {
+	public FrameMenuOcuparHabitacion(OcupacionDTO ocupacion, FrameOcuparHabitacionConPasajeros frameA) {
 		super("Sistema Hotel Premier");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 400);
@@ -25,7 +27,7 @@ public class FrameMenuOcuparHabitacion extends JFrame{
 		
 		//contentPane = new PanelMenuOcuparHabitacion(this);
 		//setContentPane(contentPane);
-		setContentPane(new PanelMenuOcuparHabitacion(this, frameA));
+		setContentPane(new PanelMenuOcuparHabitacion(ocupacion, this, frameA));
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		this.setVisible(true);
