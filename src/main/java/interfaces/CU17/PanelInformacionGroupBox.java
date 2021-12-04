@@ -30,6 +30,8 @@ public class PanelInformacionGroupBox extends JPanel{
 	
 	private HabitacionDTO habitacion;
 	
+	private Integer seleccionados = 0;
+	
 	public PanelInformacionGroupBox(HabitacionDTO habitacion) {
 		this.habitacion = habitacion;
 		
@@ -51,7 +53,13 @@ public class PanelInformacionGroupBox extends JPanel{
 		numeroHabitacion.setFont(fuenteLabelCampo);	c.gridy = 1; this.add(numeroHabitacion, c);
 		
 		personasSeleccionadas = new JLabel();
-		personasSeleccionadas.setText("X/" + habitacion.getTipo().getCapacidad() + " personas seleccionadas");	
+		personasSeleccionadas.setText(seleccionados + "/" + habitacion.getTipo().getCapacidad() + " personas seleccionadas");	
 		personasSeleccionadas.setFont(fuenteLabelCampo);	c.gridy = 2; this.add(personasSeleccionadas, c);
+	}
+	
+	public void setSeleccionados(Integer seleccionados) {
+		this.seleccionados = seleccionados;
+		
+		personasSeleccionadas.setText(seleccionados + "/" + habitacion.getTipo().getCapacidad() + " personas seleccionadas");
 	}
 }
