@@ -12,14 +12,16 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.WindowConstants;
 
 import main.java.enums.TipoMensaje;
 
-public class Mensaje extends JFrame{
+public class Mensaje extends JDialog{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -48,8 +50,9 @@ public class Mensaje extends JFrame{
 	
 	private JFrame frameActual;
 
-	public Mensaje(Integer id, String texto, TipoMensaje tipo, String opcionAceptar, final String opcionCancelar) {
-		super("Sistema Hotel Premier");
+	public Mensaje(Integer id, String texto, TipoMensaje tipo, String opcionAceptar, final String opcionCancelar) {	
+		super();
+		this.setTitle("Sistema Hotel Premier");
 		this.id = id;
 		this.texto = texto;
 		this.elegirIconoSegunTipoMensaje(tipo);
@@ -63,7 +66,6 @@ public class Mensaje extends JFrame{
 		
 		frame.setEnabled(false);	//Para que solo se pueda clickear el mensaje
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 240);
 		contentPane = new JPanel();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

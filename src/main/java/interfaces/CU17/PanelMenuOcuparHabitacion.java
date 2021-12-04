@@ -1,5 +1,6 @@
 package main.java.interfaces.CU17;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -38,7 +39,13 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		
 		this.setBackground(Color.white);
 		
-		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), " Ocupar Habitación", 1, 0, fuenteGroupBox));
+		//this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), " Ocupar Habitación", 1, 0, fuenteGroupBox));
+		this.setBorder(
+				javax.swing.BorderFactory.createCompoundBorder(
+						javax.swing.BorderFactory.createEmptyBorder(10, 20, 20, 20),
+						javax.swing.BorderFactory.createTitledBorder(new LineBorder (Color.black, 1), " Ocupar Habitación", 1, 0, fuenteGroupBox)
+						)
+		);
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();

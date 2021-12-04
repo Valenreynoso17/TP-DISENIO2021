@@ -17,14 +17,15 @@ public class FrameMenuOcuparHabitacion extends JFrame{
 
 	public FrameMenuOcuparHabitacion(FrameOcuparHabitacionConPasajeros frameA) {
 		super("Sistema Hotel Premier");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 400);
-		contentPane = new JPanel(new GridBagLayout());	GridBagConstraints c = new GridBagConstraints();	//TODO: Ver si puede hacerse de una manera mas eficiente
-		c.weightx = 0.1; c.weighty = 0.1;	contentPane.setBackground(Color.WHITE);	c.fill = GridBagConstraints.BOTH;	c.insets = new Insets(10,30,15,30);
-		contentPane.add(new PanelMenuOcuparHabitacion(this, frameA), c);
+		//contentPane = new JPanel(new GridBagLayout());	GridBagConstraints c = new GridBagConstraints();	//TODO: Ver si puede hacerse de una manera mas eficiente
+		//c.weightx = 0.1; c.weighty = 0.1;	contentPane.setBackground(Color.WHITE);	c.fill = GridBagConstraints.BOTH;	c.insets = new Insets(10,30,15,30);
+		//contentPane.add(new PanelMenuOcuparHabitacion(this, frameA), c);
 		
 		//contentPane = new PanelMenuOcuparHabitacion(this);
-		setContentPane(contentPane);
+		//setContentPane(contentPane);
+		setContentPane(new PanelMenuOcuparHabitacion(this, frameA));
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		this.setVisible(true);
