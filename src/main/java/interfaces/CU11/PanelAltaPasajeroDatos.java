@@ -91,7 +91,9 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private JTextField apellido;					//Campos de texto
 	private JTextField nombre;
 	private JTextField numeroDocumento;
-	private JTextField fechaNacimiento;
+	private MaskFormatter formato; 
+	private JTextField fechaNacimiento ;
+	
 	private JTextField email;
 	private JTextField telefono;
 	private JTextField ocupacion;
@@ -312,8 +314,18 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			  }
 		});
 		fondoJTextField = new TextPrompt("dd/mm/aaaa", fechaNacimiento); fondoJTextField.setForeground(Color.GRAY);
+	    
+	    try {
+	    	fechaNacimiento = new JFormattedTextField(new MaskFormatter("##'/##'/####"));
+	    	
+	    }catch (ParseException e) {
+	    	e.printStackTrace();
+	    }
+		c.gridx = 0; c.gridy = 5;	fechaNacimiento.setMinimumSize(dimensionCampo);	fechaNacimiento.setPreferredSize(dimensionCampo);	this.add(fechaNacimiento, c);
+
 		c.gridx = 0; c.gridy = 5;	fechaNacimiento.setMinimumSize(dimensionCampo);	fechaNacimiento.setPreferredSize(dimensionCampo);	
 		this.add(fechaNacimiento, c);
+
 		
 			c.fill = GridBagConstraints.NONE; c.weightx = pesoXLabel; c.weighty = pesoYLabel; c.insets = insetLabel; c.gridwidth = 1;
 		
