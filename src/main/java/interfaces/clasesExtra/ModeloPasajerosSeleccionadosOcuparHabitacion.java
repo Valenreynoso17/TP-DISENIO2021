@@ -56,7 +56,7 @@ public class ModeloPasajerosSeleccionadosOcuparHabitacion extends DefaultTableMo
 	}
 	
 	public List<PasajeroDTO> getPasajerosSeleccionados(){
-		return  this.pasajerosSeleccionados;
+		return this.pasajerosSeleccionados;
 	}
 
 }

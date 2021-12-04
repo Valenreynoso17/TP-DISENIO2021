@@ -9,12 +9,14 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import main.java.dtos.HabitacionDTO;
+import main.java.dtos.OcupacionDTO;
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.InputInvalidaException;
@@ -59,6 +61,9 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	private String textoMensajeNoExistePasajeroSiguiente = "<html><p>No seleccionó ningún pasajero. ¿Desea agregar un nuevo pasajero?</p><html>";
 	@SuppressWarnings("unused")
 	private Mensaje mensajeNoExistePasajeroSiguiente = new Mensaje(3, textoMensajeNoExistePasajeroSiguiente, TipoMensaje.CONFIRMACION, "Si", "No");
+	
+	private String textoPasajerosNoSeleccionados = 	"<html><p>Seleccione al menos un ocupante.</p><html>";
+	private Mensaje mensajePasajerosNoSeleccionados = new Mensaje(5, textoPasajerosNoSeleccionados, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private JButton buscar;
 	private JButton cancelar;
@@ -182,8 +187,14 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		siguiente.setBorder(bordeBoton);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frameActual.setEnabled(false);	//Por si quiere cagar otro pasajero
-				new FrameMenuOcuparHabitacion(frame);
+				List<PasajeroDTO> pasajeros = panelPasajerosSeleccionadosGroupBox.getPasajerosSeleccionados();
+				
+				if (pasajeros.isEmpty()) mensajePasajerosNoSeleccionados.mostrar(getPanel(), frameActual);
+				else {
+					OcupacionDTO ocupacionDTO = new OcupacionDTO(idHabitacion, ingreso, egreso, pasajeros, pasajeros.get(0));
+					frameActual.setEnabled(false);	//Por si quiere cargar otro pasajero
+					new FrameMenuOcuparHabitacion(frame);
+				}
 				
 				
 				

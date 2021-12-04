@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -133,5 +134,9 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 			
 			
 		}
+	}
+	
+	public List<PasajeroDTO> getPasajerosSeleccionados() {
+		return miModelo.getPasajerosSeleccionados();
 	}
 }
