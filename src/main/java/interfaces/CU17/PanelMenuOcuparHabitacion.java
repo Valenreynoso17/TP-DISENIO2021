@@ -15,12 +15,16 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import main.java.dtos.OcupacionDTO;
+import main.java.gestores.GestorOcupacion;
 import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelMenuOcuparHabitacion extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
+	
+	private GestorOcupacion gestorOcupacion;
 	
 	private JButton cargarOtroPasajero;
 	private JButton cargarOtraHabitacion;
@@ -35,7 +39,9 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 	
 	private Dimension dimensionBoton = new Dimension(200, 50);
 	
-	public PanelMenuOcuparHabitacion(FrameMenuOcuparHabitacion frame, FrameOcuparHabitacionConPasajeros frameA) {
+	public PanelMenuOcuparHabitacion(OcupacionDTO ocupacion, FrameMenuOcuparHabitacion frame, FrameOcuparHabitacionConPasajeros frameA) {
+		this.gestorOcupacion = GestorOcupacion.getInstance();
+		
 		
 		this.setBackground(Color.white);
 		
@@ -84,6 +90,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		cargarOtraHabitacion.setBorder(bordeBoton);
 		cargarOtraHabitacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				gestorOcupacion.guardarOcupacion(ocupacion);
 				
 				frame.dispose();
 				frameA.dispose();	//Estaba invisible, hay que cerrarla
@@ -102,6 +109,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		salir.setBorder(bordeBoton);
 		salir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	//TODO: Hacer aca el pasaje de todos los datos para cargar la ocupacion
+				gestorOcupacion.guardarOcupacion(ocupacion);
 				
 				frame.dispose();
 				frameA.dispose();	//Estaba invisible, hay que cerrarla
