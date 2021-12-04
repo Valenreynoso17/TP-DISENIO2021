@@ -82,6 +82,7 @@ private static GestorFactura instance;
 		
 		facturaDAO.guardar(factura);
 		
+		imprimir(factura);
 		// faltaria la parte de imprimir
 	}
 	
@@ -131,5 +132,9 @@ private static GestorFactura instance;
 		}
 		
 		return retorno;
+	}
+	
+	public void imprimir(Factura factura) {
+		
 	}
 }

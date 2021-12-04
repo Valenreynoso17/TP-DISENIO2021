@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import main.java.dtos.OcupacionDTO;
 import main.java.dtos.ResponsableDePagoDTO;
 import main.java.enums.TipoMensaje;
+import main.java.excepciones.HabitacionInexistenteException;
 import main.java.excepciones.InputInvalidaException;
 import main.java.excepciones.InputVacioException;
 import main.java.excepciones.OcupacionYaFacturadaException;
@@ -55,7 +56,6 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	
 	private String textoHabitacionInexsistente = "<html><p>La habitación " + "Luego se reemplaza" + " no existe. Por favor, ingrese un número de una habitación"
 											   + " existente en el sistema.</p><html>";
-	@SuppressWarnings("unused")
 	private Mensaje mensajeHabitacionInexsistente = new Mensaje(4, textoHabitacionInexsistente, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private String textoResponsableNoSeleccionado = "<html><p>No ha seleccionado ningún pasajero como responsable de pago. Por favor, "
@@ -134,6 +134,9 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 					//Si la habitación no tiene ninguna deuda asociada, PEDIR EL NUMERO DE HABITACION y mostrar:
 					mensajeHabitacionSinDeudaAsociada.setTextoMensaje("<html><p>La habitación " + this.panelFacturarGroupBox.getNumeroHabitacion() + " no tiene ninguna deuda asociada.</p><html>");
 					mensajeHabitacionSinDeudaAsociada.mostrar(getPanel(), frame);
+				}
+				catch(HabitacionInexistenteException exc) {
+					mensajeHabitacionInexsistente.mostrar(getPanel(), frame);
 				}
 		});
 		c.anchor = GridBagConstraints.CENTER;

@@ -8,13 +8,20 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import main.java.dtos.FacturaDTO;
+import main.java.dtos.ItemFilaDTO;
 import main.java.dtos.OcupacionDTO;
 import main.java.dtos.ResponsableDePagoDTO;
 import main.java.enums.TipoMensaje;
+import main.java.excepciones.NingunElementoSeleccionadoFacturacionException;
+import main.java.excepciones.RecargoNoEstaEnUltimaFacturaException;
+import main.java.gestores.GestorFactura;
+import main.java.gestores.GestorOcupacion;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
@@ -41,6 +48,9 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	private Insets insetPanelFacturarConsumos = new Insets(30,30,20,30);
 	
 	private FrameFacturarConsumos frameActual;
+	
+	private GestorOcupacion gestorOcupacion;
+	private GestorFactura gestorFactura;
 	//TODO: Imprimir
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
@@ -48,6 +58,11 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	public PanelFacturarConsumos(final FrameFacturarConsumos frame, OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsablePagoDTO) {
 		
 		this.frameActual = frame;
+		
+		this.gestorOcupacion = GestorOcupacion.getInstance();
+		
+		// TODO: pasarselo a los paneles y crear la tabla
+		List<ItemFilaDTO> listaItemsFilaDTO = gestorOcupacion.calcularItemsAPagar(ocupacionDTO, responsablePagoDTO);
 		
 		this.setBackground(Color.WHITE);
 		
@@ -89,9 +104,21 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 			public void actionPerformed(ActionEvent e) {
 				
 				//TODO: Imprimir	
+				FacturaDTO facturaDTO = crearFacturaDTO(responsablePagoDTO);
 				
-				//Si no seleccionó ningún consumo hay que mostrar: 
-				mensajeNadaSeleccionado.mostrar(getPanel(), frame);
+				try {
+					gestorFactura.crearFactura(facturaDTO, ocupacionDTO);
+					
+				} catch (NingunElementoSeleccionadoFacturacionException e1) {
+					//Si no seleccionó ningún consumo hay que mostrar: 
+					mensajeNadaSeleccionado.mostrar(getPanel(), frame);
+					
+				} catch (RecargoNoEstaEnUltimaFacturaException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,20,60);
@@ -119,5 +146,12 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	public void confirmoCancelar(Integer idMensaje) {
 
 		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
+	}
+	
+	public FacturaDTO crearFacturaDTO(ResponsableDePagoDTO responsablePagoDTO) {
+		
+		//TipoFactura tipoFactura;
+		return null;
+		//return new FacturaDTO(responsablePagoDTO, );
 	}
 }
