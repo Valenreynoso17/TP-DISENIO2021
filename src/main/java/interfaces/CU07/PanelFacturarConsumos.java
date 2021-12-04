@@ -30,7 +30,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	
 	private static final long serialVersionUID = 1L;
 	
-	private PanelFacturarConsumosGroupBox panelFacturarConsumosGroupBox = new PanelFacturarConsumosGroupBox();
+	private PanelFacturarConsumosGroupBox panelFacturarConsumosGroupBox;
 	
 	private JButton aceptar;
 	private JButton cancelar;
@@ -69,6 +69,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
+		panelFacturarConsumosGroupBox = new PanelFacturarConsumosGroupBox(ocupacionDTO, responsablePagoDTO);
 		c.insets = insetPanelFacturarConsumos;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 0;	c.gridwidth = 2;
 		c.weightx = 0.1; c.weighty = 0.1;			this.add(panelFacturarConsumosGroupBox, c);
