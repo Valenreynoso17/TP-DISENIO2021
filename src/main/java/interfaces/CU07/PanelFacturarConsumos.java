@@ -107,7 +107,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 			public void actionPerformed(ActionEvent e) {
 				
 				List<ItemFilaDTO> listaItemsFila = panelFacturarConsumosGroupBox.getListaItems();
-				FacturaDTO facturaDTO = crearFacturaDTO(responsablePagoDTO, null); 
+				FacturaDTO facturaDTO = crearFacturaDTO(responsablePagoDTO, listaItemsFila); 
 				
 				try {
 					gestorFactura.crearFactura(facturaDTO, ocupacionDTO);

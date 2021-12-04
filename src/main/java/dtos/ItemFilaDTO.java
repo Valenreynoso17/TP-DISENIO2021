@@ -48,4 +48,8 @@ public class ItemFilaDTO {
 		return esRecargo;
 	}
 	
+	public void setCantidadSeleccionada(Integer cant) {
+		this.cantidadSeleccionada = cant;
+	}
+	
 }
