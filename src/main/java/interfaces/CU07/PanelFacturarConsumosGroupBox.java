@@ -8,6 +8,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -20,8 +23,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import main.java.dtos.ItemFilaDTO;
 import main.java.dtos.OcupacionDTO;
 import main.java.dtos.ResponsableDePagoDTO;
+import main.java.enums.PosicionFrenteIva;
 import main.java.interfaces.clasesExtra.*;
 
 public class PanelFacturarConsumosGroupBox extends JPanel{
@@ -76,7 +81,15 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	private ButtonEditor editorBotonMenos = new ButtonEditor(new JCheckBox(), '-');
 	private ButtonEditor editorBotonMas = new ButtonEditor(new JCheckBox(), '+');
 	
-	public PanelFacturarConsumosGroupBox(OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsableDTO) {
+	private OcupacionDTO ocupacion;
+	private ResponsableDePagoDTO responsable;
+	private List<ItemFilaDTO> listaItems;
+	
+	public PanelFacturarConsumosGroupBox(OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsableDTO, List<ItemFilaDTO> listaItemsDTO) {
+		
+		ocupacion = ocupacionDTO;
+		responsable = responsableDTO;
+		listaItems = listaItemsDTO;
 		
 		this.setBackground(Color.white);
 		
@@ -94,7 +107,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 			c.anchor = GridBagConstraints.EAST;	c.fill = GridBagConstraints.CENTER; c.weightx = pesoXCampo; c.weighty = pesoYCampo; //c.insets = insetCampo;
 		
 		razonSocial = new JTextField(); 
-		razonSocial.setText("REEMPLAZAR");
+		razonSocial.setText(responsableDTO.getRazonSocial());
 		razonSocial.setFont(fuenteLabelCampo);	razonSocial.setBorder(bordeCampo);	razonSocial.setEditable(false);
 		c.gridx = 1; c.gridy = 0;	razonSocial.setMinimumSize(dimensionCampo); razonSocial.setPreferredSize(dimensionCampo);	
 		this.add(razonSocial, c); 
@@ -105,8 +118,9 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		
 			c.anchor = GridBagConstraints.EAST; c.fill = GridBagConstraints.CENTER; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampoDerecho;
 		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");	//TODO: Ver si funciona
 		fecha = new JTextField(); 
-		fecha.setText("REEMPLAZAR");
+		fecha.setText(ocupacionDTO.getPosibleFechaHoraDeSalida().toLocalDate().format(formatter));
 		fecha.setFont(fuenteLabelCampo);	fecha.setBorder(bordeCampo);	fecha.setEditable(false);
 		c.gridx = 3; c.gridy = 0;	fecha.setMinimumSize(dimensionCampo);	fecha.setPreferredSize(dimensionCampo);	
 		this.add(fecha, c); 	
@@ -118,7 +132,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 			c.anchor = GridBagConstraints.EAST; c.fill = GridBagConstraints.CENTER; c.weightx = pesoXCampo; c.weighty = pesoYCampo; //c.insets = insetCampo;
 		
 		cuit = new JTextField(); 
-		cuit.setText("REEMPLAZAR");
+		cuit.setText(responsableDTO.getCuit());
 		cuit.setFont(fuenteLabelCampo);	cuit.setBorder(bordeCampo);	cuit.setEditable(false);
 		c.gridx = 1; c.gridy = 1;	cuit.setMinimumSize(dimensionCampo);	cuit.setPreferredSize(dimensionCampo);	
 		this.add(cuit, c); 
@@ -130,7 +144,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 			c.anchor = GridBagConstraints.EAST; c.fill = GridBagConstraints.CENTER; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampoDerecho;
 		
 		posicionFrenteIVA = new JTextField(); 
-		posicionFrenteIVA.setText("REEMPLAZAR");
+		posicionFrenteIVA.setText(responsableDTO.getRazonSocial());
 		posicionFrenteIVA.setFont(fuenteLabelCampo);	posicionFrenteIVA.setBorder(bordeCampo);	posicionFrenteIVA.setEditable(false);
 		c.gridx = 3; c.gridy = 1;	posicionFrenteIVA.setMinimumSize(dimensionCampo);	posicionFrenteIVA.setPreferredSize(dimensionCampo);	
 		this.add(posicionFrenteIVA, c); 
@@ -141,8 +155,9 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		
 			c.anchor = GridBagConstraints.WEST;	c.fill = GridBagConstraints.WEST; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampoTipoFactura; 
 		
-		tipoFactura = new JTextField(); 
-		tipoFactura.setText("A");
+		tipoFactura = new JTextField();
+		String tipoFacturaString = (responsableDTO.getPosicionFrenteIva().equals(PosicionFrenteIva.RESPONSABLE_INSCRIPTO)) ? "A" : "B";	//TODO: Ver
+		tipoFactura.setText(tipoFacturaString);
 		tipoFactura.setFont(fuenteLabelCampo);	tipoFactura.setBorder(bordeCampo);	tipoFactura.setEditable(false);
 		c.gridx = 2; c.gridy = 2;	tipoFactura.setMinimumSize(dimensionCampoTipoFactura);	tipoFactura.setPreferredSize(dimensionCampoTipoFactura);	
 		this.add(tipoFactura, c); 
@@ -279,6 +294,11 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	public double getTotalAPagar() {
 		
 		return Double.parseDouble(this.totalAPagar.getText());
+	}
+	
+	public List<ItemFilaDTO> getListaItems(){
+		
+		return this.listaItems; 	//TODO: Cambiar
 	}
 
 }
