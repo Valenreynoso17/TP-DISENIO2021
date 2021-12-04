@@ -33,15 +33,28 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 	
 	private JTable tabla;
 	private ModeloTablaPasajeros miModelo;
+<<<<<<< HEAD
+=======
 	private PanelPaginacion paginacion;
+<<<<<<< HEAD
+	
+>>>>>>> 0db6a6f87cabe890fa7c6701dd5875cba6eec031
+	private JLabel label;
+	private Vector filaSeleccionada = null;
+	private Integer nroFilaSeleccionada;
+=======
 	private RenderParaTablas renderTabla;
 
+>>>>>>> 6cc6d324f8645fa4635ed99aa9acb1e920e11f91
 	private JScrollPane tableContainer;
-	
 	private Insets insetTabla = new Insets(15, 100, 15, 100);
+<<<<<<< HEAD
+	private Font fuenteLabelCampo =new Font("SourceSansPro", Font.PLAIN, 14);
+=======
 	
 	//private Dimension dimensionTabla = new Dimension(0,200);
 	
+>>>>>>> 6cc6d324f8645fa4635ed99aa9acb1e920e11f91
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 	
 	private PasajeroDTO filtros;
