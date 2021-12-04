@@ -62,4 +62,8 @@ public class PanelInformacionGroupBox extends JPanel{
 		
 		personasSeleccionadas.setText(seleccionados + "/" + habitacion.getTipo().getCapacidad() + " personas seleccionadas");
 	}
+	
+	public Integer getSeleccionados() {
+		return seleccionados;
+	}
 }

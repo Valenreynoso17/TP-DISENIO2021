@@ -182,9 +182,11 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		siguiente.setBorder(bordeBoton);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				frameActual.setEnabled(false);	//Por si quiere cagar otro pasajero
 				new FrameMenuOcuparHabitacion(frame);
+				
+				
+				
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
