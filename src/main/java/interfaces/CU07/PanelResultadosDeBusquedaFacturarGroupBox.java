@@ -31,7 +31,7 @@ import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.excepciones.ReponsablePagoMenorDeEdadException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaFacturar;
-import main.java.interfaces.clasesExtra.RenderParaTablas;
+import main.java.interfaces.clasesExtra.RenderParaHeaderTablas;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
 public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
@@ -60,6 +60,10 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	private FrameFacturarANombreDeUnTercero frameSiguiente;
 	
 	private Dimension dimensionBoton = new Dimension(250, 33);
+	
+	private RenderParaHeaderTablas renderTabla;
+	
+	private OcupacionDTO ocupacion;
 
 	public PanelResultadosDeBusquedaFacturarGroupBox(FrameFacturar frame) {
 		
@@ -79,10 +83,9 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
 		
-		RenderParaTablas a = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
+		renderTabla = new RenderParaHeaderTablas(tabla.getDefaultRenderer(Object.class), false);
 		
-		tabla.setDefaultRenderer(Object.class, a);
-		tabla.getTableHeader().setDefaultRenderer(a);
+		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
@@ -97,19 +100,8 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		
 		tabla.setAutoCreateRowSorter(true);	//Para que se ordenen
 		
-		tabla.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {				
-				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
-				nroFilaSeleccionada = tabla.getSelectedRow();
-				
-				System.out.println("Fila: "+tabla.getSelectedRow()+" nombre: "+tabla.getValueAt(tabla.getSelectedRow(), 1));
-			}
-		});
-
-//		Object[] prueba = {"Perez", "Juan", TipoDocumento.DNI, "32333444", LocalDate.now()};	miModelo.addRow(prueba);	//TODO: Borrar
-//		Object[] prueba1 = {"Gomez", "Pedro", TipoDocumento.DNI, "5435634634", LocalDate.now()};	miModelo.addRow(prueba1);	//TODO: Borrar
-//		Object[] prueba2 = {"Pereira", "María", TipoDocumento.DNI, "12412444", LocalDate.now()};	miModelo.addRow(prueba2);	//TODO: Borrar
-		
+		tabla.setSelectionBackground(Color.decode("#e0e0e0"));
+	
 		//PARA CENTRAR
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
@@ -135,6 +127,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		c.gridwidth = 1;
 		
 		facturarANombreDeUnTercero = new JButton("Facturar a nombre de un tercero");
+		facturarANombreDeUnTercero.setEnabled(false);			//Se habilita cuando se aprieta Buscar con campos validos
 		facturarANombreDeUnTercero.setMinimumSize(dimensionBoton);
 		facturarANombreDeUnTercero.setPreferredSize(dimensionBoton);
 		facturarANombreDeUnTercero.setBackground(Color.decode("#E0E0E0"));
@@ -144,6 +137,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 			
 			frameActual.setEnabled(false);
 			frameSiguiente = new FrameFacturarANombreDeUnTercero(frame); 
+			frameSiguiente.ocupacionSeleccionada(ocupacion);
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
 		c.gridy = 1;
@@ -152,23 +146,29 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		
 	}
 	
-		public PasajeroDTO pasajeroSeleccionado() throws PasajeroNoSeleccionadoException{
-		
-			if(tabla.getSelectedRow() < 0) {
-				
-				throw new PasajeroNoSeleccionadoException();
-			}				
+	public PasajeroDTO pasajeroSeleccionado() throws PasajeroNoSeleccionadoException{
+	
+		if(tabla.getSelectedRow() < 0) {
+			
+			throw new PasajeroNoSeleccionadoException();
+		}				
 
-			System.out.println("getSelectedRow: "+tabla.getSelectedRow());
-			System.out.println("converRowIndexToModel: "+tabla.convertRowIndexToModel(tabla.getSelectedRow()));
-			System.out.println("PasajeroDTO: "+this.miModelo.getPasajerosHabitacion().get(tabla.convertRowIndexToModel(tabla.getSelectedRow())));
-			
-			return this.miModelo.getPasajerosHabitacion().get(tabla.convertRowIndexToModel(tabla.getSelectedRow()));
-	}
+		System.out.println("getSelectedRow: "+tabla.getSelectedRow());
+		System.out.println("converRowIndexToModel: "+tabla.convertRowIndexToModel(tabla.getSelectedRow()));
+		System.out.println("PasajeroDTO: "+this.miModelo.getPasajerosHabitacion().get(tabla.convertRowIndexToModel(tabla.getSelectedRow())));
 		
-		public void ocupacionSeleccionada(OcupacionDTO ocupacionDTO) {
-			
-			miModelo.cargarPasajeros(ocupacionDTO.getListaPasajerosDTO());
-			frameSiguiente.ocupacionSeleccionada(ocupacionDTO);
-		}
+		return this.miModelo.getPasajerosHabitacion().get(tabla.convertRowIndexToModel(tabla.getSelectedRow()));
+	}
+	
+	public void activarTabla(OcupacionDTO ocupacionDTO) {
+		
+		facturarANombreDeUnTercero.setEnabled(true);
+		miModelo.actualizarTabla(ocupacionDTO.getListaPasajerosDTO());
+		this.ocupacion = ocupacionDTO;
+	}
+	
+	public void desactivarTabla() {
+		
+		miModelo.limpiarTabla();
+	}
 }

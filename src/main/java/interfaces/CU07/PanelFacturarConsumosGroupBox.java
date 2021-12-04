@@ -49,12 +49,8 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	
 	private JTable tabla;
 	private ModeloTablaConsumos miModelo;	
-	private RenderParaTablas renderTabla; 
+	private RenderParaHeaderTablas renderTabla; 
 	
-	@SuppressWarnings({ "rawtypes", "unused" })
-	private Vector filaSeleccionada = null;
-	@SuppressWarnings("unused")
-	private Integer nroFilaSeleccionada;
 	private JScrollPane tableContainer;
 	
 	private Insets insetTabla = new Insets(0,40,0,60);	//Espacios en blanco para acomodar los componentes
@@ -78,8 +74,8 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	
 	private ButtonRenderer renderBotonMenos = new ButtonRenderer('-');
 	private ButtonRenderer renderBotonMas = new ButtonRenderer('+');
-	private ButtonEditor editorBotonMenos = new ButtonEditor(new JCheckBox(), '-');
-	private ButtonEditor editorBotonMas = new ButtonEditor(new JCheckBox(), '+');
+	private ButtonEditor editorBotonMenos = new ButtonEditor(new JCheckBox(), '-', this);	//TODO: Ver si se puede hacer mas lindo/eficiente
+	private ButtonEditor editorBotonMas = new ButtonEditor(new JCheckBox(), '+', this);
 	
 	private OcupacionDTO ocupacion;
 	private ResponsableDePagoDTO responsable;
@@ -144,7 +140,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 			c.anchor = GridBagConstraints.EAST; c.fill = GridBagConstraints.CENTER; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampoDerecho;
 		
 		posicionFrenteIVA = new JTextField(); 
-		posicionFrenteIVA.setText(responsableDTO.getRazonSocial());
+		posicionFrenteIVA.setText(responsableDTO.getPosicionFrenteIva().toString().replaceAll("_", " "));	//Para que se muestre sin guion bajo
 		posicionFrenteIVA.setFont(fuenteLabelCampo);	posicionFrenteIVA.setBorder(bordeCampo);	posicionFrenteIVA.setEditable(false);
 		c.gridx = 3; c.gridy = 1;	posicionFrenteIVA.setMinimumSize(dimensionCampo);	posicionFrenteIVA.setPreferredSize(dimensionCampo);	
 		this.add(posicionFrenteIVA, c); 
@@ -164,16 +160,17 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		
 		//----------- CONFIGURACIONES TABLA -----------
 		
-		miModelo = new ModeloTablaConsumos();
+		miModelo = new ModeloTablaConsumos(listaItemsDTO);
+		
+		miModelo.cargarConsumos();
 		
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
 		
-		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
-		
-//		tabla.setDefaultRenderer(Object.class, renderTabla);
+		renderTabla = new RenderParaHeaderTablas(tabla.getDefaultRenderer(Object.class), false);
+
 		tabla.getTableHeader().setDefaultRenderer(renderTabla);
-		
+				
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
 		tabla.setRowSelectionAllowed(false);
@@ -185,23 +182,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		tabla.setAutoCreateRowSorter(false);	//Para que no se ordenen
-		
-		tabla.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {				
-				filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
-				nroFilaSeleccionada = tabla.getSelectedRow();
-			}
-		});
-		
-		
-//		Object[] prueba = new Object[] {"VALOR DE LA ESTADÍA","", valorCantidad.toString()+"/3", "", 1400.00, 4200.00}; 
-//		
-//		miModelo.addRow(prueba);
-//		for(int i = 0; i < 8; i++)
-//			miModelo.addRow(new Object[]{null,null,null,null,null,null});	//Fila en blanco
-//		
-//		miModelo.addRow(new Object[] {"TOTAL","","","","", 4200.00});
+		tabla.setAutoCreateRowSorter(false);	//Para que no se ordenen		
 		
 		tabla.getColumnModel().getColumn(1).setCellRenderer(renderBotonMenos);
 		tabla.getColumnModel().getColumn(1).setCellEditor(editorBotonMenos);
@@ -251,7 +232,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 			c.anchor = GridBagConstraints.WEST;	c.fill = GridBagConstraints.CENTER; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampoDerecho;
 		
 		subtotal = new JTextField(); 
-		subtotal.setText("REEMPLAZAR");
+		subtotal.setText("$ 0.00");
 		subtotal.setFont(fuenteLabelCampo);	subtotal.setBorder(bordeCampo);	subtotal.setEditable(false);
 		c.gridx = 3; c.gridy = 4;	subtotal.setMinimumSize(dimensionCamposFinales);	subtotal.setPreferredSize(dimensionCamposFinales);	
 		this.add(subtotal, c); 
@@ -263,7 +244,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 			c.anchor = GridBagConstraints.WEST;	c.fill = GridBagConstraints.CENTER; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampoDerecho;
 		
 		IVA = new JTextField(); 
-		IVA.setText("REEMPLAZAR");
+		IVA.setText("$ 0.00");
 		IVA.setFont(fuenteLabelCampo);	IVA.setBorder(bordeCampo);	IVA.setEditable(false);
 		c.gridx = 3; c.gridy = 5;	IVA.setMinimumSize(dimensionCamposFinales);	IVA.setPreferredSize(dimensionCamposFinales);	
 		this.add(IVA, c); 
@@ -275,30 +256,41 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 			c.anchor = GridBagConstraints.WEST;	c.fill = GridBagConstraints.CENTER; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampoDerecho;
 		
 		totalAPagar = new JTextField(); 
-		totalAPagar.setText("REEMPLAZAR");
+		totalAPagar.setText("$ 0.00");
 		totalAPagar.setFont(fuenteLabelCampo);	totalAPagar.setBorder(bordeCampo);	totalAPagar.setEditable(false);	totalAPagar.setBackground(Color.decode("#edf4b1"));
 		c.gridx = 3; c.gridy = 6;	totalAPagar.setMinimumSize(dimensionCamposFinales);	totalAPagar.setPreferredSize(dimensionCamposFinales);	
 		this.add(totalAPagar, c); 
 	}
-	
+
 	public double getSubtotal() {
 		
-		return Double.parseDouble(this.subtotal.getText());
+		return Double.parseDouble(this.subtotal.getText().substring(2));	//Para que elimine el "$ "
 	}
 	
 	public double getIVA() {
 		
-		return Double.parseDouble(this.IVA.getText());
+		return Double.parseDouble(this.IVA.getText().substring(2));			//Para que elimine el "$ "
 	}
 	
 	public double getTotalAPagar() {
 		
-		return Double.parseDouble(this.totalAPagar.getText());
+		return Double.parseDouble(this.totalAPagar.getText().substring(2));	//Para que elimine el "$ "
 	}
 	
 	public List<ItemFilaDTO> getListaItems(){
 		
 		return this.listaItems; 	//TODO: Cambiar
+	}
+
+	public void actualizarItemsCantidadModificada(Character c) {
+		
+		
+		
+		miModelo.actualizarFila(c, tabla.getSelectedRow());
+		
+//		this.subtotal =
+//		this.IVA
+//		this.totalAPagar
 	}
 
 }

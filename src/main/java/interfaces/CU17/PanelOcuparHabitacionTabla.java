@@ -24,9 +24,9 @@ import main.java.enums.ColumnaBuscarPasajeros;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaPasajeros;
+import main.java.interfaces.clasesExtra.RenderParaHeaderTablas;
 import main.java.interfaces.clasesExtra.RenderParaTablaEstadoColores;
 import main.java.interfaces.clasesExtra.RenderParaTablaOcuparHabitacion;
-import main.java.interfaces.clasesExtra.RenderParaTablas;
 
 public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 	
@@ -35,7 +35,7 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 	private JTable tabla;
 	private ModeloTablaPasajeros miModelo;
 	private PanelPaginacion paginacion;
-	private RenderParaTablas renderTabla;
+	private RenderParaHeaderTablas renderTabla;
 	
 	@SuppressWarnings("rawtypes")
 	private Vector filaSeleccionada = null;
@@ -84,7 +84,7 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		
 		tabla.setSelectionBackground(Color.decode("#e0e0e0"));
 		
-		renderTabla = new RenderParaTablas(tabla.getDefaultRenderer(Object.class), false);
+		renderTabla = new RenderParaHeaderTablas(tabla.getDefaultRenderer(Object.class), false);
 		
 		tabla.getTableHeader().setDefaultRenderer(renderTabla);
 		

@@ -21,7 +21,7 @@ import javax.swing.WindowConstants;
 
 import main.java.enums.TipoMensaje;
 
-public class Mensaje extends JDialog{
+public class Mensaje extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 

@@ -97,7 +97,7 @@ private static GestorFactura instance;
 			
 			cantCosasAFacturar += unItem.getCantidadMax();
 			
-			cantSeleccionadaEnItem = unItem.getCantidadSeleccionada();
+			cantSeleccionadaEnItem = unItem.getCantidadSeleccionadaFinal();
 			
 			if(cantSeleccionadaEnItem > 0) {
 				

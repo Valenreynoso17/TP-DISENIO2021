@@ -66,4 +66,10 @@ public class ModeloTablaFacturar extends DefaultTableModel{
 		return  this.pasajerosHabitacion;
 	}
 
+	public void actualizarTabla(List<PasajeroDTO> listaPasajerosDTO) {
+		
+		this.limpiarTabla();
+		this.cargarPasajeros(listaPasajerosDTO);
+	}
+
 }

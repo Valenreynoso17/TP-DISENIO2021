@@ -48,18 +48,17 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	
 	private String textoPasajeroMenorDeEdad = "<html><p>La persona ingresada como 'Responsable de pago' es menor de edad."
 											+ " Por favor, seleccione otra persona.</p><html>";
-	@SuppressWarnings("unused")
 	private Mensaje mensajePasajeroMenorDeEdad = new Mensaje(2, textoPasajeroMenorDeEdad, TipoMensaje.ERROR, "Aceptar", null);
 	
-	private String textoHabitacionSinDeudaAsociada = "<html><p>La habitación " + "Luego se reemplaza" + " no tiene ninguna deuda asociada.</p><html>";
+	private String textoHabitacionSinDeudaAsociada = "<html><p>La habitación " + " " + " no tiene ninguna deuda asociada.</p><html>";
 	private Mensaje mensajeHabitacionSinDeudaAsociada = new Mensaje(3, textoHabitacionSinDeudaAsociada, TipoMensaje.ERROR, "Aceptar", null);
 	
-	private String textoHabitacionInexsistente = "<html><p>La habitación " + "Luego se reemplaza" + " no existe. Por favor, ingrese un número de una habitación"
+	private String textoHabitacionInexsistente = "<html><p>La habitación " + " " + " no existe. Por favor, ingrese un número de una habitación"
 											   + " existente en el sistema.</p><html>";
 	private Mensaje mensajeHabitacionInexsistente = new Mensaje(4, textoHabitacionInexsistente, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private String textoResponsableNoSeleccionado = "<html><p>No ha seleccionado ningún pasajero como responsable de pago. Por favor, "
-			   + "seleccione uno de la tabla y luego presione 'Siguiente'.</p><html>";
+													+ "seleccione uno de la tabla y luego presione 'Siguiente'.</p><html>";
 	private Mensaje mensajeResponsableNoSeleccionado = new Mensaje(5, textoResponsableNoSeleccionado, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
@@ -84,6 +83,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		this.frameActual = frame;
 		
 		gestorOcupacion = GestorOcupacion.getInstance();
+		gestorResponsablePago = GestorResponsableDePago.getInstance();
 		
 		this.setBackground(Color.WHITE);
 		
@@ -99,6 +99,8 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		c.fill = GridBagConstraints.NONE;
 		c.insets = new Insets(0,0,0,0);
 		
+		panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox(frame);	//Se declara antes para evitar errores
+		
 		buscar = new JButton("Buscar");
 		buscar.setMinimumSize(dimensionBoton);
 		buscar.setPreferredSize(dimensionBoton);
@@ -107,6 +109,8 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		buscar.setBorder(bordeBoton);
 		buscar.addActionListener(e -> {
 				try{
+						panelResultadosDeBusquedaFacturarGroupBox.desactivarTabla();
+					
 						this.panelFacturarGroupBox.inputNoEsVacia();
 						this.panelFacturarGroupBox.inputEsValida();
 						
@@ -117,25 +121,29 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 						
 						ocupacionDTO = gestorOcupacion.buscarUltimaOcupacionDTO(numeroHabitacion, fechaHora);
 						
-						panelResultadosDeBusquedaFacturarGroupBox.ocupacionSeleccionada(ocupacionDTO);
+						panelResultadosDeBusquedaFacturarGroupBox.activarTabla(ocupacionDTO);
 						
 						siguiente.setEnabled(true);
 				}
 				catch(InputVacioException exc) {
-					
+
 					this.panelFacturarGroupBox.colocarLabelVacio(exc.getInputsVacios());
 				}
 				catch (InputInvalidaException exc) {
-					
+
 					this.panelFacturarGroupBox.colocarLabelInvalido(exc.getInputsInvalidos());
 				}
 				catch(OcupacionYaFacturadaException exc) {
-					
+
 					//Si la habitación no tiene ninguna deuda asociada, PEDIR EL NUMERO DE HABITACION y mostrar:
 					mensajeHabitacionSinDeudaAsociada.setTextoMensaje("<html><p>La habitación " + this.panelFacturarGroupBox.getNumeroHabitacion() + " no tiene ninguna deuda asociada.</p><html>");
 					mensajeHabitacionSinDeudaAsociada.mostrar(getPanel(), frame);
 				}
 				catch(HabitacionInexistenteException exc) {
+					
+					//Si la habitación no existe, PEDIR EL NUMERO DE HABITACION y mostrar:
+					mensajeHabitacionInexsistente.setTextoMensaje("<html><p>La habitación " + this.panelFacturarGroupBox.getNumeroHabitacion() 
+							+ " no existe. Por favor, ingrese un número de una habitación existente en el sistema.</p><html>");
 					mensajeHabitacionInexsistente.mostrar(getPanel(), frame);
 				}
 		});
@@ -143,7 +151,6 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		c.gridx = 1; c.gridy = 1;
 		this.add(buscar, c);
 		
-		panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox(frame);
 		c.insets = insetPanelTabla;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 2;	c.gridwidth = 3;
 		c.weightx = 0.8; c.weighty = 0.8;			this.add(panelResultadosDeBusquedaFacturarGroupBox, c);
