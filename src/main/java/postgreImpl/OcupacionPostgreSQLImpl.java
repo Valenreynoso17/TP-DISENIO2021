@@ -108,8 +108,12 @@ public class OcupacionPostgreSQLImpl implements OcupacionDAO {
 		q.setParameter("nroHabitacion", nroHabitacion);
 		
 		List<Ocupacion> ocupaciones = q.getResultList();
+
+		sesion.close();		
 		
-		sesion.close();
+		for(int i = 0; i < ocupaciones.size(); i++) {
+			System.out.println(ocupaciones.get(i).getId());
+		}
 		
 		if (ocupaciones.size() == 1) ocupacion = ocupaciones.get(0); 
 		else if (ocupaciones.size() > 1) throw new DataBaseException("Existen varias ocupaciones sin horario de salida");

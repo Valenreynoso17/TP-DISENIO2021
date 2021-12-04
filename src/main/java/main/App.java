@@ -19,7 +19,7 @@ public class App{
 		
 			//FrameBuscarFacturasHabitacion fBH = new FrameBuscarFacturasHabitacion();
 		
-			FrameOcuparHabitacion fOH = new FrameOcuparHabitacion();
+			//FrameOcuparHabitacion fOH = new FrameOcuparHabitacion();
 		
 			//FrameConfirmarDatosHabitacion fCDH = new FrameConfirmarDatosHabitacion();
 		
@@ -27,7 +27,7 @@ public class App{
 		
 			//FrameReservaANombreDe fRAND = new FrameReservaANombreDe();
 		
-			//FrameFacturar fF = new FrameFacturar();
+			FrameFacturar fF = new FrameFacturar();
 		
 			//FrameFacturarANombreDeUnTercero fFANDUT = new FrameFacturarANombreDeUnTercero();<html>- Reserva 1 a nombre de Juan.<br/>- Reserva 2 a nombe de Pancho.</html>
 		

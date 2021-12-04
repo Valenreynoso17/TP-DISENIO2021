@@ -71,7 +71,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		panelFacturarConsumosGroupBox = new PanelFacturarConsumosGroupBox(ocupacionDTO, responsablePagoDTO);
+		panelFacturarConsumosGroupBox = new PanelFacturarConsumosGroupBox(ocupacionDTO, responsablePagoDTO, listaItemsFilaDTO);
 		c.insets = insetPanelFacturarConsumos;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 0;	c.gridwidth = 2;
 		c.weightx = 0.1; c.weighty = 0.1;			this.add(panelFacturarConsumosGroupBox, c);
