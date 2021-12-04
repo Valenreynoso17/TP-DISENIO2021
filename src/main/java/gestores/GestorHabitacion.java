@@ -53,6 +53,10 @@ public class GestorHabitacion {
 		return habitacionDao.buscarHabitacion(id);
 	}
 	
+	public Habitacion buscarHabitacionPorNro(Integer nroHabitacion) {
+		return habitacionDao.buscarHabitacionPorNro(nroHabitacion);
+	}
+	
 	public Map<TipoHabitacionDTO, List<HabitacionDTO>> buscarHabitaciones() {
 		Map<TipoHabitacionDTO, List<HabitacionDTO>> mapTipoHabitacion = new TreeMap<>((t1, t2) -> t1.getCostoPorNoche().compareTo(t2.getCostoPorNoche()));
 		

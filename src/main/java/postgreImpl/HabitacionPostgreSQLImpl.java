@@ -8,8 +8,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import main.java.clases.Habitacion;
+import main.java.clases.Ocupacion;
 import main.java.clases.TipoHabitacion;
 import main.java.daos.HabitacionDAO;
+import main.java.excepciones.DataBaseException;
 
 public class HabitacionPostgreSQLImpl implements HabitacionDAO {
 	private SessionFactory sessionFactory;
@@ -27,6 +29,29 @@ public class HabitacionPostgreSQLImpl implements HabitacionDAO {
 		
 		sesion.close();
 		
+		return habitacion;
+	}
+	
+	@Override
+	public Habitacion buscarHabitacionPorNro(Integer nroHabitacion) {
+		Habitacion habitacion = null;
+		
+		String stringQuery = 	"SELECT h FROM Habitacion h "
+							+ 	"WHERE h.numero = :nroHabitacion ";
+
+		Session sesion = sessionFactory.openSession();
+		
+		TypedQuery<Habitacion> q = sesion.createQuery(stringQuery, Habitacion.class);
+		
+		q.setParameter("nroHabitacion", nroHabitacion);
+		
+		List<Habitacion> habitaciones= q.getResultList();
+		
+		sesion.close();
+		
+		if (habitaciones.size() == 1) habitacion = habitaciones.get(0); 
+		else if (habitaciones.size() > 1) throw new DataBaseException("Existen varias habitaciones con el mismo numero");
+				
 		return habitacion;
 	}
 	

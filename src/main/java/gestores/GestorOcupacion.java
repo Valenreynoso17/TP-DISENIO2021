@@ -27,6 +27,7 @@ import main.java.dtos.OcupacionDTO;
 import main.java.dtos.PasajeroDTO;
 import main.java.dtos.ResponsableDePagoDTO;
 import main.java.enums.PosicionFrenteIva;
+import main.java.excepciones.HabitacionInexistenteException;
 import main.java.excepciones.OcupacionYaFacturadaException;
 import main.java.postgreImpl.OcupacionPostgreSQLImpl;
 
@@ -49,7 +50,15 @@ public class GestorOcupacion {
 		return instance;
 	}
 
-	public OcupacionDTO buscarUltimaOcupacionDTO(Integer nroHabitacion, LocalDateTime horaSalida) throws OcupacionYaFacturadaException{
+	public OcupacionDTO buscarUltimaOcupacionDTO(Integer nroHabitacion, LocalDateTime horaSalida) throws OcupacionYaFacturadaException, 
+																										 HabitacionInexistenteException {
+		
+		gestorHabitacion = GestorHabitacion.getInstance();
+		Optional<Habitacion> optHabitacion = Optional.ofNullable(gestorHabitacion.buscarHabitacionPorNro(nroHabitacion));
+		
+		if (optHabitacion.isEmpty()) {
+			throw new HabitacionInexistenteException();
+		}
 		
 		Optional<Ocupacion> optOcupacion = Optional.ofNullable(ocupacionDAO.buscarUltimaOcupacion(nroHabitacion));
 		
@@ -137,7 +146,7 @@ public class GestorOcupacion {
 		}
 		
 		if (cantDiasFacturados < cantDiasOcupacion) {
-			listaItemsFila.add(new ItemFilaDTO(ocupacionDTO.getId(), "VALOR DE LA ESTADIA", ocupacionDTO.getPrecioPorDia() * multiplicadorIVA, cantDiasOcupacion - cantDiasFacturados, true));
+			listaItemsFila.add(new ItemFilaDTO(ocupacionDTO.getId(), "VALOR DE LA ESTADIA", ocupacionDTO.getPrecioPorDia() * multiplicadorIVA, cantDiasOcupacion - cantDiasFacturados, true, false));
 		}
 	}
 	
@@ -151,7 +160,7 @@ public class GestorOcupacion {
 			}
 			
 			if(cantidadFacturada < cantidadTotal) {
-				listaItemsFila.add(new ItemFilaDTO(unConsumo.getId(), unConsumo.getDescripcion(), ocupacionDTO.getPrecioPorDia() * multiplicadorIVA, cantidadTotal - cantidadFacturada, false));
+				listaItemsFila.add(new ItemFilaDTO(unConsumo.getId(), unConsumo.getDescripcion(), ocupacionDTO.getPrecioPorDia() * multiplicadorIVA, cantidadTotal - cantidadFacturada, false, false));
 			}
 		}
 	}
@@ -159,15 +168,23 @@ public class GestorOcupacion {
 	private void calcularValorItemsRecargo(List<ItemFilaDTO> listaItemsFila, OcupacionDTO ocupacionDTO, Double multiplicadorIVA) {
 		
 		LocalTime hora11 = LocalTime.of(11, 0);
+		LocalTime hora18 = LocalTime.of(18, 0);
+		LocalDateTime fechaMaximaEgreso = LocalDateTime.of(ocupacionDTO.getFechaEgreso(), hora18);
 		
-		// preguntar si la fecha es igual a la de egreso y la hora es > 11 entonces:
-		if(ocupacionDTO.getFechaEgreso().isEqual(ocupacionDTO.getPosibleFechaHoraDeSalida().toLocalDate()) && ocupacionDTO.getPosibleFechaHoraDeSalida().toLocalTime().isBefore(hora11)) {
-			// crear un itemFila que tenga la mitad del precio de la habitacion por dia4
-			listaItemsFila.add(new ItemFilaDTO(ocupacionDTO.getId(), "RECARGO 50%", ocupacionDTO.getPrecioPorDia() / 2 * multiplicadorIVA, 1, true));
+		// La fechaMaxima sera la fecha del egreso a las 18 horas
+		if(ocupacionDTO.getPosibleFechaHoraDeSalida().isBefore(fechaMaximaEgreso)) {
+			
+			listaItemsFila.add(new ItemFilaDTO(ocupacionDTO.getId(), "RECARGO CHECKOUT TARDÍO", ocupacionDTO.getPrecioPorDia() * multiplicadorIVA, 1, true, true));
+			
+		} else {
+			
+			// Fecha actual = fecha egreso y hora > 11:
+			if(ocupacionDTO.getFechaEgreso().isEqual(ocupacionDTO.getPosibleFechaHoraDeSalida().toLocalDate()) && ocupacionDTO.getPosibleFechaHoraDeSalida().toLocalTime().isBefore(hora11)) {
+				// crear un itemFila que tenga la mitad del precio de la habitacion por dia
+				listaItemsFila.add(new ItemFilaDTO(ocupacionDTO.getId(), "RECARGO 50%", ocupacionDTO.getPrecioPorDia() / 2 * multiplicadorIVA, 1, true, true));
+			}
 		}
 		
-		// Si pasaron las 18 Se crea un 
-		listaItemsFila.add(new ItemFilaDTO(ocupacionDTO.getId(), "RECARGO CHECKOUT TARDÍO", ocupacionDTO.getPrecioPorDia() * multiplicadorIVA, 1, true));
 	}
 	
 	/*

@@ -20,6 +20,7 @@ import main.java.dtos.FacturaDTO;
 import main.java.dtos.ItemFilaDTO;
 import main.java.dtos.OcupacionDTO;
 import main.java.excepciones.NingunElementoSeleccionadoFacturacionException;
+import main.java.excepciones.RecargoNoEstaEnUltimaFacturaException;
 import main.java.postgreImpl.FacturaPostgreSQLImpl;
 import main.java.postgreImpl.HabitacionPostgreSQLImpl;
 import main.java.postgreImpl.OcupacionPostgreSQLImpl;
@@ -47,15 +48,23 @@ private static GestorFactura instance;
 		return instance;
 	}
 	
-	public void crearFactura(FacturaDTO facturaDTO, OcupacionDTO ocupacionDTO) throws NingunElementoSeleccionadoFacturacionException {
+	public void crearFactura(FacturaDTO facturaDTO, OcupacionDTO ocupacionDTO) throws NingunElementoSeleccionadoFacturacionException,
+																					  RecargoNoEstaEnUltimaFacturaException {
 		
 		Boolean seFacturaronTodosLosItems = false;
+		Boolean tieneRecargo = false;
 		
 		Ocupacion ocupacion = ocupacionDAO.buscar(ocupacionDTO.getId());
-		List<ItemFactura> listaItemsFactura = crearListaItemsFactura(facturaDTO.getListaItemsFila(), ocupacion, seFacturaronTodosLosItems);
+		List<ItemFactura> listaItemsFactura = crearListaItemsFactura(facturaDTO.getListaItemsFila(), ocupacion, seFacturaronTodosLosItems, tieneRecargo);
 		
 		if(listaItemsFactura.isEmpty()) {
 			throw new NingunElementoSeleccionadoFacturacionException();
+		}
+		
+		/* Si selecciono para facturar un recargo pero hay otros items por facturar no se debería permitir,
+		 ya que los recargos son lo último que se deben facturar (deben estar en la ultima factura)*/
+		if(tieneRecargo && !seFacturaronTodosLosItems) {
+			throw new RecargoNoEstaEnUltimaFacturaException();
 		}
 		
 		if(seFacturaronTodosLosItems) {
@@ -64,18 +73,19 @@ private static GestorFactura instance;
 		}
 		
 		Habitacion habitacion = ocupacion.getHabitacion();
+		
 		ResponsableDePago responsablePago = responsableDAO.buscar(facturaDTO.getResponsablePagoDTO().getId());
 		
-		// Lo necesito crear? No existiria ya en la BD?
 		DatosResponsableDePago datosResponsable = new DatosResponsableDePago(responsablePago);
 		
 		Factura factura = new Factura(facturaDTO, habitacion, responsablePago, datosResponsable, listaItemsFactura);
 		
 		facturaDAO.guardar(factura);
+		
 		// faltaria la parte de imprimir
 	}
 	
-	public List<ItemFactura> crearListaItemsFactura(List<ItemFilaDTO> listaItems, Ocupacion ocupacion, Boolean seFacturaronTodosLosItems){
+	public List<ItemFactura> crearListaItemsFactura(List<ItemFilaDTO> listaItems, Ocupacion ocupacion, Boolean seFacturaronTodosLosItems, Boolean tieneRecargo){
 		
 		List<ItemFactura> retorno = new ArrayList<ItemFactura>();
 		Integer cantCosasAFacturar = 0;
@@ -94,7 +104,11 @@ private static GestorFactura instance;
 			
 				ItemFactura itemFactura;
 				
-				if(unItem.getEsItemOcupacion()) {
+				if(unItem.esItemOcupacion()) {
+					
+					if(unItem.esRecargo()) {
+						tieneRecargo = true;
+					}
 					
 					itemFactura = new ItemOcupacion(unItem, ocupacion);
 					

@@ -7,8 +7,9 @@ public class ItemFilaDTO {
 	private Integer cantidadSeleccionada;
 	private Integer cantidadMax;
 	private Boolean esItemOcupacion;
+	private Boolean esRecargo;
 	
-	public ItemFilaDTO(Integer idAsociado, String descripcion, Double precioUnitario, Integer cantidadMax, Boolean esItemOcupacion) {
+	public ItemFilaDTO(Integer idAsociado, String descripcion, Double precioUnitario, Integer cantidadMax, Boolean esItemOcupacion, Boolean esRecargo) {
 		super();
 		this.idAsociado = idAsociado;
 		this.descripcion = descripcion;
@@ -16,6 +17,7 @@ public class ItemFilaDTO {
 		this.cantidadSeleccionada = 0;
 		this.cantidadMax = cantidadMax;
 		this.esItemOcupacion = esItemOcupacion;
+		this.esRecargo = esRecargo;
 	}
 	
 	public Integer getIdAsociado() {
@@ -38,9 +40,12 @@ public class ItemFilaDTO {
 		return cantidadMax;
 	}
 
-	public Boolean getEsItemOcupacion() {
+	public Boolean esItemOcupacion() {
 		return esItemOcupacion;
 	}
 	
+	public Boolean esRecargo() {
+		return esRecargo;
+	}
 	
 }
