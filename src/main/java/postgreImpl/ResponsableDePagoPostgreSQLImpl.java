@@ -67,7 +67,7 @@ public class ResponsableDePagoPostgreSQLImpl implements ResponsableDePagoDAO {
 	public ResponsableDePago buscarPorCuit(String cuit) {
 		ResponsableDePago responsable = null;
 		
-		String stringQuery = "SELECT r FROM ResponsableDePago r WHERE cuitPersonaJuridica = :cuit";
+		String stringQuery = "SELECT r FROM ResponsableDePago r WHERE r.personaJuridica.cuit = :cuit";
 		
 		Session sesion = sessionFactory.openSession();
 		

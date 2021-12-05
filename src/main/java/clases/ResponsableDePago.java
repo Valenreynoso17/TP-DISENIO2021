@@ -17,7 +17,7 @@ public class ResponsableDePago {
 	private String razonSocial;
 	
 	@OneToOne(optional = true)
-	@JoinColumn(name = "cuitpersonajuridica", nullable = true, referencedColumnName = "id")
+	@JoinColumn(name = "idpersonajuridica", nullable = true, referencedColumnName = "id")
 	private PersonaJuridica personaJuridica;
 	
 	@OneToOne(optional = true)
