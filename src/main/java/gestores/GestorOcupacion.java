@@ -160,7 +160,7 @@ public class GestorOcupacion {
 			}
 			
 			if(cantidadFacturada < cantidadTotal) {
-				listaItemsFila.add(new ItemFilaDTO(unConsumo.getId(), unConsumo.getDescripcion(), ocupacionDTO.getPrecioPorDia() * multiplicadorIVA, cantidadTotal - cantidadFacturada, false, false));
+				listaItemsFila.add(new ItemFilaDTO(unConsumo.getId(), unConsumo.getDescripcion(), unConsumo.getValorUnitario() * multiplicadorIVA, cantidadTotal - cantidadFacturada, false, false));
 			}
 		}
 	}
