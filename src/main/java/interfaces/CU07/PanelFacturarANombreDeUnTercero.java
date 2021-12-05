@@ -27,7 +27,7 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	
 	private OcupacionDTO ocupacion;
 	
-	private PanelFacturarANombreDeUnTerceroGroupBox panelGroupBox = new PanelFacturarANombreDeUnTerceroGroupBox();
+	private PanelFacturarANombreDeUnTerceroGroupBox panelGroupBox = new PanelFacturarANombreDeUnTerceroGroupBox();;
 	
 	private JButton aceptar;
 	private JButton cancelar;
@@ -59,6 +59,8 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	
 	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FrameFacturar frameA) {
 		
+		gestorResponsablePago = GestorResponsableDePago.getInstance();
+		
 		this.frameActual = frame;
 		this.frameAnterior = frameA;
 		
@@ -67,12 +69,12 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-			c.anchor = GridBagConstraints.CENTER;	c.fill = GridBagConstraints.BOTH;	c.gridwidth = 2;
-			c.gridy = 0;	c.weightx = 0.4; c.weighty = 0.4;	c.insets = insetPanelGroupBox;	
-		
-			this.add(panelGroupBox, c);
-		
-			c.fill = GridBagConstraints.NONE;	c.gridwidth = 1;	c.weightx = 0.1; c.weighty = 0.1;
+		c.anchor = GridBagConstraints.CENTER;	c.fill = GridBagConstraints.BOTH;	c.gridwidth = 2;
+		c.gridy = 0;	c.weightx = 0.4; c.weighty = 0.4;	c.insets = insetPanelGroupBox;	
+	
+		this.add(panelGroupBox, c);
+	
+		c.fill = GridBagConstraints.NONE;	c.gridwidth = 1;	c.weightx = 0.1; c.weighty = 0.1;
 		
 		cancelar = new JButton("Cancelar");
 		cancelar.setMinimumSize(dimensionBoton);
@@ -105,6 +107,8 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 					panelGroupBox.CUITNoEsVacio();
 					
 					ResponsableDePagoDTO responsablePagoDTO = gestorResponsablePago.buscarResponsableDePago(panelGroupBox.getCUIT());
+					
+					panelGroupBox.setRazonSocial(responsablePagoDTO.getRazonSocial());
 					
 					frameAnterior.dispose();
 					frameActual.dispose();
