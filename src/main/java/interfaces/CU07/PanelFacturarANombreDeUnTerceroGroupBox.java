@@ -20,7 +20,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 
+import main.java.dtos.OcupacionDTO;
+import main.java.dtos.ResponsableDePagoDTO;
 import main.java.excepciones.InputVacioException;
+import main.java.excepciones.NoExisteResponsableCuitException;
+import main.java.gestores.GestorResponsableDePago;
 import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 
@@ -47,7 +51,11 @@ public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 	
 	TextPrompt fondoJTextField;
 	
+	private GestorResponsableDePago gestorResponsable;
+	
 	public PanelFacturarANombreDeUnTerceroGroupBox() {
+		
+		gestorResponsable = GestorResponsableDePago.getInstance();
 		
 		this.setBackground(Color.white);
 		
@@ -78,18 +86,9 @@ public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 				  }
 				  public void insertUpdate(DocumentEvent e) {
 
-					  if(!CUITDeUnTercero.getText().contains(" ")) {	//Si no contiene espacios, el CUIT esta escrito completamente
+					  if(CUITDeUnTercero.getText().contains(" ")) {	//Si no contiene espacios, el CUIT esta escrito completamente
 						  
-						  if(CUITDeUnTercero.getText().equals("11-11111111-1")) {
-						  //Si es igual a algun CUIT de un responsable de pago, muestra el nombre. Sino, cuando apriete "Aceptar" salta la validacion
-						  System.out.println("IGUAL");
-						  
-						  razonSocial.setText("Juan Perez");
-						  }
-						  else {
-							  
-							  razonSocial.setText("");
-						  }
+						  razonSocial.setText("");
 					  }
 				  }
 			});
@@ -127,5 +126,9 @@ public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 	
 	public String getCUIT(){
 		return this.CUITDeUnTercero.getText();
+	}
+	
+	public void setRazonSocial(String s) {
+		this.razonSocial.setText(s);
 	}
 }
