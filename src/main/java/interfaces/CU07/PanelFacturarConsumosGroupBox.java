@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -43,6 +44,8 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	private JTextField posicionFrenteIVA;
 	private JTextField tipoFactura;
 	
+	private String tipoFacturaString;
+	
 	private JTextField subtotal;
 	private JTextField IVA;
 	private JTextField totalAPagar;
@@ -77,14 +80,12 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	private ButtonEditor editorBotonMenos = new ButtonEditor(new JCheckBox(), '-', this);	//TODO: Ver si se puede hacer mas lindo/eficiente
 	private ButtonEditor editorBotonMas = new ButtonEditor(new JCheckBox(), '+', this);
 	
-	private OcupacionDTO ocupacion;
-	private ResponsableDePagoDTO responsable;
 	private List<ItemFilaDTO> listaItems;
+	
+	private static final DecimalFormat df = new DecimalFormat("0.00");
 	
 	public PanelFacturarConsumosGroupBox(OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsableDTO, List<ItemFilaDTO> listaItemsDTO) {
 		
-		ocupacion = ocupacionDTO;
-		responsable = responsableDTO;
 		listaItems = listaItemsDTO;
 		
 		this.setBackground(Color.white);
@@ -152,7 +153,9 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 			c.anchor = GridBagConstraints.WEST;	c.fill = GridBagConstraints.WEST; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampoTipoFactura; 
 		
 		tipoFactura = new JTextField();
-		String tipoFacturaString = (responsableDTO.getPosicionFrenteIva().equals(PosicionFrenteIva.RESPONSABLE_INSCRIPTO)) ? "A" : "B";	//TODO: Ver
+		
+		tipoFacturaString = (responsableDTO.getPosicionFrenteIva().equals(PosicionFrenteIva.RESPONSABLE_INSCRIPTO)) ? "A" : "B";	//TODO: Ver
+		
 		tipoFactura.setText(tipoFacturaString);
 		tipoFactura.setFont(fuenteLabelCampo);	tipoFactura.setBorder(bordeCampo);	tipoFactura.setEditable(false);
 		c.gridx = 2; c.gridy = 2;	tipoFactura.setMinimumSize(dimensionCampoTipoFactura);	tipoFactura.setPreferredSize(dimensionCampoTipoFactura);	
@@ -264,33 +267,47 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 
 	public double getSubtotal() {
 		
-		return Double.parseDouble(this.subtotal.getText().substring(2));	//Para que elimine el "$ "
+		return Double.parseDouble(this.subtotal.getText().substring(2).replace(',', '.'));	//Para que elimine el "$ " y se reemplace el ','
 	}
 	
 	public double getIVA() {
 		
-		return Double.parseDouble(this.IVA.getText().substring(2));			//Para que elimine el "$ "
+		return Double.parseDouble(this.IVA.getText().substring(2).replace(',', '.'));			//Para que elimine el "$ " y se reemplace el ','
 	}
 	
 	public double getTotalAPagar() {
 		
-		return Double.parseDouble(this.totalAPagar.getText().substring(2));	//Para que elimine el "$ "
+		System.out.println(this.totalAPagar.getText());
+		System.out.println(this.totalAPagar.getText().substring(2).replace(',', '.'));
+		
+		return Double.parseDouble(this.totalAPagar.getText().substring(2).replace(',', '.'));	//Para que elimine el "$ " y se reemplace el ','
 	}
 	
 	public List<ItemFilaDTO> getListaItems(){
 		
-		return this.listaItems; 	//TODO: Cambiar
+		return this.listaItems; 	//TODO: Ver si funciona bien, creeria que si
 	}
 
 	public void actualizarItemsCantidadModificada(Character c) {
 		
+		double subtotal = miModelo.actualizarFila(c, tabla.getSelectedRow());
 		
+		this.subtotal.setText("$ "+df.format(subtotal));
 		
-		miModelo.actualizarFila(c, tabla.getSelectedRow());
-		
-//		this.subtotal =
-//		this.IVA
-//		this.totalAPagar
+		if(tipoFacturaString == "A") {
+			
+			//No discrimina IVA, por lo tanto sigue en 0.0
+			
+			this.totalAPagar.setText(this.subtotal.getText());	//Subtotal == TotalAPagar
+		}
+		else if(tipoFacturaString == "B") {
+			
+			//Discrimina IVA, por lo tanto se calcula el 30%
+			
+			this.IVA.setText("$ "+df.format(subtotal*0.21));
+			
+			this.totalAPagar.setText(this.subtotal.getText());	//Subtotal == TotalAPagar
+		}
 	}
 
 }

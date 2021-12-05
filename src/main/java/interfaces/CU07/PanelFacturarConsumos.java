@@ -62,8 +62,8 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 		this.frameActual = frame;
 		
 		this.gestorOcupacion = GestorOcupacion.getInstance();
+		this.gestorFactura = GestorFactura.getInstance();
 		
-		// TODO: pasarselo a los paneles y crear la tabla
 		List<ItemFilaDTO> listaItemsFilaDTO = gestorOcupacion.calcularItemsAPagar(ocupacionDTO, responsablePagoDTO);
 		
 		this.setBackground(Color.WHITE);

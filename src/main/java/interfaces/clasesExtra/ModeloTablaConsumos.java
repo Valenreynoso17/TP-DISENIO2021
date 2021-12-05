@@ -18,6 +18,8 @@ public class ModeloTablaConsumos extends DefaultTableModel{
 	
 	private Integer cantidadFilasEnBlanco = 10;
 	
+	private double total = 0.0;
+	
 	public ModeloTablaConsumos(List<ItemFilaDTO> itemsDTO) {
 		this.items = itemsDTO;
 		this.addColumn("Consumos"); 
@@ -65,16 +67,16 @@ public class ModeloTablaConsumos extends DefaultTableModel{
 									, "$ 0.00"});		//Se cargan todas con cantidadSeleccionada = 0
 		}
 		
-		cantidadFilasEnBlanco = 10 - items.size();
+		cantidadFilasEnBlanco = (items.size() > 10)? 0 : 10 - items.size();	//Mas de 10 items -> filasEnBlanco = 0 // Menos de 10 items -> filasEnBlanco = 10 - cantItems
 		
 		for(int i = 0; i < cantidadFilasEnBlanco; i++)
 			this.addRow(new Object[]{null,null,null,null,null,null});	//Fila en blanco
 		
-		this.addRow(new Object[] {"TOTAL",null,"",null,"", 4200.00});
+		this.addRow(new Object[] {"TOTAL",null,"",null,"", "$ 0.00"});
 
 	}
 
-	public void actualizarFila(Character c, int fila) {
+	public double actualizarFila(Character c, int fila) {
 		
 		ItemFilaDTO itemCambioCantidad = items.get(fila);
 		
@@ -99,7 +101,9 @@ public class ModeloTablaConsumos extends DefaultTableModel{
 			}
 			
 			//Actualiza el campo "TOTAL" en funcion de la cantidad y del precio unitario de todas las filas
-			this.setValueAt("$ "+df.format(total), this.cantidadFilasEnBlanco+items.size(), 5);			
+			this.setValueAt("$ "+df.format(total), this.cantidadFilasEnBlanco+items.size(), 5);	
+			
+			this.total = total;
 		}
 		//Si la cantidadSeleccionada es distinta de 0
 		else if(c == '-' && itemCambioCantidad.getCantidadSeleccionada() != 0) {
@@ -120,9 +124,11 @@ public class ModeloTablaConsumos extends DefaultTableModel{
 			
 			//Actualiza el campo "TOTAL" en funcion de la cantidad y del precio unitario de todas las filas
 			this.setValueAt("$ "+df.format(total), this.cantidadFilasEnBlanco+items.size(), 5);
+			
+			this.total = total;
 		}
 		
-		
+		return this.total;
 	}
 
 }
