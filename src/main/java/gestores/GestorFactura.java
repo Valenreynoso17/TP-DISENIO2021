@@ -33,6 +33,8 @@ private static GestorFactura instance;
 	private ResponsableDePagoDAO responsableDAO;
 	private HabitacionDAO habitacionDAO;
 	private OcupacionDAO ocupacionDAO;
+	private Boolean seFacturaronTodosLosItems;
+	private Boolean tieneRecargo;
 	//private ConsumoDAO consumoDAO;
 	
 	private GestorFactura() {
@@ -51,11 +53,11 @@ private static GestorFactura instance;
 	public void crearFactura(FacturaDTO facturaDTO, OcupacionDTO ocupacionDTO) throws NingunElementoSeleccionadoFacturacionException,
 																					  RecargoNoEstaEnUltimaFacturaException {
 		
-		Boolean seFacturaronTodosLosItems = false;
-		Boolean tieneRecargo = false;
+		seFacturaronTodosLosItems = false;
+		tieneRecargo = false;
 		
-		Ocupacion ocupacion = ocupacionDAO.buscar(ocupacionDTO.getId());
-		List<ItemFactura> listaItemsFactura = crearListaItemsFactura(facturaDTO.getListaItemsFila(), ocupacion, seFacturaronTodosLosItems, tieneRecargo);
+		Ocupacion ocupacion = ocupacionDAO.buscarExtendido(ocupacionDTO.getId());
+		List<ItemFactura> listaItemsFactura = crearListaItemsFactura(facturaDTO.getListaItemsFila(), ocupacion);
 		
 		if(listaItemsFactura.isEmpty()) {
 			throw new NingunElementoSeleccionadoFacturacionException();
@@ -74,8 +76,9 @@ private static GestorFactura instance;
 		
 		Habitacion habitacion = ocupacion.getHabitacion();
 		
+		System.out.println(facturaDTO.getResponsablePagoDTO().getId());
 		ResponsableDePago responsablePago = responsableDAO.buscar(facturaDTO.getResponsablePagoDTO().getId());
-		
+		System.out.println("dsp");
 		DatosResponsableDePago datosResponsable = new DatosResponsableDePago(responsablePago);
 		
 		Factura factura = new Factura(facturaDTO, habitacion, responsablePago, datosResponsable, listaItemsFactura);
@@ -83,10 +86,9 @@ private static GestorFactura instance;
 		facturaDAO.guardar(factura);
 		
 		imprimir(factura);
-		// faltaria la parte de imprimir
 	}
 	
-	public List<ItemFactura> crearListaItemsFactura(List<ItemFilaDTO> listaItems, Ocupacion ocupacion, Boolean seFacturaronTodosLosItems, Boolean tieneRecargo){
+	public List<ItemFactura> crearListaItemsFactura(List<ItemFilaDTO> listaItems, Ocupacion ocupacion){
 		
 		List<ItemFactura> retorno = new ArrayList<ItemFactura>();
 		Integer cantCosasAFacturar = 0;
@@ -97,7 +99,7 @@ private static GestorFactura instance;
 			
 			cantCosasAFacturar += unItem.getCantidadMax();
 			
-			cantSeleccionadaEnItem = unItem.getCantidadSeleccionadaFinal();
+			cantSeleccionadaEnItem = unItem.getCantidadSeleccionada();
 			
 			if(cantSeleccionadaEnItem > 0) {
 				
@@ -135,6 +137,6 @@ private static GestorFactura instance;
 	}
 	
 	public void imprimir(Factura factura) {
-		
+		System.out.println("Impresion de factura");
 	}
 }

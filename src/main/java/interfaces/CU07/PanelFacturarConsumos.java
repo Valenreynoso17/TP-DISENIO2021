@@ -107,7 +107,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 			public void actionPerformed(ActionEvent e) {
 				
 				List<ItemFilaDTO> listaItemsFila = panelFacturarConsumosGroupBox.getListaItems();
-				FacturaDTO facturaDTO = crearFacturaDTO(responsablePagoDTO, listaItemsFila); 
+				FacturaDTO facturaDTO = crearFacturaDTO(responsablePagoDTO, listaItemsFila);
 				
 				try {
 					gestorFactura.crearFactura(facturaDTO, ocupacionDTO);
@@ -117,8 +117,10 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 					mensajeNadaSeleccionado.mostrar(getPanel(), frame);
 					
 				} catch (RecargoNoEstaEnUltimaFacturaException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					/* TODO: copie la excepcion de arriba, pero habría que hacer un msj que diga que
+					 no se puede facturar un recargo sin facturar todo el resto (tiene que estar en la ultima factura)*/
+					//Si no seleccionó ningún consumo hay que mostrar: 
+					mensajeNadaSeleccionado.mostrar(getPanel(), frame);
 				}
 				
 				

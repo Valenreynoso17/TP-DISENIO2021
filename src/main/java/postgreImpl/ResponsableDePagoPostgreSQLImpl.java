@@ -21,7 +21,6 @@ public class ResponsableDePagoPostgreSQLImpl implements ResponsableDePagoDAO {
 	@Override
 	public ResponsableDePago buscar(Integer id) {
 		Session sesion = sessionFactory.openSession();
-		
 		ResponsableDePago responsable = sesion.get(ResponsableDePago.class, id);
 		
 		sesion.close();

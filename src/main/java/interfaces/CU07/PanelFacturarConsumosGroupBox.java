@@ -277,14 +277,10 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	
 	public double getTotalAPagar() {
 		
-		System.out.println(this.totalAPagar.getText());
-		System.out.println(this.totalAPagar.getText().substring(2).replace(',', '.'));
-		
 		return Double.parseDouble(this.totalAPagar.getText().substring(2).replace(',', '.'));	//Para que elimine el "$ " y se reemplace el ','
 	}
 	
 	public List<ItemFilaDTO> getListaItems(){
-		
 		return this.listaItems; 	//TODO: Ver si funciona bien, creeria que si
 	}
 
