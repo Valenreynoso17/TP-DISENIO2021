@@ -28,7 +28,7 @@ public class ItemOcupacion extends ItemFactura {
 	
 	public ItemOcupacion(ItemFilaDTO unItem, Ocupacion ocupacion) {
 		super(unItem.getPrecioUnitario(), unItem.getDescripcion());
-		this.cantidadDias = unItem.getCantidadSeleccionadaFinal();
+		this.cantidadDias = unItem.getCantidadSeleccionada();
 		this.ocupacion = ocupacion;
 		
 		ocupacion.agregarItemOcupacion(this);

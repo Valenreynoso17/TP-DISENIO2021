@@ -33,7 +33,7 @@ public class ItemConsumo extends ItemFactura {
 	
 	public ItemConsumo(ItemFilaDTO unItem, Consumo consumo) {
 		super(unItem.getPrecioUnitario(), unItem.getDescripcion());
-		this.cantidad = unItem.getCantidadSeleccionadaFinal();
+		this.cantidad = unItem.getCantidadSeleccionada();
 		this.consumo = consumo;
 		
 		consumo.agregarItemConsumo(this);

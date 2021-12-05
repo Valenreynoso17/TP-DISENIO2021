@@ -76,9 +76,8 @@ private static GestorFactura instance;
 		
 		Habitacion habitacion = ocupacion.getHabitacion();
 		
-		System.out.println(facturaDTO.getResponsablePagoDTO().getId());
 		ResponsableDePago responsablePago = responsableDAO.buscar(facturaDTO.getResponsablePagoDTO().getId());
-		System.out.println("dsp");
+		
 		DatosResponsableDePago datosResponsable = new DatosResponsableDePago(responsablePago);
 		
 		Factura factura = new Factura(facturaDTO, habitacion, responsablePago, datosResponsable, listaItemsFactura);

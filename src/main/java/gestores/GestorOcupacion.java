@@ -172,14 +172,14 @@ public class GestorOcupacion {
 		LocalDateTime fechaMaximaEgreso = LocalDateTime.of(ocupacionDTO.getFechaEgreso(), hora18);
 		
 		// La fechaMaxima sera la fecha del egreso a las 18 horas
-		if(ocupacionDTO.getPosibleFechaHoraDeSalida().isBefore(fechaMaximaEgreso)) {
+		if(ocupacionDTO.getPosibleFechaHoraDeSalida().isAfter(fechaMaximaEgreso)) {
 			
 			listaItemsFila.add(new ItemFilaDTO(ocupacionDTO.getId(), "RECARGO CHECKOUT TARDÍO", ocupacionDTO.getPrecioPorDia() * multiplicadorIVA, 1, true, true));
 			
 		} else {
 			
 			// Fecha actual = fecha egreso y hora > 11:
-			if(ocupacionDTO.getFechaEgreso().isEqual(ocupacionDTO.getPosibleFechaHoraDeSalida().toLocalDate()) && ocupacionDTO.getPosibleFechaHoraDeSalida().toLocalTime().isBefore(hora11)) {
+			if(ocupacionDTO.getFechaEgreso().isEqual(ocupacionDTO.getPosibleFechaHoraDeSalida().toLocalDate()) && ocupacionDTO.getPosibleFechaHoraDeSalida().toLocalTime().isAfter(hora11)) {
 				// crear un itemFila que tenga la mitad del precio de la habitacion por dia
 				listaItemsFila.add(new ItemFilaDTO(ocupacionDTO.getId(), "RECARGO 50%", ocupacionDTO.getPrecioPorDia() / 2 * multiplicadorIVA, 1, true, true));
 			}
