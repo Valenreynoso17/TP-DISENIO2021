@@ -17,7 +17,7 @@ public class PersonaJuridica {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "cuit", nullable = false, unique = false)
+	@Column(name = "cuit", nullable = false, unique = true)
 	private String cuit;
 	
 	@Column(name = "telefono", nullable = false, unique = false)
