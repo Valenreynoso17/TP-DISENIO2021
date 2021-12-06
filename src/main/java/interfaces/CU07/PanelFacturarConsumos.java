@@ -24,6 +24,7 @@ import main.java.excepciones.NingunElementoSeleccionadoFacturacionException;
 import main.java.excepciones.RecargoNoEstaEnUltimaFacturaException;
 import main.java.gestores.GestorFactura;
 import main.java.gestores.GestorOcupacion;
+import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
@@ -42,6 +43,10 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	
 	private String textoNadaSeleccionado = "<html><p>Por favor, seleccione al menos un consumo para ser adherido a la factura.</p><html>";
 	private Mensaje mensajeNadaSeleccionado = new Mensaje(2, textoNadaSeleccionado, TipoMensaje.ERROR, "Aceptar", null);
+	
+	private String textoRecargoUltimoSeleccionado = "<html><p>No se puede facturar un recargo sin facturar todo el resto de la factura. "
+													+ "Si no desea facturarlo en este momento, puede facturarlo en su último factura.</p><html>";
+	private Mensaje mensajeRecargoUltimoSeleccionado = new Mensaje(3, textoRecargoUltimoSeleccionado, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
@@ -112,15 +117,20 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 				try {
 					gestorFactura.crearFactura(facturaDTO, ocupacionDTO);
 					
+					String textoFacturaCreada = "<html><p>Ver si ponemos mensaje. Deberia IMPRIMIR aca.</p><html>";
+					Mensaje mensajeFacturaCreada = new Mensaje(4, textoFacturaCreada, TipoMensaje.ERROR, "Aceptar", null);
+					
+					mensajeFacturaCreada.mostrar(getPanel(), frame);
+					
 				} catch (NingunElementoSeleccionadoFacturacionException e1) {
 					//Si no seleccionó ningún consumo hay que mostrar: 
 					mensajeNadaSeleccionado.mostrar(getPanel(), frame);
 					
 				} catch (RecargoNoEstaEnUltimaFacturaException e1) {
 					/* TODO: copie la excepcion de arriba, pero habría que hacer un msj que diga que
-					 no se puede facturar un recargo sin facturar todo el resto (tiene que estar en la ultima factura)*/
+					 */
 					//Si no seleccionó ningún consumo hay que mostrar: 
-					mensajeNadaSeleccionado.mostrar(getPanel(), frame);
+					mensajeRecargoUltimoSeleccionado.mostrar(getPanel(), frame);
 				}
 				
 				
@@ -143,6 +153,12 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 			new FrameFacturar();	
 			break;
 		case 2:	//Si no selecciona ningún consumo a facturar, simplemente muestra el mensaje
+			break;
+		case 3:	//Si selecciona el recargo pero no el resto de la factura, simplemente muestra el mensaje
+			break;
+		case 4:	//TODO: Ver si poner mensaje o mostrar directamente la factura impresa
+			frameActual.dispose();
+			new FrameMenuPrincipal();
 			break;
 		}
 	}

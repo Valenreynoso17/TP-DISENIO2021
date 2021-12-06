@@ -39,7 +39,7 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 													+ " de pago del sistema. ¿Desea dar de alta un nuevo responsable de pago?</p><html>";
 	private Mensaje mensajeNoExisteResponsable = new Mensaje(2, textoMensajeNoExisteResponsable, TipoMensaje.CONFIRMACION, "Si", "No");
 	
-	private String textoAltaResponsableDePago = "<html><p>El CU13 'Dar de alta nuevo Responsable de Pago' no se implementa en esta etapa.</p><html>";
+	private String textoAltaResponsableDePago = "<html><p>El CU14 'Dar de alta nuevo Responsable de Pago' no se implementa en esta etapa.</p><html>";
 	private Mensaje mensajeAltaResponsableDePago = new Mensaje(3, textoAltaResponsableDePago, TipoMensaje.ERROR, "Aceptar", null);
 
 	private Insets insetPanelGroupBox = new Insets(0,0,0,0);
@@ -55,11 +55,11 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	private FrameFacturar frameAnterior;
 	private FrameFacturarANombreDeUnTercero frameActual;
 	
-	private GestorResponsableDePago gestorResponsablePago;
+	//private GestorResponsableDePago gestorResponsablePago;
 	
 	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FrameFacturar frameA) {
 		
-		gestorResponsablePago = GestorResponsableDePago.getInstance();
+		//gestorResponsablePago = GestorResponsableDePago.getInstance();
 		
 		this.frameActual = frame;
 		this.frameAnterior = frameA;
@@ -106,22 +106,26 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 					
 					panelGroupBox.CUITNoEsVacio();
 					
-					ResponsableDePagoDTO responsablePagoDTO = gestorResponsablePago.buscarResponsableDePago(panelGroupBox.getCUIT());
+					//ResponsableDePagoDTO responsablePagoDTO = gestorResponsablePago.buscarResponsableDePago(panelGroupBox.getCUIT());
 					
-					panelGroupBox.setRazonSocial(responsablePagoDTO.getRazonSocial());
-					
-					frameAnterior.dispose();
-					frameActual.dispose();
-					new FrameFacturarConsumos(ocupacion, responsablePagoDTO);
+					if(panelGroupBox.getExcepcionNoExisteResponsable())	{	//TODO: Ver si puede hacerse de otra manera
+						
+						mensajeNoExisteResponsable.mostrar(getPanel(), frameA);
+						System.out.println("No existe responsable");
+					}
+					else {
+						
+						frameAnterior.dispose();
+						frameActual.dispose();
+						new FrameFacturarConsumos(ocupacion, panelGroupBox.getResponsableDePago());
+					}
 				}
 				catch(InputVacioException exc) {
 					
 					mensajeCUITVacio.mostrar(getPanel(), frameActual);
 				}
-				catch(NoExisteResponsableCuitException exc) {
 					
-					mensajeNoExisteResponsable.mostrar(getPanel(), frameA);
-				}
+					
 				
 				
 			}
