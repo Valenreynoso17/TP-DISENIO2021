@@ -53,6 +53,10 @@ public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 	
 	private GestorResponsableDePago gestorResponsable;
 	
+	private ResponsableDePagoDTO responsablePagoDTO;
+	
+	boolean excepcionNoExisteResponsable = false;
+	
 	public PanelFacturarANombreDeUnTerceroGroupBox() {
 		
 		gestorResponsable = GestorResponsableDePago.getInstance();
@@ -86,9 +90,25 @@ public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 				  }
 				  public void insertUpdate(DocumentEvent e) {
 
-					  if(CUITDeUnTercero.getText().contains(" ")) {	//Si no contiene espacios, el CUIT esta escrito completamente
+					  if(!CUITDeUnTercero.getText().contains(" ")) {	//Si no contiene espacios, el CUIT esta escrito completamente
+						  
+						  try {
+							responsablePagoDTO = gestorResponsable.buscarResponsableDePago(CUITDeUnTercero.getText());
+							
+							razonSocial.setText(responsablePagoDTO.getRazonSocial());
+							System.out.println("setText: "+responsablePagoDTO.getRazonSocial());
+							
+						} catch (NoExisteResponsableCuitException e1) {
+							
+							excepcionNoExisteResponsable = true;
+						}
+						 
+					  }
+					  else {
 						  
 						  razonSocial.setText("");
+						  excepcionNoExisteResponsable = false;
+						  System.out.println("setVacio");
 					  }
 				  }
 			});
@@ -129,6 +149,16 @@ public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 	}
 	
 	public void setRazonSocial(String s) {
+		System.out.println("SetRazonSocial");
 		this.razonSocial.setText(s);
+	}
+	
+	public boolean getExcepcionNoExisteResponsable() {
+		return this.excepcionNoExisteResponsable;
+	}
+
+	public ResponsableDePagoDTO getResponsableDePago() {
+		
+		return this.responsablePagoDTO;
 	}
 }

@@ -84,7 +84,7 @@ public class Mensaje extends JFrame{
 			c.gridx = 0; c.gridy = 0;
 		contentPane.add(labelIcono, c);
 		
-		labelTexto = new JLabel(texto);	c.weightx = 0.2; c.weighty = 0.3;	c.insets = insetTexto;
+		labelTexto = new JLabel(texto);	c.weightx = 0.2; c.weighty = 0.5;	c.insets = insetTexto;
 		labelTexto.setFont(fuenteBoton);
 		labelTexto.setPreferredSize(new Dimension(200, 100));
 		c.anchor = GridBagConstraints.CENTER;	
