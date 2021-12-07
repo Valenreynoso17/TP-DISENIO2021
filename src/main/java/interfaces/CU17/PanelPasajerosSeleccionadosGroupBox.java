@@ -52,7 +52,7 @@ public class PanelPasajerosSeleccionadosGroupBox extends JPanel{
 		
 		this.setBackground(Color.white);
 		
-		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), " Resultados de búsqueda", 0, 0, fuenteGroupBox));
+		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), " Pasajeros seleccionados", 0, 0, fuenteGroupBox));
 		
 		this.setLayout(new GridBagLayout());
 		

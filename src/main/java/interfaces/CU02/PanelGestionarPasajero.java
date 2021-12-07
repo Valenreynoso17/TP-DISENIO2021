@@ -19,11 +19,12 @@ import main.java.excepciones.InputInvalidaException;
 import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.excepciones.SinResultadosException;
 import main.java.gestores.GestorPasajero;
-import main.java.interfaces.CU11.FrameAltaPasajero;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.CU11.PanelAltaPasajero;
+import main.java.interfaces.MenuPrincipal.PanelMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensajes{
 	
@@ -35,7 +36,7 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 	
 	public GestorPasajero gestorPasajero;
 
-	private JFrame frameActual;
+	private FramePrincipal frameActual;
 	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
@@ -64,7 +65,7 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
-	public PanelGestionarPasajero(final FrameGestionarPasajero frame) {
+	public PanelGestionarPasajero(final FramePrincipal frame) {
 		gestorPasajero = GestorPasajero.getInstance();
 		
 		this.frameActual = frame;
@@ -74,7 +75,7 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		panelGestionarPasajeroBusqueda = new PanelGestionarPasajeroBusqueda(frame);
+		panelGestionarPasajeroBusqueda = new PanelGestionarPasajeroBusqueda(frameActual);
 		c.insets = insetPanelBusqueda;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 0;	c.gridwidth = 3;
 		c.weightx = 0.1; c.weighty = 0.1;			this.add(panelGestionarPasajeroBusqueda, c);
@@ -168,16 +169,11 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a MenuPrincipal
-			frameActual.dispose();
-			new FrameMenuPrincipal();	
+			frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
 			break;
 		case 2:	//Si no se encontro ningún pasajero, va a la pantalla de AltaPasajero
-			frameActual.dispose();
-			new FrameAltaPasajero();
-			break;
 		case 3:	//Si no se seleccionó ningún pasajero, va a la pantalla de AltaPasajero
-			frameActual.dispose();
-			new FrameAltaPasajero();	
+			frameActual.setNuevoPanel(new PanelAltaPasajero(frameActual));	
 			break;		
 		}
 	}

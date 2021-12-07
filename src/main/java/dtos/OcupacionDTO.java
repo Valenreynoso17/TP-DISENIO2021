@@ -2,12 +2,10 @@ package main.java.dtos;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
-
 import main.java.clases.Ocupacion;
 
-public class OcupacionDTO {
+public class OcupacionDTO{
 	private Integer id;
 	private LocalDate fechaEgreso;
 	private LocalDate fechaIngreso;
@@ -132,6 +130,4 @@ public class OcupacionDTO {
 	public void setIdHabitacion(Integer idHabitacion) {
 		this.idHabitacion = idHabitacion;
 	}
-	
-	
 }

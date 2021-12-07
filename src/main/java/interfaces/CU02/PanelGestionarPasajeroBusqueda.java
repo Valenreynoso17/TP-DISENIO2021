@@ -16,9 +16,10 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoDocumento;
-import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.clasesExtra.TextPrompt;
 import main.java.interfaces.clasesExtra.UppercaseDocumentFilter;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelGestionarPasajeroBusqueda extends JPanel{
 	
@@ -47,14 +48,9 @@ public class PanelGestionarPasajeroBusqueda extends JPanel{
 	
 	private RoundedBorder bordeCampo = new RoundedBorder(5, Color.BLACK);
 	
-//	private ComboBoxRenderer rendererListasDesplegables = new ComboBoxRenderer();
-//	
-//	ComboBoxEditor renderer = new ComboBoxEditor();
-	
 	private TextPrompt fondoJTextField;
-	//cuadradito de arriba
 
-	public PanelGestionarPasajeroBusqueda(FrameGestionarPasajero frame) {
+	public PanelGestionarPasajeroBusqueda(FramePrincipal frame) {
 		
 		this.setBackground(Color.WHITE);
 		

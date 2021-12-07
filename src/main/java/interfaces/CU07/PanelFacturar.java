@@ -27,10 +27,11 @@ import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.excepciones.ReponsablePagoMenorDeEdadException;
 import main.java.gestores.GestorOcupacion;
 import main.java.gestores.GestorResponsableDePago;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.MenuPrincipal.PanelMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	
@@ -68,7 +69,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	private Insets insetPanelBusqueda = new Insets(30,30,5,30);
 	private Insets insetPanelTabla = new Insets(0,30,0,30);
 	
-	private FrameFacturar frameActual;
+	private FramePrincipal frameActual;
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
@@ -78,7 +79,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	
 	private OcupacionDTO ocupacionDTO;
 	
-	public PanelFacturar(final FrameFacturar frame) {
+	public PanelFacturar(final FramePrincipal frame) {
 		
 		this.frameActual = frame;
 		
@@ -99,7 +100,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		c.fill = GridBagConstraints.NONE;
 		c.insets = new Insets(0,0,0,0);
 		
-		panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox(frame);	//Se declara antes para evitar errores
+		panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox(frameActual);	//Se declara antes para evitar errores
 		
 		buscar = new JButton("Buscar");
 		buscar.setMinimumSize(dimensionBoton);
@@ -186,8 +187,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 				try {
 					ResponsableDePagoDTO responsablePagoDTO = gestorResponsablePago.obtenerResponsableDePagoDTO(panelResultadosDeBusquedaFacturarGroupBox.pasajeroSeleccionado()); 
 					
-					frameActual.dispose();
-					new FrameFacturarConsumos(ocupacionDTO, responsablePagoDTO);
+					frameActual.setNuevoPanel(new PanelFacturarConsumos(frame, ocupacionDTO, responsablePagoDTO));
 				}
 				catch (PasajeroNoSeleccionadoException exc) {
 					mensajeResponsableNoSeleccionado.mostrar(getPanel(), frame);
@@ -212,8 +212,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a MenuPrincipal
-			frameActual.dispose();
-			new FrameMenuPrincipal();	
+			frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
 			break;
 		case 2:	//Si el responsable es menor de edad, simplemente muestra el mensaje
 			break;

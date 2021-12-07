@@ -20,6 +20,7 @@ import javax.swing.JRootPane;
 import javax.swing.WindowConstants;
 
 import main.java.enums.TipoMensaje;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class Mensaje extends JFrame{
 	
@@ -51,7 +52,7 @@ public class Mensaje extends JFrame{
 	private JFrame frameActual;
 
 	public Mensaje(Integer id, String texto, TipoMensaje tipo, String opcionAceptar, final String opcionCancelar) {	
-		super();
+		//super();
 		this.setTitle("Sistema Hotel Premier");
 		this.id = id;
 		this.texto = texto;

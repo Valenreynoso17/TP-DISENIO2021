@@ -27,6 +27,7 @@ import main.java.interfaces.CU02.PanelGestionarPasajeroTabla;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPermiteMensajes{
 	
@@ -36,12 +37,10 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	private PanelOcuparHabitacionBusqueda panelOcuparHabitacionBusqueda;
 	private PanelOcuparHabitacionTabla panelOcuparHabitacionTabla;
 	
-	private PanelGestionarPasajeroTabla prueba;
-	
 	private PanelPasajerosSeleccionadosGroupBox panelPasajerosSeleccionadosGroupBox;
 	private PanelInformacionGroupBox panelInformacionGroupBox;
 
-	private JFrame frameActual;
+	private FramePrincipal frameActual;
 	
 	public GestorPasajero gestorPasajero;
 	private GestorHabitacion gestorHabitacion;
@@ -50,20 +49,11 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoMensajeNoExistePasajeroBuscar = "<html><p>No existe ningún pasajero con los criterios de búsqueda"
-														+ " seleccionados. ¿Desea agregar un nuevo pasajero?</p><html>";
-	@SuppressWarnings("unused")
+														+ " seleccionados. Por favor, revise y vuelva a intentar.</p><html>";
 	private Mensaje mensajeNoExistePasajeroBuscar = new Mensaje(2, textoMensajeNoExistePasajeroBuscar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
-	private String textoModificarPasajero = 	"<html><p>Modificar pasajero en proximas versiones</p><html>";
-	@SuppressWarnings("unused")
-	private Mensaje mensajeModificarPasajero = new Mensaje(4, textoModificarPasajero, TipoMensaje.ERROR, "Aceptar", null);
-	
-	private String textoMensajeNoExistePasajeroSiguiente = "<html><p>No seleccionó ningún pasajero. ¿Desea agregar un nuevo pasajero?</p><html>";
-	@SuppressWarnings("unused")
-	private Mensaje mensajeNoExistePasajeroSiguiente = new Mensaje(3, textoMensajeNoExistePasajeroSiguiente, TipoMensaje.CONFIRMACION, "Si", "No");
-	
 	private String textoPasajerosNoSeleccionados = 	"<html><p>Seleccione al menos un ocupante.</p><html>";
-	private Mensaje mensajePasajerosNoSeleccionados = new Mensaje(5, textoPasajerosNoSeleccionados, TipoMensaje.ERROR, "Aceptar", null);
+	private Mensaje mensajePasajerosNoSeleccionados = new Mensaje(3, textoPasajerosNoSeleccionados, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private JButton buscar;
 	private JButton cancelar;
@@ -87,7 +77,12 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	private LocalDate ingreso = LocalDate.of(2021, 12, 3);
 	private LocalDate egreso = LocalDate.of(2021, 12, 6);
 	
-	public PanelOcuparHabitacionConPasajeros(final FrameOcuparHabitacionConPasajeros frame) {
+	public PanelOcuparHabitacionConPasajeros(final FramePrincipal frame, HabitacionDTO habitacion, LocalDate fechaDesde, LocalDate fechaHasta) {
+		
+		System.out.println("Numero habitacion: "+habitacion.getNroHabitacion());	//TODO: Borrar
+		System.out.println("Fecha desde: "+fechaDesde);
+		System.out.println("Fecha hasta: "+fechaHasta);
+		
 		gestorPasajero = GestorPasajero.getInstance();
 		gestorHabitacion = GestorHabitacion.getInstance();
 		
@@ -100,7 +95,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		panelOcuparHabitacionBusqueda = new PanelOcuparHabitacionBusqueda(frame);
+		panelOcuparHabitacionBusqueda = new PanelOcuparHabitacionBusqueda(frameActual);
 		c.insets = insetPanelBusqueda;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 0;	c.gridwidth = 3;
 		c.weightx = 0.1; c.weighty = 0.1;			this.add(panelOcuparHabitacionBusqueda, c);
@@ -192,8 +187,8 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 				if (pasajeros.isEmpty()) mensajePasajerosNoSeleccionados.mostrar(getPanel(), frameActual);
 				else {
 					OcupacionDTO ocupacionDTO = new OcupacionDTO(idHabitacion, ingreso, egreso, pasajeros, pasajeros.get(0));
-					frameActual.setEnabled(false);	//Por si quiere cargar otro pasajero
-					new FrameMenuOcuparHabitacion(ocupacionDTO, frame);
+					
+					frameActual.setNuevoPanel(new PanelMenuOcuparHabitacion(ocupacionDTO, frameActual));
 				}
 				
 				
@@ -214,16 +209,11 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve al frame anterior
-			frameActual.dispose();
-			new FrameOcuparHabitacion();	//TODO: Ver si no es mejor mostrar el frame anterior en vez de uno nuevo
+			frameActual.cargarPanelViejo();
 			break;
-		case 2:	//Si no se encontro ningún pasajero, va a la pantalla de AltaPasajero
-			//frameActual.dispose();
-			//frameAltaPasajero = new FrameAltaPasajero();
+		case 2:	//
 			break;
-		case 3:	//Si no se seleccionó ningún pasajero, va a la pantalla de AltaPasajero
-			//frameActual.dispose();
-			//frameAltaPasajero = new FrameAltaPasajero();	
+		case 3:	//
 			break;		
 		}
 	}

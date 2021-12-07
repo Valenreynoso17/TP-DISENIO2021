@@ -115,7 +115,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		
 			c.anchor = GridBagConstraints.EAST; c.fill = GridBagConstraints.CENTER; c.weightx = pesoXCampo; c.weighty = pesoYCampo; c.insets = insetCampoDerecho;
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");	//TODO: Ver si funciona
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 		fecha = new JTextField(); 
 		fecha.setText(ocupacionDTO.getPosibleFechaHoraDeSalida().toLocalDate().format(formatter));
 		fecha.setFont(fuenteLabelCampo);	fecha.setBorder(bordeCampo);	fecha.setEditable(false);

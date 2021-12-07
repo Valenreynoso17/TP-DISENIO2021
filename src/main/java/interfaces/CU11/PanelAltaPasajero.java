@@ -14,11 +14,11 @@ import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.DocumentoRepetidoException;
 import main.java.gestores.GestorPasajero;
-import main.java.interfaces.CU02.FrameGestionarPasajero;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.MenuPrincipal.PanelMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 	
@@ -37,7 +37,7 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
-	private FrameAltaPasajero frameActual;
+	private FramePrincipal frameActual;
 	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
@@ -51,7 +51,7 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 	private PasajeroDTO pasajeroDTO;
 	private GestorPasajero gestorPasajero;
 	
-	public PanelAltaPasajero(final FrameAltaPasajero frame) {
+	public PanelAltaPasajero(final FramePrincipal frame) {
 		this.frameActual = frame;
 		
 		this.setBackground(Color.WHITE);
@@ -59,7 +59,7 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		panelDarAltaPasajero  = new PanelAltaPasajeroDatos(frame);
+		panelDarAltaPasajero  = new PanelAltaPasajeroDatos(frameActual);
 		c.insets = insetPanel;
 		c.fill = GridBagConstraints.BOTH; 		c.gridx = 0; c.gridy = 0;	c.gridwidth = 2;
 		c.weightx = 0.5; c.weighty = 0.5;			this.add(panelDarAltaPasajero, c);
@@ -134,16 +134,14 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a GestionarPasajero
-			frameActual.dispose();
-			new FrameGestionarPasajero();	
+			frameActual.cargarPanelViejo();
 			break;
 		case 2:	//Si tiene documento repetido, se guarda igualmente (primero muestra el mensaje de que se creó el pasajero)
 			gestorPasajero.crearPasajero(pasajeroDTO);
 			mensajePasajeroCreado.mostrar(getPanel(), frameActual);
 			break;
 		case 3:	//Si se creo el pasajero, vuelve al MenuPrincpal
-			frameActual.dispose();
-			new FrameMenuPrincipal();	
+			frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
 			break;		
 		}
 		
@@ -154,13 +152,11 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 		
 		switch(idMensaje) {
 		case 1:	//Si no quiere cancelar, no pasa nada
-			
 			break;
 		case 2:	//Si quiere corregir, se centra en el campo NumeroDocumento
 			this.panelDarAltaPasajero.centrarDocumento();			
 			break;		
-		}
-		
+		}	
 
 	}
 

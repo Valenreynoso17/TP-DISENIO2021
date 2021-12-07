@@ -12,15 +12,14 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import main.java.enums.TipoMensaje;
-import main.java.interfaces.CU01.FrameAutenticarUsuario;
-import main.java.interfaces.CU02.FrameGestionarPasajero;
-import main.java.interfaces.CU04.FrameReservarHabitacion;
-import main.java.interfaces.CU07.FrameFacturar;
-import main.java.interfaces.CU17.FrameOcuparHabitacion;
-import main.java.interfaces.CU18.FrameBuscarFacturasHabitacion;
+import main.java.interfaces.CU01.PanelAutenticarUsuario;
+import main.java.interfaces.CU02.PanelGestionarPasajero;
+import main.java.interfaces.CU05.PanelMostrarEstadoHabitaciones;
+import main.java.interfaces.CU07.PanelFacturar;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.frames.FramePrincipal;
 
 
 public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
@@ -49,18 +48,24 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 	private String textoMensajeCU03 = "<html><p>El CU03 'Gestionar Responsable de Pago' no debe ser implementado.</p><html>";
 	private Mensaje mensajeCU03 = new Mensaje(2, textoMensajeCU03, TipoMensaje.ERROR, "Aceptar", null);
 	
+	private String textoMensajeCU04 = "<html><p>El CU04 'Reservar Habitación' no debe ser implementado.</p><html>";
+	private Mensaje mensajeCU04 = new Mensaje(3, textoMensajeCU04, TipoMensaje.ERROR, "Aceptar", null);
+	
 	private String textoMensajeCU06 = "<html><p>El CU06 'Cancelar Reserva' no debe ser implementado.</p><html>";
-	private Mensaje mensajeCU06 = new Mensaje(3, textoMensajeCU06, TipoMensaje.ERROR, "Aceptar", null); 
+	private Mensaje mensajeCU06 = new Mensaje(4, textoMensajeCU06, TipoMensaje.ERROR, "Aceptar", null); 
 
 	private String textoMensajeCU09 = "<html><p>El CU09 'Gestionar Listados' no debe ser implementado.</p><html>";
-	private Mensaje mensajeCU09 = new Mensaje(4, textoMensajeCU09, TipoMensaje.ERROR, "Aceptar", null); 
+	private Mensaje mensajeCU09 = new Mensaje(5, textoMensajeCU09, TipoMensaje.ERROR, "Aceptar", null); 
+	
+	private String textoMensajeCU18 = "<html><p>El CU18 'Ingresar Pago' no debe ser implementado.</p><html>";
+	private Mensaje mensajeCU18 = new Mensaje(6, textoMensajeCU18, TipoMensaje.ERROR, "Aceptar", null); 
 	
 	private String textoMensajeCU21 = "<html><p>El CU21 'Ingresar Nota de Crédito' no debe ser implementado.</p><html>";
-	private Mensaje mensajeCU21 = new Mensaje(5, textoMensajeCU21, TipoMensaje.ERROR, "Aceptar", null); 
+	private Mensaje mensajeCU21 = new Mensaje(7, textoMensajeCU21, TipoMensaje.ERROR, "Aceptar", null); 
 	
-	private FrameMenuPrincipal frameActual;
+	private FramePrincipal frameActual;
 	
-	public PanelMenuPrincipal(final FrameMenuPrincipal frame) {
+	public PanelMenuPrincipal(final FramePrincipal frame) {
 		
 		this.frameActual = frame;
 		
@@ -88,8 +93,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.dispose();
-				new FrameGestionarPasajero();
+				frame.setNuevoPanel(new PanelGestionarPasajero(frame));
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
@@ -119,8 +123,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.dispose();
-				new FrameReservarHabitacion();
+				mensajeCU04.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.EAST; c.insets = izq;
@@ -133,8 +136,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.dispose();
-				new FrameOcuparHabitacion();
+				frame.setNuevoPanel(new PanelMostrarEstadoHabitaciones(frame));
 			}
 		});
 		button.setBorder(bordeBoton);
@@ -181,8 +183,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frameActual.dispose();
-				new FrameFacturar();
+				frame.setNuevoPanel(new PanelFacturar(frame));
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
@@ -212,7 +213,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		cerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				mensajeCerrarSesion.mostrar(getPanel(), frame);
+				mensajeCerrarSesion.mostrar(getPanel(), frameActual);
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izqF;
@@ -227,8 +228,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.dispose();
-				new FrameBuscarFacturasHabitacion();
+				mensajeCU18.mostrar(getPanel(), frame);
 			}
 		});
 		c.anchor = GridBagConstraints.WEST; c.insets = derF;
@@ -244,13 +244,14 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a AutenticarUsuario
-			frameActual.dispose();
-			new FrameAutenticarUsuario();	
+			frameActual.setNuevoPanel(new PanelAutenticarUsuario(frameActual));
 			break;
 		case 2:	//No pasa nada
 		case 3:	//No pasa nada
 		case 4:	//No pasa nada
 		case 5:	//No pasa nada
+		case 6:	//No pasa nada
+		case 7:	//No pasa nada
 			break;	
 		}
 		

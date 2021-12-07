@@ -33,9 +33,10 @@ import main.java.dtos.ProvinciaDTO;
 import main.java.enums.PosicionFrenteIva;
 import main.java.enums.TipoDocumento;
 import main.java.gestores.GestorPaisProvincia;
-import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.JTextFieldLimitado;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.clasesExtra.TextPrompt;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelAltaPasajeroDatos extends JPanel{
 	
@@ -134,7 +135,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	
 	private TextPrompt fondoJTextField;
 	
-	public PanelAltaPasajeroDatos(FrameAltaPasajero frame) {
+	public PanelAltaPasajeroDatos(FramePrincipal frame) {
 		gestorPP =  GestorPaisProvincia.getInstance();
 		
 		this.setBackground(Color.WHITE);

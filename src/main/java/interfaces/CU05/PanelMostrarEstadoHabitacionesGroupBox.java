@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -23,8 +24,8 @@ import javax.swing.text.MaskFormatter;
 
 import main.java.excepciones.FechaInvalidaException;
 import main.java.excepciones.InputVacioException;
-import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.clasesExtra.TextPrompt;
 
 public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 	
@@ -171,25 +172,31 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 
 	public void inputNoEsVacia() throws InputVacioException{
 		
+		labelFechaDesdeVacio.setVisible(false);
+		labelFechaHastaVacio.setVisible(false);
+		
 		String inputsVacios = "";
-		boolean alMenosUnoInvalido = false;
+		boolean alMenosUnoVacio = false;
 
 		if(this.fechaDesde.getText().contains(" ")) {	//Por el formato que tiene
 			inputsVacios += "d";
-			alMenosUnoInvalido = true;
+			alMenosUnoVacio = true;
 		}
 			
 		if(this.fechaHasta.getText().contains(" ")) {	//Por el formato que tiene
 			inputsVacios += "h";
-			alMenosUnoInvalido = true;
+			alMenosUnoVacio = true;
 		}
 		
-		if(alMenosUnoInvalido) {
+		if(alMenosUnoVacio) {
 			throw new InputVacioException(inputsVacios);
 		}
 	}
 	
 	public void inputEsValida() throws FechaInvalidaException{
+		
+		labelFechaDesdeInvalida.setVisible(false);
+		labelFechaHastaInvalida.setVisible(false);
 
 		String inputsInvalidos = "";
 		boolean alMenosUnoInvalido = false;
@@ -226,7 +233,8 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 			LocalDate localDateDesde = LocalDate.parse(fechaDesdeString, formatter);	
 			LocalDate localDateHasta = LocalDate.parse(fechaHastaString, formatter);	
 			
-			if(localDateDesde.isAfter(localDateHasta)) {	//Si DESDE es MAYOR a HASTA --> Está mal
+			//Si DESDE es MAYOR a HASTA --> Está mal // Si el periodo entre las fechas es mayor a 2 meses -> Está mal
+			if(localDateDesde.isAfter(localDateHasta) || Period.between(localDateDesde, localDateHasta).getMonths() >= 2) {	
 				
 				resultado = false;
 			}
@@ -263,11 +271,10 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 		return resultado;
 	}
 	
-	private boolean fechaEnRango(LocalDate fecha) {	//TODO: Cambiar para que el periodo no sea mayor a 2 meses
+	private boolean fechaEnRango(LocalDate fecha) {
 
-			LocalDate fechaMaxima = LocalDate.now().plusMonths(2);	//Fecha máxima
 			LocalDate fechaMinima = LocalDate.now().minusDays(1);	//Fecha mínima (hoy)
-		return (fecha.isBefore(fechaMaxima) && fecha.isAfter(fechaMinima));
+		return (fecha.isAfter(fechaMinima));
 	}
 
 	public void colocarLabelVacio(String inputs) {

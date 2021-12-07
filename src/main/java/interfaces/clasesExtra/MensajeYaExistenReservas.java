@@ -62,6 +62,8 @@ public class MensajeYaExistenReservas extends JFrame{
 		
 		this.frameActual = frame;
 		
+		frame.setEnabled(false);	//Para que solo se pueda clickear el mensaje
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 240);
 		contentPane = new JPanel();

@@ -24,10 +24,11 @@ import main.java.excepciones.NingunElementoSeleccionadoFacturacionException;
 import main.java.excepciones.RecargoNoEstaEnUltimaFacturaException;
 import main.java.gestores.GestorFactura;
 import main.java.gestores.GestorOcupacion;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.MenuPrincipal.PanelMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensajes{
 	
@@ -54,7 +55,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	
 	private Insets insetPanelFacturarConsumos = new Insets(30,30,20,30);
 	
-	private FrameFacturarConsumos frameActual;
+	private FramePrincipal frameActual;
 	
 	private GestorOcupacion gestorOcupacion;
 	private GestorFactura gestorFactura;
@@ -62,7 +63,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
-	public PanelFacturarConsumos(final FrameFacturarConsumos frame, OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsablePagoDTO) {
+	public PanelFacturarConsumos(final FramePrincipal frame, OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsablePagoDTO) {
 		
 		this.frameActual = frame;
 		
@@ -149,16 +150,14 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve al frame anterior
-			frameActual.dispose();
-			new FrameFacturar();	
+			frameActual.cargarPanelViejo();
 			break;
 		case 2:	//Si no selecciona ningún consumo a facturar, simplemente muestra el mensaje
 			break;
 		case 3:	//Si selecciona el recargo pero no el resto de la factura, simplemente muestra el mensaje
 			break;
 		case 4:	//TODO: Ver si poner mensaje o mostrar directamente la factura impresa
-			frameActual.dispose();
-			new FrameMenuPrincipal();
+			frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
 			break;
 		}
 	}

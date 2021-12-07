@@ -21,9 +21,9 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 import main.java.excepciones.InputInvalidaException;
 import main.java.excepciones.InputVacioException;
-import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.JTextFieldLimitado;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.clasesExtra.TextPrompt;
 
 public class PanelFacturarGroupBox extends JPanel{
 	

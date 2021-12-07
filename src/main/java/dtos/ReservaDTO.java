@@ -2,7 +2,7 @@ package main.java.dtos;
 
 import java.time.LocalDateTime;
 
-public class ReservaDTO {
+public class ReservaDTO{
 	private Integer id;
 	private Integer idHabitacion;
 	private LocalDateTime ingreso;
@@ -43,8 +43,5 @@ public class ReservaDTO {
 	public void setEgreso(LocalDateTime egreso) {
 		this.egreso = egreso;
 	}
-
-	
-	
 	
 }
