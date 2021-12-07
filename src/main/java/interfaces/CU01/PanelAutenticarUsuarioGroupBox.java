@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -15,10 +14,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
-import main.java.excepciones.ContraseniaIncorrectaExcepcion;
 import main.java.excepciones.InputVacioException;
-import main.java.excepciones.UsuarioIncorrectoException;
+import main.java.excepciones.UsuarioOContraseniaIncorrectaException;
 import main.java.gestores.GestorUsuario;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 import main.java.interfaces.clasesExtra.TextPrompt;
@@ -169,7 +166,7 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 		
 	}
 	
-	public void validarUsuarioContrasenia() throws UsuarioIncorrectoException, ContraseniaIncorrectaExcepcion {
+	public void validarUsuarioContrasenia() throws UsuarioOContraseniaIncorrectaException {
 		gestorUsuario.autentificar(nombre.getText(), contrasenia.getPassword());
 	}
 	

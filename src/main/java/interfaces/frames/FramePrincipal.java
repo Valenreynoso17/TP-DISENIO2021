@@ -41,7 +41,6 @@ public class FramePrincipal extends JFrame {
 	}
 	
 	public void setNuevoPanel(JPanel panelNuevo) {
-
 		panelActual = panelNuevo;
 
 		mostrarPanelNuevo();

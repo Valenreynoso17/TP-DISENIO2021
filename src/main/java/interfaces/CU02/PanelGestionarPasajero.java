@@ -37,6 +37,7 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 	public GestorPasajero gestorPasajero;
 
 	private FramePrincipal frameActual;
+	private PanelMenuPrincipal panelAnterior;
 	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
@@ -65,10 +66,11 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
-	public PanelGestionarPasajero(final FramePrincipal frame) {
+	public PanelGestionarPasajero(final FramePrincipal frame, PanelMenuPrincipal panelAnterior) {
 		gestorPasajero = GestorPasajero.getInstance();
 		
 		this.frameActual = frame;
+		this.panelAnterior = panelAnterior;
 		
 		this.setBackground(Color.WHITE);
 		
@@ -169,11 +171,11 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a MenuPrincipal
-			frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
+			frameActual.setNuevoPanel(panelAnterior);
 			break;
 		case 2:	//Si no se encontro ningún pasajero, va a la pantalla de AltaPasajero
 		case 3:	//Si no se seleccionó ningún pasajero, va a la pantalla de AltaPasajero
-			frameActual.setNuevoPanel(new PanelAltaPasajero(frameActual));	
+			frameActual.setNuevoPanel(new PanelAltaPasajero(frameActual, this));	
 			break;		
 		}
 	}

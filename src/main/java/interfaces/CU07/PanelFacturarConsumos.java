@@ -56,6 +56,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	private Insets insetPanelFacturarConsumos = new Insets(30,30,20,30);
 	
 	private FramePrincipal frameActual;
+	private PanelFacturar panelAnterior;
 	
 	private GestorOcupacion gestorOcupacion;
 	private GestorFactura gestorFactura;
@@ -63,9 +64,10 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
-	public PanelFacturarConsumos(final FramePrincipal frame, OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsablePagoDTO) {
+	public PanelFacturarConsumos(final FramePrincipal frame, PanelFacturar panelAnterior, OcupacionDTO ocupacionDTO, ResponsableDePagoDTO responsablePagoDTO) {
 		
 		this.frameActual = frame;
+		this.panelAnterior = panelAnterior;
 		
 		this.gestorOcupacion = GestorOcupacion.getInstance();
 		this.gestorFactura = GestorFactura.getInstance();
@@ -149,8 +151,8 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	public void confirmoElMensaje(Integer idMensaje) {
 		
 		switch(idMensaje) {
-		case 1:	//Si cancela, vuelve al frame anterior
-			frameActual.cargarPanelViejo();
+		case 1:	//Si cancela, vuelve al panel anterior
+			frameActual.setNuevoPanel(panelAnterior);
 			break;
 		case 2:	//Si no selecciona ningún consumo a facturar, simplemente muestra el mensaje
 			break;

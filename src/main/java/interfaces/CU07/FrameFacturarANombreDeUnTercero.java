@@ -17,14 +17,14 @@ public class FrameFacturarANombreDeUnTercero extends JFrame{
 	
 	private JFrame frameAnterior;
 
-	public FrameFacturarANombreDeUnTercero(FramePrincipal frame) {
+	public FrameFacturarANombreDeUnTercero(FramePrincipal frame, PanelFacturar panelFacturar) {
 		
 		super("Sistema Hotel Premier");
 		
 		frameAnterior = frame;
 		
 		setBounds(100, 100, 500, 250);
-		contentPane = new PanelFacturarANombreDeUnTercero(this, frame);
+		contentPane = new PanelFacturarANombreDeUnTercero(this, frame, panelFacturar);
 		setContentPane(contentPane);
 		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		
