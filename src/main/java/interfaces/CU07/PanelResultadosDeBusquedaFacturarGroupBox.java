@@ -33,6 +33,7 @@ import main.java.gestores.GestorPasajero;
 import main.java.interfaces.clasesExtra.ModeloTablaFacturar;
 import main.java.interfaces.clasesExtra.RenderParaHeaderTablas;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	
@@ -56,8 +57,8 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
-	private FrameFacturar frameActual;
-	private FrameFacturarANombreDeUnTercero frameSiguiente;
+	private FramePrincipal frameActual;
+	private FrameFacturarANombreDeUnTercero frameFacturarANombreDeUnTercero;
 	
 	private Dimension dimensionBoton = new Dimension(250, 33);
 	
@@ -65,7 +66,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	
 	private OcupacionDTO ocupacion;
 
-	public PanelResultadosDeBusquedaFacturarGroupBox(FrameFacturar frame) {
+	public PanelResultadosDeBusquedaFacturarGroupBox(FramePrincipal frame) {
 		
 		this.frameActual = frame;
 		
@@ -136,8 +137,8 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		facturarANombreDeUnTercero.addActionListener(e -> {
 			
 			frameActual.setEnabled(false);
-			frameSiguiente = new FrameFacturarANombreDeUnTercero(frame); 
-			frameSiguiente.ocupacionSeleccionada(ocupacion);
+			frameFacturarANombreDeUnTercero = new FrameFacturarANombreDeUnTercero(frameActual); 
+			frameFacturarANombreDeUnTercero.ocupacionSeleccionada(ocupacion);
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
 		c.gridy = 1;

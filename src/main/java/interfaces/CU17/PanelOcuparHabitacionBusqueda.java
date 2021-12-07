@@ -16,9 +16,10 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoDocumento;
-import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.clasesExtra.TextPrompt;
 import main.java.interfaces.clasesExtra.UppercaseDocumentFilter;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelOcuparHabitacionBusqueda extends JPanel{
 	
@@ -54,11 +55,11 @@ public class PanelOcuparHabitacionBusqueda extends JPanel{
 	private TextPrompt fondoJTextField;
 	//cuadradito de arriba
 
-	public PanelOcuparHabitacionBusqueda(FrameOcuparHabitacionConPasajeros frame) {
+	public PanelOcuparHabitacionBusqueda(FramePrincipal frame) {
 		
 		this.setBackground(Color.WHITE);
 		
-		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Gestionar Pasajero", 0, 0, fuenteGroupBox));
+		this.setBorder(new TitledBorder (new LineBorder (Color.black, 1), "Ocupar Habitación", 0, 0, fuenteGroupBox));
 		
 		this.setLayout(new GridBagLayout());
 		

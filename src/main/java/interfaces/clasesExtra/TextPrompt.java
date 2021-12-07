@@ -1,4 +1,4 @@
-package main.java.interfaces;
+package main.java.interfaces.clasesExtra;
 
 import java.awt.*;
 import java.awt.event.*;

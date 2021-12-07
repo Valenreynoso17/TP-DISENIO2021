@@ -2,7 +2,7 @@ package main.java.dtos;
 
 import java.time.LocalDateTime;
 
-public class FueraDeServicioDTO {
+public class FueraDeServicioDTO{
 	private Integer id;
 	private Integer idHabitacion;
 	private LocalDateTime fechaInicio;
@@ -44,5 +44,4 @@ public class FueraDeServicioDTO {
 		this.fechaFin = fechaFin;
 	}
 
-	
 }

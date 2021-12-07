@@ -25,8 +25,8 @@ import main.java.dtos.ResponsableDePagoDTO;
 import main.java.excepciones.InputVacioException;
 import main.java.excepciones.NoExisteResponsableCuitException;
 import main.java.gestores.GestorResponsableDePago;
-import main.java.interfaces.TextPrompt;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.clasesExtra.TextPrompt;
 
 public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 	

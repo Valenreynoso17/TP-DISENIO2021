@@ -17,8 +17,10 @@ import javax.swing.border.TitledBorder;
 
 import main.java.dtos.OcupacionDTO;
 import main.java.gestores.GestorOcupacion;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.CU05.PanelMostrarEstadoHabitaciones;
+import main.java.interfaces.MenuPrincipal.PanelMenuPrincipal;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelMenuOcuparHabitacion extends JPanel{
 	
@@ -39,9 +41,8 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 	
 	private Dimension dimensionBoton = new Dimension(200, 50);
 	
-	public PanelMenuOcuparHabitacion(OcupacionDTO ocupacion, FrameMenuOcuparHabitacion frame, FrameOcuparHabitacionConPasajeros frameA) {
+	public PanelMenuOcuparHabitacion(OcupacionDTO ocupacion, FramePrincipal frame) {
 		this.gestorOcupacion = GestorOcupacion.getInstance();
-		
 		
 		this.setBackground(Color.white);
 		
@@ -74,8 +75,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		cargarOtroPasajero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.dispose();
-				frameA.setEnabled(true);
+				frame.cargarPanelViejo();
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;	
@@ -92,9 +92,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				gestorOcupacion.guardarOcupacion(ocupacion);
 				
-				frame.dispose();
-				frameA.dispose();	//Estaba invisible, hay que cerrarla
-				new FrameOcuparHabitacion();
+				frame.setNuevoPanel(new PanelMostrarEstadoHabitaciones(frame));
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;
@@ -108,12 +106,10 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		salir.setFont(fuenteBoton);
 		salir.setBorder(bordeBoton);
 		salir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	//TODO: Hacer aca el pasaje de todos los datos para cargar la ocupacion
+			public void actionPerformed(ActionEvent e) {	
 				gestorOcupacion.guardarOcupacion(ocupacion);
 				
-				frame.dispose();
-				frameA.dispose();	//Estaba invisible, hay que cerrarla
-				new FrameMenuPrincipal();
+				frame.setNuevoPanel(new PanelMenuPrincipal(frame));
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;	c.insets = new Insets(0,0,30,0);

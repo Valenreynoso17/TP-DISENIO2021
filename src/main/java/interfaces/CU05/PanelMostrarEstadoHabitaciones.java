@@ -15,12 +15,14 @@ import main.java.excepciones.ContieneFechasReservadasException;
 import main.java.excepciones.FechaInvalidaException;
 import main.java.excepciones.InputVacioException;
 import main.java.excepciones.RangoNoSeleccionadoException;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.interfaces.CU17.PanelOcuparHabitacionConPasajeros;
+import main.java.interfaces.MenuPrincipal.PanelMenuPrincipal;
 import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.MensajeYaExistenReservas;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermiteMensajes{
 	
@@ -37,11 +39,9 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoNoExistenHabitacionesEnPeriodo = "<html><p>No existen habitaciones disponibles para el período seleccionado.</p><html>";
-	@SuppressWarnings("unused")
 	private Mensaje mensajeNoExistenHabitacionesEnPeriodo = new Mensaje(2, textoNoExistenHabitacionesEnPeriodo, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private String textoRangoNoSeleccionado = "<html><p>Por favor, seleccione al menos un rango de fechas para ocupar una habitación.</p><html>";
-	@SuppressWarnings("unused")
 	private Mensaje mensajeRangoNoSeleccionado = new Mensaje(3, textoRangoNoSeleccionado, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private MensajeYaExistenReservas mensajeYaExistenReservas = new MensajeYaExistenReservas(4);
@@ -53,12 +53,12 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	private Insets insetPanelBusqueda = new Insets(30,30,5,30);
 	private Insets insetPanelTabla = new Insets(0,30,0,30);
 	
-	private FrameMuestraEstadoHabitaciones frameActual;
+	private FramePrincipal frameActual;
 	//Dependiendo quien lo llame, cambia el frame que se mostrara al presionar "Siguiente"
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
-	public PanelMostrarEstadoHabitaciones(final FrameMuestraEstadoHabitaciones frame) {
+	public PanelMostrarEstadoHabitaciones(final FramePrincipal frame) {
 		
 		this.frameActual = frame;
 		
@@ -143,20 +143,25 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		siguiente.setBorder(bordeBoton);
 		siguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("NOSE");
 				try {
 						panelResultadosDeBusquedaHabitacionesGroupBox.seleccionoUnRango();
 					
 						panelResultadosDeBusquedaHabitacionesGroupBox.validacionContieneFechasReservadas();
 						
-						frame.apretoSiguiente();
+						//TODO: Ver, por ahora le pasa la habitacion, fecha desde y fecha hasta (creo que no necesita nada mas)
+						frame.setNuevoPanel(new PanelOcuparHabitacionConPasajeros(frame,
+											panelResultadosDeBusquedaHabitacionesGroupBox.getHabitacion(), 
+											panelResultadosDeBusquedaHabitacionesGroupBox.getFechaDesde(), 
+											panelResultadosDeBusquedaHabitacionesGroupBox.getFechaHasta()));
+//						frame.apretoSiguiente(panelResultadosDeBusquedaHabitacionesGroupBox.getHabitacion(), 
+//											  panelResultadosDeBusquedaHabitacionesGroupBox.getFechaDesde(), 
+//											  panelResultadosDeBusquedaHabitacionesGroupBox.getFechaHasta());
 				}
 				catch (RangoNoSeleccionadoException exc) {
 					mensajeRangoNoSeleccionado.mostrar(getPanel(), frame);
 				}
 				catch (ContieneFechasReservadasException exc) {
 					System.out.println("Periodo reservado");
-					frame.setEnabled(false);
 					mensajeYaExistenReservas.mostrar(getPanel(), frame, "a");
 				}
 			}
@@ -174,8 +179,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a MenuPrincipal
-			frameActual.dispose();
-			new FrameMenuPrincipal();	
+			frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
 			break;
 		case 2:	//Si la habitación no existe, simplemente muestra el mensaje
 			break;

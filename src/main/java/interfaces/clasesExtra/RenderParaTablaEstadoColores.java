@@ -7,6 +7,8 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import main.java.enums.EstadoHabitacion;
+
 public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	
 	private static final long serialVersionUID = 1L;
@@ -29,10 +31,15 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		
+		if(column != 0) {
+        	c = super.getTableCellRendererComponent(table, "", isSelected, hasFocus, row, column);      
+		}
+		else {
+			c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);  
+		}
 
-        c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        
-        this.pintarTodasLasCeldas(c, row, column);
+		this.pintarTodasLasCeldas(value, c, row, column);
         	
         ArrayList<Integer> filaYColumnaParaRePintar = new ArrayList<Integer>();	filaYColumnaParaRePintar.add(row); filaYColumnaParaRePintar.add(column);
         
@@ -89,27 +96,37 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
         return c;
     }	
 	
-	public void pintarTodasLasCeldas(Component c, int row, int column) {
+	public void pintarTodasLasCeldas(Object value, Component c, int row, int column) {
 		
   	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
-		
-	    	if (column == 0) {
-	    	  c.setBackground(Color.white);
-	      } else if (column == 1) {
-	    	  c.setBackground(colorRojo);
-	    	  celdasOcupadas.add(filaYColumna);
-	      } else if (column == 2) {
-	    	  c.setBackground(colorVerde);
-	      } else if (column == 3) {
-	    	  c.setBackground(colorAzul);
-	    	  celdasReservadas.add(filaYColumna);
-	      } else if (column == 4) {
-	    	  c.setBackground(colorAmarillo);
-	    	  celdasFueraDeServicio.add(filaYColumna);
-	      }
-	      else {
-	    	  c.setBackground(colorVerde);
-	      }
+  	 
+  	  if(column == 0) {	//FECHA
+  		c.setBackground(Color.white);
+  	  }
+  	  else if(value == null) {	//Ver si vale la pena dejar el value como null y hacer el if aca o colocar la fila como EstadoHabitacion.LIBRE
+  		c.setBackground(colorVerde);
+  	  }
+  	  else {
+  		switch((EstadoHabitacion) value) {
+  		
+  			case LIBRE:
+  	    	  c.setBackground(colorVerde);
+  	    	  break;
+  			case RESERVADA:
+  	    	  c.setBackground(colorAzul);
+  	    	  celdasReservadas.add(filaYColumna);
+  	    	  break;
+  			case OCUPADA:
+  	    	  c.setBackground(colorRojo);
+  	    	  celdasOcupadas.add(filaYColumna);
+  	    	  break;
+  			case FUERA_DE_SERVICIO:
+  	    	  c.setBackground(colorAmarillo);
+  	    	  celdasFueraDeServicio.add(filaYColumna);
+  	    	  break;
+  		}
+  		  
+  	  }
 	}
 	
 	public List<ArrayList<Integer>> getCeldasSeleccionadas(){

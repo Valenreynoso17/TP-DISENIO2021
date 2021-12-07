@@ -9,7 +9,6 @@ import main.java.daos.PasajeroDAO;
 import main.java.dtos.PasajeroDTO;
 import main.java.excepciones.InputInvalidaException;
 import main.java.gestores.GestorPasajero;
-import main.java.interfaces.CU02.FrameGestionarPasajero;
 import main.java.postgreImpl.FacturaPostgreSQLImpl;
 import main.java.postgreImpl.PasajeroPostgreSQLImpl;
 

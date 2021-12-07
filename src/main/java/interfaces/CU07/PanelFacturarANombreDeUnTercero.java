@@ -20,6 +20,7 @@ import main.java.gestores.GestorResponsableDePago;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPermiteMensajes{
 	
@@ -52,17 +53,17 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
-	private FrameFacturar frameAnterior;
+	private FramePrincipal framePrincipal;
 	private FrameFacturarANombreDeUnTercero frameActual;
 	
 	//private GestorResponsableDePago gestorResponsablePago;
 	
-	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FrameFacturar frameA) {
+	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FramePrincipal frameP) {
 		
 		//gestorResponsablePago = GestorResponsableDePago.getInstance();
 		
 		this.frameActual = frame;
-		this.frameAnterior = frameA;
+		this.framePrincipal = frameP;
 		
 		this.setBackground(Color.white);
 		
@@ -85,7 +86,7 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frameAnterior.setEnabled(true);
+				framePrincipal.setEnabled(true);
 				frameActual.dispose();
 			}
 		});
@@ -110,23 +111,19 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 					
 					if(panelGroupBox.getExcepcionNoExisteResponsable())	{	//TODO: Ver si puede hacerse de otra manera
 						
-						mensajeNoExisteResponsable.mostrar(getPanel(), frameA);
+						mensajeNoExisteResponsable.mostrar(getPanel(), framePrincipal);
 						System.out.println("No existe responsable");
 					}
 					else {
 						
-						frameAnterior.dispose();
 						frameActual.dispose();
-						new FrameFacturarConsumos(ocupacion, panelGroupBox.getResponsableDePago());
+						framePrincipal.setNuevoPanel(new PanelFacturarConsumos(framePrincipal, ocupacion, panelGroupBox.getResponsableDePago()));
 					}
 				}
 				catch(InputVacioException exc) {
 					
 					mensajeCUITVacio.mostrar(getPanel(), frameActual);
-				}
-					
-					
-				
+				}	
 				
 			}
 		});

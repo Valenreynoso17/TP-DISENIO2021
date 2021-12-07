@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import main.java.dtos.OcupacionDTO;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class FrameFacturarANombreDeUnTercero extends JFrame{
 	
@@ -16,7 +17,7 @@ public class FrameFacturarANombreDeUnTercero extends JFrame{
 	
 	private JFrame frameAnterior;
 
-	public FrameFacturarANombreDeUnTercero(FrameFacturar frame) {
+	public FrameFacturarANombreDeUnTercero(FramePrincipal frame) {
 		
 		super("Sistema Hotel Premier");
 		

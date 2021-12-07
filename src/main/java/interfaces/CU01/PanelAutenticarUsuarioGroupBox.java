@@ -16,8 +16,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import main.java.interfaces.TextPrompt;
+import main.java.excepciones.InputVacioException;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.clasesExtra.TextPrompt;
 
 public class PanelAutenticarUsuarioGroupBox extends JPanel{
 	
@@ -45,11 +46,6 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 	private RoundedBorder bordeCampo = new RoundedBorder(5, Color.decode("#BDBDBD"));
 	
 	TextPrompt fondoJTextField;
-	
-//	private GestorEstacion gestorEstacion = GestorEstacion.getInstance();
-//	
-//	private EstacionGestionar frameAnterior;
-//	private EstacionAltaGrafo frameSiguiente;
 	
 	public PanelAutenticarUsuarioGroupBox() {
 		
@@ -133,26 +129,48 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 
 	}
 
-	public boolean inputEsNoVacio() {
+	public void inputEsNoVacio() throws InputVacioException{
 		
-//		labelNombreVacio.setVisible(false);	//Se resetean cuando el usuario vuelve a presionar "Iniciar Sesión"
-//		labelContraseniaVacio.setVisible(false);	//Pareciera que se puede sacar, igualmente por si acaso lo dejo comentado
+		labelNombreVacio.setVisible(false);
+		labelContraseniaVacio.setVisible(false);
 		
-		boolean resultado = true;
+		String inputsVacios = "";
+		boolean alMenosUnoVacio = false;
 		
 		if(nombre.getText().isEmpty()) {
-			
-			resultado = false;
-			labelNombreVacio.setVisible(true);
+			inputsVacios += "n";
+			alMenosUnoVacio = true;
 		}
 			
 		if(contrasenia.getPassword().length == 0){
-				
-			resultado = false;
+			inputsVacios += "c";
+			alMenosUnoVacio = true;
+		}
+		
+		if(alMenosUnoVacio) {
+			throw new InputVacioException(inputsVacios);
+		}
+	}
+	
+	public void colocarLabelVacio(String inputs) {
+		
+		if(inputs.contains("n")) {
+			labelNombreVacio.setVisible(true);
+		}
+		if(inputs.contains("c")) {
 			labelContraseniaVacio.setVisible(true);
 		}
 		
-	
-	return resultado;
 	}
+	
+//	public void colocarLabelInvalido(String inputs) {
+//		
+//		if(inputs.contains("d")) {
+//			labelFechaDesdeInvalida.setVisible(true);
+//		}
+//		if(inputs.contains("h")) {
+//			labelFechaHastaInvalida.setVisible(true);
+//		}
+//	
+//	}
 }

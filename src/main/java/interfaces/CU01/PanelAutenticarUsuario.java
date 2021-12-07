@@ -12,10 +12,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import main.java.enums.TipoMensaje;
-import main.java.interfaces.MenuPrincipal.FrameMenuPrincipal;
+import main.java.excepciones.InputVacioException;
+import main.java.interfaces.MenuPrincipal.PanelMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensajes{
 	
@@ -32,7 +34,6 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 	private Mensaje mensajeSalir = new Mensaje(1, textoMensajeSalir, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoMensajeInputInvalido = "<html><p>La contraseña y/o el nombre ingresados son inválidos. Por favor, vuelva a ingresarlos.</p><html>";
-	@SuppressWarnings("unused")
 	private Mensaje mensajeInputInvalido = new Mensaje(2, textoMensajeInputInvalido, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private Font fuenteTitulo = new Font("SourceSansPro", Font.PLAIN, 46);	
@@ -40,9 +41,9 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
-	private FrameAutenticarUsuario frameActual;
+	private FramePrincipal frameActual;
 	
-	public PanelAutenticarUsuario(final FrameAutenticarUsuario frame) {
+	public PanelAutenticarUsuario(final FramePrincipal frame) {
 		
 		this.frameActual = frame;
 		
@@ -93,13 +94,16 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 		iniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if(panelAutenticarUsuarioGroupBox.inputEsNoVacio()) {
-					frame.dispose();
-					new FrameMenuPrincipal();
+				try {
+					panelAutenticarUsuarioGroupBox.inputEsNoVacio();
+					
+					frame.setNuevoPanel(new PanelMenuPrincipal(frame));
+				} catch (InputVacioException exc) {
+					
+					panelAutenticarUsuarioGroupBox.colocarLabelVacio(exc.getInputsVacios());
 				}
-				else {
-					//mensajeInputInvalido.mostrar(getPanel(), frame);
-				}
+				
+//				//mensajeInputInvalido.mostrar(getPanel(), frame);	//Actualmente no se valida contrasenia y/o usuario
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;

@@ -129,34 +129,14 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		    @Override
 		    public void mouseReleased(MouseEvent e) {
 		    	
-		    	if(e.isPopupTrigger() && e.getComponent() instanceof JTable) {	//Si pulsa el boton derecho dentro de la tabla, se limpia y carga la tabla desde 0 y se agrega otro Render
+		    	//Si pulsa el boton derecho dentro de la tabla, se limpia y carga la tabla desde 0 y se agrega otro Render
+		    	if(e.isPopupTrigger() && e.getComponent() instanceof JTable) {	
 		    		
 		    		if(((RenderParaTablaEstadoColores) tabla.getDefaultRenderer(String.class)).celdaYaSeleccionada(tabla.rowAtPoint(e.getPoint()), tabla.columnAtPoint(e.getPoint()))) {
 		    			
-		    			actualizarTabla();
-		    			renderTablaEstadoColores = new RenderParaTablaEstadoColores();
-		    			renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
-		    			tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
+		    			deseleccionarPeriodo();
 		    		}
 		    	}
-//
-//		        if (tabla.getSelectedRow() >= 0) {
-//		        	
-//				    int r = tabla.rowAtPoint(e.getPoint());
-//			        if (r >= 0 && r < tabla.getRowCount()) {
-//			        	try {
-//							filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
-//							nroFilaSeleccionada = tabla.getSelectedRow();
-//			        	} catch(ArrayIndexOutOfBoundsException exc) {		//El "elementAt" fallta debido a que el click derecho busca el elemento -1 en el vector
-//			        		
-//			        		System.out.println("Click derecho por excepcion");
-//			        		//tabla.setDefaultRenderer(String.class, new RenderParaTablaEstadoColores());	//Quizas mas ineficiente, pero mas simple
-//			        	}
-//			        } else {
-//			        	tabla.clearSelection();
-//			        }
-//		       }
-//
 		    }
 		});
 		
@@ -204,7 +184,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
 		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 		
-		miModelo.actualizarTabla(gestorHabitacion.buscarEstadoHabitaciones(fechaDesde, fechaHasta));
+		miModelo.actualizarTabla(fechaDesde, fechaHasta, gestorHabitacion.buscarEstadoHabitaciones(fechaDesde, fechaHasta));
 	}
 	
 	public void desactivarTabla() {
@@ -231,17 +211,29 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 
 	public void deseleccionarPeriodo() {
 		
-		actualizarTabla();
+		miModelo.actualizarTabla(fechaDesde, fechaHasta, gestorHabitacion.buscarEstadoHabitaciones(fechaDesde, fechaHasta));
 		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
 		renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
 		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 	}
-	
 
+	public HabitacionDTO getHabitacion() {		//TODO: VERIFICAR
 		
-	public void actualizarTabla() {
+		return miModelo.getHabitaciones().get(tabla.getSelectedColumn()-1);
+	}
+
+	public LocalDate getFechaDesde() {			//TODO: VERIFICAR
 		
-		miModelo.limpiarTabla();
-		miModelo.cargarEstados(gestorHabitacion.buscarEstadoHabitaciones(fechaDesde, fechaHasta));
+		Integer diasQueHayQueSumar = renderTablaEstadoColores.getCeldasSeleccionadas().get(0).get(0);	//Fila de la primera celda seleccionada (fecha desde)
+		
+		return miModelo.getFechaDesde().plusDays(diasQueHayQueSumar);
+	}
+
+	public LocalDate getFechaHasta() {			//TODO: VERIFICAR
+
+		//Fila de la ultima celda seleccionada (fecha hasta)
+		Integer diasQueHayQueSumar = renderTablaEstadoColores.getCeldasSeleccionadas().get(renderTablaEstadoColores.getCeldasSeleccionadas().size()-1).get(0);	
+		
+		return miModelo.getFechaDesde().plusDays(diasQueHayQueSumar);
 	}
 }
