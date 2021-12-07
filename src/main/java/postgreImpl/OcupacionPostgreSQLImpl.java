@@ -145,17 +145,19 @@ public class OcupacionPostgreSQLImpl implements OcupacionDAO {
 	@Override
 	public List<Ocupacion> buscar(LocalDate fechaDesde, LocalDate fechaHasta) {
 		String stringQuery = 	"SELECT o FROM Ocupacion o "
-							+ 	"WHERE o.ingreso BETWEEN :desde1 AND :hasta1 "
-							+ 	"	OR o.egreso BETWEEN :desde2 AND :hasta2 ";
+							+ 	"WHERE o.ingreso BETWEEN :desde AND :hasta "
+							+ 	"	OR o.egreso BETWEEN :desde AND :hasta "							
+							+ 	"	OR (:desde BETWEEN o.ingreso AND o.egreso "
+							+ 	"		AND :hasta BETWEEN o.ingreso AND o.egreso) ";
 		
 		Session sesion = sessionFactory.openSession();
 		
 		TypedQuery<Ocupacion> query = sesion.createQuery(stringQuery, Ocupacion.class);
 		
-		query.setParameter("desde1", fechaDesde);
-		query.setParameter("hasta1", fechaHasta);
-		query.setParameter("desde2", fechaDesde);
-		query.setParameter("hasta2", fechaHasta);
+		query.setParameter("desde", fechaDesde);
+		query.setParameter("hasta", fechaHasta);
+		//query.setParameter("desde2", fechaDesde);
+		//query.setParameter("hasta2", fechaHasta);
 		
 		List<Ocupacion> ocupaciones = query.getResultList();
 		
