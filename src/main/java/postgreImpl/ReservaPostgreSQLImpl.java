@@ -23,17 +23,21 @@ public class ReservaPostgreSQLImpl implements ReservaDAO {
 	@Override
 	public List<Reserva> buscar(LocalDateTime fechaDesde, LocalDateTime fechaHasta) {
 		String stringQuery = 	"SELECT r FROM Reserva r "
-							+ 	"WHERE r.ingreso BETWEEN :desde1 AND :hasta1 "
-							+ 	"	OR r.egreso BETWEEN :desde2 AND :hasta2 ";
+							+ 	"WHERE r.ingreso BETWEEN :desde AND :hasta "
+							+ 	"	OR r.egreso BETWEEN :desde AND :hasta "
+							+ 	"	OR (:desde BETWEEN r.ingreso AND r.egreso "
+							+ 	"		AND :hasta BETWEEN r.ingreso AND r.egreso) ";
 
 		Session sesion = sessionFactory.openSession();
 
 		TypedQuery<Reserva> query = sesion.createQuery(stringQuery, Reserva.class);
 
-		query.setParameter("desde1", fechaDesde);
-		query.setParameter("hasta1", fechaHasta);
-		query.setParameter("desde2", fechaDesde);
+		query.setParameter("desde", fechaDesde);
+		query.setParameter("hasta", fechaHasta);
+		/*query.setParameter("desde2", fechaDesde);
 		query.setParameter("hasta2", fechaHasta);
+		query.setParameter("desde3", fechaDesde);
+		query.setParameter("hasta3", fechaHasta);*/
 
 		List<Reserva> reservas = query.getResultList();
 

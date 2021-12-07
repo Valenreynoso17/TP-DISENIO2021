@@ -23,17 +23,19 @@ public class FueraDeServicioPostgreSQLImpl implements FueraDeServicioDAO {
 	@Override
 	public List<FueraDeServicio> buscar(LocalDateTime fechaDesde, LocalDateTime fechaHasta) {
 		String stringQuery = 	"SELECT f FROM FueraDeServicio f "
-							+ 	"WHERE f.fechaInicio BETWEEN :desde1 AND :hasta1 "
-							+ 	"	OR f.fechaFin BETWEEN :desde2 AND :hasta2 ";
+							+ 	"WHERE f.fechaInicio BETWEEN :desde AND :hasta "
+							+ 	"	OR f.fechaFin BETWEEN :desde AND :hasta "							
+							+ 	"	OR (:desde BETWEEN f.fechaInicio AND f.fechaFin "
+							+ 	"		AND :hasta BETWEEN f.fechaInicio AND f.fechaFin) ";
 
 		Session sesion = sessionFactory.openSession();
 
 		TypedQuery<FueraDeServicio> query = sesion.createQuery(stringQuery, FueraDeServicio.class);
 
-		query.setParameter("desde1", fechaDesde);
-		query.setParameter("hasta1", fechaHasta);
-		query.setParameter("desde2", fechaDesde);
-		query.setParameter("hasta2", fechaHasta);
+		query.setParameter("desde", fechaDesde);
+		query.setParameter("hasta", fechaHasta);
+		//query.setParameter("desde2", fechaDesde);
+		//query.setParameter("hasta2", fechaHasta);
 
 		List<FueraDeServicio> fuerasDeServicio = query.getResultList();
 
