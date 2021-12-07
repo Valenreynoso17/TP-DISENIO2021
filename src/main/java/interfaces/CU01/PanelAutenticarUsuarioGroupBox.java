@@ -16,7 +16,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import main.java.excepciones.ContraseniaIncorrectaExcepcion;
 import main.java.excepciones.InputVacioException;
+import main.java.excepciones.UsuarioIncorrectoException;
+import main.java.gestores.GestorUsuario;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 import main.java.interfaces.clasesExtra.TextPrompt;
 
@@ -37,6 +40,8 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 	private Insets insetCampo = new Insets(0,80,30,80);
 	
 	private Insets insetLabelError = new Insets(0,0,2,90);
+	
+	private GestorUsuario gestorUsuario;
 
 	
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 20);	
@@ -48,6 +53,7 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 	TextPrompt fondoJTextField;
 	
 	public PanelAutenticarUsuarioGroupBox() {
+		gestorUsuario = GestorUsuario.getInstance();
 		
 		this.setBackground(Color.white);
 		
@@ -161,6 +167,10 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 			labelContraseniaVacio.setVisible(true);
 		}
 		
+	}
+	
+	public void validarUsuarioContrasenia() throws UsuarioIncorrectoException, ContraseniaIncorrectaExcepcion {
+		gestorUsuario.autentificar(nombre.getText(), contrasenia.getPassword());
 	}
 	
 //	public void colocarLabelInvalido(String inputs) {
