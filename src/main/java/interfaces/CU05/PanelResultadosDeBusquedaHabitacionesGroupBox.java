@@ -8,7 +8,10 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,7 +24,9 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 import main.java.dtos.HabitacionDTO;
+import main.java.dtos.ReservaDTO;
 import main.java.dtos.TipoHabitacionDTO;
+import main.java.enums.EstadoHabitacion;
 import main.java.excepciones.ContieneFechasReservadasException;
 import main.java.excepciones.RangoNoSeleccionadoException;
 import main.java.gestores.GestorHabitacion;
@@ -52,7 +57,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	
 	private GestorHabitacion gestorHabitacion;
 
-	private Map<TipoHabitacionDTO, List<HabitacionDTO>> mapHabitacionesTipo;
+	private Map<TipoHabitacionDTO, List<HabitacionDTO>> mapHabitacionesTipo;	//Tipos de habitacion (Individual, Suite Double, etc)
 	
 	private LocalDate fechaDesde;
 	private LocalDate fechaHasta;
@@ -150,11 +155,6 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	    
 	    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
-		//PARA CENTRAR
-//		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-//		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-//		tabla.setDefaultRenderer(Object.class, centerRenderer);
-		
 		tabla.setBackground(Color.white);
 		tabla.setGridColor(Color.black);
 		tabla.setBorder(new LineBorder(Color.BLACK));
@@ -205,8 +205,73 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		//Si CeldasReservadas tiene algun elemento que esta dentro de CeldasSeleccionadas, entonces debe tirar la excepcion y posteriormente el mensaje
 		if(!Collections.disjoint(this.renderTablaEstadoColores.getCeldasReservadas(),this.renderTablaEstadoColores.getCeldasSeleccionadas())) {	
 			
-			throw new ContieneFechasReservadasException();
+			List<ReservaDTO> reservasSeleccionadas = new ArrayList<ReservaDTO>();
+			List<ArrayList<Integer>> celdasReservadasYSeleccionadas = this.celdasReservadasYSeleccionadas();
+			
+			Map<Integer, List<ReservaDTO>>  mapReservasPorHabitacion = miModelo.getMapReservasPorHabitacion();
+			
+			//La columna de la primera celda (la habitacion), menos 1 por como es la tabla
+			Integer idHabitacionSeleccionada = miModelo.getHabitaciones().get(celdasReservadasYSeleccionadas.get(0).get(1)-1).getId();	
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");		
+			
+			for(ArrayList<Integer> celda : this.renderTablaEstadoColores.getCeldasSeleccionadas()) {	//Para cada una de las celdas
+				
+				System.out.println("Fila de celda: "+celda.get(0));
+				
+				//Se pasa del string que se muestra en la grilla a un LocalDate, para asi poder usar el map con el metodo "get"
+				String fechaCeldaString = miModelo.getValueAt(celda.get(0), 0).toString();
+				LocalDate fechaCelda = LocalDate.of(Integer.parseInt(fechaCeldaString.substring(6, 10)), 
+													Integer.parseInt(fechaCeldaString.substring(3, 5)), 
+													Integer.parseInt(fechaCeldaString.substring(0, 2)));
+				
+				//Para cada reserva que se encuentra en la lista de reservas de la habitacion seleccionada
+				for(ReservaDTO r :mapReservasPorHabitacion.get(idHabitacionSeleccionada)) {
+					
+					System.out.println("Reserva: "+r.getId());
+					
+					for (LocalDate fecha = r.getIngreso().toLocalDate(); fecha.isBefore(r.getEgreso().toLocalDate()); fecha = fecha.plusDays(1)) {
+					
+						//Si la fecha contenida en la celda es igual a alguna fecha dentro del periodo de la reserva
+						System.out.println("Fecha de reserva: "+fecha.format(formatter).toString());
+						System.out.println("Fecha de miModelo: "+fechaCelda);
+						//if(fecha.format(formatter).equals(fechaCelda)){
+						if(fecha.isEqual(fechaCelda)) {
+							
+							if(!reservasSeleccionadas.contains(r)) {	//Se guarda en la lista de reservasSeleccionadas, si no esta ya contenida en la lista
+								
+								System.out.println(r.getId());
+								reservasSeleccionadas.add(r);								
+							}
+						}
+						else if(fecha.isAfter(fechaCelda)) {
+							
+							break;	//Si ya se estan comparando fechas despues de la fecha en la fila seleccionada, salir del for
+						}
+					}
+				}
+			}
+			
+			throw new ContieneFechasReservadasException(reservasSeleccionadas);
 		}
+	}
+	
+	private List<ArrayList<Integer>> celdasReservadasYSeleccionadas(){
+		
+		//De la lista de celdasSeleccionadas, hay que quitar las que no se encuentren dentro de celdasReservadas (otra opcion es crear una lista nueva)
+		
+		//Primero, copio la lista de celdasSeleccionadas
+		List<ArrayList<Integer>> celdasReservadasYSeleccionadas = this.renderTablaEstadoColores.getCeldasSeleccionadas().stream().collect(Collectors.toList());
+		
+		for(ArrayList<Integer> celda : this.renderTablaEstadoColores.getCeldasSeleccionadas()) {	//Itero sobre la lista original, porque la otra la voy modificando
+			
+			if(!this.renderTablaEstadoColores.getCeldasReservadas().contains(celda)) {	//Si no la contiene
+				
+				celdasReservadasYSeleccionadas.remove(celda);	//Se elimina de la lista de celdasSeleccionadas
+			}
+		}
+
+		return celdasReservadasYSeleccionadas;
 	}
 
 	public void deseleccionarPeriodo() {
@@ -217,19 +282,19 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 	}
 
-	public HabitacionDTO getHabitacion() {		//TODO: VERIFICAR
+	public HabitacionDTO getHabitacion() {
 		
 		return miModelo.getHabitaciones().get(tabla.getSelectedColumn()-1);
 	}
 
-	public LocalDate getFechaDesde() {			//TODO: VERIFICAR
+	public LocalDate getFechaDesde() {	
 		
 		Integer diasQueHayQueSumar = renderTablaEstadoColores.getCeldasSeleccionadas().get(0).get(0);	//Fila de la primera celda seleccionada (fecha desde)
 		
 		return miModelo.getFechaDesde().plusDays(diasQueHayQueSumar);
 	}
 
-	public LocalDate getFechaHasta() {			//TODO: VERIFICAR
+	public LocalDate getFechaHasta() {
 
 		//Fila de la ultima celda seleccionada (fecha hasta)
 		Integer diasQueHayQueSumar = renderTablaEstadoColores.getCeldasSeleccionadas().get(renderTablaEstadoColores.getCeldasSeleccionadas().size()-1).get(0);	

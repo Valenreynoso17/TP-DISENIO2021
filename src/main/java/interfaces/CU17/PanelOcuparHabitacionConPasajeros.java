@@ -73,15 +73,19 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	private HabitacionDTO habitacion;
 	
 	// TODO valores temporales
-	private Integer idHabitacion = 11;
-	private LocalDate ingreso = LocalDate.of(2021, 12, 3);
-	private LocalDate egreso = LocalDate.of(2021, 12, 6);
+	private Integer idHabitacion;// = 11;
+	private LocalDate ingreso;// = LocalDate.of(2021, 12, 3);
+	private LocalDate egreso;// = LocalDate.of(2021, 12, 6);
 	
 	public PanelOcuparHabitacionConPasajeros(final FramePrincipal frame, HabitacionDTO habitacion, LocalDate fechaDesde, LocalDate fechaHasta) {
 		
 		System.out.println("Numero habitacion: "+habitacion.getNroHabitacion());	//TODO: Borrar
 		System.out.println("Fecha desde: "+fechaDesde);
 		System.out.println("Fecha hasta: "+fechaHasta);
+		
+		this.idHabitacion = habitacion.getId();
+		this.ingreso = fechaDesde;
+		this.egreso = fechaHasta;
 		
 		gestorPasajero = GestorPasajero.getInstance();
 		gestorHabitacion = GestorHabitacion.getInstance();
