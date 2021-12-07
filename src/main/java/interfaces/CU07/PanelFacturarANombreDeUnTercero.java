@@ -58,7 +58,7 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 	
 	//private GestorResponsableDePago gestorResponsablePago;
 	
-	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FramePrincipal frameP) {
+	public PanelFacturarANombreDeUnTercero(FrameFacturarANombreDeUnTercero frame, FramePrincipal frameP, PanelFacturar panelFacturar) {
 		
 		//gestorResponsablePago = GestorResponsableDePago.getInstance();
 		
@@ -112,12 +112,12 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 					if(panelGroupBox.getExcepcionNoExisteResponsable())	{	//TODO: Ver si puede hacerse de otra manera
 						
 						mensajeNoExisteResponsable.mostrar(getPanel(), framePrincipal);
-						System.out.println("No existe responsable");
 					}
 					else {
 						
+						framePrincipal.setEnabled(true);
+						framePrincipal.setNuevoPanel(new PanelFacturarConsumos(framePrincipal, panelFacturar, ocupacion, panelGroupBox.getResponsableDePago()));
 						frameActual.dispose();
-						framePrincipal.setNuevoPanel(new PanelFacturarConsumos(framePrincipal, ocupacion, panelGroupBox.getResponsableDePago()));
 					}
 				}
 				catch(InputVacioException exc) {

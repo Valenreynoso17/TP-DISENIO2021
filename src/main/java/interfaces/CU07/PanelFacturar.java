@@ -70,6 +70,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	private Insets insetPanelTabla = new Insets(0,30,0,30);
 	
 	private FramePrincipal frameActual;
+	private PanelMenuPrincipal panelAnterior;
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
@@ -79,9 +80,10 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	
 	private OcupacionDTO ocupacionDTO;
 	
-	public PanelFacturar(final FramePrincipal frame) {
+	public PanelFacturar(final FramePrincipal frame, PanelMenuPrincipal panelAnterior) {
 		
 		this.frameActual = frame;
+		this.panelAnterior = panelAnterior;
 		
 		gestorOcupacion = GestorOcupacion.getInstance();
 		gestorResponsablePago = GestorResponsableDePago.getInstance();
@@ -100,7 +102,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		c.fill = GridBagConstraints.NONE;
 		c.insets = new Insets(0,0,0,0);
 		
-		panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox(frameActual);	//Se declara antes para evitar errores
+		panelResultadosDeBusquedaFacturarGroupBox = new PanelResultadosDeBusquedaFacturarGroupBox(frameActual, this);	//Se declara antes para evitar errores
 		
 		buscar = new JButton("Buscar");
 		buscar.setMinimumSize(dimensionBoton);
@@ -187,7 +189,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 				try {
 					ResponsableDePagoDTO responsablePagoDTO = gestorResponsablePago.obtenerResponsableDePagoDTO(panelResultadosDeBusquedaFacturarGroupBox.pasajeroSeleccionado()); 
 					
-					frameActual.setNuevoPanel(new PanelFacturarConsumos(frame, ocupacionDTO, responsablePagoDTO));
+					frameActual.setNuevoPanel(new PanelFacturarConsumos(frame, (PanelFacturar) getPanel(), ocupacionDTO, responsablePagoDTO));
 				}
 				catch (PasajeroNoSeleccionadoException exc) {
 					mensajeResponsableNoSeleccionado.mostrar(getPanel(), frame);
@@ -212,7 +214,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a MenuPrincipal
-			frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
+			frameActual.setNuevoPanel(panelAnterior);
 			break;
 		case 2:	//Si el responsable es menor de edad, simplemente muestra el mensaje
 			break;

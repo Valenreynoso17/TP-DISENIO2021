@@ -93,7 +93,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.setNuevoPanel(new PanelGestionarPasajero(frame));
+				frame.setNuevoPanel(new PanelGestionarPasajero(frame, (PanelMenuPrincipal) getPanel()));
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
@@ -136,7 +136,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.setNuevoPanel(new PanelMostrarEstadoHabitaciones(frame));
+				frame.setNuevoPanel(new PanelMostrarEstadoHabitaciones(frame, (PanelMenuPrincipal) getPanel()));
 			}
 		});
 		button.setBorder(bordeBoton);
@@ -183,7 +183,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.setNuevoPanel(new PanelFacturar(frame));
+				frame.setNuevoPanel(new PanelFacturar(frame, (PanelMenuPrincipal) getPanel()));
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
@@ -244,7 +244,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a AutenticarUsuario
-			frameActual.setNuevoPanel(new PanelAutenticarUsuario(frameActual));
+			frameActual.setNuevoPanel(new PanelAutenticarUsuario(frameActual));	//Se crea un nuevo panel desde cero (no se usa el "panelAnterior")
 			break;
 		case 2:	//No pasa nada
 		case 3:	//No pasa nada

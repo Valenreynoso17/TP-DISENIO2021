@@ -54,13 +54,14 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	private Insets insetPanelTabla = new Insets(0,30,0,30);
 	
 	private FramePrincipal frameActual;
-	//Dependiendo quien lo llame, cambia el frame que se mostrara al presionar "Siguiente"
+	private PanelMenuPrincipal panelAnterior;
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
-	public PanelMostrarEstadoHabitaciones(final FramePrincipal frame) {
+	public PanelMostrarEstadoHabitaciones(final FramePrincipal frame, PanelMenuPrincipal panelAnterior) {
 		
 		this.frameActual = frame;
+		this.panelAnterior = panelAnterior;
 		
 		this.setBackground(Color.WHITE);
 		
@@ -148,7 +149,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 					
 						panelResultadosDeBusquedaHabitacionesGroupBox.validacionContieneFechasReservadas();
 						
-						frame.setNuevoPanel(new PanelOcuparHabitacionConPasajeros(frame,
+						frame.setNuevoPanel(new PanelOcuparHabitacionConPasajeros(frame, (PanelMostrarEstadoHabitaciones) getPanel(),
 											panelResultadosDeBusquedaHabitacionesGroupBox.getHabitacion(), 
 											panelResultadosDeBusquedaHabitacionesGroupBox.getFechaDesde(), 
 											panelResultadosDeBusquedaHabitacionesGroupBox.getFechaHasta().plusDays(1)));
@@ -174,14 +175,14 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a MenuPrincipal
-			frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
+			frameActual.setNuevoPanel(panelAnterior);
 			break;
 		case 2:	//Si la habitación no existe, simplemente muestra el mensaje
 			break;
 		case 3:	//Si la habitación no posee facturas, simplemente muestra el mensaje
 			break;		
 		case 4:	//Si quiere OcuparIgualmente aunque existan reservas, se le pasa al panel los datos que necesita (y se sobreescribe la reserva)
-			frameActual.setNuevoPanel(new PanelOcuparHabitacionConPasajeros(frameActual,
+			frameActual.setNuevoPanel(new PanelOcuparHabitacionConPasajeros(frameActual, this,
 									  panelResultadosDeBusquedaHabitacionesGroupBox.getHabitacion(), 
 									  panelResultadosDeBusquedaHabitacionesGroupBox.getFechaDesde(), 
 									  panelResultadosDeBusquedaHabitacionesGroupBox.getFechaHasta().plusDays(1)));

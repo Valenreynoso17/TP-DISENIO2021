@@ -41,7 +41,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 	
 	private Dimension dimensionBoton = new Dimension(200, 50);
 	
-	public PanelMenuOcuparHabitacion(OcupacionDTO ocupacion, FramePrincipal frame) {
+	public PanelMenuOcuparHabitacion(FramePrincipal frame, PanelOcuparHabitacionConPasajeros panelAnterior, OcupacionDTO ocupacion) {
 		this.gestorOcupacion = GestorOcupacion.getInstance();
 		
 		this.setBackground(Color.white);
@@ -75,7 +75,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		cargarOtroPasajero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.cargarPanelViejo();
+				frame.setNuevoPanel(panelAnterior);
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;	
@@ -92,7 +92,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				gestorOcupacion.guardarOcupacion(ocupacion);
 				
-				frame.setNuevoPanel(new PanelMostrarEstadoHabitaciones(frame));
+				frame.setNuevoPanel(new PanelMostrarEstadoHabitaciones(frame, new PanelMenuPrincipal(frame)));
 			}
 		});
 		c.anchor = GridBagConstraints.CENTER;

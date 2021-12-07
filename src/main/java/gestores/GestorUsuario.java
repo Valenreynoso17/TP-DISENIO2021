@@ -6,11 +6,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.Provider;
 import java.security.SecureRandom;
 import java.security.Security;
-
 import main.java.clases.Usuario;
 import main.java.daos.UsuarioDAO;
-import main.java.excepciones.ContraseniaIncorrectaExcepcion;
-import main.java.excepciones.UsuarioIncorrectoException;
+import main.java.excepciones.UsuarioOContraseniaIncorrectaException;
 import main.java.postgreImpl.UsuarioPostgreSQLImpl;
 
 public class GestorUsuario {
@@ -75,12 +73,11 @@ public class GestorUsuario {
 		
 	}*/
 	
-	public void autentificar(String usuario, char[] contrasenia) 
-			throws UsuarioIncorrectoException, ContraseniaIncorrectaExcepcion {
+	public void autentificar(String usuario, char[] contrasenia) throws UsuarioOContraseniaIncorrectaException {
 		Usuario user = dao.buscar(usuario);
 		Boolean iguales = true;
 		
-		if (user == null) throw new UsuarioIncorrectoException();
+		if (user == null) throw new UsuarioOContraseniaIncorrectaException();
 		
 		Integer caractNoNulos = 0;
 		
@@ -97,7 +94,7 @@ public class GestorUsuario {
 			}
 		}
 		
-		if (!iguales) throw new ContraseniaIncorrectaExcepcion();
+		if (!iguales) throw new UsuarioOContraseniaIncorrectaException();
 		
 	}
 }
