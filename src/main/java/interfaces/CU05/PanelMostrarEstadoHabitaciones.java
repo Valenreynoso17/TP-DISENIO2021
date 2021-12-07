@@ -148,21 +148,16 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 					
 						panelResultadosDeBusquedaHabitacionesGroupBox.validacionContieneFechasReservadas();
 						
-						//TODO: Ver, por ahora le pasa la habitacion, fecha desde y fecha hasta (creo que no necesita nada mas)
 						frame.setNuevoPanel(new PanelOcuparHabitacionConPasajeros(frame,
 											panelResultadosDeBusquedaHabitacionesGroupBox.getHabitacion(), 
 											panelResultadosDeBusquedaHabitacionesGroupBox.getFechaDesde(), 
-											panelResultadosDeBusquedaHabitacionesGroupBox.getFechaHasta()));
-//						frame.apretoSiguiente(panelResultadosDeBusquedaHabitacionesGroupBox.getHabitacion(), 
-//											  panelResultadosDeBusquedaHabitacionesGroupBox.getFechaDesde(), 
-//											  panelResultadosDeBusquedaHabitacionesGroupBox.getFechaHasta());
+											panelResultadosDeBusquedaHabitacionesGroupBox.getFechaHasta().plusDays(1)));
 				}
 				catch (RangoNoSeleccionadoException exc) {
 					mensajeRangoNoSeleccionado.mostrar(getPanel(), frame);
 				}
 				catch (ContieneFechasReservadasException exc) {
-					System.out.println("Periodo reservado");
-					mensajeYaExistenReservas.mostrar(getPanel(), frame, "a");
+					mensajeYaExistenReservas.mostrar(getPanel(), frame, exc.getReservasSeleccionadas());
 				}
 			}
 		});
@@ -185,7 +180,11 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			break;
 		case 3:	//Si la habitación no posee facturas, simplemente muestra el mensaje
 			break;		
-		case 4:
+		case 4:	//Si quiere OcuparIgualmente aunque existan reservas, se le pasa al panel los datos que necesita (y se sobreescribe la reserva)
+			frameActual.setNuevoPanel(new PanelOcuparHabitacionConPasajeros(frameActual,
+									  panelResultadosDeBusquedaHabitacionesGroupBox.getHabitacion(), 
+									  panelResultadosDeBusquedaHabitacionesGroupBox.getFechaDesde(), 
+									  panelResultadosDeBusquedaHabitacionesGroupBox.getFechaHasta().plusDays(1)));
 			break;
 		}
 	}

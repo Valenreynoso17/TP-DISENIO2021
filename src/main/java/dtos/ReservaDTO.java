@@ -7,9 +7,17 @@ public class ReservaDTO{
 	private Integer idHabitacion;
 	private LocalDateTime ingreso;
 	private LocalDateTime egreso;
+	private String nombre;
+	private String apellido;
 	
-	public ReservaDTO() {
+	public ReservaDTO(Integer id, Integer idHabitacion, LocalDateTime ingreso, LocalDateTime egreso, String nombre, String apellido) {
 		super();
+		this.id = id;
+		this.idHabitacion = idHabitacion;
+		this.ingreso = ingreso;
+		this.egreso = egreso;
+		this.nombre = nombre;
+		this.apellido = apellido;
 	}
 
 	public Integer getId() {
@@ -26,6 +34,14 @@ public class ReservaDTO{
 
 	public LocalDateTime getEgreso() {
 		return egreso;
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public String getApellido() {
+		return apellido;
 	}
 
 	public void setId(Integer id) {

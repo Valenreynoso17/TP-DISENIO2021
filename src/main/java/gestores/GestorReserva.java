@@ -36,11 +36,11 @@ public class GestorReserva {
 		List<ReservaDTO> reservasDTO = new ArrayList<>();
 		
 		for (Reserva r : reservas) {
-			ReservaDTO dto = new ReservaDTO();
-			dto.setId(r.getId());
-			dto.setIngreso(r.getIngreso());
-			dto.setEgreso(r.getEgreso());
-			dto.setIdHabitacion(r.getHabitacion().getId());
+			ReservaDTO dto = new ReservaDTO(r.getId(), r.getHabitacion().getId(), r.getIngreso(), r.getEgreso(),  r.getNombre(), r.getApellido());
+//			dto.setId(r.getId());
+//			dto.setIngreso(r.getIngreso());
+//			dto.setEgreso(r.getEgreso());
+//			dto.setIdHabitacion(r.getHabitacion().getId());
 			
 			reservasDTO.add(dto);
 		}
