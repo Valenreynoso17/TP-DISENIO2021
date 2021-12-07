@@ -27,6 +27,7 @@
 		<mapping class="main.java.clases.Factura" />
 		<mapping class="main.java.clases.DocumentoLegal" />
 		<mapping class="main.java.clases.DatosResponsableDePago" />
+		<mapping class="main.java.clases.Usuario" />
 
 	</session-factory>
 </hibernate-configuration>
