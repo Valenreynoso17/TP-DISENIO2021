@@ -99,7 +99,8 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 		
 		Map<LocalDate, Map<Integer, EstadoHabitacion>> mapFechaHabitacionEstado = new TreeMap<LocalDate, Map<Integer, EstadoHabitacion>>();	//(f1, f2) -> f1.compareTo(f2)
 		
-		mapReservasPorHabitacion = new TreeMap<Integer, List<ReservaDTO>>();
+		this.mapReservasPorHabitacion = new TreeMap<Integer, List<ReservaDTO>>();
+		this.mapOcupacionActualPorHabitacion = new TreeMap<Integer, OcupacionDTO>();
 		
 		for(String tipo : mapEstadoHabitaciones.keySet()) {
 			
