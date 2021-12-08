@@ -1,5 +1,7 @@
 package main.java.gestores;
 
+import java.text.DecimalFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,8 @@ import main.java.dtos.FacturaDTO;
 import main.java.dtos.ItemFacturaImpresionDTO;
 import main.java.dtos.ItemFilaDTO;
 import main.java.dtos.OcupacionDTO;
+import main.java.enums.PosicionFrenteIva;
+import main.java.enums.TipoFactura;
 import main.java.excepciones.NingunElementoSeleccionadoFacturacionException;
 import main.java.excepciones.RecargoNoEstaEnUltimaFacturaException;
 import main.java.postgreImpl.FacturaPostgreSQLImpl;
@@ -156,32 +160,55 @@ private static GestorFactura instance;
 			
 		Factura f = facturaDAO.buscarConItems(idFactura);
 		
-		try {			
-			List<ItemFacturaImpresionDTO> itemsDTO = new ArrayList<>();
+		try {		
+			JasperReport report;
 			
-			for (ItemFactura i : f.getItems()) {
-				itemsDTO.add(new ItemFacturaImpresionDTO(i));
-				
-			}
-			
-			JRBeanCollectionDataSource items = new JRBeanCollectionDataSource(itemsDTO);
+			List<ItemFacturaImpresionDTO> itemsDTO = new ArrayList<>();			
 			
 			Map<String, Object> parameters = new HashMap<>();
 			
-			parameters.put("tipoFactura", f.getTipo().toString());
+			Double subtotal = f.getMontoTotal()*(100.0/121);
+			
+			final DecimalFormat df = new DecimalFormat("0.00");
+			
+			
+			
+			for (ItemFactura i : f.getItems()) {
+				itemsDTO.add(new ItemFacturaImpresionDTO(i));
+			}
+			
+			for (int i=itemsDTO.size(); i<10; i++) {
+				itemsDTO.add(new ItemFacturaImpresionDTO());
+			}
+			
+			
+			JRBeanCollectionDataSource items = new JRBeanCollectionDataSource(itemsDTO);
+			
+						
+			
 			parameters.put("razonSocial", f.getDatosResponsable().getRazonSocial());
-			parameters.put("posicionIva", f.getDatosResponsable().getPosicionFrenteIva().toString());
 			parameters.put("direccion", f.getDatosResponsable().getDireccion().getDireccionDomicilio());
 			parameters.put("cuit", f.getDatosResponsable().getCuit());
 			parameters.put("numero", f.getNumero());
 			parameters.put("localidad", f.getDatosResponsable().getDireccion().getLocalidad().getNombre());
-			parameters.put("montoNeto", f.getMontoNeto());
-			parameters.put("montoTotal", f.getMontoTotal());
-			parameters.put("iva", Factura.getIVA()*f.getMontoTotal());
+			parameters.put("montoTotal", "$ " + df.format(f.getMontoTotal()));
 			parameters.put("items", items);
+			parameters.put("fecha", f.getFechaFacturacion().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString());
+			
+			if (f.getTipo() == TipoFactura.A) {
+				parameters.put("posicionIva", "R.I.");
+				parameters.put("montoNeto", "$ " + df.format(subtotal));
+				parameters.put("iva", "$ " + df.format(f.getMontoTotal() - subtotal));
+				
+				report = (JasperReport) JRLoader.loadObject(getClass().getResource("../reportes/reportes/FacturaA.jasper"));
+			}
+			else {
+				parameters.put("posicionIva", "CONSUMIDOR FINAL");
+				
+				report = (JasperReport) JRLoader.loadObject(getClass().getResource("../reportes/reportes/FacturaB.jasper"));
+			}
 			
 			
-			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("../reportes/reportes/Factura.jasper"));
 			JasperPrint jprint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
 			JasperViewer view = new JasperViewer(jprint, false);
 			view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

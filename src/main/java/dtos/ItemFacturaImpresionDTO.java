@@ -1,22 +1,28 @@
 package main.java.dtos;
 
+import java.text.DecimalFormat;
+
 import main.java.clases.ItemFactura;
 
 public class ItemFacturaImpresionDTO {
 	private String consumo;
 	private Integer cantidad;
-	private Double precio;
-	private Double precioNeto;
+	private String precio;
+	private String precioNeto;
 	
 	
-	
+	final DecimalFormat df = new DecimalFormat("0.00");
 	
 	public ItemFacturaImpresionDTO(ItemFactura item) {
 		super();
 		this.consumo = item.getDescripcion();
 		this.cantidad = item.getCantidad();
-		this.precio = item.getPrecioUnitario();
-		this.precioNeto = precio * cantidad;
+		this.precio = "$ " + df.format(item.getPrecioUnitario());
+		this.precioNeto = "$ " + df.format(item.getPrecioUnitario() * cantidad);
+	}
+	
+	public ItemFacturaImpresionDTO() {
+		super();
 	}
 	
 	
@@ -30,17 +36,17 @@ public class ItemFacturaImpresionDTO {
 		return cantidad;
 	}
 	
-	public Double getPrecioNeto() {
+	public String getPrecioNeto() {
 		return this.precioNeto;
 	}
 	
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
-	public Double getPrecio() {
+	public String getPrecio() {
 		return precio;
 	}
-	public void setPrecio(Double precio) {
+	public void setPrecio(String precio) {
 		this.precio = precio;
 	}
 	
