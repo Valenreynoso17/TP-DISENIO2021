@@ -37,6 +37,8 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	
 	private PanelFacturarConsumosGroupBox panelFacturarConsumosGroupBox;
 	
+	private Integer idFactura;
+	
 	private JButton aceptar;
 	private JButton cancelar;
 	
@@ -63,7 +65,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	            frameActual.toFront();	
 	            frameActual.setEnabled(true);
 	            
-	            gestorFactura.imprimir();
+	            gestorFactura.imprimir(idFactura);
 	    		frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
 	        }
 		} 
@@ -80,8 +82,6 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	
 	private GestorOcupacion gestorOcupacion;
 	private GestorFactura gestorFactura;
-	
-	private Integer idFactura;
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
