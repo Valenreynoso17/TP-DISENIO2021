@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import main.java.enums.EstadoHabitacion;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.ContieneFechasReservadasException;
 import main.java.excepciones.FechaInvalidaException;
@@ -44,6 +46,8 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	private Mensaje mensajeRangoNoSeleccionado = new Mensaje(3, textoRangoNoSeleccionado, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private MensajeYaExistenReservas mensajeYaExistenReservas = new MensajeYaExistenReservas(4);
+	
+	private Mensaje mensajeHabitacionConOcupacionOFS = new Mensaje(5, "", TipoMensaje.ERROR, "Aceptar", null);
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
@@ -190,6 +194,8 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 									  panelResultadosDeBusquedaHabitacionesGroupBox.getFechaDesde(), 
 									  panelResultadosDeBusquedaHabitacionesGroupBox.getFechaHasta().plusDays(1)));
 			break;
+		case 5:	//Si la habitacion está ocupada o fuera de servicio, simplemente mostrar el mensaje
+			break;	
 		}
 	}
 
@@ -201,6 +207,18 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			this.panelResultadosDeBusquedaHabitacionesGroupBox.deseleccionarPeriodo();
 			break;
 		}
+	}
+	
+	public void setTextoMensajeHabitacionConOcupacionOFS (EstadoHabitacion estado) {
+
+		if(estado.equals(EstadoHabitacion.OCUPADA)) {
+			this.mensajeHabitacionConOcupacionOFS.setTextoMensaje("La habitacion esta ocupada. Cambiar este texto");
+		}
+		else if (estado.equals(EstadoHabitacion.FUERA_DE_SERVICIO)) {
+			this.mensajeHabitacionConOcupacionOFS.setTextoMensaje("La habitacion esta fuera de servicio. Cambiar este texto");
+		}
+		
+		this.mensajeHabitacionConOcupacionOFS.mostrar(getPanel(), frameActual);
 	}
 
 }

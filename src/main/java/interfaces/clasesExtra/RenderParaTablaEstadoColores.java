@@ -63,20 +63,22 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	    	  
 	    	  c.setBackground(colorSeleccionado);
 	    	  
-	    	  for(int i = 0; i <= row; i++) {
+	    	  for(int i = (row-ultimaFilaSeleccionada); i <= row; i++) {
 				  
 				  filaYColumna = new ArrayList<Integer>();	
 				  filaYColumna.add(i); 	filaYColumna.add(column);
-				  celdasSeleccionadas.add(filaYColumna);   	  
+				  
+				  if(!celdasSeleccionadas.contains(filaYColumna))
+					  celdasSeleccionadas.add(filaYColumna);   	
 	    	  }
+	    	  
+	    	  ultimaFilaSeleccionada = row;
 	      }
 	      
 	      if(celdasSeleccionadas.contains(filaYColumnaParaRePintar)) {	// Si estan dentro de la lista, se vuelven a colorear de "colorSeleccionado"
 	    	  c.setBackground(colorSeleccionado);
 	    	  
 	      }
-	      
-	      
 	      
         return c;
     }	
