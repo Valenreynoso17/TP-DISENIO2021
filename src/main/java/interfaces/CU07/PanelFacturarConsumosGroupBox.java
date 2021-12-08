@@ -294,15 +294,16 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		
 		if(tipoFacturaString == "A") {
 			
-			//No discrimina IVA, por lo tanto sigue en 0.0
-			
-			this.totalAPagar.setText(this.subtotal.getText());	//Subtotal == TotalAPagar
-		}
-		else if(tipoFacturaString == "B") {
-			
 			//Discrimina IVA, por lo tanto se calcula el 30%
 			
 			this.IVA.setText("$ "+df.format(subtotal*0.21));
+			
+			this.totalAPagar.setText(this.subtotal.getText());	//Subtotal == TotalAPagar
+			
+		}
+		else if(tipoFacturaString == "B") {
+			
+			//No discrimina IVA, por lo tanto sigue en 0.0
 			
 			this.totalAPagar.setText(this.subtotal.getText());	//Subtotal == TotalAPagar
 		}

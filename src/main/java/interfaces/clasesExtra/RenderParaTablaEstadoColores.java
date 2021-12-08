@@ -23,80 +23,70 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	
 	List<ArrayList<Integer>> celdasSeleccionadas = new ArrayList<ArrayList<Integer>>();
 	List<ArrayList<Integer>> celdasReservadas = new ArrayList<ArrayList<Integer>>();
-	List<ArrayList<Integer>> celdasOcupadas = new ArrayList<ArrayList<Integer>>();			//TODO: Ver si vale la pena, quizas mas adelante no haga falta
-	List<ArrayList<Integer>> celdasFueraDeServicio = new ArrayList<ArrayList<Integer>>();	//TODO: Ver si vale la pena, quizas mas adelante no haga falta
+	List<ArrayList<Integer>> celdasOcupadas = new ArrayList<ArrayList<Integer>>();			
+	List<ArrayList<Integer>> celdasFueraDeServicio = new ArrayList<ArrayList<Integer>>();	
 	
-	int columnaSeleccion = 0;			//Es la columna de la primera seleccion, para que no pueda seleccionar celdas de distintas columnas
 	boolean banderaPrimeraVez = true;	//Bandera hecha simplemente para que la primera vez se entre al if y luego dependa de "columnaSeleccion"
+	int columnaSeleccion = -1;			//Es la columna de la primera seleccion, para que no pueda seleccionar celdas de distintas columnas
+	int ultimaFilaSeleccionada = -1;
 
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		
-		if(column != 0) {
-        	c = super.getTableCellRendererComponent(table, "", isSelected, hasFocus, row, column);      
-		}
-		else {
-			c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);  
-		}
+		  if(column != 0) {
+        	  c = super.getTableCellRendererComponent(table, "", isSelected, hasFocus, row, column);      
+		  }
+		  else {
+			  c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);  
+		  }
 
-		this.pintarCelda(value, c, row, column);
+		  this.pintarCelda(value, c, row, column);
         	
-        ArrayList<Integer> filaYColumnaParaRePintar = new ArrayList<Integer>();	filaYColumnaParaRePintar.add(row); filaYColumnaParaRePintar.add(column);
-     
-	      if (isSelected &&													 // Para pintar de gris
+		  ArrayList<Integer> filaYColumnaParaRePintar = new ArrayList<Integer>();	filaYColumnaParaRePintar.add(row); filaYColumnaParaRePintar.add(column);
+		  
+	      if (isSelected &&													 // Para pintar de gris										
 	    	  table.getSelectedColumn() == column && 						 // Para que no coloree toda la fila, simplemente la columna indicada
 	    	  column != 0 && 												 // column == 0 es la FECHA
-	    	  !celdasOcupadas.contains(filaYColumnaParaRePintar) &&				 // No debe estar ocupada
-	    	  !celdasFueraDeServicio.contains(filaYColumnaParaRePintar) &&		 // No debe estar fuera de servicio
-	    	  (banderaPrimeraVez || column == columnaSeleccion)) {			 // Debe permanecer siempre en una misma columna
+	    	  !celdasOcupadas.contains(filaYColumnaParaRePintar) &&			 // No debe estar ocupada
+	    	  !celdasFueraDeServicio.contains(filaYColumnaParaRePintar) &&	 // No debe estar fuera de servicio
+	    	  // Si es la primera vez, entra por la bandera. Sino, debe cumplirse el seleccionar la misma columna y que la fila sea mayor a su celda anterior
+	    	  (banderaPrimeraVez || (column == columnaSeleccion && row > ultimaFilaSeleccionada)) &&
+	    	  this.comprobarQueNoExistaOcupacionNiFueraDeEstadoEnLaColumna()) {	// Comprueba si no hay una ocupacion o un fuera de estado en la misma columna actualmente
 	    	  
-	    	  if(banderaPrimeraVez) {	//Si es la primera vez que se entra al metodo
-	    		  
-	    		  if(row == 0) {	//La primera fila debe ser la primera seleccion
-	    			  
-	    	    	  banderaPrimeraVez = false;	// La bandera se pone en falso porque ya cumplio su funcion (dejar entrar la primera vez al if)
-	    	    	  columnaSeleccion = column;
-	    	    	  
-	    	    	  if(celdasSeleccionadas.isEmpty()) {
-	    	    		  
-	    		    	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
-	    		    	  celdasSeleccionadas.add(filaYColumna);
-	    		    	  
-	    		    	  c.setBackground(colorSeleccionado);
-	    	    	  }
-	    		  }
+	    	  if(banderaPrimeraVez) {
+	    		  ultimaFilaSeleccionada = row;
+	    		  columnaSeleccion = column;
+		    	  banderaPrimeraVez = false;
 	    	  }
-	    	  else {
-		    	  int ultimaFilaSeleccionada = celdasSeleccionadas.get(celdasSeleccionadas.size()-1).get(0);
-		    	  this.mostrarArrayList(celdasSeleccionadas);
-		    	  
-		    	 	//Si la fila seleccionada ahora es igual a la siguiente fila que habia seleccionado antes
-		    	  	if(table.getSelectedRow() == ultimaFilaSeleccionada+1) {
-		    		  
-		    		  c.setBackground(colorSeleccionado);	//Para que no pueda seleccionar fechas anteriores a la primera seleccion
-		    		  
-		    		  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
-	    			  celdasSeleccionadas.add(filaYColumna);
-		    		  
-//		    		  for(int i = 1; i <= (table.getSelectedRow()-ultimaFilaSeleccionada); i++) {
-//		    			  
-//		    			  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(i); filaYColumna.add(column);
-//		    			  celdasSeleccionadas.add(filaYColumna);
-//		    	    	  
-//		    	    	  
-//		    		  }
-		    	  }
+	    		  
+	    	  ArrayList<Integer> filaYColumna;
+	    	  
+	    	  c.setBackground(colorSeleccionado);
+	    	  
+	    	  for(int i = 0; i <= row; i++) {
+				  
+				  filaYColumna = new ArrayList<Integer>();	
+				  filaYColumna.add(i); 	filaYColumna.add(column);
+				  celdasSeleccionadas.add(filaYColumna);   	  
 	    	  }
 	      }
 	      
 	      if(celdasSeleccionadas.contains(filaYColumnaParaRePintar)) {	// Si estan dentro de la lista, se vuelven a colorear de "colorSeleccionado"
 	    	  c.setBackground(colorSeleccionado);
+	    	  
 	      }
 	      
-     
+	      
+	      
         return c;
     }	
 	
+	private boolean comprobarQueNoExistaOcupacionNiFueraDeEstadoEnLaColumna() {
+		
+		
+		return true;
+	}
+
 	public void pintarCelda(Object value, Component c, int row, int column) {
 		
   	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
@@ -152,14 +142,6 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 		
 		
 		return resultado;
-	}
-	
-	public void mostrarArrayList(List<ArrayList<Integer>> lista) {
-		
-		for(int i = 0; i < lista.size(); i++) {
-			
-			System.out.println(lista.get(i)+": fila: "+lista.get(i).get(0)+" columna: "+lista.get(i).get(1));
-		}
 	}
 	
 }
