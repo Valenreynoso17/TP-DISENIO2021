@@ -21,7 +21,8 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 
 	private List<HabitacionDTO> habitaciones;
 
-	private Map<Integer, List<ReservaDTO>> mapReservasPorHabitacion;
+	private Map<Integer, List<ReservaDTO>> mapReservasPorHabitacion;	//Guarda una lista de reservas por cada habitacion
+	private Map<Integer, OcupacionDTO> mapOcupacionActualPorHabitacion;		//Guarda la ocupacion actual (fechaHoraSalidaReal == null) por habitacion
 	
 	private LocalDate fechaDesde;
 	private LocalDate fechaHasta;
@@ -123,9 +124,12 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 				    }
 				}
 				
-				mapReservasPorHabitacion.put(h.getId(), reservas);	//TODO: Probar
+				mapReservasPorHabitacion.put(h.getId(), reservas);
 				
 				for(OcupacionDTO o : h.getOcupaciones()) {
+					
+					if(o.getFechaHoraSalidaReal() == null)	//TODO: VER
+						mapOcupacionActualPorHabitacion.put(h.getId(), o);
 					
 				    for (LocalDate fecha = o.getFechaIngreso(); fecha.isBefore(o.getFechaEgreso()); fecha = fecha.plusDays(1)) {
 				        
