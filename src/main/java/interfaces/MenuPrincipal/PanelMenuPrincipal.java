@@ -42,7 +42,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	private RoundedBorder bordeSalir = new RoundedBorder(10, Color.DARK_GRAY);
 	
-	private String textoMensajeCerrarSesion = "<html><p>¿Está seguro que desea cerrar sesión? Deberá volver a inciar sesión.</p><html>";
+	private String textoMensajeCerrarSesion = "<html><p>¿Está seguro que desea cerrar sesión? Deberá volver a iniciar sesión.</p><html>";
 	private Mensaje mensajeCerrarSesion = new Mensaje(1, textoMensajeCerrarSesion, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoMensajeCU03 = "<html><p>El CU03 'Gestionar Responsable de Pago' no debe ser implementado.</p><html>";

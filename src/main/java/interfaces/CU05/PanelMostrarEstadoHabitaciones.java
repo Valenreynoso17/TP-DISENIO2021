@@ -17,7 +17,6 @@ import main.java.excepciones.InputVacioException;
 import main.java.excepciones.RangoNoSeleccionadoException;
 import main.java.interfaces.CU17.PanelOcuparHabitacionConPasajeros;
 import main.java.interfaces.MenuPrincipal.PanelMenuPrincipal;
-import main.java.interfaces.clasesExtra.FrameMuestraEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.MensajeYaExistenReservas;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
@@ -100,11 +99,13 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			}
 			catch(InputVacioException exc) {
 				
-				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelVacio(exc.getInputsVacios());
+				//this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelVacio(exc.getInputsVacios());
+				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelVacio();
 			}
 			catch (FechaInvalidaException exc) {
 
-				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelInvalido(exc.getFechasInvalidas());
+				//this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelInvalido(exc.getFechasInvalidas());
+				this.panelMostrarEstadoHabitacionesGroupBox.colocarLabelInvalido();
 			}	
 			
 		});

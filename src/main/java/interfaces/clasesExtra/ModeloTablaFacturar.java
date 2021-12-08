@@ -44,13 +44,13 @@ public class ModeloTablaFacturar extends DefaultTableModel{
 	public void limpiarTabla() {
 
 		this.setRowCount(0); //Elimino todas las filas de la tabla
+		if(this.pasajerosHabitacion != null)
+			this.pasajerosHabitacion.clear();
 	}
 	
 	public void cargarPasajeros(List<PasajeroDTO> pasajeros) {
 		
 		this.pasajerosHabitacion.addAll(pasajeros);
-		
-		System.out.println(this.pasajerosHabitacion);
 		
 		for(PasajeroDTO p : pasajeros) {
 			this.addRow(new Object[] {p.getApellido()

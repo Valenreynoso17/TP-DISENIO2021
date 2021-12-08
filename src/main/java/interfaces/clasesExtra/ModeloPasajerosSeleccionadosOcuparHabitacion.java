@@ -35,6 +35,9 @@ public class ModeloPasajerosSeleccionadosOcuparHabitacion extends DefaultTableMo
 	public void limpiarTabla() {
 
 		this.setRowCount(0); //Elimino todas las filas de la tabla
+		this.capacidadHabitacion = 0;
+		if(this.pasajerosSeleccionados != null)
+			this.pasajerosSeleccionados.clear();
 	}
 	
 	public void eliminarPasajero(int fila) {

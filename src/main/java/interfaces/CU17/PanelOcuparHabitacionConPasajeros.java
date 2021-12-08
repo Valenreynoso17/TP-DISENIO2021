@@ -81,10 +81,6 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	
 	public PanelOcuparHabitacionConPasajeros(final FramePrincipal frame, PanelMostrarEstadoHabitaciones panelAnterior, HabitacionDTO habitacion, LocalDate fechaDesde, LocalDate fechaHasta) {
 		
-		System.out.println("Numero habitacion: "+habitacion.getNroHabitacion());	//TODO: Borrar
-		System.out.println("Fecha desde: "+fechaDesde);
-		System.out.println("Fecha hasta: "+fechaHasta);
-		
 		this.idHabitacion = habitacion.getId();
 		this.ingreso = fechaDesde;
 		this.egreso = fechaHasta;

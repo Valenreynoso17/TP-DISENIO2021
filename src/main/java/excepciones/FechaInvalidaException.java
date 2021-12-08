@@ -6,6 +6,10 @@ public class FechaInvalidaException extends Exception {
 	
 	public String fechasInvalidas;
 	
+	public FechaInvalidaException() {
+		super();
+	}
+	
 	public FechaInvalidaException(String inputs) {
 		super();
 		this.fechasInvalidas = inputs;

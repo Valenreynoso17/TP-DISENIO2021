@@ -153,10 +153,6 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 			
 			throw new PasajeroNoSeleccionadoException();
 		}				
-
-		System.out.println("getSelectedRow: "+tabla.getSelectedRow());
-		System.out.println("converRowIndexToModel: "+tabla.convertRowIndexToModel(tabla.getSelectedRow()));
-		System.out.println("PasajeroDTO: "+this.miModelo.getPasajerosHabitacion().get(tabla.convertRowIndexToModel(tabla.getSelectedRow())));
 		
 		return this.miModelo.getPasajerosHabitacion().get(tabla.convertRowIndexToModel(tabla.getSelectedRow()));
 	}

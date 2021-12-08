@@ -213,11 +213,9 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 			//La columna de la primera celda (la habitacion), menos 1 por como es la tabla
 			Integer idHabitacionSeleccionada = miModelo.getHabitaciones().get(celdasReservadasYSeleccionadas.get(0).get(1)-1).getId();	
 			
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");		
+//			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");		
 			
 			for(ArrayList<Integer> celda : this.renderTablaEstadoColores.getCeldasSeleccionadas()) {	//Para cada una de las celdas
-				
-				System.out.println("Fila de celda: "+celda.get(0));
 				
 				//Se pasa del string que se muestra en la grilla a un LocalDate, para asi poder usar el map con el metodo "get"
 				String fechaCeldaString = miModelo.getValueAt(celda.get(0), 0).toString();
@@ -228,19 +226,13 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 				//Para cada reserva que se encuentra en la lista de reservas de la habitacion seleccionada
 				for(ReservaDTO r :mapReservasPorHabitacion.get(idHabitacionSeleccionada)) {
 					
-					System.out.println("Reserva: "+r.getId());
-					
 					for (LocalDate fecha = r.getIngreso().toLocalDate(); fecha.isBefore(r.getEgreso().toLocalDate()); fecha = fecha.plusDays(1)) {
 					
 						//Si la fecha contenida en la celda es igual a alguna fecha dentro del periodo de la reserva
-						System.out.println("Fecha de reserva: "+fecha.format(formatter).toString());
-						System.out.println("Fecha de miModelo: "+fechaCelda);
-						//if(fecha.format(formatter).equals(fechaCelda)){
 						if(fecha.isEqual(fechaCelda)) {
 							
 							if(!reservasSeleccionadas.contains(r)) {	//Se guarda en la lista de reservasSeleccionadas, si no esta ya contenida en la lista
 								
-								System.out.println(r.getId());
 								reservasSeleccionadas.add(r);								
 							}
 						}
