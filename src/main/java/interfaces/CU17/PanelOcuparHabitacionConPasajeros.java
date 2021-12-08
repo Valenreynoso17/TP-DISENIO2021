@@ -52,7 +52,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	
 	private String textoMensajeNoExistePasajeroBuscar = "<html><p>No existe ningún pasajero con los criterios de búsqueda"
 														+ " seleccionados. Por favor, revise y vuelva a intentar.</p><html>";
-	private Mensaje mensajeNoExistePasajeroBuscar = new Mensaje(2, textoMensajeNoExistePasajeroBuscar, TipoMensaje.CONFIRMACION, "Si", "No");
+	private Mensaje mensajeNoExistePasajeroBuscar = new Mensaje(2, textoMensajeNoExistePasajeroBuscar, TipoMensaje.CONFIRMACION, "Aceptar", null);
 	
 	private String textoPasajerosNoSeleccionados = 	"<html><p>Seleccione al menos un ocupante.</p><html>";
 	private Mensaje mensajePasajerosNoSeleccionados = new Mensaje(3, textoPasajerosNoSeleccionados, TipoMensaje.ERROR, "Aceptar", null);
