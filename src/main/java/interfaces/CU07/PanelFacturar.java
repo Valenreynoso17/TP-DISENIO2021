@@ -112,6 +112,8 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		buscar.setBorder(bordeBoton);
 		buscar.addActionListener(e -> {
 				try{
+						ocupacionDTO = null;
+					
 						panelResultadosDeBusquedaFacturarGroupBox.desactivarTabla();
 					
 						this.panelFacturarGroupBox.inputNoEsVacia();

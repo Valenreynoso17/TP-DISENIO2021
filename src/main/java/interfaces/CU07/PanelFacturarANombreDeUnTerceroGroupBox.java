@@ -96,7 +96,6 @@ public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 							responsablePagoDTO = gestorResponsable.buscarResponsableDePago(CUITDeUnTercero.getText());
 							
 							razonSocial.setText(responsablePagoDTO.getRazonSocial());
-							System.out.println("setText: "+responsablePagoDTO.getRazonSocial());
 							
 						} catch (NoExisteResponsableCuitException e1) {
 							
@@ -108,7 +107,6 @@ public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 						  
 						  razonSocial.setText("");
 						  excepcionNoExisteResponsable = false;
-						  System.out.println("setVacio");
 					  }
 				  }
 			});
@@ -149,7 +147,7 @@ public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 	}
 	
 	public void setRazonSocial(String s) {
-		System.out.println("SetRazonSocial");
+		
 		this.razonSocial.setText(s);
 	}
 	

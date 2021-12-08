@@ -113,18 +113,16 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 			        		
 							filaSeleccionada = miModelo.getDataVector().elementAt(tabla.getSelectedRow());
 							nroFilaSeleccionada = tabla.getSelectedRow();
-							System.out.println(nroFilaSeleccionada);
-							System.out.println(filaSeleccionada);
 							
 							//Cuando selecciona a alguien, se copia tambien en la otra tabla pero NO desaparece de ésta
 							panelPasajerosSeleccionados.seleccionaronPasajero(pasajeroSeleccionado());
 							
 			        	} catch(ArrayIndexOutOfBoundsException exc) {		//El "elementAt" fallta debido a que el click derecho busca el elemento -1 en el vector
 			        		
-			        		System.out.println("Excepcion");
+			        		exc.printStackTrace();
 			        	} catch(PasajeroNoSeleccionadoException exc) {
 			        		
-			        		//TODO: Creo que nunca va a llegar aca
+			        		exc.printStackTrace();
 			        	}
 			        } else {
 			        	tabla.clearSelection();

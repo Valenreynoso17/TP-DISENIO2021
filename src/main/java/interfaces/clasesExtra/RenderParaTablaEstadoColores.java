@@ -39,11 +39,9 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 			c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);  
 		}
 
-		this.pintarTodasLasCeldas(value, c, row, column);
+		this.pintarCelda(value, c, row, column);
         	
         ArrayList<Integer> filaYColumnaParaRePintar = new ArrayList<Integer>();	filaYColumnaParaRePintar.add(row); filaYColumnaParaRePintar.add(column);
-        
-       // System.out.println(filaYColumnaParaRePintar);
      
 	      if (isSelected &&													 // Para pintar de gris
 	    	  table.getSelectedColumn() == column && 						 // Para que no coloree toda la fila, simplemente la columna indicada
@@ -64,7 +62,6 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	    	  }
 	    	  else {
 		    	  int ultimaFilaSeleccionada = celdasSeleccionadas.get(celdasSeleccionadas.size()-1).get(0);
-		    	  System.out.println("UltimaFilaSeleccionada: "+ultimaFilaSeleccionada);
 		    	  this.mostrarArrayList(celdasSeleccionadas);
 		    	  
 		    	 	//Si la fila seleccionada ahora es igual a la siguiente fila que habia seleccionado antes
@@ -96,7 +93,7 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
         return c;
     }	
 	
-	public void pintarTodasLasCeldas(Object value, Component c, int row, int column) {
+	public void pintarCelda(Object value, Component c, int row, int column) {
 		
   	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
   	 

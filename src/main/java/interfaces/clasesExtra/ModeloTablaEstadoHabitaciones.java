@@ -164,9 +164,9 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 
 	public void actualizarTabla(LocalDate fechaDesde, LocalDate fechaHasta, Map<String, List<HabitacionDTO>> estadoHabitaciones) {
 		
+		this.limpiarTabla();
 		this.fechaDesde = fechaDesde;
 		this.fechaHasta = fechaHasta;
-		this.limpiarTabla();
 		this.cargarEstados(estadoHabitaciones);
 	}
 
