@@ -102,7 +102,7 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 //	    	e.printStackTrace();
 //	    }
 
-		fechaDesde.setFont(fuenteLabelCampo);	fechaDesde.setBorder(bordeCampo);	fechaDesde.setEditable(false);
+		fechaDesde.setFont(fuenteLabelCampo);	fechaDesde.setBorder(bordeCampo);	fechaDesde.setEditable(false);	fechaDesde.setFocusable(false);
 //		fechaDesde.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 //			  public void changedUpdate(DocumentEvent e) {
 //				labelFechaDesdeVacio.setVisible(false);

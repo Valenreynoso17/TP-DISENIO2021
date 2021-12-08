@@ -166,6 +166,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	
 	public void desactivarTabla() {
 		
+		facturarANombreDeUnTercero.setEnabled(false);
 		miModelo.limpiarTabla();
 	}
 }

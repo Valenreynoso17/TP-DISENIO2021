@@ -30,7 +30,7 @@ public CrearFactura() {
 	
 	GestorFactura g = GestorFactura.getInstance();
 	
-	g.imprimir(f);
+	//g.imprimir(f);
 	/*try {
 		FacturaDAO dao = new FacturaPostgreSQLImpl();
 		Factura f = dao.buscarConItems(2);

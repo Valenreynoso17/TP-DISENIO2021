@@ -113,7 +113,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 		buscar.addActionListener(e -> {
 				try{
 						ocupacionDTO = null;
-					
+						siguiente.setEnabled(false);
 						panelResultadosDeBusquedaFacturarGroupBox.desactivarTabla();
 					
 						this.panelFacturarGroupBox.inputNoEsVacia();
@@ -127,7 +127,6 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 						ocupacionDTO = gestorOcupacion.buscarUltimaOcupacionDTO(numeroHabitacion, fechaHora);
 						
 						panelResultadosDeBusquedaFacturarGroupBox.activarTabla(ocupacionDTO);
-						
 						siguiente.setEnabled(true);
 				}
 				catch(InputVacioException exc) {
