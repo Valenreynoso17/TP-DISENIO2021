@@ -71,24 +71,19 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
-	
-//	private HabitacionDTO habitacion;
-	
-	// TODO valores temporales
-	private Integer idHabitacion;// = 11;
-	private LocalDate ingreso;// = LocalDate.of(2021, 12, 3);
-	private LocalDate egreso;// = LocalDate.of(2021, 12, 6);
+
+	private Integer idHabitacion;
+	private LocalDate ingreso;
+	private LocalDate egreso;
 	
 	public PanelOcuparHabitacionConPasajeros(final FramePrincipal frame, PanelMostrarEstadoHabitaciones panelAnterior, HabitacionDTO habitacion, LocalDate fechaDesde, LocalDate fechaHasta) {
-		
+				
 		this.idHabitacion = habitacion.getId();
 		this.ingreso = fechaDesde;
 		this.egreso = fechaHasta;
 		
 		gestorPasajero = GestorPasajero.getInstance();
 		gestorHabitacion = GestorHabitacion.getInstance();
-		
-//		habitacion = gestorHabitacion.buscarHabitacionDTO(idHabitacion);
 		
 		this.frameActual = frame;
 		this.panelAnterior = panelAnterior;
