@@ -142,7 +142,7 @@ public class GestorOcupacion {
 		Integer cantDiasFacturados = 0;
 		
 		for(ItemOcupacionDTO unItem : ocupacionDTO.getListaItemsOcupacionDTO()) {
-			cantDiasFacturados += unItem.getCantidadDias();
+			cantDiasFacturados += unItem.getCantidad();
 		}
 		
 		if (cantDiasFacturados < cantDiasOcupacion) {
