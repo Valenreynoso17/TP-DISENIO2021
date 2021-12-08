@@ -1,11 +1,13 @@
 package main.java.reportes.reportes;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import main.java.clases.Factura;
 import main.java.clases.ItemFactura;
 import main.java.daos.FacturaDAO;
+import main.java.dtos.ItemFacturaImpresionDTO;
 import main.java.postgreImpl.FacturaPostgreSQLImpl;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -16,14 +18,22 @@ public class DatosFacturacion implements JRDataSource {
 	Integer index =-1;
 	FacturaDAO dao = new FacturaPostgreSQLImpl();
 	Factura factura = dao.buscarConItems(2);
-	List<ItemFactura> items = factura.getItems();
+	List<ItemFacturaImpresionDTO> items;
+	
+	public DatosFacturacion() {
+		items = new ArrayList<>();
+		for (ItemFactura i : factura.getItems()) {
+			items.add(new ItemFacturaImpresionDTO(i));
+		}
+	}
 	
 	
-	public Object getFieldValue(JRField jrf) throws JRException{
-	System.out.println(items.get(index));
-	System.out.println(index);
+	
+	@Override
+	public Object getFieldValue(JRField jrField) throws JRException{
 		Object value = null;
-		String fieldName = jrf.getName();
+		String fieldName = jrField.getName();
+		System.out.println(fieldName);
 		switch(fieldName) {
 		case "tipoFactura":
 			value = factura.getTipo().toString();
@@ -40,6 +50,9 @@ public class DatosFacturacion implements JRDataSource {
 		case "localidad":
 			value = factura.getDatosResponsable().getDireccion().getLocalidad().getNombre();
 			break;
+		case "posicionFrenteIVA":
+			value = factura.getDatosResponsable().getPosicionFrenteIva().toString();
+			break;
 		case "nroFactura":
 			value = factura.getNumero();
 			break;
@@ -52,13 +65,9 @@ public class DatosFacturacion implements JRDataSource {
 		case "montoTotal":
 			value = factura.getMontoTotal();
 			break;
-		case "consumo"	:
-			value = items.get(index).getDescripcion();
+		case "items":
+			value = items;
 			break;
-		case "precioUnitario":
-			value = items.get(index).getPrecioUnitario();
-			break;
-			
 		}
 		return value;
 	}

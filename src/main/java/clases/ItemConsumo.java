@@ -44,7 +44,7 @@ public class ItemConsumo extends ItemFactura {
 	}
 	
 	
-
+	@Override
 	public Integer getCantidad() {
 		return cantidad;
 	}
