@@ -22,7 +22,7 @@ import javax.swing.WindowConstants;
 import main.java.enums.TipoMensaje;
 import main.java.interfaces.frames.FramePrincipal;
 
-public class Mensaje extends JFrame{
+public class Mensaje extends JDialog{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -68,9 +68,9 @@ public class Mensaje extends JFrame{
 		frame.setEnabled(false);	//Para que solo se pueda clickear el mensaje
 		
 		setBounds(100, 100, 400, 240);
+		
 		contentPane = new JPanel();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 		
 		contentPane.setBackground(Color.WHITE);
@@ -134,26 +134,23 @@ public class Mensaje extends JFrame{
 		}
 		
 		setContentPane(contentPane);
+		this.setVisible(true);
 	}
 
 	private void elegirIconoSegunTipoMensaje(TipoMensaje tipo) {
 
 		switch(tipo) {
 			case ADVERTENCIA:
-				//this.icono = new ImageIcon(getClass().getResource("Advertencia.PNG"));
-				this.icono = new ImageIcon("main/java/interfaces/clasesExtra/Advertencia.PNG");
+				this.icono = new ImageIcon("src/main/java/interfaces/clasesExtra/Advertencia.PNG");
 				break;
 			case CONFIRMACION:
-				//this.icono = new ImageIcon(getClass().getResource("Confirmacion.PNG"));
-				this.icono = new ImageIcon("main/java/interfaces/clasesExtra/Confirmacion.PNG");
+				this.icono = new ImageIcon("src/main/java/interfaces/clasesExtra/Confirmacion.PNG");
 				break;
 			case ERROR:
-				//this.icono = new ImageIcon(getClass().getResource("Error.PNG"));
-				this.icono = new ImageIcon("main/java/interfaces/clasesExtra/Error.PNG");
+				this.icono = new ImageIcon("src/main/java/interfaces/clasesExtra/Error.PNG");
 				break;
 			case EXITO:
-				//this.icono = new ImageIcon(getClass().getResource("Exito.PNG"));
-				this.icono = new ImageIcon("main/java/interfaces/clasesExtra/Exito.PNG");
+				this.icono = new ImageIcon("src/main/java/interfaces/clasesExtra/Exito.PNG");
 				break;
 		}
 	}

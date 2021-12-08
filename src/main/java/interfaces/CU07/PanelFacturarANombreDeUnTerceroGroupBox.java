@@ -89,13 +89,17 @@ public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 				  public void removeUpdate(DocumentEvent e)  {
 				  }
 				  public void insertUpdate(DocumentEvent e) {
-
+					  
 					  if(!CUITDeUnTercero.getText().contains(" ")) {	//Si no contiene espacios, el CUIT esta escrito completamente
 						  
 						  try {
+							excepcionNoExisteResponsable = false;  
+							  
 							responsablePagoDTO = gestorResponsable.buscarResponsableDePago(CUITDeUnTercero.getText());
 							
 							razonSocial.setText(responsablePagoDTO.getRazonSocial());
+							
+							System.out.println(responsablePagoDTO.getCuit());
 							
 						} catch (NoExisteResponsableCuitException e1) {
 							

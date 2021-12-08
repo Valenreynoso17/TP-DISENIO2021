@@ -89,6 +89,11 @@ private static GestorFactura instance;
 		
 		if(seFacturaronTodosLosItems) {
 			ocupacion.setHoraYFechaSalidaReal(ocupacionDTO.getPosibleFechaHoraDeSalida());
+			
+			if(ocupacionDTO.getPosibleFechaHoraDeSalida().toLocalDate().isBefore(ocupacionDTO.getFechaEgreso())) {
+				ocupacion.setEgreso(ocupacionDTO.getPosibleFechaHoraDeSalida().toLocalDate());
+			}
+				
 			ocupacionDAO.guardar(ocupacion);
 		}
 		
