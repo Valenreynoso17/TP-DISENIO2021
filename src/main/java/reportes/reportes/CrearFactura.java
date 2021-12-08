@@ -13,6 +13,7 @@ import main.java.daos.FacturaDAO;
 import main.java.dtos.ItemFacturaDTO;
 import main.java.dtos.ItemFacturaImpresionDTO;
 import main.java.enums.PosicionFrenteIva;
+import main.java.gestores.GestorFactura;
 import main.java.postgreImpl.FacturaPostgreSQLImpl;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -24,7 +25,13 @@ import net.sf.jasperreports.view.JasperViewer;
 
 public class CrearFactura {
 public CrearFactura() {
-	try {
+	FacturaDAO dao = new FacturaPostgreSQLImpl();
+	Factura f = dao.buscarConItems(2);
+	
+	GestorFactura g = GestorFactura.getInstance();
+	
+	g.imprimir(f);
+	/*try {
 		FacturaDAO dao = new FacturaPostgreSQLImpl();
 		Factura f = dao.buscarConItems(2);
 		
@@ -63,7 +70,7 @@ public CrearFactura() {
 	}
 	catch(Exception ex) {
 		ex.printStackTrace();
-	}
+	}*/
 }
 
 
