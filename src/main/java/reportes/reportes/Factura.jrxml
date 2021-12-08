@@ -162,6 +162,7 @@
 	<parameter name="montoNeto" class="java.lang.Double"/>
 	<parameter name="tipoFactura" class="java.lang.String"/>
 	<parameter name="items" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource" nestedType="clases.Dibujable"/>
+	<parameter name="fecha" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -184,7 +185,7 @@
 				<textElement textAlignment="Left">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="10" y="-10" width="50" height="50" uuid="499be2d5-419a-4efe-bd04-7299f49ba65a"/>

@@ -1,5 +1,6 @@
 package main.java.gestores;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -165,9 +166,10 @@ private static GestorFactura instance;
 			
 			Map<String, Object> parameters = new HashMap<>();
 			
+			
 			parameters.put("tipoFactura", f.getTipo().toString());
 			parameters.put("razonSocial", f.getDatosResponsable().getRazonSocial());
-			parameters.put("posicionIva", f.getDatosResponsable().getPosicionFrenteIva().toString());
+			parameters.put("posicionIva", f.getDatosResponsable().getPosicionFrenteIva().toString().replace('_', ' '));
 			parameters.put("direccion", f.getDatosResponsable().getDireccion().getDireccionDomicilio());
 			parameters.put("cuit", f.getDatosResponsable().getCuit());
 			parameters.put("numero", f.getNumero());
@@ -176,6 +178,7 @@ private static GestorFactura instance;
 			parameters.put("montoTotal", f.getMontoTotal());
 			parameters.put("iva", Factura.getIVA()*f.getMontoTotal());
 			parameters.put("items", items);
+			parameters.put("fecha", f.getFechaFacturacion().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString());
 			
 			
 			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("../reportes/reportes/Factura.jasper"));
