@@ -127,7 +127,7 @@ public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 		
 			c.insets = insetCampo;	c.fill = GridBagConstraints.HORIZONTAL;	c.anchor = GridBagConstraints.CENTER;
 		
-		razonSocial.setFont(fuenteLabelCampo);	razonSocial.setBorder(bordeCampo);	razonSocial.setEditable(false);
+		razonSocial.setFont(fuenteLabelCampo);	razonSocial.setBorder(bordeCampo);	razonSocial.setEditable(false);		razonSocial.setFocusable(false);
 		razonSocial.setBackground(colorFondoCampoNoEditable);
 		c.gridx = 1; razonSocial.setMinimumSize(dimensionCampo);	razonSocial.setPreferredSize(dimensionCampo);	
 		this.add(razonSocial, c); 	

@@ -50,15 +50,21 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	    	  !celdasFueraDeServicio.contains(filaYColumnaParaRePintar) &&		 // No debe estar fuera de servicio
 	    	  (banderaPrimeraVez || column == columnaSeleccion)) {			 // Debe permanecer siempre en una misma columna
 	    	  
-	    	  banderaPrimeraVez = false;	// La bandera se pone en falso porque ya cumplio su funcion (dejar entrar la primera vez al if)
-	    	  columnaSeleccion = column;
-	    	  
-	    	  if(celdasSeleccionadas.isEmpty()) {
+	    	  if(banderaPrimeraVez) {	//Si es la primera vez que se entra al metodo
 	    		  
-		    	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
-		    	  celdasSeleccionadas.add(filaYColumna);
-		    	  
-		    	  c.setBackground(colorSeleccionado);
+	    		  if(row == 0) {	//La primera fila debe ser la primera seleccion
+	    			  
+	    	    	  banderaPrimeraVez = false;	// La bandera se pone en falso porque ya cumplio su funcion (dejar entrar la primera vez al if)
+	    	    	  columnaSeleccion = column;
+	    	    	  
+	    	    	  if(celdasSeleccionadas.isEmpty()) {
+	    	    		  
+	    		    	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
+	    		    	  celdasSeleccionadas.add(filaYColumna);
+	    		    	  
+	    		    	  c.setBackground(colorSeleccionado);
+	    	    	  }
+	    		  }
 	    	  }
 	    	  else {
 		    	  int ultimaFilaSeleccionada = celdasSeleccionadas.get(celdasSeleccionadas.size()-1).get(0);
@@ -81,8 +87,6 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 //		    		  }
 		    	  }
 	    	  }
-	    	  
-	
 	      }
 	      
 	      if(celdasSeleccionadas.contains(filaYColumnaParaRePintar)) {	// Si estan dentro de la lista, se vuelven a colorear de "colorSeleccionado"

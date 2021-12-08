@@ -49,6 +49,9 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 													+ "Si no desea facturarlo en este momento, puede facturarlo en su último factura.</p><html>";
 	private Mensaje mensajeRecargoUltimoSeleccionado = new Mensaje(3, textoRecargoUltimoSeleccionado, TipoMensaje.ERROR, "Aceptar", null);
 	
+	private String textoFacturaCreada = "<html><p>La factura se ha creado con éxito.</p><html>";
+	private Mensaje mensajeFacturaCreada = new Mensaje(4, textoFacturaCreada, TipoMensaje.ERROR, "Imprimir", "Aceptar");
+	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
@@ -120,9 +123,6 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 				try {
 					gestorFactura.crearFactura(facturaDTO, ocupacionDTO);
 					
-					String textoFacturaCreada = "<html><p>Ver si ponemos mensaje. Deberia IMPRIMIR aca.</p><html>";
-					Mensaje mensajeFacturaCreada = new Mensaje(4, textoFacturaCreada, TipoMensaje.ERROR, "Aceptar", null);
-					
 					mensajeFacturaCreada.mostrar(getPanel(), frame);
 					
 				} catch (NingunElementoSeleccionadoFacturacionException e1) {
@@ -130,8 +130,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 					mensajeNadaSeleccionado.mostrar(getPanel(), frame);
 					
 				} catch (RecargoNoEstaEnUltimaFacturaException e1) {
-					/* TODO: copie la excepcion de arriba, pero habría que hacer un msj que diga que
-					 */
+
 					//Si no seleccionó ningún consumo hay que mostrar: 
 					mensajeRecargoUltimoSeleccionado.mostrar(getPanel(), frame);
 				}
@@ -168,6 +167,16 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	public void confirmoCancelar(Integer idMensaje) {
 
 		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
+		
+		switch(idMensaje) {
+		case 1:
+		case 2:	
+		case 3:	
+			break;
+		case 4:	//Presiono "Volver al menú principal"
+			frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
+			break;
+		}
 	}
 	
 	public FacturaDTO crearFacturaDTO(ResponsableDePagoDTO responsablePagoDTO, List<ItemFilaDTO> listaItemsFila) {

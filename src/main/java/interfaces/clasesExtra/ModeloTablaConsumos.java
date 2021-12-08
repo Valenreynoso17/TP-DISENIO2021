@@ -1,5 +1,8 @@
 package main.java.interfaces.clasesExtra;
 
+import java.awt.Font;
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -96,16 +99,6 @@ public class ModeloTablaConsumos extends DefaultTableModel{
 			
 			//Actualiza el campo "TotalNeto" en funcion de la cantidad y del precio unitario
 			this.setValueAt("$ "+df.format(itemCambioCantidad.getCantidadSeleccionada()*itemCambioCantidad.getPrecioUnitario()), fila, 5);
-			
-			for(ItemFilaDTO i : items) {
-				
-				total += i.getCantidadSeleccionada() * i.getPrecioUnitario();
-			}
-			
-			//Actualiza el campo "TOTAL" en funcion de la cantidad y del precio unitario de todas las filas
-			this.setValueAt("$ "+df.format(total), this.cantidadFilasEnBlanco+items.size(), 5);	
-			
-			this.total = total;
 		}
 		//Si la cantidadSeleccionada es distinta de 0
 		else if(c == '-' && itemCambioCantidad.getCantidadSeleccionada() != 0) {
@@ -118,17 +111,18 @@ public class ModeloTablaConsumos extends DefaultTableModel{
 			
 			//Actualiza el campo "TotalNeto" en funcion de la cantidad y del precio unitario
 			this.setValueAt("$ "+df.format(itemCambioCantidad.getCantidadSeleccionada()*itemCambioCantidad.getPrecioUnitario()), fila, 5);
-			
-			for(ItemFilaDTO i : items) {
-				
-				total += i.getCantidadSeleccionada() * i.getPrecioUnitario();
-			}
-			
-			//Actualiza el campo "TOTAL" en funcion de la cantidad y del precio unitario de todas las filas
-			this.setValueAt("$ "+df.format(total), this.cantidadFilasEnBlanco+items.size(), 5);
-			
-			this.total = total;
 		}
+		
+		//El total se calcula independientemente si se sumo o resto una cantidad (aunque se reste y tenga cantidad 0 o se sume con cantidad maxima)
+		for(ItemFilaDTO i : items) {
+			
+			total += i.getCantidadSeleccionada() * i.getPrecioUnitario();
+		}
+		
+		//Actualiza el campo "TOTAL" en funcion de la cantidad y del precio unitario de todas las filas
+		this.setValueAt("$ "+df.format(total), this.cantidadFilasEnBlanco+items.size(), 5);	
+		
+		this.total = total;
 		
 		return this.total;
 	}

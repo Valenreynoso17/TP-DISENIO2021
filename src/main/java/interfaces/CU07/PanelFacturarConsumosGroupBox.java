@@ -52,7 +52,7 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 	
 	private JTable tabla;
 	private ModeloTablaConsumos miModelo;	
-	private RenderParaHeaderTablas renderTabla; 
+	private RenderParaHeaderTablas renderHeaderTabla; 
 	
 	private JScrollPane tableContainer;
 	
@@ -170,9 +170,11 @@ public class PanelFacturarConsumosGroupBox extends JPanel{
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla);
 		
-		renderTabla = new RenderParaHeaderTablas(tabla.getDefaultRenderer(Object.class), false);
+		renderHeaderTabla = new RenderParaHeaderTablas(tabla.getDefaultRenderer(Object.class), false);
 
-		tabla.getTableHeader().setDefaultRenderer(renderTabla);
+		tabla.getTableHeader().setDefaultRenderer(renderHeaderTabla);
+		
+		//render
 				
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
