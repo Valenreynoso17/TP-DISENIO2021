@@ -158,6 +158,9 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 		case 3:	//Si selecciona el recargo pero no el resto de la factura, simplemente muestra el mensaje
 			break;
 		case 4:	//TODO: Ver si poner mensaje o mostrar directamente la factura impresa
+			gestorFactura.imprimir();
+			
+			//TODO: Cuando se cierre la factura quizas:
 			frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
 			break;
 		}

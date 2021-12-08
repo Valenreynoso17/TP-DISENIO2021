@@ -49,6 +49,8 @@ private static GestorFactura instance;
 	private Boolean tieneRecargo;
 	//private ConsumoDAO consumoDAO;
 	
+	private Factura ultimaFactura;
+	
 	private GestorFactura() {
 		facturaDAO = new FacturaPostgreSQLImpl();
 		responsableDAO = new ResponsableDePagoPostgreSQLImpl();
@@ -96,7 +98,7 @@ private static GestorFactura instance;
 		
 		facturaDAO.guardar(factura);
 		
-		imprimir(factura);
+		ultimaFactura = factura;
 	}
 	
 	public List<ItemFactura> crearListaItemsFactura(List<ItemFilaDTO> listaItems, Ocupacion ocupacion){
@@ -147,8 +149,10 @@ private static GestorFactura instance;
 		return retorno;
 	}
 	
-	public void imprimir(Factura f) {
-		System.out.println("Impresion de factura");
+	public void imprimir() {
+			
+			Factura f = ultimaFactura;
+		
 		try {			
 			List<ItemFacturaImpresionDTO> itemsDTO = new ArrayList<>();
 			
