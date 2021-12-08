@@ -51,9 +51,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	private Mensaje mensajeRecargoUltimoSeleccionado = new Mensaje(3, textoRecargoUltimoSeleccionado, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private String textoFacturaCreada = "<html><p>La factura se ha creado con éxito.</p><html>";
-	private Mensaje mensajeFacturaCreada = new Mensaje(4, textoFacturaCreada, TipoMensaje.ERROR, "Imprimir", "Aceptar") {
-		
-		private static final long serialVersionUID = 1L;
+	private Mensaje mensajeFacturaCreada = new Mensaje(4, textoFacturaCreada, TipoMensaje.ERROR, "Imprimir", null) {
 		
 		@Override
 		protected void processWindowEvent(WindowEvent e) {	//Para que al cerrarse con la cruz se vuelva al menu principal y no se cierren todos los frames
@@ -64,6 +62,8 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	            this.dispose();
 	            frameActual.toFront();	
 	            frameActual.setEnabled(true);
+	            
+	            gestorFactura.imprimir();
 	    		frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
 	        }
 		} 
@@ -187,16 +187,6 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	public void confirmoCancelar(Integer idMensaje) {
 
 		//Ninguno de los mensajes tiene una función si se presiona el botón de la izquierda
-		
-		switch(idMensaje) {
-		case 1:
-		case 2:	
-		case 3:	
-			break;
-		case 4:	//Presiono "Volver al menú principal"
-			frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
-			break;
-		}
 	}
 	
 	public FacturaDTO crearFacturaDTO(ResponsableDePagoDTO responsablePagoDTO, List<ItemFilaDTO> listaItemsFila) {

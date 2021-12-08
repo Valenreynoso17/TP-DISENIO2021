@@ -140,16 +140,20 @@ public class Mensaje extends JFrame{
 
 		switch(tipo) {
 			case ADVERTENCIA:
-				this.icono = new ImageIcon(getClass().getResource("Advertencia.PNG"));
+				//this.icono = new ImageIcon(getClass().getResource("Advertencia.PNG"));
+				this.icono = new ImageIcon("main/java/interfaces/clasesExtra/Advertencia.PNG");
 				break;
 			case CONFIRMACION:
-				this.icono = new ImageIcon(getClass().getResource("Confirmacion.PNG"));
+				//this.icono = new ImageIcon(getClass().getResource("Confirmacion.PNG"));
+				this.icono = new ImageIcon("main/java/interfaces/clasesExtra/Confirmacion.PNG");
 				break;
 			case ERROR:
-				this.icono = new ImageIcon(getClass().getResource("Error.PNG"));
+				//this.icono = new ImageIcon(getClass().getResource("Error.PNG"));
+				this.icono = new ImageIcon("main/java/interfaces/clasesExtra/Error.PNG");
 				break;
 			case EXITO:
-				this.icono = new ImageIcon(getClass().getResource("Exito.PNG"));
+				//this.icono = new ImageIcon(getClass().getResource("Exito.PNG"));
+				this.icono = new ImageIcon("main/java/interfaces/clasesExtra/Exito.PNG");
 				break;
 		}
 	}
