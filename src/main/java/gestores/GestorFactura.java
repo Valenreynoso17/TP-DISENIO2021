@@ -64,7 +64,7 @@ private static GestorFactura instance;
 		return instance;
 	}
 	
-	public void crearFactura(FacturaDTO facturaDTO, OcupacionDTO ocupacionDTO) throws NingunElementoSeleccionadoFacturacionException,
+	public Integer crearFactura(FacturaDTO facturaDTO, OcupacionDTO ocupacionDTO) throws NingunElementoSeleccionadoFacturacionException,
 																					  RecargoNoEstaEnUltimaFacturaException {
 		
 		seFacturaronTodosLosItems = false;
@@ -96,9 +96,7 @@ private static GestorFactura instance;
 		
 		Factura factura = new Factura(facturaDTO, habitacion, responsablePago, datosResponsable, listaItemsFactura);
 		
-		facturaDAO.guardar(factura);
-		
-		ultimaFactura = factura;
+		return facturaDAO.guardar(factura);
 	}
 	
 	public List<ItemFactura> crearListaItemsFactura(List<ItemFilaDTO> listaItems, Ocupacion ocupacion){
@@ -149,9 +147,9 @@ private static GestorFactura instance;
 		return retorno;
 	}
 	
-	public void imprimir() {
+	public void imprimir(Integer idFactura) {
 			
-			Factura f = ultimaFactura;
+		Factura f = facturaDAO.buscarConItems(idFactura);
 		
 		try {			
 			List<ItemFacturaImpresionDTO> itemsDTO = new ArrayList<>();
