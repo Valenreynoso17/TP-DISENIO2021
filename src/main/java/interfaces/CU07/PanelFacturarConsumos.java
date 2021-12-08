@@ -80,7 +80,8 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	
 	private GestorOcupacion gestorOcupacion;
 	private GestorFactura gestorFactura;
-	//TODO: Imprimir
+	
+	private Integer idFactura;
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
 	
@@ -138,7 +139,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 				FacturaDTO facturaDTO = crearFacturaDTO(responsablePagoDTO, listaItemsFila);
 				
 				try {
-					gestorFactura.crearFactura(facturaDTO, ocupacionDTO);
+					idFactura = gestorFactura.crearFactura(facturaDTO, ocupacionDTO);
 					
 					mensajeFacturaCreada.mostrar(getPanel(), frame);
 					
@@ -175,7 +176,7 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 		case 3:	//Si selecciona el recargo pero no el resto de la factura, simplemente muestra el mensaje
 			break;
 		case 4:	//TODO: Ver si poner mensaje o mostrar directamente la factura impresa
-			gestorFactura.imprimir();
+			gestorFactura.imprimir(idFactura);
 			
 			//TODO: Cuando se cierre la factura quizas:
 			frameActual.setNuevoPanel(new PanelMenuPrincipal(frameActual));
