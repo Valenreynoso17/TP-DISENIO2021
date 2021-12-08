@@ -3,7 +3,7 @@ package main.java.dtos;
 import main.java.clases.ItemConsumo;
 import main.java.clases.ItemOcupacion;
 
-public class ItemFacturaDTO {
+public abstract class ItemFacturaDTO {
 	private Integer id;
 	private Double precioUnitario;
 	private String descripcion;
@@ -20,6 +20,8 @@ public class ItemFacturaDTO {
 		this.descripcion = itemConsumo.getDescripcion();
 	}
 
+	public abstract Integer getCantidad();
+	
 	public Integer getId() {
 		return id;
 	}

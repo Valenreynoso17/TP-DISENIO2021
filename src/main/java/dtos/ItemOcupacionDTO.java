@@ -7,10 +7,11 @@ public class ItemOcupacionDTO extends ItemFacturaDTO{
 	
 	public ItemOcupacionDTO(ItemOcupacion itemOcupacion) {
 		super(itemOcupacion);
-		this.cantidadDias = itemOcupacion.getCantidadDias();
+		this.cantidadDias = itemOcupacion.getCantidad();
 	}
 	
-	public Integer getCantidadDias() {
+	@Override
+	public Integer getCantidad() {
 		return cantidadDias;
 	}
 	

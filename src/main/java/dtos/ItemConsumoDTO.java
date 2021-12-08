@@ -10,6 +10,7 @@ public class ItemConsumoDTO extends ItemFacturaDTO{
 		this.cantidad = itemConsumo.getCantidad();
 	}
 	
+	@Override
 	public Integer getCantidad() {
 		return cantidad;
 	}

@@ -57,6 +57,8 @@ public abstract class ItemFactura {
 	public String getDescripcion() {
 		return descripcion;
 	}
+	
+	public abstract Integer getCantidad();
 
 
 

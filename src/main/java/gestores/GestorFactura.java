@@ -1,7 +1,11 @@
 package main.java.gestores;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.swing.WindowConstants;
 
 import main.java.clases.Consumo;
 import main.java.clases.DatosResponsableDePago;
@@ -17,6 +21,7 @@ import main.java.daos.HabitacionDAO;
 import main.java.daos.OcupacionDAO;
 import main.java.daos.ResponsableDePagoDAO;
 import main.java.dtos.FacturaDTO;
+import main.java.dtos.ItemFacturaImpresionDTO;
 import main.java.dtos.ItemFilaDTO;
 import main.java.dtos.OcupacionDTO;
 import main.java.excepciones.NingunElementoSeleccionadoFacturacionException;
@@ -25,6 +30,13 @@ import main.java.postgreImpl.FacturaPostgreSQLImpl;
 import main.java.postgreImpl.HabitacionPostgreSQLImpl;
 import main.java.postgreImpl.OcupacionPostgreSQLImpl;
 import main.java.postgreImpl.ResponsableDePagoPostgreSQLImpl;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class GestorFactura {
 private static GestorFactura instance;
@@ -135,7 +147,41 @@ private static GestorFactura instance;
 		return retorno;
 	}
 	
-	public void imprimir(Factura factura) {
+	public void imprimir(Factura f) {
 		System.out.println("Impresion de factura");
+		try {			
+			List<ItemFacturaImpresionDTO> itemsDTO = new ArrayList<>();
+			
+			for (ItemFactura i : f.getItems()) {
+				itemsDTO.add(new ItemFacturaImpresionDTO(i));
+				
+			}
+			
+			JRBeanCollectionDataSource items = new JRBeanCollectionDataSource(itemsDTO);
+			
+			Map<String, Object> parameters = new HashMap<>();
+			
+			parameters.put("tipoFactura", f.getTipo().toString());
+			parameters.put("razonSocial", f.getDatosResponsable().getRazonSocial());
+			parameters.put("posicionIva", f.getDatosResponsable().getPosicionFrenteIva().toString());
+			parameters.put("direccion", f.getDatosResponsable().getDireccion().getDireccionDomicilio());
+			parameters.put("cuit", f.getDatosResponsable().getCuit());
+			parameters.put("numero", f.getNumero());
+			parameters.put("localidad", f.getDatosResponsable().getDireccion().getLocalidad().getNombre());
+			parameters.put("montoNeto", f.getMontoNeto());
+			parameters.put("montoTotal", f.getMontoTotal());
+			parameters.put("iva", Factura.getIVA()*f.getMontoTotal());
+			parameters.put("items", items);
+			
+			
+			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("../reportes/reportes/Factura.jasper"));
+			JasperPrint jprint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
+			JasperViewer view = new JasperViewer(jprint, false);
+			view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			view.setVisible(true);
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 }

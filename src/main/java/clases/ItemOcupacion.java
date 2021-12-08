@@ -38,7 +38,8 @@ public class ItemOcupacion extends ItemFactura {
 		super();
 	}
 	
-	public Integer getCantidadDias() {
+	@Override
+	public Integer getCantidad() {
 		return this.cantidadDias;
 	}
 	
