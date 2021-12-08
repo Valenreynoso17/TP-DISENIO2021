@@ -28,6 +28,7 @@ import main.java.dtos.ReservaDTO;
 import main.java.dtos.TipoHabitacionDTO;
 import main.java.enums.EstadoHabitacion;
 import main.java.excepciones.ContieneFechasReservadasException;
+import main.java.excepciones.PasajeroNoSeleccionadoException;
 import main.java.excepciones.RangoNoSeleccionadoException;
 import main.java.gestores.GestorHabitacion;
 import main.java.interfaces.clasesExtra.ColumnaAgrupada;
@@ -53,7 +54,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	private Integer nroFilaSeleccionada;
 	private JScrollPane tableContainer;
 	
-	private Insets insetTabla = new Insets(15, 100, 15, 100);
+	private Insets insetTabla = new Insets(15, 30, 15, 30);
 	
 	private GestorHabitacion gestorHabitacion;
 
@@ -121,7 +122,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		
 		tabla.setRowSelectionAllowed(true);
 		tabla.setColumnSelectionAllowed(false);
-		
+
 		tabla.setFocusable(false); //Para que no seleccione una sola columna
 		
 		tabla.getTableHeader().setResizingAllowed(false);	//Para que no puedas cambiar el tamaño de las columnas
@@ -142,6 +143,15 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		    			deseleccionarPeriodo();
 		    		}
 		    	}
+		    	
+		    	 if (tabla.getSelectedRow() >= 0) {
+			        	
+//					    int r = tabla.rowAtPoint(e.getPoint());
+//				        if (r >= 0 && r < tabla.getRowCount()) {
+				        	
+				        	repaint();
+//				        } 
+			       }
 		    }
 		});
 		
@@ -198,6 +208,16 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 			
 			throw new RangoNoSeleccionadoException();
 		}
+	}
+	
+	public void habitacionConOcupacionOFueraDeServicioHoy(EstadoHabitacion estado){
+		
+		
+	}
+	
+	public void validacionOcupacionActualNoFinalizada(){
+		
+		
 	}
 	
 	public void validacionContieneFechasReservadas() throws ContieneFechasReservadasException{

@@ -50,7 +50,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
 	private Insets insetPanelBusqueda = new Insets(30,30,5,30);
-	private Insets insetPanelTabla = new Insets(0,30,0,30);
+	private Insets insetPanelTabla = new Insets(0,15,0,15);
 	
 	private FramePrincipal frameActual;
 	private PanelMenuPrincipal panelAnterior;
@@ -85,6 +85,8 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		buscar.addActionListener(e -> {
 			
 			try{
+					siguiente.setEnabled(false);
+				
 					panelResultadosDeBusquedaHabitacionesGroupBox.desactivarTabla();
 					
 //					panelResultadosDeBusquedaHabitacionesGroupBox.activarTabla();	//TODO: Cuando terminemos de probar, sacar estas dos lineas y descomentar las de abajo
