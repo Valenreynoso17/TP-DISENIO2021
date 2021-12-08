@@ -63,8 +63,13 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	private LocalDate fechaDesde;
 	private LocalDate fechaHasta;
 	
+	private PanelMostrarEstadoHabitaciones panelAnterior;
+	
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
-	public PanelResultadosDeBusquedaHabitacionesGroupBox() {
+	
+	public PanelResultadosDeBusquedaHabitacionesGroupBox(PanelMostrarEstadoHabitaciones panel) {
+		
+		this.panelAnterior = panel;
 		
 		gestorHabitacion = GestorHabitacion.getInstance();
 		
@@ -142,16 +147,12 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		    			
 		    			deseleccionarPeriodo();
 		    		}
-		    	}
+		    	}    	
 		    	
-		    	 if (tabla.getSelectedRow() >= 0) {
-			        	
-//					    int r = tabla.rowAtPoint(e.getPoint());
-//				        if (r >= 0 && r < tabla.getRowCount()) {
-				        	
-				        	repaint();
-//				        } 
-			       }
+		    	 if (tabla.getSelectedRow() >= 0) {		    
+		    		 
+				       repaint();
+				 } 
 		    }
 		});
 		
@@ -190,7 +191,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		this.fechaDesde = fechaDesde;
 		this.fechaHasta = fechaHasta;
 		
-		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
+		renderTablaEstadoColores = new RenderParaTablaEstadoColores(this);
 		renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
 		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 		
@@ -204,6 +205,9 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	
 	public void seleccionoUnRango() throws RangoNoSeleccionadoException{
 		
+		for(int i = 0; i < this.renderTablaEstadoColores.getCeldasSeleccionadas().size(); i++)
+			System.out.println(this.renderTablaEstadoColores.getCeldasSeleccionadas().get(i));
+		
 		if(this.renderTablaEstadoColores.getCeldasSeleccionadas().isEmpty()) {	//Si la lista de celdas seleccionadas es vacia, tirar excepcion
 			
 			throw new RangoNoSeleccionadoException();
@@ -212,7 +216,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	
 	public void habitacionConOcupacionOFueraDeServicioHoy(EstadoHabitacion estado){
 		
-		
+		this.panelAnterior.setTextoMensajeHabitacionConOcupacionOFS(estado);
 	}
 	
 	public void validacionOcupacionActualNoFinalizada(){
@@ -289,7 +293,7 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	public void deseleccionarPeriodo() {
 		
 		miModelo.actualizarTabla(fechaDesde, fechaHasta, gestorHabitacion.buscarEstadoHabitaciones(fechaDesde, fechaHasta));
-		renderTablaEstadoColores = new RenderParaTablaEstadoColores();
+		renderTablaEstadoColores = new RenderParaTablaEstadoColores(this);
 		renderTablaEstadoColores.setHorizontalAlignment( JLabel.CENTER );
 		tabla.setDefaultRenderer(String.class, renderTablaEstadoColores);
 	}
