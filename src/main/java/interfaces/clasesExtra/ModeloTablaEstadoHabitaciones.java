@@ -20,11 +20,13 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 	private static final long serialVersionUID = 1L;
 
 	private List<HabitacionDTO> habitaciones;
+
+	private Map<Integer, List<ReservaDTO>> mapReservasPorHabitacion;
 	
 	private LocalDate fechaDesde;
 	private LocalDate fechaHasta;
 	
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	public ModeloTablaEstadoHabitaciones(Map<TipoHabitacionDTO, List<HabitacionDTO>> mapHabitacionesTipo) {
 		
@@ -96,11 +98,17 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 		
 		Map<LocalDate, Map<Integer, EstadoHabitacion>> mapFechaHabitacionEstado = new TreeMap<LocalDate, Map<Integer, EstadoHabitacion>>();	//(f1, f2) -> f1.compareTo(f2)
 		
+		mapReservasPorHabitacion = new TreeMap<Integer, List<ReservaDTO>>();
+		
 		for(String tipo : mapEstadoHabitaciones.keySet()) {
 			
 			for(HabitacionDTO h : mapEstadoHabitaciones.get(tipo)) {
-									
+					
+				List<ReservaDTO> reservas = new ArrayList<ReservaDTO>();
+					
 				for(ReservaDTO r : h.getReservas()) {
+					
+					reservas.add(r);
 					
 				    for (LocalDate fecha = r.getIngreso().toLocalDate(); fecha.isBefore(r.getEgreso().toLocalDate()); fecha = fecha.plusDays(1)) {
 				        
@@ -114,6 +122,8 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 				    	mapFechaHabitacionEstado.get(fecha).put(h.getId(), EstadoHabitacion.RESERVADA);
 				    }
 				}
+				
+				mapReservasPorHabitacion.put(h.getId(), reservas);	//TODO: Probar
 				
 				for(OcupacionDTO o : h.getOcupaciones()) {
 					
@@ -154,9 +164,9 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 
 	public void actualizarTabla(LocalDate fechaDesde, LocalDate fechaHasta, Map<String, List<HabitacionDTO>> estadoHabitaciones) {
 		
+		this.limpiarTabla();
 		this.fechaDesde = fechaDesde;
 		this.fechaHasta = fechaHasta;
-		this.limpiarTabla();
 		this.cargarEstados(estadoHabitaciones);
 	}
 
@@ -169,10 +179,8 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 
 		return this.fechaDesde;
 	}
-	
-//	public LocalDate getFechaHasta() {
-//
-//		return this.fechaHasta;
-//	}
 
+	public Map<Integer, List<ReservaDTO>> getMapReservasPorHabitacion(){
+		return this.mapReservasPorHabitacion;
+	}
 }

@@ -57,8 +57,7 @@ public class RenderParaTablaOcuparHabitacion extends DefaultTableCellRenderer{
 	    	  }
 	    	  else {
 		    	  int ultimaFilaSeleccionada = celdasSeleccionadas.get(celdasSeleccionadas.size()-1).get(0);
-		    	  System.out.println("UltimaFilaSeleccionada: "+ultimaFilaSeleccionada);
-		    	  this.mostrarArrayList(celdasSeleccionadas);
+		    	  //this.mostrarArrayList(celdasSeleccionadas);
 		    	  
 		    	 	//Si la fila seleccionada ahora es igual a la siguiente fila que habia seleccionado antes
 		    	  	if(table.getSelectedRow() == ultimaFilaSeleccionada+1) {
@@ -130,12 +129,12 @@ public class RenderParaTablaOcuparHabitacion extends DefaultTableCellRenderer{
 		return resultado;
 	}
 	
-	public void mostrarArrayList(List<ArrayList<Integer>> lista) {
-		
-		for(int i = 0; i < lista.size(); i++) {
-			
-			System.out.println(lista.get(i)+": fila: "+lista.get(i).get(0)+" columna: "+lista.get(i).get(1));
-		}
-	}
+//	public void mostrarArrayList(List<ArrayList<Integer>> lista) {
+//		
+//		for(int i = 0; i < lista.size(); i++) {
+//			
+//			System.out.println(lista.get(i)+": fila: "+lista.get(i).get(0)+" columna: "+lista.get(i).get(1));
+//		}
+//	}
 
 }

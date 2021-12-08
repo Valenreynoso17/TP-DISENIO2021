@@ -12,9 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import main.java.enums.TipoMensaje;
-import main.java.excepciones.ContraseniaIncorrectaExcepcion;
 import main.java.excepciones.InputVacioException;
-import main.java.excepciones.UsuarioIncorrectoException;
+import main.java.excepciones.UsuarioOContraseniaIncorrectaException;
 import main.java.interfaces.MenuPrincipal.PanelMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
@@ -35,14 +34,8 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 	private String textoMensajeSalir = "<html><p>¿Está seguro que desea salir del programa?</p><html>";
 	private Mensaje mensajeSalir = new Mensaje(1, textoMensajeSalir, TipoMensaje.CONFIRMACION, "Si", "No");
 	
-	/*private String textoMensajeInputInvalido = "<html><p>La contraseña y/o el nombre ingresados son inválidos. Por favor, vuelva a ingresarlos.</p><html>";
-	private Mensaje mensajeInputInvalido = new Mensaje(2, textoMensajeInputInvalido, TipoMensaje.ERROR, "Aceptar", null);*/
-	
-	private String textoMensajeUsuarioIncorrecto = "<html><p>El nombre ingresado es inválido. Por favor, intente nuevamente.</p><html>";
-	private Mensaje mensajeUsuarioIncorrecto = new Mensaje(2, textoMensajeUsuarioIncorrecto, TipoMensaje.ERROR, "Aceptar", null);
-	
-	private String textoMensajeContraseniaIncorrecta = "<html><p>La contraseña ingresada es incorrecta. Por favor, intente nuevamente.</p><html>";
-	private Mensaje mensajeContraseniaIncorrecta = new Mensaje(3, textoMensajeContraseniaIncorrecta, TipoMensaje.ERROR, "Aceptar", null);
+	private String textoMensajeInputInvalido = "<html><p>La contraseña y/o el nombre ingresados son inválidos. Por favor, vuelva a ingresarlos.</p><html>";
+	private Mensaje mensajeInputInvalido = new Mensaje(2, textoMensajeInputInvalido, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private Font fuenteTitulo = new Font("SourceSansPro", Font.PLAIN, 46);	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
@@ -111,13 +104,10 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 				} catch (InputVacioException exc) {
 					
 					panelAutenticarUsuarioGroupBox.colocarLabelVacio(exc.getInputsVacios());
-				} catch (UsuarioIncorrectoException exc) {
-					mensajeUsuarioIncorrecto.mostrar(getPanel(), frame);
-				} catch (ContraseniaIncorrectaExcepcion exc) {
-					mensajeContraseniaIncorrecta.mostrar(getPanel(), frame);
-				}
-				
-//				//mensajeInputInvalido.mostrar(getPanel(), frame);	//Actualmente no se valida contrasenia y/o usuario
+				} catch (UsuarioOContraseniaIncorrectaException exc) {
+					
+					mensajeInputInvalido.mostrar(getPanel(), frame);
+				} 
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;
@@ -135,8 +125,7 @@ public class PanelAutenticarUsuario extends JPanel implements PanelPermiteMensaj
 		case 1:	//Si sale, cierra el programa
 			frameActual.dispose();	
 			break;
-		case 2:	//No pasa nada
-			
+		case 2:	//Solo se muestra el mensaje
 			break;		
 		}
 		

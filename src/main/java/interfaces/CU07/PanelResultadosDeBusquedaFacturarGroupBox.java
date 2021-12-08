@@ -66,7 +66,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 	
 	private OcupacionDTO ocupacion;
 
-	public PanelResultadosDeBusquedaFacturarGroupBox(FramePrincipal frame) {
+	public PanelResultadosDeBusquedaFacturarGroupBox(FramePrincipal frame, PanelFacturar panelFacturar) {
 		
 		this.frameActual = frame;
 		
@@ -137,7 +137,7 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 		facturarANombreDeUnTercero.addActionListener(e -> {
 			
 			frameActual.setEnabled(false);
-			frameFacturarANombreDeUnTercero = new FrameFacturarANombreDeUnTercero(frameActual); 
+			frameFacturarANombreDeUnTercero = new FrameFacturarANombreDeUnTercero(frameActual, panelFacturar); 
 			frameFacturarANombreDeUnTercero.ocupacionSeleccionada(ocupacion);
 		});
 		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
@@ -153,10 +153,6 @@ public class PanelResultadosDeBusquedaFacturarGroupBox extends JPanel{
 			
 			throw new PasajeroNoSeleccionadoException();
 		}				
-
-		System.out.println("getSelectedRow: "+tabla.getSelectedRow());
-		System.out.println("converRowIndexToModel: "+tabla.convertRowIndexToModel(tabla.getSelectedRow()));
-		System.out.println("PasajeroDTO: "+this.miModelo.getPasajerosHabitacion().get(tabla.convertRowIndexToModel(tabla.getSelectedRow())));
 		
 		return this.miModelo.getPasajerosHabitacion().get(tabla.convertRowIndexToModel(tabla.getSelectedRow()));
 	}

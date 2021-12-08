@@ -42,7 +42,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	private RoundedBorder bordeSalir = new RoundedBorder(10, Color.DARK_GRAY);
 	
-	private String textoMensajeCerrarSesion = "<html><p>¿Está seguro que desea cerrar sesión? Deberá volver a inciar sesión.</p><html>";
+	private String textoMensajeCerrarSesion = "<html><p>¿Está seguro que desea cerrar sesión? Deberá volver a iniciar sesión.</p><html>";
 	private Mensaje mensajeCerrarSesion = new Mensaje(1, textoMensajeCerrarSesion, TipoMensaje.CONFIRMACION, "Si", "No");
 	
 	private String textoMensajeCU03 = "<html><p>El CU03 'Gestionar Responsable de Pago' no debe ser implementado.</p><html>";
@@ -93,7 +93,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.setNuevoPanel(new PanelGestionarPasajero(frame));
+				frame.setNuevoPanel(new PanelGestionarPasajero(frame, (PanelMenuPrincipal) getPanel()));
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
@@ -136,7 +136,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.setNuevoPanel(new PanelMostrarEstadoHabitaciones(frame));
+				frame.setNuevoPanel(new PanelMostrarEstadoHabitaciones(frame, (PanelMenuPrincipal) getPanel()));
 			}
 		});
 		button.setBorder(bordeBoton);
@@ -183,7 +183,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.setNuevoPanel(new PanelFacturar(frame));
+				frame.setNuevoPanel(new PanelFacturar(frame, (PanelMenuPrincipal) getPanel()));
 			}
 		});
 		c.anchor = GridBagConstraints.EAST;	c.insets = izq;
@@ -244,7 +244,7 @@ public class PanelMenuPrincipal extends JPanel implements PanelPermiteMensajes{
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a AutenticarUsuario
-			frameActual.setNuevoPanel(new PanelAutenticarUsuario(frameActual));
+			frameActual.setNuevoPanel(new PanelAutenticarUsuario(frameActual));	//Se crea un nuevo panel desde cero (no se usa el "panelAnterior")
 			break;
 		case 2:	//No pasa nada
 		case 3:	//No pasa nada

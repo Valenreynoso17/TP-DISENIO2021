@@ -92,7 +92,6 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	private JTextField apellido;					//Campos de texto
 	private JTextField nombre;
 	private JTextField numeroDocumento;
-	private MaskFormatter formato; 
 	private JTextField fechaNacimiento ;
 	
 	private JTextField email;
@@ -314,15 +313,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 				  labelFechaNacimientoFormatoInvalido.setVisible(false);
 			  }
 		});
-		fondoJTextField = new TextPrompt("dd/mm/aaaa", fechaNacimiento); fondoJTextField.setForeground(Color.GRAY);
-	    
-	    try {
-	    	fechaNacimiento = new JFormattedTextField(new MaskFormatter("##'/##'/####"));
-	    	
-	    }catch (ParseException e) {
-	    	e.printStackTrace();
-	    }
-		c.gridx = 0; c.gridy = 5;	fechaNacimiento.setMinimumSize(dimensionCampo);	fechaNacimiento.setPreferredSize(dimensionCampo);	this.add(fechaNacimiento, c);
+		//fondoJTextField = new TextPrompt("dd/mm/aaaa", fechaNacimiento); fondoJTextField.setForeground(Color.GRAY);
 
 		c.gridx = 0; c.gridy = 5;	fechaNacimiento.setMinimumSize(dimensionCampo);	fechaNacimiento.setPreferredSize(dimensionCampo);	
 		this.add(fechaNacimiento, c);
@@ -840,7 +831,7 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			resultado = false;
 			labelFechaNacimientoFormatoInvalido.setVisible(true);
 		}
-		if(!esValidoEmail(email)) {
+		if(!email.getText().isEmpty() && !esValidoEmail(email)) {
 			resultado = false;
 			labelEmailFormatoInvalido.setVisible(true);
 		}
@@ -848,23 +839,23 @@ public class PanelAltaPasajeroDatos extends JPanel{
 			resultado = false;
 			labelTelefonoFormatoInvalido.setVisible(true);
 		}
-		if(contieneCaracteresEspeciales(ocupacion)) {
+		if(contieneCaracteresEspeciales(ocupacion) && direccion.getText().charAt(0) != ' ') {
 			resultado = false;
 			labelOcupacionFormatoInvalido.setVisible(true);
 		}
-		if(contieneCaracteresEspeciales(direccion)) {
+		if(contieneCaracteresEspeciales(direccion) && direccion.getText().charAt(0) != ' ') {	//El primer caracter no es un caracter en blanco
 			resultado = false;
 			labelDireccionFormatoInvalido.setVisible(true);
 		}
-		if(contieneCaracteresEspecialesYGuiones(departamento)) {
+		if(contieneCaracteresEspecialesYGuiones(departamento) && !codigoPostal.getText().contains(" ")) {
 			resultado = false;
 			labelDepartamentoFormatoInvalido.setVisible(true);
 		}
-		if(contieneCaracteresEspecialesYGuiones(piso)) {
+		if(contieneCaracteresEspecialesYGuiones(piso) && !codigoPostal.getText().contains(" ")) {
 			resultado = false;
 			labelPisoFormatoInvalido.setVisible(true);
 		}
-		if(contieneCaracteresEspeciales(codigoPostal)) {
+		if(contieneCaracteresEspeciales(codigoPostal) && !codigoPostal.getText().contains(" ")) {
 			resultado = false;
 			labelCodigoPostalFormatoInvalido.setVisible(true);
 		}
@@ -916,20 +907,20 @@ public class PanelAltaPasajeroDatos extends JPanel{
 		
 		String fecha = fechaNacimiento2.getText();
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 		try {
-			
+
 			LocalDate localDate = LocalDate.parse(fecha, formatter);	//Si se puede convertir a LocalDate, es una fecha válida
 			
 			if(!fechaEnRango(localDate)) {
-				
+
 				resultado = false;
 			}
 			
 		}
 		catch(DateTimeParseException e) {
-			
+
 			resultado = false;
 		}
 		
@@ -939,8 +930,9 @@ public class PanelAltaPasajeroDatos extends JPanel{
 	
 	private boolean fechaEnRango(LocalDate fecha) {
 		
-		LocalDate fechaMaxima = LocalDate.of(1900,1,1);	//Fecha de nacimiento máxima
-		LocalDate fechaMinima = LocalDate.now().minusDays(1);	//Fecha de nacimiento mínima (ayer)
+		LocalDate fechaMinima = LocalDate.of(1900,1,1);	//Fecha de nacimiento máxima
+		LocalDate fechaMaxima = LocalDate.now().minusDays(1);	//Fecha de nacimiento mínima (ayer)
+
 		   return (fecha.isBefore(fechaMaxima) && fecha.isAfter(fechaMinima));
 		}
 	

@@ -24,6 +24,7 @@ import main.java.excepciones.SinResultadosException;
 import main.java.gestores.GestorHabitacion;
 import main.java.gestores.GestorPasajero;
 import main.java.interfaces.CU02.PanelGestionarPasajeroTabla;
+import main.java.interfaces.CU05.PanelMostrarEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
@@ -41,6 +42,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	private PanelInformacionGroupBox panelInformacionGroupBox;
 
 	private FramePrincipal frameActual;
+	private PanelMostrarEstadoHabitaciones panelAnterior;
 	
 	public GestorPasajero gestorPasajero;
 	private GestorHabitacion gestorHabitacion;
@@ -70,25 +72,26 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
-	private HabitacionDTO habitacion;
+//	private HabitacionDTO habitacion;
 	
 	// TODO valores temporales
-	private Integer idHabitacion = 11;
-	private LocalDate ingreso = LocalDate.of(2021, 12, 3);
-	private LocalDate egreso = LocalDate.of(2021, 12, 6);
+	private Integer idHabitacion;// = 11;
+	private LocalDate ingreso;// = LocalDate.of(2021, 12, 3);
+	private LocalDate egreso;// = LocalDate.of(2021, 12, 6);
 	
-	public PanelOcuparHabitacionConPasajeros(final FramePrincipal frame, HabitacionDTO habitacion, LocalDate fechaDesde, LocalDate fechaHasta) {
+	public PanelOcuparHabitacionConPasajeros(final FramePrincipal frame, PanelMostrarEstadoHabitaciones panelAnterior, HabitacionDTO habitacion, LocalDate fechaDesde, LocalDate fechaHasta) {
 		
-		System.out.println("Numero habitacion: "+habitacion.getNroHabitacion());	//TODO: Borrar
-		System.out.println("Fecha desde: "+fechaDesde);
-		System.out.println("Fecha hasta: "+fechaHasta);
+		this.idHabitacion = habitacion.getId();
+		this.ingreso = fechaDesde;
+		this.egreso = fechaHasta;
 		
 		gestorPasajero = GestorPasajero.getInstance();
 		gestorHabitacion = GestorHabitacion.getInstance();
 		
-		habitacion = gestorHabitacion.buscarHabitacionDTO(idHabitacion);
+//		habitacion = gestorHabitacion.buscarHabitacionDTO(idHabitacion);
 		
 		this.frameActual = frame;
+		this.panelAnterior = panelAnterior;
 		
 		this.setBackground(Color.WHITE);
 		
@@ -188,7 +191,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 				else {
 					OcupacionDTO ocupacionDTO = new OcupacionDTO(idHabitacion, ingreso, egreso, pasajeros, pasajeros.get(0));
 					
-					frameActual.setNuevoPanel(new PanelMenuOcuparHabitacion(ocupacionDTO, frameActual));
+					frameActual.setNuevoPanel(new PanelMenuOcuparHabitacion(frameActual, (PanelOcuparHabitacionConPasajeros) getPanel(), ocupacionDTO));
 				}
 				
 				
@@ -208,8 +211,8 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	public void confirmoElMensaje(Integer idMensaje) {
 		
 		switch(idMensaje) {
-		case 1:	//Si cancela, vuelve al frame anterior
-			frameActual.cargarPanelViejo();
+		case 1:	//Si cancela, vuelve al panel anterior
+			frameActual.setNuevoPanel(panelAnterior);
 			break;
 		case 2:	//
 			break;

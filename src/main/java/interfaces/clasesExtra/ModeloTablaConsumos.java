@@ -54,6 +54,8 @@ public class ModeloTablaConsumos extends DefaultTableModel{
 	public void limpiarTabla() {
 
 		this.setRowCount(0); //Elimino todas las filas de la tabla
+		if(this.items != null)
+			this.items.clear();
 	}
 	
 	public void cargarConsumos() {

@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
+
+import main.java.dtos.ReservaDTO;
 
 public class MensajeYaExistenReservas extends JFrame{
 	
@@ -58,7 +61,7 @@ public class MensajeYaExistenReservas extends JFrame{
 		this.id = i;
 	}
 	
-	public void mostrar(final PanelPermiteMensajes panel, JFrame frame, String reservasExistentes) {
+	public void mostrar(final PanelPermiteMensajes panel, JFrame frame, List<ReservaDTO> reservas) {
 		
 		this.frameActual = frame;
 		
@@ -91,7 +94,8 @@ public class MensajeYaExistenReservas extends JFrame{
 			c.gridx = 1; c.gridy = 0;
 		contentPane.add(labelTexto, c);
 
-		textoReservasExistentes = new JTextArea(reservasExistentes, filasTexto, columnasTexto);
+		String stringReservasExistentes = this.crearTextoReservasExistentes(reservas);
+		textoReservasExistentes = new JTextArea(stringReservasExistentes, filasTexto, columnasTexto);
 		textoReservasExistentes.setEditable(false); 
 		textoReservasExistentes.setPreferredSize(dimensionTextoReservasExistentes);
 		scrollPaneTexto = new JScrollPane(textoReservasExistentes, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -142,7 +146,21 @@ public class MensajeYaExistenReservas extends JFrame{
 
 		setContentPane(contentPane);
 	}
-														//TODO: VER
+	
+	
+	private String crearTextoReservasExistentes(List<ReservaDTO> reservas) {
+		String resultado = "";
+		
+		for(ReservaDTO r : reservas) {
+			
+			resultado += "-Entre los días "+r.getIngreso().toLocalDate()+" y "+r.getEgreso().toLocalDate()
+						 +" reservó "+r.getNombre()+" "+r.getApellido()+".\n";
+		}
+		
+		return resultado;
+	}
+
+	//TODO: VER
 	protected void processWindowEvent(WindowEvent e) {	//Para que al cerrarse con la cruz (arriba a la derecha) no se cierren todos los frames
 		
 		super.processWindowEvent(e);

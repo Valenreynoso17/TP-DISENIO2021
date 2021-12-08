@@ -14,6 +14,7 @@ import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.DocumentoRepetidoException;
 import main.java.gestores.GestorPasajero;
+import main.java.interfaces.CU02.PanelGestionarPasajero;
 import main.java.interfaces.MenuPrincipal.PanelMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
@@ -38,6 +39,7 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
 	private FramePrincipal frameActual;
+	private PanelGestionarPasajero panelAnterior;
 	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
@@ -51,8 +53,9 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 	private PasajeroDTO pasajeroDTO;
 	private GestorPasajero gestorPasajero;
 	
-	public PanelAltaPasajero(final FramePrincipal frame) {
+	public PanelAltaPasajero(final FramePrincipal frame, PanelGestionarPasajero panelAnterior) {
 		this.frameActual = frame;
+		this.panelAnterior = panelAnterior;
 		
 		this.setBackground(Color.WHITE);
 		
@@ -134,7 +137,7 @@ public class PanelAltaPasajero extends JPanel implements PanelPermiteMensajes{
 		
 		switch(idMensaje) {
 		case 1:	//Si cancela, vuelve a GestionarPasajero
-			frameActual.cargarPanelViejo();
+			frameActual.setNuevoPanel(panelAnterior);
 			break;
 		case 2:	//Si tiene documento repetido, se guarda igualmente (primero muestra el mensaje de que se creó el pasajero)
 			gestorPasajero.crearPasajero(pasajeroDTO);

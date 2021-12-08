@@ -32,13 +32,13 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
 	private JLabel label;
-	private JLabel labelFechaDesdeVacio;		//Muestran mensaje "Campo incompleto"
+	//private JLabel labelFechaDesdeVacio;		//Muestran mensaje "Campo incompleto"
 	private JLabel labelFechaHastaVacio;
 	
-	private JLabel labelFechaDesdeInvalida;		//Muestran mensaje "Fecha inválida"
+	//private JLabel labelFechaDesdeInvalida;		//Muestran mensaje "Fecha inválida"
 	private JLabel labelFechaHastaInvalida;
 	
-	private JTextField fechaDesde;
+	private JTextField fechaDesde;	//FechaDesde siempre es la fecha de HOY (no se puede modificar)
 	private JTextField fechaHasta;
 	
 	private Insets insetLabel = new Insets(0,0,0,20);
@@ -52,6 +52,8 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 	private RoundedBorder bordeCampo = new RoundedBorder(5, Color.BLACK);
 	
 	private Dimension dimensionCampo = new Dimension(250, 30);
+	
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	TextPrompt fondoJTextField;
 	
@@ -68,50 +70,53 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 	
 		label = new JLabel("Fecha desde");	label.setFont(fuenteLabelCampo); c.gridy = 0;	this.add(label, c);
 			
-			c.anchor = GridBagConstraints.NORTHEAST; c.gridx = 1;	c.insets = insetLabelError;	
-		
-				labelFechaDesdeVacio = new JLabel();	labelFechaDesdeVacio.setFont(fuenteLabelError); 
-				labelFechaDesdeVacio.setText(" Campo incompleto ");
-				labelFechaDesdeVacio.setOpaque(true);	
-				labelFechaDesdeVacio.setBackground(Color.decode("#cc0000"));
-				labelFechaDesdeVacio.setForeground(Color.WHITE);
-				this.add(labelFechaDesdeVacio, c);
-				
-				labelFechaDesdeVacio.setVisible(false);	//No se va a mostrar a menos que el metodo validar lo indique
-				
-				labelFechaDesdeInvalida = new JLabel();	labelFechaDesdeInvalida.setFont(fuenteLabelError); 
-				labelFechaDesdeInvalida.setText(" Fecha inválida ");
-				labelFechaDesdeInvalida.setOpaque(true);	
-				labelFechaDesdeInvalida.setBackground(Color.decode("#cc0000"));
-				labelFechaDesdeInvalida.setForeground(Color.WHITE);
-				this.add(labelFechaDesdeInvalida, c);
-				
-				labelFechaDesdeInvalida.setVisible(false);	//No se va a mostrar a menos que el metodo validar lo indique
+//			c.anchor = GridBagConstraints.NORTHEAST; c.gridx = 1;	c.insets = insetLabelError;	
+//		
+//				labelFechaDesdeVacio = new JLabel();	labelFechaDesdeVacio.setFont(fuenteLabelError); 
+//				labelFechaDesdeVacio.setText(" Campo incompleto ");
+//				labelFechaDesdeVacio.setOpaque(true);	
+//				labelFechaDesdeVacio.setBackground(Color.decode("#cc0000"));
+//				labelFechaDesdeVacio.setForeground(Color.WHITE);
+//				this.add(labelFechaDesdeVacio, c);
+//				
+//				labelFechaDesdeVacio.setVisible(false);	//No se va a mostrar a menos que el metodo validar lo indique
+//				
+//				labelFechaDesdeInvalida = new JLabel();	labelFechaDesdeInvalida.setFont(fuenteLabelError); 
+//				labelFechaDesdeInvalida.setText(" Fecha inválida ");
+//				labelFechaDesdeInvalida.setOpaque(true);	
+//				labelFechaDesdeInvalida.setBackground(Color.decode("#cc0000"));
+//				labelFechaDesdeInvalida.setForeground(Color.WHITE);
+//				this.add(labelFechaDesdeInvalida, c);
+//				
+//				labelFechaDesdeInvalida.setVisible(false);	//No se va a mostrar a menos que el metodo validar lo indique
 		
 			c.anchor = GridBagConstraints.WEST;  c.insets = insetCampo;	
 		
-		try {
-			MaskFormatter mascaraFecha = new MaskFormatter("##'/##'/####");
-			fechaDesde = new JFormattedTextField(mascaraFecha);
-	    	
-	    }catch (ParseException e) {
-	    	e.printStackTrace();
-	    }
-		fechaDesde.setFont(fuenteLabelCampo);	fechaDesde.setBorder(bordeCampo);
-		fechaDesde.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
-			  public void changedUpdate(DocumentEvent e) {
-				labelFechaDesdeVacio.setVisible(false);
-				labelFechaDesdeInvalida.setVisible(false);
-			  }
-			  public void removeUpdate(DocumentEvent e)  {
-				labelFechaDesdeVacio.setVisible(false);
-				labelFechaDesdeInvalida.setVisible(false);
-			  }
-			  public void insertUpdate(DocumentEvent e) {
-				labelFechaDesdeVacio.setVisible(false);
-				labelFechaDesdeInvalida.setVisible(false);
-			  }
-		});
+		fechaDesde = new JTextField();
+		fechaDesde.setText(LocalDate.now().format(formatter).toString());
+//		try {
+//			MaskFormatter mascaraFecha = new MaskFormatter("##'/##'/####");
+//			fechaDesde = new JFormattedTextField(mascaraFecha);
+//	    	
+//	    }catch (ParseException e) {
+//	    	e.printStackTrace();
+//	    }
+
+		fechaDesde.setFont(fuenteLabelCampo);	fechaDesde.setBorder(bordeCampo);	fechaDesde.setEditable(false);
+//		fechaDesde.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
+//			  public void changedUpdate(DocumentEvent e) {
+//				labelFechaDesdeVacio.setVisible(false);
+//				labelFechaDesdeInvalida.setVisible(false);
+//			  }
+//			  public void removeUpdate(DocumentEvent e)  {
+//				labelFechaDesdeVacio.setVisible(false);
+//				labelFechaDesdeInvalida.setVisible(false);
+//			  }
+//			  public void insertUpdate(DocumentEvent e) {
+//				labelFechaDesdeVacio.setVisible(false);
+//				labelFechaDesdeInvalida.setVisible(false);
+//			  }
+//		});
 		c.gridx = 1;	fechaDesde.setMinimumSize(dimensionCampo);	fechaDesde.setPreferredSize(dimensionCampo);	fechaDesde.setMaximumSize(dimensionCampo);
 		this.add(fechaDesde, c);
 		
@@ -169,64 +174,81 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 
 	}
 	
-
 	public void inputNoEsVacia() throws InputVacioException{
 		
-		labelFechaDesdeVacio.setVisible(false);
 		labelFechaHastaVacio.setVisible(false);
-		
-		String inputsVacios = "";
-		boolean alMenosUnoVacio = false;
-
-		if(this.fechaDesde.getText().contains(" ")) {	//Por el formato que tiene
-			inputsVacios += "d";
-			alMenosUnoVacio = true;
-		}
 			
 		if(this.fechaHasta.getText().contains(" ")) {	//Por el formato que tiene
-			inputsVacios += "h";
-			alMenosUnoVacio = true;
-		}
-		
-		if(alMenosUnoVacio) {
-			throw new InputVacioException(inputsVacios);
+			throw new InputVacioException();
 		}
 	}
 	
+
+//	public void inputNoEsVacia() throws InputVacioException{
+//		
+//		labelFechaDesdeVacio.setVisible(false);
+//		labelFechaHastaVacio.setVisible(false);
+//		
+//		String inputsVacios = "";
+//		boolean alMenosUnoVacio = false;
+//
+//		if(this.fechaDesde.getText().contains(" ")) {	//Por el formato que tiene
+//			inputsVacios += "d";
+//			alMenosUnoVacio = true;
+//		}
+//			
+//		if(this.fechaHasta.getText().contains(" ")) {	//Por el formato que tiene
+//			inputsVacios += "h";
+//			alMenosUnoVacio = true;
+//		}
+//		
+//		if(alMenosUnoVacio) {
+//			throw new InputVacioException(inputsVacios);
+//		}
+//	}
+	
 	public void inputEsValida() throws FechaInvalidaException{
 		
-		labelFechaDesdeInvalida.setVisible(false);
 		labelFechaHastaInvalida.setVisible(false);
-
-		String inputsInvalidos = "";
-		boolean alMenosUnoInvalido = false;
-
-		if(!this.esValidaFecha(fechaDesde)) {
-			inputsInvalidos += "d";
-			alMenosUnoInvalido = true;
-		}
 			
-		if(!this.esValidaFecha(fechaHasta)) {
-			inputsInvalidos += "h";
-			alMenosUnoInvalido = true;
-		}
-		if(!this.fechaHastaMayorAFechaDesde()) {	
-			
-			inputsInvalidos = "dh";
-			alMenosUnoInvalido = true;
-		}
-		
-		if(alMenosUnoInvalido) {
-			throw new FechaInvalidaException(inputsInvalidos);
+		if(!this.esValidaFecha(fechaHasta) || !this.fechaHastaMayorAFechaDesde()) {
+			throw new FechaInvalidaException();
 		}
 	}
+	
+//	public void inputEsValida() throws FechaInvalidaException{
+//		
+//		labelFechaDesdeInvalida.setVisible(false);
+//		labelFechaHastaInvalida.setVisible(false);
+//
+//		String inputsInvalidos = "";
+//		boolean alMenosUnoInvalido = false;
+//
+//		if(!this.esValidaFecha(fechaDesde)) {
+//			inputsInvalidos += "d";
+//			alMenosUnoInvalido = true;
+//		}
+//			
+//		if(!this.esValidaFecha(fechaHasta)) {
+//			inputsInvalidos += "h";
+//			alMenosUnoInvalido = true;
+//		}
+//		if(!this.fechaHastaMayorAFechaDesde()) {	
+//			
+//			inputsInvalidos = "dh";
+//			alMenosUnoInvalido = true;
+//		}
+//		
+//		if(alMenosUnoInvalido) {
+//			throw new FechaInvalidaException(inputsInvalidos);
+//		}
+//	}
 	
 	private boolean fechaHastaMayorAFechaDesde() {
 		
 		boolean resultado = true;
 		String fechaDesdeString = fechaDesde.getText();
 		String fechaHastaString = fechaHasta.getText();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 		
 		try {
 			
@@ -252,7 +274,6 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 		
 		boolean resultado = true;
 		String fechaString = fecha.getText();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 
 		try {
 			
@@ -277,37 +298,45 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 		return (fecha.isAfter(fechaMinima));
 	}
 
-	public void colocarLabelVacio(String inputs) {
+//	public void colocarLabelVacio(String inputs) {
+//		
+//		if(inputs.contains("d")) {
+//			labelFechaDesdeVacio.setVisible(true);
+//		}
+//		if(inputs.contains("h")) {
+//			labelFechaHastaVacio.setVisible(true);
+//		}
+//		
+//	}
+//	
+//	public void colocarLabelInvalido(String inputs) {
+//		
+//		if(inputs.contains("d")) {
+//			labelFechaDesdeInvalida.setVisible(true);
+//		}
+//		if(inputs.contains("h")) {
+//			labelFechaHastaInvalida.setVisible(true);
+//		}
+//	
+//	}
+	
+	public void colocarLabelVacio() {
 		
-		if(inputs.contains("d")) {
-			labelFechaDesdeVacio.setVisible(true);
-		}
-		if(inputs.contains("h")) {
-			labelFechaHastaVacio.setVisible(true);
-		}
-		
+		labelFechaHastaVacio.setVisible(true);
 	}
 	
-	public void colocarLabelInvalido(String inputs) {
-		
-		if(inputs.contains("d")) {
-			labelFechaDesdeInvalida.setVisible(true);
-		}
-		if(inputs.contains("h")) {
-			labelFechaHastaInvalida.setVisible(true);
-		}
-	
+	public void colocarLabelInvalido() {
+
+		labelFechaHastaInvalida.setVisible(true);	
 	}
 	
 	public LocalDate getFechaDesde() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 		LocalDate localDate = LocalDate.parse(this.fechaDesde.getText(), formatter);
 		
 		return localDate;
 	}
 	
 	public LocalDate getFechaHasta() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 		LocalDate localDate = LocalDate.parse(this.fechaHasta.getText(), formatter);
 		
 		return localDate;
