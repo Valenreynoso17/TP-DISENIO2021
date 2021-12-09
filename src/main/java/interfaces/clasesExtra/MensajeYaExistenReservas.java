@@ -22,6 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
 import main.java.dtos.ReservaDTO;
+import main.java.interfaces.frames.FrameODialog;
 import main.java.interfaces.frames.FramePrincipal;
 
 public class MensajeYaExistenReservas extends JFrame{
@@ -56,14 +57,14 @@ public class MensajeYaExistenReservas extends JFrame{
 	private Dimension dimensionBotonDerecho = new Dimension(155, 35);
 	private Dimension dimensionTextoReservasExistentes = new Dimension(200,60);
 	
-	private JDialog frameActual;
+	private FrameODialog frameActual;
 
 	public MensajeYaExistenReservas(Integer i) {
 		super("Sistema Hotel Premier");
 		this.id = i;
 	}
 	
-	public void mostrar(final PanelPermiteMensajes panel, JDialog frame, List<ReservaDTO> reservas) {
+	public void mostrar(final PanelPermiteMensajes panel, FrameODialog frame, List<ReservaDTO> reservas) {
 		
 		this.frameActual = frame;
 		

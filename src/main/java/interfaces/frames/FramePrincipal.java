@@ -9,7 +9,7 @@ import javax.swing.WindowConstants;
 
 import main.java.interfaces.CU01.PanelAutenticarUsuario;
 
-public class FramePrincipal extends JDialog {
+public class FramePrincipal extends JFrame implements FrameODialog{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -21,9 +21,8 @@ public class FramePrincipal extends JDialog {
 	private JPanel panelActual;
 
 	public FramePrincipal() {
-		//super("Sistema Hotel Premier");
-		this.setTitle("Sistema Hotel Premier");
-		//setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
+		super("Sistema Hotel Premier");
+		setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 600);
 		
 		cardLayout = new CardLayout();
@@ -36,7 +35,6 @@ public class FramePrincipal extends JDialog {
 		mostrarPanelNuevo();
 		
 		setContentPane(panelPrincipal);
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);

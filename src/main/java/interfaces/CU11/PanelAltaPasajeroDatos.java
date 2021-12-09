@@ -1008,6 +1008,9 @@ public PasajeroDTO crearDTOS() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 		LocalDate fechaNac = LocalDate.parse(fechaNacimiento.getText(), formatter);
 		
+		if(cuit.getText().contains(" "))	//Si no coloco el cuit, debe ponerse como un String vacio (sino, se guardaria con guiones)
+			cuit.setText("");
+		
 		PasajeroDTO pasajeroDto = new PasajeroDTO(null, apellido.getText(), nombre.getText(), TipoDocumento.valueOf(tipoDocumento.getSelectedItem().toString()), numeroDocumento.getText(), cuit.getText(), PosicionFrenteIva.valueOf(posicionIVA.getSelectedItem().toString().replace(" ", "_")), email.getText(), telefono.getText(), fechaNac, ocupacion.getText(), direccionDto, ((PaisDTO) nacionalidad.getSelectedItem()).getId()); 
 		
 		return pasajeroDto;

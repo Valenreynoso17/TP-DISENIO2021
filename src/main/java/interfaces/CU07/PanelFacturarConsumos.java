@@ -53,7 +53,9 @@ public class PanelFacturarConsumos extends JPanel implements PanelPermiteMensaje
 	private Mensaje mensajeRecargoUltimoSeleccionado = new Mensaje(3, textoRecargoUltimoSeleccionado, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private String textoFacturaCreada = "<html><p>La factura se ha creado con éxito.</p><html>";
-	private Mensaje mensajeFacturaCreada = new Mensaje(4, textoFacturaCreada, TipoMensaje.ERROR, "Imprimir", null) {
+	private Mensaje mensajeFacturaCreada = new Mensaje(4, textoFacturaCreada, TipoMensaje.EXITO, "Imprimir", null) {
+		
+		private static final long serialVersionUID = 1L;
 		
 		@Override
 		protected void processWindowEvent(WindowEvent e) {	//Para que al cerrarse con la cruz se vuelva al menu principal y no se cierren todos los frames
