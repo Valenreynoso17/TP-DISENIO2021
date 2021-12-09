@@ -30,7 +30,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	private static final long serialVersionUID = 1L;
 	
 	private PanelMostrarEstadoHabitacionesGroupBox panelMostrarEstadoHabitacionesGroupBox = new PanelMostrarEstadoHabitacionesGroupBox();
-	private PanelResultadosDeBusquedaHabitacionesGroupBox panelResultadosDeBusquedaHabitacionesGroupBox = new PanelResultadosDeBusquedaHabitacionesGroupBox();
+	private PanelResultadosDeBusquedaHabitacionesGroupBox panelResultadosDeBusquedaHabitacionesGroupBox = new PanelResultadosDeBusquedaHabitacionesGroupBox(this);
 	
 	private JButton buscar;
 	private JButton siguiente;
