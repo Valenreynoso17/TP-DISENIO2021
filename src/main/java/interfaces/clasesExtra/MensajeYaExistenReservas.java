@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
 import main.java.dtos.ReservaDTO;
+import main.java.interfaces.frames.FramePrincipal;
 
 public class MensajeYaExistenReservas extends JFrame{
 	
@@ -54,14 +56,14 @@ public class MensajeYaExistenReservas extends JFrame{
 	private Dimension dimensionBotonDerecho = new Dimension(155, 35);
 	private Dimension dimensionTextoReservasExistentes = new Dimension(200,60);
 	
-	private JFrame frameActual;
+	private JDialog frameActual;
 
 	public MensajeYaExistenReservas(Integer i) {
 		super("Sistema Hotel Premier");
 		this.id = i;
 	}
 	
-	public void mostrar(final PanelPermiteMensajes panel, JFrame frame, List<ReservaDTO> reservas) {
+	public void mostrar(final PanelPermiteMensajes panel, JDialog frame, List<ReservaDTO> reservas) {
 		
 		this.frameActual = frame;
 		

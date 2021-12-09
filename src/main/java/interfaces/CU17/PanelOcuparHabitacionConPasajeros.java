@@ -188,16 +188,23 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 				
 				if (pasajeros.isEmpty()) mensajePasajerosNoSeleccionados.mostrar(getPanel(), frameActual);				
 				else {
-					try{
-						gestorPasajero.validarEdad(pasajeros.get(0).getId());
+
+					
+
+
+
 						
-						OcupacionDTO ocupacionDTO = new OcupacionDTO(idHabitacion, ingreso, egreso, pasajeros, pasajeros.get(0));
-						
-						frameActual.setNuevoPanel(new PanelMenuOcuparHabitacion(frameActual, (PanelOcuparHabitacionConPasajeros) getPanel(), ocupacionDTO));
+
+
+			
+
 					}
-					catch (ResponsableMenorException exc) {
-						mensajeResponsableMenorDeEdad.mostrar(getPanel(), frame);
-					}
+=======
+					OcupacionDTO ocupacionDTO = new OcupacionDTO(idHabitacion, ingreso, egreso, pasajeros, pasajeros.get(0));
+					
+					frameActual.cambiarTamanio(350, 400);
+					frameActual.setNuevoPanel(new PanelMenuOcuparHabitacion(frameActual, (PanelOcuparHabitacionConPasajeros) getPanel(), ocupacionDTO));
+>>>>>>> 3ffe1db4f9881ef6af9af0ad2d2b3731d429b15a
 				}
 				
 				

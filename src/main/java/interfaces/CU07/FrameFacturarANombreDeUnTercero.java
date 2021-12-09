@@ -2,24 +2,25 @@ package main.java.interfaces.CU07;
 
 import java.awt.event.WindowEvent;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JDialog;
 import javax.swing.WindowConstants;
 
 import main.java.dtos.OcupacionDTO;
 import main.java.interfaces.frames.FramePrincipal;
 
-public class FrameFacturarANombreDeUnTercero extends JFrame{
+public class FrameFacturarANombreDeUnTercero extends JDialog{
 	
 	private static final long serialVersionUID = 1L;
 
 	private PanelFacturarANombreDeUnTercero contentPane;
 	
-	private JFrame frameAnterior;
+	private JDialog frameAnterior;
 
 	public FrameFacturarANombreDeUnTercero(FramePrincipal frame, PanelFacturar panelFacturar) {
 		
-		super("Sistema Hotel Premier");
+		//super("Sistema Hotel Premier");
+		
+		this.setTitle("Sistema Hotel Premier");
 		
 		frameAnterior = frame;
 		

@@ -49,7 +49,7 @@ public class Mensaje extends JDialog{
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
-	private JFrame frameActual;
+	private JDialog frameActual;
 
 	public Mensaje(Integer id, String texto, TipoMensaje tipo, String opcionAceptar, final String opcionCancelar) {	
 		//super();
@@ -61,7 +61,7 @@ public class Mensaje extends JDialog{
 		this.textoOpcionCancelar = opcionCancelar;
 	}
 	
-	public void mostrar(final PanelPermiteMensajes panel, JFrame frame) {
+	public void mostrar(final PanelPermiteMensajes panel, JDialog frame) {
 		
 		frameActual = frame;
 		
@@ -87,7 +87,7 @@ public class Mensaje extends JDialog{
 		
 		labelTexto = new JLabel(texto);	c.weightx = 0.2; c.weighty = 0.5;	c.insets = insetTexto;
 		labelTexto.setFont(fuenteBoton);
-		labelTexto.setPreferredSize(new Dimension(200, 100));
+		labelTexto.setPreferredSize(new Dimension(200, 120));
 		c.anchor = GridBagConstraints.CENTER;	
 			c.gridx = 1; c.gridy = 0;
 		contentPane.add(labelTexto, c);

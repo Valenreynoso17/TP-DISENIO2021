@@ -75,9 +75,6 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	    		  
 	    	  ArrayList<Integer> filaYColumna;
 	    	  
-	    	  System.out.println("row :"+ row);
-	    	  System.out.println("ultimaFilaSeleccionada: "+ultimaFilaSeleccionada);
-	    	  
 	    	  for(int filaNueva = ultimaFilaSeleccionada; filaNueva <= row; filaNueva++) {
 				  
 				  filaYColumna = new ArrayList<Integer>();	
@@ -110,8 +107,8 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 		    	  ultimaFilaSeleccionada = row;
 	    	  }
 	    	  else {
+	    		  	celdasPreSeleccionadas.clear();
 	    		  	this.panelGrilla.habitacionConOcupacionOFueraDeServicioHoy(estadoCelda);
-	    		  	this.panelGrilla.deseleccionarPeriodo();	//TODO: Ver
 	    	  }	    	  
 
 	      }

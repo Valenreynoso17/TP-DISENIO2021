@@ -16,6 +16,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoDocumento;
+import main.java.interfaces.clasesExtra.JTextFieldLimitado;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 import main.java.interfaces.clasesExtra.TextPrompt;
 import main.java.interfaces.clasesExtra.UppercaseDocumentFilter;
@@ -78,8 +79,7 @@ public class PanelOcuparHabitacionBusqueda extends JPanel{
 		// Configuracion apellido textField
 		apellido = new JTextField(); apellido.setFont(fuenteLabelCampo);	apellido.setBorder(bordeCampo);	
 		
-		AbstractDocument apellidoDoc = (AbstractDocument) apellido.getDocument();
-		apellidoDoc.setDocumentFilter(filter);
+		apellido.setDocument(new JTextFieldLimitado(40));
 		
 		fondoJTextField = new TextPrompt("Ingrese un apellido",apellido); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 1; c.gridy = 0;	apellido.setMinimumSize(dimensionCampo);	apellido.setPreferredSize(dimensionCampo);	this.add(apellido, c);
@@ -93,9 +93,7 @@ public class PanelOcuparHabitacionBusqueda extends JPanel{
 		// Configuracion nombre textField
 		nombre = new JTextField();	nombre.setFont(fuenteLabelCampo);	nombre.setBorder(bordeCampo);
 		
-		AbstractDocument nombreDoc = (AbstractDocument) nombre.getDocument();
-		nombreDoc.setDocumentFilter(filter);
-		
+		nombre.setDocument(new JTextFieldLimitado(40));
 		
 		fondoJTextField = new TextPrompt("Ingrese un nombre", nombre); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 3; c.gridy = 0;	nombre.setMinimumSize(dimensionCampo);	nombre.setPreferredSize(dimensionCampo);	this.add(nombre, c);
@@ -120,8 +118,7 @@ public class PanelOcuparHabitacionBusqueda extends JPanel{
 		
 		numeroDocumento = new JTextField();	numeroDocumento.setFont(fuenteLabelCampo);	numeroDocumento.setBorder(bordeCampo);
 		
-		AbstractDocument numeroDoc = (AbstractDocument) numeroDocumento.getDocument();
-		numeroDoc.setDocumentFilter(filter);
+		numeroDocumento.setDocument(new JTextFieldLimitado(20));
 		
 		fondoJTextField = new TextPrompt("Ingrese el número de documento", numeroDocumento); fondoJTextField.setForeground(Color.GRAY);
 		c.gridx = 3; c.gridy = 1;	numeroDocumento.setMinimumSize(dimensionCampo);	numeroDocumento.setPreferredSize(dimensionCampo);	this.add(numeroDocumento, c);
