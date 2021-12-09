@@ -128,6 +128,8 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		    header.addColumnGroup(cA);
 		}
 		
+		header.getColumnModel().getColumn(4).setPreferredWidth(10);
+		
 		tabla.getTableHeader().setReorderingAllowed(false); //Para que no se muevan las columnas
 		
 		tabla.setRowSelectionAllowed(true);
@@ -168,9 +170,9 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	    for (int i = 1; i < cm.getColumnCount(); i++) {
 	    	cm.getColumn(i).setPreferredWidth(30);
 	    }
-	    
-	    cm.getColumn(cm.getColumnCount()-2).setPreferredWidth(50);
-	    cm.getColumn(cm.getColumnCount()-1).setPreferredWidth(50);
+//	    
+//	    cm.getColumn(cm.getColumnCount()-2).setPreferredWidth(50);
+//	    cm.getColumn(cm.getColumnCount()-1).setPreferredWidth(50);
 
 	    
 	    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

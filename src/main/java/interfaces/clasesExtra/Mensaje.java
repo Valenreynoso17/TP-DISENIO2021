@@ -20,6 +20,7 @@ import javax.swing.JRootPane;
 import javax.swing.WindowConstants;
 
 import main.java.enums.TipoMensaje;
+import main.java.interfaces.frames.FrameODialog;
 import main.java.interfaces.frames.FramePrincipal;
 
 public class Mensaje extends JDialog{
@@ -49,7 +50,7 @@ public class Mensaje extends JDialog{
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
-	private JDialog frameActual;
+	private FrameODialog frameActual;
 
 	public Mensaje(Integer id, String texto, TipoMensaje tipo, String opcionAceptar, final String opcionCancelar) {	
 		//super();
@@ -61,7 +62,7 @@ public class Mensaje extends JDialog{
 		this.textoOpcionCancelar = opcionCancelar;
 	}
 	
-	public void mostrar(final PanelPermiteMensajes panel, JDialog frame) {
+	public void mostrar(final PanelPermiteMensajes panel, FrameODialog frame) {
 		
 		frameActual = frame;
 		

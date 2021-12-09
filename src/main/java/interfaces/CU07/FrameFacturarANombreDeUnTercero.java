@@ -6,15 +6,16 @@ import javax.swing.JDialog;
 import javax.swing.WindowConstants;
 
 import main.java.dtos.OcupacionDTO;
+import main.java.interfaces.frames.FrameODialog;
 import main.java.interfaces.frames.FramePrincipal;
 
-public class FrameFacturarANombreDeUnTercero extends JDialog{
+public class FrameFacturarANombreDeUnTercero extends JDialog implements FrameODialog{
 	
 	private static final long serialVersionUID = 1L;
 
 	private PanelFacturarANombreDeUnTercero contentPane;
 	
-	private JDialog frameAnterior;
+	private FrameODialog frameAnterior;
 
 	public FrameFacturarANombreDeUnTercero(FramePrincipal frame, PanelFacturar panelFacturar) {
 		
