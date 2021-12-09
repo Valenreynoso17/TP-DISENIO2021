@@ -1,6 +1,7 @@
 package main.java.clases;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import javax.persistence.*;
 
@@ -153,6 +154,10 @@ public class Pasajero {
 
 	public Direccion getDireccion() {
 		return direccion;
+	}
+	
+	public Integer getEdad() {
+		return Period.between(fechaNacimiento, LocalDate.now()).getYears();
 	}
 	
 	
