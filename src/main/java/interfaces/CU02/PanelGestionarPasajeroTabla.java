@@ -131,6 +131,8 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		tabla.setBackground(Color.white);
 		tabla.setGridColor(Color.black);
 		tabla.setBorder(new LineBorder(Color.BLACK));
+		
+		tabla.setRowHeight(15);
 
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;
