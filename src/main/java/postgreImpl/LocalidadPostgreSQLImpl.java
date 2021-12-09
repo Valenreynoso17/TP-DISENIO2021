@@ -30,7 +30,7 @@ public class LocalidadPostgreSQLImpl implements LocalidadDAO {
 	public List<Localidad> buscarPorProvincia(Integer idProvincia) {
 		Session sesion = sessionFactory.openSession();
 		
-		TypedQuery<Localidad> query = sesion.createQuery("SELECT l FROM Localidad l WHERE idprovincia = :id", Localidad.class);
+		TypedQuery<Localidad> query = sesion.createQuery("SELECT l FROM Localidad l WHERE idprovincia = :id ORDER BY l.nombre", Localidad.class);
 		query.setParameter("id", idProvincia);
 		List<Localidad> lista = query.getResultList();
 		

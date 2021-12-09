@@ -30,7 +30,7 @@ public class ProvinciaPostgreSQLImpl implements ProvinciaDAO {
 	public List<Provincia> buscarPorPais(Integer idPais) {
 		Session sesion = sessionFactory.openSession();
 		
-		TypedQuery<Provincia> query = sesion.createQuery("SELECT p FROM Provincia p WHERE idpais = :id", Provincia.class);
+		TypedQuery<Provincia> query = sesion.createQuery("SELECT p FROM Provincia p WHERE idpais = :id ORDER BY p.nombre", Provincia.class);
 		query.setParameter("id", idPais);
 		List<Provincia> lista = query.getResultList();
 		
