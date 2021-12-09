@@ -149,9 +149,9 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
   	  if(column == 0) {	//FECHA
   		c.setBackground(Color.white);
   	  }
-//  	  else if(value == null) {	//Ver si vale la pena dejar el value como null y hacer el if aca o colocar la fila como EstadoHabitacion.LIBRE
-//  		c.setBackground(colorVerde);
-//  	  }
+  	  else if(value == null) {	//Ver si vale la pena dejar el value como null y hacer el if aca o colocar la fila como EstadoHabitacion.LIBRE
+  		c.setBackground(colorVerde);
+  	  }
   	  else {
   		switch((EstadoHabitacion) value) {
   		

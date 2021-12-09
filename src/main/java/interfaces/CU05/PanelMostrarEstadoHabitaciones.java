@@ -211,11 +211,16 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	
 	public void setTextoMensajeHabitacionConOcupacionOFS (EstadoHabitacion estado) {
 
+		//<html><p>La habitación "" está fuera de servicio dentro del período seleccionado. Por favor, elija un período que no contenga ese estado.</p><html>
+		
 		if(estado.equals(EstadoHabitacion.OCUPADA)) {
-			this.mensajeHabitacionConOcupacionOFS.setTextoMensaje("La habitacion esta ocupada. Cambiar este texto");
+			this.mensajeHabitacionConOcupacionOFS.setTextoMensaje("<html><p>La habitación "+this.panelResultadosDeBusquedaHabitacionesGroupBox.getHabitacion()
+																  +" está ocupada el día de hoy. Por favor, elija otra habitación para ocupar.</p>");
 		}
 		else if (estado.equals(EstadoHabitacion.FUERA_DE_SERVICIO)) {
-			this.mensajeHabitacionConOcupacionOFS.setTextoMensaje("La habitacion esta fuera de servicio. Cambiar este texto");
+			this.mensajeHabitacionConOcupacionOFS.setTextoMensaje("<html><p>La habitación "+this.panelResultadosDeBusquedaHabitacionesGroupBox.getHabitacion()
+																  +" está fuera de servicio dentro del período seleccionado. "
+																  + "Por favor, elija un período que no contenga ese estado.</p><html>");
 		}
 		
 		this.mensajeHabitacionConOcupacionOFS.mostrar(getPanel(), frameActual);
