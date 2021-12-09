@@ -23,7 +23,8 @@ public class PaisPostgreSQLImpl implements PaisDAO {
 	public List<Pais> buscar() {
 		Session sesion = sessionFactory.openSession();
 		
-		TypedQuery<Pais> query = sesion.createQuery("SELECT pais FROM Pais pais", Pais.class);
+		TypedQuery<Pais> query = sesion.createQuery("SELECT pais FROM Pais pais ORDER BY pais.nombre", Pais.class);
+		
 		List<Pais> listaPaises = query.getResultList();
 		
 		sesion.close();
