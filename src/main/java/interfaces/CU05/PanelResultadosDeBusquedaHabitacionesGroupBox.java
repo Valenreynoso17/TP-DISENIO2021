@@ -216,9 +216,6 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	
 	public void seleccionoUnRango() throws RangoNoSeleccionadoException{
 		
-		for(int i = 0; i < this.renderTablaEstadoColores.getCeldasSeleccionadas().size(); i++)
-			System.out.println(this.renderTablaEstadoColores.getCeldasSeleccionadas().get(i));
-		
 		if(this.renderTablaEstadoColores.getCeldasSeleccionadas().isEmpty()) {	//Si la lista de celdas seleccionadas es vacia, tirar excepcion
 			
 			throw new RangoNoSeleccionadoException();
