@@ -1,6 +1,7 @@
 package main.java.dtos;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import main.java.clases.Pasajero;
 import main.java.enums.PosicionFrenteIva;
@@ -104,6 +105,11 @@ public class PasajeroDTO {
 	public Integer getIdNacionalidad() {
 		return idNacionalidad;
 	}
+	
+	public Integer getEdad() {
+		return Period.between(fechaNacimiento, LocalDate.now()).getYears();
+	}
+	
 
 	public void setId(Integer id) {
 		this.id = id;

@@ -15,6 +15,7 @@ import main.java.clases.Direccion;
 import main.java.clases.Pais;
 import main.java.excepciones.DocumentoRepetidoException;
 import main.java.excepciones.InputInvalidaException;
+import main.java.excepciones.ResponsableMenorException;
 import main.java.excepciones.SinResultadosException;
 import main.java.postgreImpl.PasajeroPostgreSQLImpl;
 
@@ -117,6 +118,12 @@ public class GestorPasajero {
 										.collect(Collectors.toList());
 		
 		return pasajeroDAO.buscarPasajeros(idsPasajeros);
+	}
+	
+	public void validarEdad(Integer idPasajero) throws ResponsableMenorException {
+		Pasajero p = pasajeroDAO.buscar(idPasajero);
+		
+		if (p.getEdad() < 18) throw new ResponsableMenorException();
 	}
 	
 	

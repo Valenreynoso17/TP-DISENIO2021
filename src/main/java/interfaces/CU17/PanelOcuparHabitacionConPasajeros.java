@@ -20,6 +20,7 @@ import main.java.dtos.OcupacionDTO;
 import main.java.dtos.PasajeroDTO;
 import main.java.enums.TipoMensaje;
 import main.java.excepciones.InputInvalidaException;
+import main.java.excepciones.ResponsableMenorException;
 import main.java.excepciones.SinResultadosException;
 import main.java.gestores.GestorHabitacion;
 import main.java.gestores.GestorPasajero;
@@ -56,6 +57,9 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	
 	private String textoPasajerosNoSeleccionados = 	"<html><p>Seleccione al menos un ocupante.</p><html>";
 	private Mensaje mensajePasajerosNoSeleccionados = new Mensaje(3, textoPasajerosNoSeleccionados, TipoMensaje.ERROR, "Aceptar", null);
+	
+	private String textoResponsableMenorDeEdad = 	"<html><p>El responsable seleccionado es menor de edad. Por favor, seleccione otro.</p><html>";
+	private Mensaje mensajeResponsableMenorDeEdad = new Mensaje(4, textoResponsableMenorDeEdad, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private JButton buscar;
 	private JButton cancelar;
@@ -182,11 +186,18 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 			public void actionPerformed(ActionEvent e) {
 				List<PasajeroDTO> pasajeros = panelPasajerosSeleccionadosGroupBox.getPasajerosSeleccionados();
 				
-				if (pasajeros.isEmpty()) mensajePasajerosNoSeleccionados.mostrar(getPanel(), frameActual);
+				if (pasajeros.isEmpty()) mensajePasajerosNoSeleccionados.mostrar(getPanel(), frameActual);				
 				else {
-					OcupacionDTO ocupacionDTO = new OcupacionDTO(idHabitacion, ingreso, egreso, pasajeros, pasajeros.get(0));
-					
-					frameActual.setNuevoPanel(new PanelMenuOcuparHabitacion(frameActual, (PanelOcuparHabitacionConPasajeros) getPanel(), ocupacionDTO));
+					try{
+						gestorPasajero.validarEdad(pasajeros.get(0).getId());
+						
+						OcupacionDTO ocupacionDTO = new OcupacionDTO(idHabitacion, ingreso, egreso, pasajeros, pasajeros.get(0));
+						
+						frameActual.setNuevoPanel(new PanelMenuOcuparHabitacion(frameActual, (PanelOcuparHabitacionConPasajeros) getPanel(), ocupacionDTO));
+					}
+					catch (ResponsableMenorException exc) {
+						mensajeResponsableMenorDeEdad.mostrar(getPanel(), frame);
+					}
 				}
 				
 				

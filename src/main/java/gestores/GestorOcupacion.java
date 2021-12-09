@@ -29,6 +29,7 @@ import main.java.dtos.ResponsableDePagoDTO;
 import main.java.enums.PosicionFrenteIva;
 import main.java.excepciones.HabitacionInexistenteException;
 import main.java.excepciones.OcupacionYaFacturadaException;
+import main.java.excepciones.ResponsableMenorException;
 import main.java.postgreImpl.OcupacionPostgreSQLImpl;
 
 public class GestorOcupacion {
@@ -207,6 +208,8 @@ public class GestorOcupacion {
 			
 			if (p.getId().equals(o.getResponsable().getId())) responsable = p;
 		}
+		
+		//if (responsable.getEdad() < 18) throw new ResponsableMenorException();
 		
 		Ocupacion ocupacion = new Ocupacion(null, 
 											o.getFechaIngreso(), 
