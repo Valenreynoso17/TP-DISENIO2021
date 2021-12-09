@@ -105,9 +105,14 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		
 		Integer tamanioAnterior = 0;
 		
+		ColumnaAgrupada cA;
+		
 		for(TipoHabitacionDTO tipo : mapHabitacionesTipo.keySet()) {
 			
-			ColumnaAgrupada cA = new ColumnaAgrupada(tipo.getTipo());
+			cA = new ColumnaAgrupada(tipo.getTipo());
+			
+			if(tipo.getTipo().equals("Suite Double"))
+				cA = new ColumnaAgrupada("Suite D.");
 			
 			for(int i = 0; i <= mapHabitacionesTipo.get(tipo).size(); i++) {
 				
@@ -163,6 +168,10 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 	    for (int i = 1; i < cm.getColumnCount(); i++) {
 	    	cm.getColumn(i).setPreferredWidth(30);
 	    }
+	    
+	    cm.getColumn(cm.getColumnCount()-2).setPreferredWidth(50);
+	    cm.getColumn(cm.getColumnCount()-1).setPreferredWidth(50);
+
 	    
 	    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		

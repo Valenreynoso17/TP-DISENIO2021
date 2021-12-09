@@ -47,7 +47,7 @@ public class PanelFacturar extends JPanel implements PanelPermiteMensajes{
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
-	private String textoPasajeroMenorDeEdad = "<html><p>La persona ingresada como 'Responsable de pago' es menor de edad."
+	private String textoPasajeroMenorDeEdad = "<html><p>La persona seleccionada como 'Responsable de pago' es menor de edad."
 											+ " Por favor, seleccione otra persona.</p><html>";
 	private Mensaje mensajePasajeroMenorDeEdad = new Mensaje(2, textoPasajeroMenorDeEdad, TipoMensaje.ERROR, "Aceptar", null);
 	

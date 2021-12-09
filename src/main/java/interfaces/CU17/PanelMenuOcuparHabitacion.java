@@ -74,7 +74,8 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 		cargarOtroPasajero.setBorder(bordeBoton);
 		cargarOtroPasajero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+			
+				frame.volverATamanioNormal();
 				frame.setNuevoPanel(panelAnterior);
 			}
 		});
@@ -92,6 +93,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				gestorOcupacion.guardarOcupacion(ocupacion);
 				
+				frame.volverATamanioNormal();
 				frame.setNuevoPanel(new PanelMostrarEstadoHabitaciones(frame, new PanelMenuPrincipal(frame)));
 			}
 		});
@@ -109,6 +111,7 @@ public class PanelMenuOcuparHabitacion extends JPanel{
 			public void actionPerformed(ActionEvent e) {	
 				gestorOcupacion.guardarOcupacion(ocupacion);
 				
+				frame.volverATamanioNormal();
 				frame.setNuevoPanel(new PanelMenuPrincipal(frame));
 			}
 		});
