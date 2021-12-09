@@ -38,9 +38,7 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 
 	private JScrollPane tableContainer;
 
-	private Insets insetTabla = new Insets(15, 100, 15, 100);
-
-	//private Dimension dimensionTabla = new Dimension(0,200);
+	private Insets insetTabla = new Insets(10, 100, 10, 100);
 
 	private Font fuenteGroupBox = new Font("SourceSansPro", Font.PLAIN, 18);	
 
@@ -54,10 +52,6 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 	private GestorPasajero gestorPasajero;
 
 	final private Integer tamPagina = 10;
-
-	//private RoundedBorder bordeCampo = new RoundedBorder(5, Color.decode("#BDBDBD"));
-
-	//Predicate<Pasajero> FiltroApellido, FiltroNombre, FiltroTipoDocumento, FiltroNumeroDocumento;
 
 	public PanelGestionarPasajeroTabla() {
 		paginaActual = 1;
