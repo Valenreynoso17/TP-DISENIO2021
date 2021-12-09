@@ -99,8 +99,6 @@ public class PanelFacturarANombreDeUnTerceroGroupBox extends JPanel{
 							
 							razonSocial.setText(responsablePagoDTO.getRazonSocial());
 							
-							System.out.println(responsablePagoDTO.getCuit());
-							
 						} catch (NoExisteResponsableCuitException e1) {
 							
 							excepcionNoExisteResponsable = true;

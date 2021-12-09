@@ -77,8 +77,6 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 
 		miModelo = new ModeloTablaPasajeros();
 
-		//miModelo.cargarEstaciones(gestorEstacion.getEstaciones());
-
 		tabla = new JTable(miModelo);
 		tableContainer = new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -140,9 +138,6 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		tabla.setGridColor(Color.black);
 		tabla.setBorder(new LineBorder(Color.BLACK));
 
-		//tabla.setPreferredSize(dimensionTabla);
-
-		//this.add(tableContainer, BorderLayout.CENTER);
 		c.fill = GridBagConstraints.BOTH;
 		//c.anchor = GridBagConstraints.CENTER;
 		c.insets = insetTabla;

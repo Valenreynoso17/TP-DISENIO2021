@@ -26,6 +26,11 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	
 	Component c;
 	
+	// Lista creada para cuando el conserje selecciona un período que no debería seleccionarse (porque existe una ocupación o la habitación
+	// está fuera de servicio), entonces la celda que selecciona queda como "Seleccionada" y cuando baja y sube por la tabla (al volverse a
+	// actualizar la celda) lanza nuevamente la excepción y el mensaje
+	List<ArrayList<Integer>> celdasPreSeleccionadasQueVuelvenACargar;
+	
 	List<ArrayList<Integer>> celdasSeleccionadas;
 	List<ArrayList<Integer>> celdasReservadas;
 	List<ArrayList<Integer>> celdasOcupadas;			
@@ -33,7 +38,7 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	
 	boolean banderaPrimeraVez = true;	//Bandera hecha simplemente para que la primera vez se entre al if y luego dependa de "columnaSeleccion"
 	int columnaSeleccion = -1;			//Es la columna de la primera seleccion, para que no pueda seleccionar celdas de distintas columnas
-	int ultimaFilaSeleccionada = -1;
+	int ultimaFilaSeleccionada = -1;	//Fila de la última fila seleccionada, es decir, la fila anterior a la selección actual
 	
 	public RenderParaTablaEstadoColores (PanelResultadosDeBusquedaHabitacionesGroupBox panel) {
 		this.panelGrilla = panel;
@@ -41,6 +46,8 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 		this.celdasReservadas = new ArrayList<ArrayList<Integer>>();
 		this.celdasOcupadas = new ArrayList<ArrayList<Integer>>();			
 		this.celdasFueraDeServicio = new ArrayList<ArrayList<Integer>>();	
+		
+		this.celdasPreSeleccionadasQueVuelvenACargar = new ArrayList<ArrayList<Integer>>();
 	}
 
 	@Override
@@ -62,6 +69,7 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	    	  column != 0 && 												 // column == 0 es la FECHA
 	    	  !celdasOcupadas.contains(celdaParaRePintar) &&			 // No debe estar ocupada
 	    	  !celdasFueraDeServicio.contains(celdaParaRePintar) &&	 // No debe estar fuera de servicio
+	    	  !celdasPreSeleccionadasQueVuelvenACargar.contains(celdaParaRePintar) &&
 	    	  // Si es la primera vez, entra por la bandera. Sino, debe cumplirse el seleccionar la misma columna y que la fila sea mayor a su celda anterior
 	    	  (banderaPrimeraVez || (column == columnaSeleccion && row > ultimaFilaSeleccionada))) {	
 	    	  
@@ -84,12 +92,6 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 					  celdasPreSeleccionadas.add(filaYColumna);   	
 	    	  } 
 	    	  
-	    	  System.out.println("CELDAS PRESELECCIONADAS");
-	    	  for(int i = 0; i < celdasPreSeleccionadas.size(); i++)
-	    		  System.out.println(celdasPreSeleccionadas.get(i));
-
-	    	  System.out.println(this.comprobarQueNoExistaOcupacionNiFueraDeEstadoEnLaColumna(celdasPreSeleccionadas));
-	    	  
 	    	  if(this.comprobarQueNoExistaOcupacionNiFueraDeEstadoEnLaColumna(celdasPreSeleccionadas)) {
 	    		  
 	    		  for(int posicionCelda = 0; posicionCelda < celdasPreSeleccionadas.size(); posicionCelda++) {
@@ -98,16 +100,12 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	    				  celdasSeleccionadas.add(celdasPreSeleccionadas.get(posicionCelda));
 	    			  }
 	    		  }
-	    		  
-		    	  System.out.println("CELDAS SELECCIONADAS");
-		    	  for(int i = 0; i < celdasSeleccionadas.size(); i++)
-		    		  System.out.println(celdasSeleccionadas.get(i));
 
 		    	  c.setBackground(colorSeleccionado);
 		    	  ultimaFilaSeleccionada = row;
 	    	  }
 	    	  else {
-	    		  	celdasPreSeleccionadas.clear();
+	    		  	celdasPreSeleccionadasQueVuelvenACargar.add(celdaParaRePintar);
 	    		  	this.panelGrilla.habitacionConOcupacionOFueraDeServicioHoy(estadoCelda);
 	    	  }	    	  
 
