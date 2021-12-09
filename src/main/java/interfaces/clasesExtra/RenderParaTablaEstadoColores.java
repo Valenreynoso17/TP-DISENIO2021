@@ -67,17 +67,22 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	      if (isSelected &&													 // Para pintar de gris										
 	    	  table.getSelectedColumn() == column && 						 // Para que no coloree toda la fila, simplemente la columna indicada
 	    	  column != 0 && 												 // column == 0 es la FECHA
-	    	  !celdasOcupadas.contains(celdaParaRePintar) &&			 // No debe estar ocupada
-	    	  !celdasFueraDeServicio.contains(celdaParaRePintar) &&	 // No debe estar fuera de servicio
+	    	  !celdasOcupadas.contains(celdaParaRePintar) &&			 	// No debe estar ocupada
+	    	  !celdasFueraDeServicio.contains(celdaParaRePintar) &&	 		// No debe estar fuera de servicio
+	    	  // Si esta en la lista de "celdasPreSeleccionadasQueVuelvenACargar", entonces es una celda que no deberia ser seleccionada ya que esta luego 
+	    	  // de un periodo en el cual la habitación está ocupada o fuera de servicio y, por ende, no debe seleccionarse	 
 	    	  !celdasPreSeleccionadasQueVuelvenACargar.contains(celdaParaRePintar) &&
 	    	  // Si es la primera vez, entra por la bandera. Sino, debe cumplirse el seleccionar la misma columna y que la fila sea mayor a su celda anterior
 	    	  (banderaPrimeraVez || (column == columnaSeleccion && row > ultimaFilaSeleccionada))) {	
-	    	  
+
+	    	  // Si es la primera vez que entra, se guarda la columna de la seleccion, la fila es = 0 (desde el principio) y la bandera se pone en false
 	    	  if(banderaPrimeraVez) {
 	    		  ultimaFilaSeleccionada = 0;
 	    		  columnaSeleccion = column;
 		    	  banderaPrimeraVez = false;
 	    	  }
+	    	  
+
 	    	  
 	    	  List<ArrayList<Integer>> celdasPreSeleccionadas = new ArrayList<ArrayList<Integer>>();
 	    		  
@@ -105,6 +110,11 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 		    	  ultimaFilaSeleccionada = row;
 	    	  }
 	    	  else {
+	    		  	// Si no hay ninguna celda seleccionada, entonces la bandera vuelve a activarse dado que
+					// la celda que quiso seleccionar era inválida (contenía un período en que la habitación
+					// estaba ocupada o fuera de servicio)
+	    		  	if(celdasSeleccionadas.isEmpty())	
+	    		  		banderaPrimeraVez = true;
 	    		  	celdasPreSeleccionadasQueVuelvenACargar.add(celdaParaRePintar);
 	    		  	this.panelGrilla.habitacionConOcupacionOFueraDeServicioHoy(estadoCelda);
 	    	  }	    	  
