@@ -79,10 +79,11 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 					
 					if(mapFechaHabitacionEstado.get(fecha).containsKey(h.getId())) {
 						
+						System.out.println("Fecha: "+fecha+" h: "+h.getId()+" est: "+mapFechaHabitacionEstado.get(fecha).get(h.getId()));
 						fila[habitaciones.indexOf(h)+1] = mapFechaHabitacionEstado.get(fecha).get(h.getId());
 					}
 					else {
-						
+						System.out.println("Fecha: "+fecha+" h: "+h.getId()+" est: LIBRE");
 						fila[habitaciones.indexOf(h)+1] = EstadoHabitacion.LIBRE;
 					}
 				}
@@ -105,9 +106,9 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 		for(String tipo : mapEstadoHabitaciones.keySet()) {
 			
 			for(HabitacionDTO h : mapEstadoHabitaciones.get(tipo)) {
-					
+				
 				List<ReservaDTO> reservas = new ArrayList<ReservaDTO>();
-					
+				
 				for(ReservaDTO r : h.getReservas()) {
 					
 					reservas.add(r);
@@ -117,7 +118,7 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 				    	if(!mapFechaHabitacionEstado.containsKey(fecha)) {
 				    		
 					    	Map<Integer, EstadoHabitacion> estadoHabitacion = new HashMap<Integer, EstadoHabitacion>();
-					    	//estadoHabitacion.put(h.getId(), f);
+	
 					    	mapFechaHabitacionEstado.put(fecha, estadoHabitacion);
 				    	}
 				    	
@@ -129,24 +130,32 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 				
 				for(OcupacionDTO o : h.getOcupaciones()) {
 					
-					//TODO: Ver
 					if(o.getFechaEgreso().equals(LocalDate.now()) && o.getFechaHoraSalidaReal() == null) {
-//						Map<Integer, EstadoHabitacion> estadoHabitacion = new HashMap<Integer, EstadoHabitacion>();
-//						
-//						mapFechaHabitacionEstado.put(o.getFechaEgreso().plusDays(1), estadoHabitacion);
-//						
-//						mapFechaHabitacionEstado.get(o.getFechaEgreso().plusDays(1)).put(h.getId(), EstadoHabitacion.TODAVIA_NO_DESOCUPO);
-//						mapOcupacionActualPorHabitacion.put(h.getId(), o);
+						
+						System.out.println("fecha hasta: "+fechaHasta);
+						
+						for(LocalDate fecha = LocalDate.now(); fecha.isBefore(fechaHasta.plusDays(1)); fecha = fecha.plusDays(1)) {
+							
+							if(!mapFechaHabitacionEstado.containsKey(fecha)) {
+
+								Map<Integer, EstadoHabitacion> estadoHabitacion = new HashMap<Integer, EstadoHabitacion>();
+								
+								mapFechaHabitacionEstado.put(fecha, estadoHabitacion);
+							}
+								mapFechaHabitacionEstado.get(fecha).put(h.getId(), EstadoHabitacion.TODAVIA_NO_DESOCUPO);
+
+						}
+						
+						
 					}
 					else {
 						
-					
 					    for (LocalDate fecha = o.getFechaIngreso(); fecha.isBefore(o.getFechaEgreso()); fecha = fecha.plusDays(1)) {
 					        
 					    	if(!mapFechaHabitacionEstado.containsKey(fecha)) {
 					    		
 						    	Map<Integer, EstadoHabitacion> estadoHabitacion = new HashMap<Integer, EstadoHabitacion>();
-						    	//estadoHabitacion.put(h.getId(), f);
+
 						    	mapFechaHabitacionEstado.put(fecha, estadoHabitacion);
 					    	}
 					    	
@@ -162,7 +171,7 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 				    	if(!mapFechaHabitacionEstado.containsKey(fecha)) {
 				    		
 					    	Map<Integer, EstadoHabitacion> estadoHabitacion = new HashMap<Integer, EstadoHabitacion>();
-					    	//estadoHabitacion.put(h.getId(), f);
+
 					    	mapFechaHabitacionEstado.put(fecha, estadoHabitacion);
 				    	}
 				    	

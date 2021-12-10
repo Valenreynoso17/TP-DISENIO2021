@@ -325,4 +325,9 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		
 		return miModelo.getFechaDesde().plusDays(diasQueHayQueSumar);
 	}
+	
+	public int getCantidadDeFilas() {
+		
+		return tabla.getRowCount();
+	}
 }
