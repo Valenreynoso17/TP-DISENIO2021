@@ -48,7 +48,7 @@ public class MensajeAyuda extends JDialog {
 		
 		frame.setEnabled(false);	//Para que solo se pueda clickear el mensaje
 		
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 800, 400);
 		
 		contentPane = new JPanel();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -63,8 +63,10 @@ public class MensajeAyuda extends JDialog {
 		labelTexto.setFont(fuenteBoton);
 		labelTexto.setPreferredSize(new Dimension(770, 400));
 		c.anchor = GridBagConstraints.CENTER;	
+		c.fill = GridBagConstraints.BOTH;
 		contentPane.add(labelTexto, c);
 		
+		c.fill = GridBagConstraints.NONE;
 		boton = new JButton("Aceptar"); c.weightx = 0.0; c.weighty = 0.0;
 		boton.setFont(fuenteBoton);
 		boton.setBorder(bordeBoton);

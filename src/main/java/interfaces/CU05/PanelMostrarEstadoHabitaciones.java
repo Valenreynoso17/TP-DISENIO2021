@@ -54,21 +54,32 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	
 	private Mensaje mensajeHabitacionConOcupacionOFS = new Mensaje(5, "", TipoMensaje.ERROR, "Aceptar", null);
 	
-	private String textoMensajeAyuda = "<html> Mostrar Estado de Habitaciones<br/><br/>"
-			+ "El propósito de esta pantalla es poder hacer el check in de un pasajero en una habitación que esté disponible y en un "
-			+ "período de fechas que comience desde la fecha de hoy.<br/>"
-			+ " Para esto, el sistema brinda un campo de texto catalogado como 'Fecha hasta' en el cual debe introducirse una fecha que contenga la fecha en "
-			+ "la que el usuario desea retirarse del hotel (hacer el check out).<br/>"
-			+ " Seguido de esto debe apretar 'Buscar' y el sistema brindará ahora una grilla en la que pueden visualizarse las habitaciones como nombres de las "
-			+ "columnas y las fechas como filas. El usuario ahora debe:<br/><br/>"
-			+ " - Con el click izquierdo, seleccionar la fecha final del período que desea seleccionar. En caso de seleccionar un período inválido (porque la habitación"
-			+ " está ocupada el día de hoy o porque selecciona un período en el cual la habitación está fuera de servicio), el sistema presenta un mensaje de error "
-			+ "para que el usuario deba seleccionar otra fecha.<br/><br/>"
-			+ " - En caso de que desee deseleccionar un período, el usuario deberá posicionarse sobre el período seleccionado y apretar el click derecho. Luego de esto, "
-			+ "se le permitirá seleccionar otro período válido.<br/><br/>"
-			+ " - Cuando ya tenga seleccionado el período en el que se ocupará la habitación, presionará el botón 'Siguiente'. En caso de no haber seleccionado ningún "
-			+ "período, se mostrará un mensaje de error.<br/><br/>"
-			+ " - Si el usuario desea cargar otro rango de fechas, podrá modificar el campo 'Fecha hasta' y luego el botón 'Buscar' para que la grilla se actualice.</html>";
+	/*private String textoMensajeAyuda = "<html> Ayuda sobre: Ocupar Habitación<br/><br/>"
+			+ " - Para <b>seleccionar</b> un pasajero haga click <b>IZQUIERDO</b> sobre su nombre en la grilla de <b>Resultados de busqueda</b><br/><br/>"
+			+ " - Para <b>deseleccionar</b> un pasajero haga click <b>DERECHO</b> sobre su nombre en la grilla de <b>Pasajeros seleccionados</b><br/><br/>"
+			+ " - El responsable de la habicacion <b>DEBE</b> ser un pasajero que sea <b>mayor de edad</b>.</html>";*/
+	
+	
+	private String textoMensajeAyuda = 
+			"<html> <h3>Ayuda sobre: Mostrar Estado de Habitaciones</h3>"
+			+ "<ul>"
+			+ "	<li>Todos los períodos de ocupación comienzan desde la fecha actual.</li>"
+			+ "	<li>Para <b>seleccionar</b> un período de ocupacion el usuario puede:</li>"
+			+ "		<ul>"
+			+ "			<li>Hacer un click <b>izquierdo</b> sobre la fecha <b>final</b> del período que desea seleccionar.</li>"
+			+ "    		<li>Hacer un click <b>izquierdo</b> sobre la fecha <b>inicial</b> y deslizar hacia abajo.</li>"
+			+ "		</ul>"
+			+ "    <li>Para <b>deseleccionar</b> un período de ocupacion el usuario debe:</li>"
+			+ "   		<ul>"
+			+ "    		<li>Hacer un click <b>derecho</b> estando posicionado sobre el período seleccionado.</li>"
+			+ "		</ul>"
+			+ "	<li><b>No</b> se podrá <b>seleccionar</b> un período si:</li>"
+			+ "    	<ul>"
+			+ "			<li>La habitacion está actualmente <b>ocupada</b>.</li>"
+			+ "    		<li>La habitacion tiene un período de <b>fuera de servicio</b></li>"
+			+ "		</ul>"
+			+ "</ul>"
+			+ "</html>";
 	
 	private MensajeAyuda mensajeAyuda = new MensajeAyuda(textoMensajeAyuda); 
 	
