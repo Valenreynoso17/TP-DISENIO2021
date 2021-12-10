@@ -93,8 +93,12 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		buscar.setFont(fuenteBoton);
 		buscar.setBorder(bordeBoton);
 		buscar.addActionListener(e -> {
-			PasajeroDTO filtros = panelGestionarPasajeroBusqueda.getFiltros();
 			try{
+				panelGestionarPasajeroTabla.desactivarTabla();	//TODO: Limpiar paginacion
+				this.panelGestionarPasajeroBusqueda.inputEsValida();
+
+				PasajeroDTO filtros = panelGestionarPasajeroBusqueda.getFiltros();
+			
 				gestorPasajero.validarDatosBusqueda(filtros);
 				Integer cantResultados = gestorPasajero.buscarCantidadPasajeros(filtros);
 				
@@ -102,8 +106,8 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 				
 			}
 			catch (InputInvalidaException exc) {
-				// TODO falta mensaje de error
-				exc.printStackTrace();
+				// La lista posee "Apellido" o "Nombre" o "Documento", dependiendo en cual debe ponerse el labelError
+				this.panelGestionarPasajeroBusqueda.colocarLabelInvalido(exc.getCamposInvalidos());
 			}
 			catch (SinResultadosException exc) {
 				mensajeNoExistePasajeroBuscar.mostrar(getPanel(), frameActual);

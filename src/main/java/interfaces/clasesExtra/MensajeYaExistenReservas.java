@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -58,6 +59,8 @@ public class MensajeYaExistenReservas extends JFrame{
 	private Dimension dimensionTextoReservasExistentes = new Dimension(200,60);
 	
 	private FrameODialog frameActual;
+	
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	public MensajeYaExistenReservas(Integer i) {
 		super("Sistema Hotel Premier");
@@ -156,7 +159,7 @@ public class MensajeYaExistenReservas extends JFrame{
 		
 		for(ReservaDTO r : reservas) {
 			
-			resultado += "-Entre los días "+r.getIngreso().toLocalDate()+" y "+r.getEgreso().toLocalDate()
+			resultado += " - Entre los días "+r.getIngreso().toLocalDate().format(formatter)+" y "+r.getEgreso().toLocalDate().format(formatter)
 						 +" reservó "+r.getNombre()+" "+r.getApellido()+".\n";
 		}
 		

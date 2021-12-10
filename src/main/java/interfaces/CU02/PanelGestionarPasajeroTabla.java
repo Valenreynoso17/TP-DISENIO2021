@@ -203,4 +203,10 @@ public class PanelGestionarPasajeroTabla extends JPanel implements Paginable{
 		actualizarTabla();
 
 	}
+
+
+	public void desactivarTabla() {
+		
+		miModelo.limpiarTabla();
+	}
 }

@@ -69,60 +69,19 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 			c.anchor = GridBagConstraints.EAST;	c.gridx = 0;	c.weightx = 0.1; c.weighty = 0.1;	c.insets = insetLabel;
 	
 		label = new JLabel("Fecha desde");	label.setFont(fuenteLabelCampo); c.gridy = 0;	this.add(label, c);
-			
-//			c.anchor = GridBagConstraints.NORTHEAST; c.gridx = 1;	c.insets = insetLabelError;	
-//		
-//				labelFechaDesdeVacio = new JLabel();	labelFechaDesdeVacio.setFont(fuenteLabelError); 
-//				labelFechaDesdeVacio.setText(" Campo incompleto ");
-//				labelFechaDesdeVacio.setOpaque(true);	
-//				labelFechaDesdeVacio.setBackground(Color.decode("#cc0000"));
-//				labelFechaDesdeVacio.setForeground(Color.WHITE);
-//				this.add(labelFechaDesdeVacio, c);
-//				
-//				labelFechaDesdeVacio.setVisible(false);	//No se va a mostrar a menos que el metodo validar lo indique
-//				
-//				labelFechaDesdeInvalida = new JLabel();	labelFechaDesdeInvalida.setFont(fuenteLabelError); 
-//				labelFechaDesdeInvalida.setText(" Fecha inválida ");
-//				labelFechaDesdeInvalida.setOpaque(true);	
-//				labelFechaDesdeInvalida.setBackground(Color.decode("#cc0000"));
-//				labelFechaDesdeInvalida.setForeground(Color.WHITE);
-//				this.add(labelFechaDesdeInvalida, c);
-//				
-//				labelFechaDesdeInvalida.setVisible(false);	//No se va a mostrar a menos que el metodo validar lo indique
 		
 			c.anchor = GridBagConstraints.WEST;  c.insets = insetCampo;	
 		
 		fechaDesde = new JTextField();
 		fechaDesde.setText(LocalDate.now().format(formatter).toString());
-//		try {
-//			MaskFormatter mascaraFecha = new MaskFormatter("##'/##'/####");
-//			fechaDesde = new JFormattedTextField(mascaraFecha);
-//	    	
-//	    }catch (ParseException e) {
-//	    	e.printStackTrace();
-//	    }
 
 		fechaDesde.setFont(fuenteLabelCampo);	fechaDesde.setBorder(bordeCampo);	fechaDesde.setEditable(false);	fechaDesde.setFocusable(false);
-//		fechaDesde.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
-//			  public void changedUpdate(DocumentEvent e) {
-//				labelFechaDesdeVacio.setVisible(false);
-//				labelFechaDesdeInvalida.setVisible(false);
-//			  }
-//			  public void removeUpdate(DocumentEvent e)  {
-//				labelFechaDesdeVacio.setVisible(false);
-//				labelFechaDesdeInvalida.setVisible(false);
-//			  }
-//			  public void insertUpdate(DocumentEvent e) {
-//				labelFechaDesdeVacio.setVisible(false);
-//				labelFechaDesdeInvalida.setVisible(false);
-//			  }
-//		});
 		c.gridx = 1;	fechaDesde.setMinimumSize(dimensionCampo);	fechaDesde.setPreferredSize(dimensionCampo);	fechaDesde.setMaximumSize(dimensionCampo);
 		this.add(fechaDesde, c);
 		
 			c.anchor = GridBagConstraints.EAST;	c.weightx = 0.1; c.weighty = 0.1;	c.insets = insetLabel;
 		
-		label = new JLabel("Fecha hasta");	label.setFont(fuenteLabelCampo); c.gridx = 2;;	this.add(label, c);
+		label = new JLabel("Fecha hasta");	label.setFont(fuenteLabelCampo); c.gridx = 2;	this.add(label, c);
 			
 			c.anchor = GridBagConstraints.NORTHEAST; c.gridx = 3;	c.insets = insetLabelError;	
 		
@@ -183,30 +142,6 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 		}
 	}
 	
-
-//	public void inputNoEsVacia() throws InputVacioException{
-//		
-//		labelFechaDesdeVacio.setVisible(false);
-//		labelFechaHastaVacio.setVisible(false);
-//		
-//		String inputsVacios = "";
-//		boolean alMenosUnoVacio = false;
-//
-//		if(this.fechaDesde.getText().contains(" ")) {	//Por el formato que tiene
-//			inputsVacios += "d";
-//			alMenosUnoVacio = true;
-//		}
-//			
-//		if(this.fechaHasta.getText().contains(" ")) {	//Por el formato que tiene
-//			inputsVacios += "h";
-//			alMenosUnoVacio = true;
-//		}
-//		
-//		if(alMenosUnoVacio) {
-//			throw new InputVacioException(inputsVacios);
-//		}
-//	}
-	
 	public void inputEsValida() throws FechaInvalidaException{
 		
 		labelFechaHastaInvalida.setVisible(false);
@@ -215,34 +150,6 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 			throw new FechaInvalidaException();
 		}
 	}
-	
-//	public void inputEsValida() throws FechaInvalidaException{
-//		
-//		labelFechaDesdeInvalida.setVisible(false);
-//		labelFechaHastaInvalida.setVisible(false);
-//
-//		String inputsInvalidos = "";
-//		boolean alMenosUnoInvalido = false;
-//
-//		if(!this.esValidaFecha(fechaDesde)) {
-//			inputsInvalidos += "d";
-//			alMenosUnoInvalido = true;
-//		}
-//			
-//		if(!this.esValidaFecha(fechaHasta)) {
-//			inputsInvalidos += "h";
-//			alMenosUnoInvalido = true;
-//		}
-//		if(!this.fechaHastaMayorAFechaDesde()) {	
-//			
-//			inputsInvalidos = "dh";
-//			alMenosUnoInvalido = true;
-//		}
-//		
-//		if(alMenosUnoInvalido) {
-//			throw new FechaInvalidaException(inputsInvalidos);
-//		}
-//	}
 	
 	private boolean fechaHastaMayorAFechaDesde() {
 		
@@ -298,27 +205,6 @@ public class PanelMostrarEstadoHabitacionesGroupBox extends JPanel{
 		return (fecha.isAfter(fechaMinima));
 	}
 
-//	public void colocarLabelVacio(String inputs) {
-//		
-//		if(inputs.contains("d")) {
-//			labelFechaDesdeVacio.setVisible(true);
-//		}
-//		if(inputs.contains("h")) {
-//			labelFechaHastaVacio.setVisible(true);
-//		}
-//		
-//	}
-//	
-//	public void colocarLabelInvalido(String inputs) {
-//		
-//		if(inputs.contains("d")) {
-//			labelFechaDesdeInvalida.setVisible(true);
-//		}
-//		if(inputs.contains("h")) {
-//			labelFechaHastaInvalida.setVisible(true);
-//		}
-//	
-//	}
 	
 	public void colocarLabelVacio() {
 		

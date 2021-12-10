@@ -8,8 +8,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import main.java.enums.EstadoHabitacion;
 import main.java.enums.TipoMensaje;
@@ -20,6 +23,7 @@ import main.java.excepciones.RangoNoSeleccionadoException;
 import main.java.interfaces.CU17.PanelOcuparHabitacionConPasajeros;
 import main.java.interfaces.MenuPrincipal.PanelMenuPrincipal;
 import main.java.interfaces.clasesExtra.Mensaje;
+import main.java.interfaces.clasesExtra.MensajeAyuda;
 import main.java.interfaces.clasesExtra.MensajeYaExistenReservas;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
@@ -33,8 +37,9 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	private PanelResultadosDeBusquedaHabitacionesGroupBox panelResultadosDeBusquedaHabitacionesGroupBox = new PanelResultadosDeBusquedaHabitacionesGroupBox(this);
 	
 	private JButton buscar;
-	private JButton siguiente;
+	private JButton ayuda;
 	private JButton cancelar;
+	private JButton siguiente;
 	
 	private String textoMensajeCancelar = "<html><p>¿Está seguro que desea cancelar la operación?</p><html>";
 	private Mensaje mensajeCancelar = new Mensaje(1, textoMensajeCancelar, TipoMensaje.CONFIRMACION, "Si", "No");
@@ -49,17 +54,39 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	
 	private Mensaje mensajeHabitacionConOcupacionOFS = new Mensaje(5, "", TipoMensaje.ERROR, "Aceptar", null);
 	
+	String textoMensajeAyuda = "<html> Ocupar Habitación<br/><br/>"
+			+ "VER MENSAJE de esta pantalla es poder hacer el check in de un pasajero en una habitación que esté disponible y en un "
+			+ "período de fechas que comience desde la fecha de hoy.<br/>"
+			+ " Para esto, el sistema brinda un campo de texto catalogado como 'Fecha hasta' en el cual debe introducirse una fecha que contenga la fecha en "
+			+ "la que el usuario desea retirarse del hotel (hacer el check out).<br/>"
+			+ " Seguido de esto debe apretar 'Buscar' y el sistema brindará ahora una grilla en la que pueden visualizarse las habitaciones como nombres de las "
+			+ "columnas y las fechas como filas. El usuario ahora debe:<br/><br/>"
+			+ " - Con el click izquierdo, seleccionar la fecha final del período que desea seleccionar. En caso de seleccionar un período inválido (porque la habitación"
+			+ " está ocupada el día de hoy o porque selecciona un período en el cual la habitación está fuera de servicio), el sistema presenta un mensaje de error "
+			+ "para que el usuario deba seleccionar otra fecha.<br/><br/>"
+			+ " - En caso de que desee deseleccionar un período, el usuario deberá posicionarse sobre el período seleccionado y apretar el click derecho. Luego de esto, "
+			+ "se le permitirá seleccionar otro período válido.<br/><br/>"
+			+ " - Cuando ya tenga seleccionado el período en el que se ocupará la habitación, presionará el botón 'Siguiente'. En caso de no haber seleccionado ningún "
+			+ "período, se mostrará un mensaje de error.<br/><br/>"
+			+ " - Si el usuario desea cargar otro rango de fechas, podrá modificar el campo 'Fecha hasta' y luego el botón 'Buscar' para que la grilla se actualice.</html>";
+	private MensajeAyuda mensajeAyuda = new MensajeAyuda(textoMensajeAyuda); 
+	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
 	private Insets insetPanelBusqueda = new Insets(30,30,5,30);
 	private Insets insetPanelTabla = new Insets(0,15,0,15);
+	private Insets insetBuscar = new Insets(0,0,0,0);
+	private Insets insetCancelar = new Insets(0,60,10,0);
+	private Insets insetAyuda = new Insets(0,15,10,0);
+	private Insets insetSiguiente = new Insets(0,0,10,60);
 	
 	private FramePrincipal frameActual;
-	private PanelMenuPrincipal panelAnterior;
+	private PanelMenuPrincipal panelAnterior;	
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
+	private Dimension dimensionBotonAyuda = new Dimension(130, 33);
 	
 	public PanelMostrarEstadoHabitaciones(final FramePrincipal frame, PanelMenuPrincipal panelAnterior) {
 		
@@ -78,7 +105,6 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 		c.weightx = 0.0; c.weighty = 0.0;	
 		c.gridwidth = 1;
 		c.fill = GridBagConstraints.NONE;
-		c.insets = new Insets(0,0,0,0);
 		
 		buscar = new JButton("Buscar");
 		buscar.setMinimumSize(dimensionBoton);
@@ -115,7 +141,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			}	
 			
 		});
-		c.anchor = GridBagConstraints.CENTER;		//c.insets = new Insets(0,60,10,0);
+		c.anchor = GridBagConstraints.CENTER;	c.insets = insetBuscar;
 		c.gridx = 1; c.gridy = 1;
 		this.add(buscar, c);
 		
@@ -138,9 +164,28 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 				mensajeCancelar.mostrar(getPanel(), frame);
 			}
 		});
-		c.anchor = GridBagConstraints.WEST;		c.insets = new Insets(0,60,10,0);
+		c.anchor = GridBagConstraints.WEST;		c.insets = insetCancelar;
 		c.gridx = 0; c.gridy = 3;
 		this.add(cancelar, c);
+		
+		ayuda = new JButton("Ayuda");
+		ImageIcon imagenAyuda = new ImageIcon("src/main/java/interfaces/clasesExtra/AyudaPrueba.PNG");
+		ayuda.setIcon(imagenAyuda);
+		ayuda.setHorizontalAlignment(SwingConstants.LEFT);
+		ayuda.setMinimumSize(dimensionBotonAyuda);
+		ayuda.setPreferredSize(dimensionBotonAyuda);
+		ayuda.setBackground(Color.decode("#E0E0E0"));
+		ayuda.setFont(fuenteBoton);
+		ayuda.setBorder(bordeBoton);
+		ayuda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				mensajeAyuda.mostrar(getPanel(), frame);
+			}
+		});
+		c.anchor = GridBagConstraints.CENTER;		c.insets = insetAyuda;
+		c.gridx = 1; c.gridy = 3;
+		this.add(ayuda, c);
 
 		siguiente = new JButton("Siguiente");
 		siguiente.setEnabled(false);			//Se habilita cuando se aprieta Buscar con campos validos
@@ -169,7 +214,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 				}
 			}
 		});
-		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
+		c.anchor = GridBagConstraints.EAST;		c.insets = insetSiguiente;
 		c.gridx = 2; c.gridy = 3;
 		this.add(siguiente, c);
 	}

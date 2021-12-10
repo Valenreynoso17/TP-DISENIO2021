@@ -221,6 +221,11 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 		actualizarTabla();
 	}
 	
+	public void desactivarTabla() {
+		
+		miModelo.limpiarTabla();
+	}
+	
 	public void actualizarTabla() {
 		ultimosResultados = gestorPasajero.buscarPaginado(filtros, tamPagina, paginaActual, columnaFiltro, orden);
 		
