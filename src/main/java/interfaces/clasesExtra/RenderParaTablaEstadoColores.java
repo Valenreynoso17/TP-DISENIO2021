@@ -32,8 +32,8 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	// está fuera de servicio), entonces la celda que selecciona queda como "Seleccionada" y cuando baja y sube por la tabla (al volverse a
 	// actualizar la celda) lanza nuevamente la excepción y el mensaje
 	List<ArrayList<Integer>> celdasPreSeleccionadasQueVuelvenACargar;
-	
-	//List<Integer> habitacionesQueNoHanSidoDesocupadas;
+
+	// Lista creada para las habitaciones que tienen pasajeros que deberían hacer el check out hoy pero todavía no lo han hecho
 	List<ArrayList<Integer>> habitacionesQueNoHanSidoDesocupadas;
 	
 	List<ArrayList<Integer>> celdasSeleccionadas;
@@ -53,7 +53,6 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 		this.celdasFueraDeServicio = new ArrayList<ArrayList<Integer>>();	
 		
 		this.celdasPreSeleccionadasQueVuelvenACargar = new ArrayList<ArrayList<Integer>>();
-		//this.habitacionesQueNoHanSidoDesocupadas = new ArrayList<Integer>();
 		this.habitacionesQueNoHanSidoDesocupadas = new ArrayList<ArrayList<Integer>>();
 	}
 
@@ -79,7 +78,10 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	    	  // Si esta en la lista de "celdasPreSeleccionadasQueVuelvenACargar", entonces es una celda que no deberia ser seleccionada ya que esta luego 
 	    	  // de un periodo en el cual la habitación está ocupada o fuera de servicio y, por ende, no debe seleccionarse	 
 	    	  !celdasPreSeleccionadasQueVuelvenACargar.contains(celdaParaRePintar) &&
-//	    	  !habitacionesQueNoHanSidoDesocupadas.contains(celdaParaRePintar) &&
+	    	  // Si la habitación está ocupada ahora mismo y esa ocupación termina hoy pero los clientes todavía no han salido de la misma, entonces no
+	    	  // puede ocuparse la habitación dado a que hay gente en ella y no se sabe si saldrán a tiempo o no. Por ende, la habitación se marca como
+	    	  // inhabilitada en todas las fechas y no deja al conserje seleccionarla
+	    	  !habitacionesQueNoHanSidoDesocupadas.contains(celdaParaRePintar) &&
 	    	  // Si es la primera vez, entra por la bandera. Sino, debe cumplirse el seleccionar la misma columna y que la fila sea mayor a su celda anterior
 	    	  (banderaPrimeraVez || (column == columnaSeleccion && row > ultimaFilaSeleccionada))) {	
 
@@ -89,9 +91,7 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	    		  columnaSeleccion = column;
 		    	  banderaPrimeraVez = false;
 	    	  }
-	    	  
-
-	    	  
+	  
 	    	  List<ArrayList<Integer>> celdasPreSeleccionadas = new ArrayList<ArrayList<Integer>>();
 	    		  
 	    	  ArrayList<Integer> filaYColumna;
@@ -162,11 +162,7 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 
 	public void pintarCelda(Object value, Component c, int row, int column) {
 		
-  	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
-  	 
-//  	  if(this.habitacionesQueNoHanSidoDesocupadas.contains(filaYColumna.get(1)))
-//  		  c.setBackground(colorHabitacionNoDesocupada);
-  	  
+  	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);  		 
   	  
   	  if(column == 0) {	//FECHA
   		c.setBackground(Color.white);
@@ -177,7 +173,9 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
   		return;
   	  }
   	  else {  		  
+  		  
   		switch((EstadoHabitacion) value) {
+
   			case LIBRE:
   	    	  c.setBackground(colorVerde);
   	    	  break;
@@ -193,23 +191,14 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
   	    	  c.setBackground(colorAmarillo);
   	    	  celdasFueraDeServicio.add(filaYColumna);
   	    	  break;
-  			case TODAVIA_NO_DESOCUPO:
-  	  			this.habitacionesQueNoHanSidoDesocupadas.add(filaYColumna);
-  				
-  				c.setBackground(colorHabitacionNoDesocupada);
+			case TODAVIA_NO_DESOCUPO:
+			  c.setBackground(colorHabitacionNoDesocupada);
+			  habitacionesQueNoHanSidoDesocupadas.add(filaYColumna);
+	  		  break;
   		}
-  		
-//  		for(int index = 0; index < this.habitacionesQueNoHanSidoDesocupadas.size(); index++) {
-//  			
-//  			if(this.habitacionesQueNoHanSidoDesocupadas.get(index).get(1) == filaYColumna.get(1)) {
-//  				
-//  				c.setBackground(colorHabitacionNoDesocupada);
-//  			}
-//  		}
-  		
   	  }
 	}
-	
+
 	public List<ArrayList<Integer>> getCeldasSeleccionadas(){
 		
 		return this.celdasSeleccionadas;
