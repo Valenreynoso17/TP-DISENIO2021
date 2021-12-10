@@ -979,8 +979,9 @@ public class PanelAltaPasajeroDatos extends JPanel{
 
 	private boolean esValidoEmail(JTextField email2) {	//TRUE: Email es v·lido (cuenta con texto + @ + texto + .com) / FALSE: Email no es v·lido
 		
-		String regex = "^[A-Z0-9!#$%&í+/=?^_`{|}~-]+(?:.[A-Z0-9!#$%&í+/=?^_`{|}~-]+)@(?:[A-Z0-9](?:[a-z0-9-][a-z0-9])?.)+(?:[A-Z]{2}|COM|ORG|NET|GOV|MIL|BIZ|INFO|MOBI|NAME|AERO|JOBS|MUSEUM|AR)$"; //"^(.+)@(.+)$";	//"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$"
-		 
+		//String regex = "^[A-Z0-9!#$%&í+/=?^_`{|}~-]+(?:.[A-Z0-9!#$%&í+/=?^_`{|}~-]+)@(?:[A-Z0-9](?:[a-z0-9-][a-z0-9])?.)+(?:[A-Z]{2}|COM|ORG|NET|GOV|MIL|BIZ|INFO|MOBI|NAME|AERO|JOBS|MUSEUM|AR)$"; //"^(.+)@(.+)$";	//"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$"
+		String regex = "[^(){^}<>@\s\n\t,;:\"{[}{]}{|}Á#%&¡…Õ”⁄+/={?}]+@[A-Z]+([.][A-Z]+)+"; //"^(.+)@(.+)$";
+		
 		Pattern patron = Pattern.compile(regex);
 
 		Matcher matcher = patron.matcher(email.getText());
