@@ -82,6 +82,7 @@ public class MensajeAyuda extends JDialog {
 		contentPane.add(boton, c);
 		
 		setContentPane(contentPane);
+		
 		this.setVisible(true);
 	}
 

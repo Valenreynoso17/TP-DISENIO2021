@@ -26,7 +26,7 @@ import main.java.dtos.ReservaDTO;
 import main.java.interfaces.frames.FrameODialog;
 import main.java.interfaces.frames.FramePrincipal;
 
-public class MensajeYaExistenReservas extends JFrame{
+public class MensajeYaExistenReservas extends JDialog{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -63,7 +63,7 @@ public class MensajeYaExistenReservas extends JFrame{
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	public MensajeYaExistenReservas(Integer i) {
-		super("Sistema Hotel Premier");
+		this.setTitle("Sistema Hotel Premier");
 		this.id = i;
 	}
 	
@@ -73,11 +73,10 @@ public class MensajeYaExistenReservas extends JFrame{
 		
 		frame.setEnabled(false);	//Para que solo se pueda clickear el mensaje
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 240);
 		contentPane = new JPanel();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		this.setVisible(true);
+
 		this.setLocationRelativeTo(null);
 		
 		contentPane.setBackground(Color.WHITE);
@@ -151,6 +150,8 @@ public class MensajeYaExistenReservas extends JFrame{
 		contentPane.add(botonIzquierdo, c);
 
 		setContentPane(contentPane);
+		
+		this.setVisible(true);
 	}
 	
 	

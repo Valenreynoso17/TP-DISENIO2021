@@ -54,8 +54,8 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	
 	private Mensaje mensajeHabitacionConOcupacionOFS = new Mensaje(5, "", TipoMensaje.ERROR, "Aceptar", null);
 	
-	String textoMensajeAyuda = "<html> Ocupar Habitación<br/><br/>"
-			+ "VER MENSAJE de esta pantalla es poder hacer el check in de un pasajero en una habitación que esté disponible y en un "
+	private String textoMensajeAyuda = "<html> Mostrar Estado de Habitaciones<br/><br/>"
+			+ "El propósito de esta pantalla es poder hacer el check in de un pasajero en una habitación que esté disponible y en un "
 			+ "período de fechas que comience desde la fecha de hoy.<br/>"
 			+ " Para esto, el sistema brinda un campo de texto catalogado como 'Fecha hasta' en el cual debe introducirse una fecha que contenga la fecha en "
 			+ "la que el usuario desea retirarse del hotel (hacer el check out).<br/>"
@@ -69,6 +69,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			+ " - Cuando ya tenga seleccionado el período en el que se ocupará la habitación, presionará el botón 'Siguiente'. En caso de no haber seleccionado ningún "
 			+ "período, se mostrará un mensaje de error.<br/><br/>"
 			+ " - Si el usuario desea cargar otro rango de fechas, podrá modificar el campo 'Fecha hasta' y luego el botón 'Buscar' para que la grilla se actualice.</html>";
+	
 	private MensajeAyuda mensajeAyuda = new MensajeAyuda(textoMensajeAyuda); 
 	
 	private Font fuenteBoton = new Font("SourceSansPro", Font.PLAIN, 14);

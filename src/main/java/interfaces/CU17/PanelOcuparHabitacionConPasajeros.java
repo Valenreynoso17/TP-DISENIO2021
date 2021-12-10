@@ -64,8 +64,8 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	private String textoResponsableMenorDeEdad = 	"<html><p>El responsable seleccionado es menor de edad. Por favor, seleccione otro.</p><html>";
 	private Mensaje mensajeResponsableMenorDeEdad = new Mensaje(4, textoResponsableMenorDeEdad, TipoMensaje.ERROR, "Aceptar", null);
 	
-	String textoMensajeAyuda = "<html> Mostrar Estado de Habitaciones<br/><br/>"
-			+ "El propósito de esta pantalla es poder hacer el check in de un pasajero en una habitación que esté disponible y en un "
+	private String textoMensajeAyuda = "<html> Ocupar Habitación<br/><br/>"
+			+ "VER MENSAJE de esta pantalla es poder hacer el check in de un pasajero en una habitación que esté disponible y en un "
 			+ "período de fechas que comience desde la fecha de hoy.<br/>"
 			+ " Para esto, el sistema brinda un campo de texto catalogado como 'Fecha hasta' en el cual debe introducirse una fecha que contenga la fecha en "
 			+ "la que el usuario desea retirarse del hotel (hacer el check out).<br/>"

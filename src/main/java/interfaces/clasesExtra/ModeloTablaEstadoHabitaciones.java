@@ -22,7 +22,7 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 	private List<HabitacionDTO> habitaciones;
 
 	private Map<Integer, List<ReservaDTO>> mapReservasPorHabitacion;	//Guarda una lista de reservas por cada habitacion
-	private Map<Integer, OcupacionDTO> mapOcupacionActualPorHabitacion;		//Guarda la ocupacion actual (fechaHoraSalidaReal == null) por habitacion
+	private Map<Integer, OcupacionDTO> mapOcupacionActualPorHabitacion;	//Guarda la ocupacion actual (fechaHoraSalidaReal == null) por habitacion
 	
 	private LocalDate fechaDesde;
 	private LocalDate fechaHasta;
@@ -129,20 +129,30 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 				
 				for(OcupacionDTO o : h.getOcupaciones()) {
 					
-					if(o.getFechaHoraSalidaReal() == null)	//TODO: VER
-						mapOcupacionActualPorHabitacion.put(h.getId(), o);
+					//TODO: Ver
+					if(o.getFechaEgreso().equals(LocalDate.now()) && o.getFechaHoraSalidaReal() == null) {
+//						Map<Integer, EstadoHabitacion> estadoHabitacion = new HashMap<Integer, EstadoHabitacion>();
+//						
+//						mapFechaHabitacionEstado.put(o.getFechaEgreso().plusDays(1), estadoHabitacion);
+//						
+//						mapFechaHabitacionEstado.get(o.getFechaEgreso().plusDays(1)).put(h.getId(), EstadoHabitacion.TODAVIA_NO_DESOCUPO);
+//						mapOcupacionActualPorHabitacion.put(h.getId(), o);
+					}
+					else {
+						
 					
-				    for (LocalDate fecha = o.getFechaIngreso(); fecha.isBefore(o.getFechaEgreso()); fecha = fecha.plusDays(1)) {
-				        
-				    	if(!mapFechaHabitacionEstado.containsKey(fecha)) {
-				    		
-					    	Map<Integer, EstadoHabitacion> estadoHabitacion = new HashMap<Integer, EstadoHabitacion>();
-					    	//estadoHabitacion.put(h.getId(), f);
-					    	mapFechaHabitacionEstado.put(fecha, estadoHabitacion);
-				    	}
-				    	
-				    	mapFechaHabitacionEstado.get(fecha).put(h.getId(), EstadoHabitacion.OCUPADA);
-				    }
+					    for (LocalDate fecha = o.getFechaIngreso(); fecha.isBefore(o.getFechaEgreso()); fecha = fecha.plusDays(1)) {
+					        
+					    	if(!mapFechaHabitacionEstado.containsKey(fecha)) {
+					    		
+						    	Map<Integer, EstadoHabitacion> estadoHabitacion = new HashMap<Integer, EstadoHabitacion>();
+						    	//estadoHabitacion.put(h.getId(), f);
+						    	mapFechaHabitacionEstado.put(fecha, estadoHabitacion);
+					    	}
+					    	
+					    	mapFechaHabitacionEstado.get(fecha).put(h.getId(), EstadoHabitacion.OCUPADA);
+					    }
+					}
 				}
 				
 				for(FueraDeServicioDTO f : h.getFuerasDeServicio()) {
