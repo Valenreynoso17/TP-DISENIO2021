@@ -46,12 +46,11 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 														+ " seleccionados. ¿Desea agregar un nuevo pasajero?</p><html>";
 	private Mensaje mensajeNoExistePasajeroBuscar = new Mensaje(2, textoMensajeNoExistePasajeroBuscar, TipoMensaje.CONFIRMACION, "Si", "No");
 	
-	private String textoModificarPasajero = 	"<html><p>Modificar pasajero en proximas versiones</p><html>";
-	
-	private Mensaje mensajeModificarPasajero = new Mensaje(4, textoModificarPasajero, TipoMensaje.ERROR, "Aceptar", null);
-	
 	private String textoMensajeNoExistePasajeroSiguiente = "<html><p>No seleccionó ningún pasajero. ¿Desea agregar un nuevo pasajero?";
 	private Mensaje mensajeNoExistePasajeroSiguiente = new Mensaje(3, textoMensajeNoExistePasajeroSiguiente, TipoMensaje.CONFIRMACION, "Si", "No");
+	
+	private String textoModificarPasajero = "<html><p>El CU12 'Modificar Pasajero' no debe ser implementado.</p><html>";
+	private Mensaje mensajeModificarPasajero = new Mensaje(4, textoModificarPasajero, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private JButton buscar;
 	private JButton cancelar;
@@ -94,8 +93,12 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 		buscar.setFont(fuenteBoton);
 		buscar.setBorder(bordeBoton);
 		buscar.addActionListener(e -> {
-			PasajeroDTO filtros = panelGestionarPasajeroBusqueda.getFiltros();
 			try{
+				panelGestionarPasajeroTabla.desactivarTabla();	//TODO: Limpiar paginacion
+				this.panelGestionarPasajeroBusqueda.inputEsValida();
+
+				PasajeroDTO filtros = panelGestionarPasajeroBusqueda.getFiltros();
+			
 				gestorPasajero.validarDatosBusqueda(filtros);
 				Integer cantResultados = gestorPasajero.buscarCantidadPasajeros(filtros);
 				
@@ -103,8 +106,8 @@ public class PanelGestionarPasajero extends JPanel implements PanelPermiteMensaj
 				
 			}
 			catch (InputInvalidaException exc) {
-				// TODO falta mensaje de error
-				exc.printStackTrace();
+				// La lista posee "Apellido" o "Nombre" o "Documento", dependiendo en cual debe ponerse el labelError
+				this.panelGestionarPasajeroBusqueda.colocarLabelInvalido(exc.getCamposInvalidos());
 			}
 			catch (SinResultadosException exc) {
 				mensajeNoExistePasajeroBuscar.mostrar(getPanel(), frameActual);

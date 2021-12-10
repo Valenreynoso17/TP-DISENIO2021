@@ -40,7 +40,7 @@ public class PanelFacturarANombreDeUnTercero extends JPanel implements PanelPerm
 													+ " de pago del sistema. ¿Desea dar de alta un nuevo responsable de pago?</p><html>";
 	private Mensaje mensajeNoExisteResponsable = new Mensaje(2, textoMensajeNoExisteResponsable, TipoMensaje.CONFIRMACION, "Si", "No");
 	
-	private String textoAltaResponsableDePago = "<html><p>El CU14 'Dar de alta nuevo Responsable de Pago' no se implementa en esta etapa.</p><html>";
+	private String textoAltaResponsableDePago = "<html><p>El CU14 'Dar de alta nuevo Responsable de Pago' no debe ser implementado.</p><html>";
 	private Mensaje mensajeAltaResponsableDePago = new Mensaje(3, textoAltaResponsableDePago, TipoMensaje.ERROR, "Aceptar", null);
 
 	private Insets insetPanelGroupBox = new Insets(0,0,0,0);

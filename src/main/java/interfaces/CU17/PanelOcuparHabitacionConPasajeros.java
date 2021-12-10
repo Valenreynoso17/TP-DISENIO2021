@@ -11,9 +11,11 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import main.java.dtos.HabitacionDTO;
 import main.java.dtos.OcupacionDTO;
@@ -27,6 +29,7 @@ import main.java.gestores.GestorPasajero;
 import main.java.interfaces.CU02.PanelGestionarPasajeroTabla;
 import main.java.interfaces.CU05.PanelMostrarEstadoHabitaciones;
 import main.java.interfaces.clasesExtra.Mensaje;
+import main.java.interfaces.clasesExtra.MensajeAyuda;
 import main.java.interfaces.clasesExtra.PanelPermiteMensajes;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 import main.java.interfaces.frames.FramePrincipal;
@@ -61,16 +64,39 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	private String textoResponsableMenorDeEdad = 	"<html><p>El responsable seleccionado es menor de edad. Por favor, seleccione otro.</p><html>";
 	private Mensaje mensajeResponsableMenorDeEdad = new Mensaje(4, textoResponsableMenorDeEdad, TipoMensaje.ERROR, "Aceptar", null);
 	
+	private String textoMensajeAyuda = "<html> Ocupar Habitación<br/><br/>"
+			+ "VER MENSAJE de esta pantalla es poder hacer el check in de un pasajero en una habitación que esté disponible y en un "
+			+ "período de fechas que comience desde la fecha de hoy.<br/>"
+			+ " Para esto, el sistema brinda un campo de texto catalogado como 'Fecha hasta' en el cual debe introducirse una fecha que contenga la fecha en "
+			+ "la que el usuario desea retirarse del hotel (hacer el check out).<br/>"
+			+ " Seguido de esto debe apretar 'Buscar' y el sistema brindará ahora una grilla en la que pueden visualizarse las habitaciones como nombres de las "
+			+ "columnas y las fechas como filas. El usuario ahora debe:<br/><br/>"
+			+ " - Con el click izquierdo, seleccionar la fecha final del período que desea seleccionar. En caso de seleccionar un período inválido (porque la habitación"
+			+ " está ocupada el día de hoy o porque selecciona un período en el cual la habitación está fuera de servicio), el sistema presenta un mensaje de error "
+			+ "para que el usuario deba seleccionar otra fecha.<br/><br/>"
+			+ " - En caso de que desee deseleccionar un período, el usuario deberá posicionarse sobre el período seleccionado y apretar el click derecho. Luego de esto, "
+			+ "se le permitirá seleccionar otro período válido.<br/><br/>"
+			+ " - Cuando ya tenga seleccionado el período en el que se ocupará la habitación, presionará el botón 'Siguiente'. En caso de no haber seleccionado ningún "
+			+ "período, se mostrará un mensaje de error.<br/><br/>"
+			+ " - Si el usuario desea cargar otro rango de fechas, podrá modificar el campo 'Fecha hasta' y luego el botón 'Buscar' para que la grilla se actualice.</html>";
+	private MensajeAyuda mensajeAyuda = new MensajeAyuda(textoMensajeAyuda); 
+	
 	private JButton buscar;
 	private JButton cancelar;
+	private JButton ayuda;
 	private JButton siguiente;
 
 	private Insets insetPanelBusqueda = new Insets(30,30,5,30);
+	private Insets insetBuscar = new Insets(0,0,0,0);
 	private Insets insetPanelTabla = new Insets(0,30,0,0);
 	private Insets insetPanelPasajerosSeleccionados = new Insets(0,0,0,10);
 	private Insets insetPanelInformacion = new Insets(0,0,0,10);
+	private Insets insetCancelar = new Insets(0,60,10,0);
+	private Insets insetAyuda = new Insets(0,15,10,0);
+	private Insets insetSiguiente = new Insets(0,0,10,60);
 	
 	private Dimension dimensionBoton = new Dimension(90, 33);
+	private Dimension dimensionBotonAyuda = new Dimension(130, 33);
 	
 	private RoundedBorder bordeBoton = new RoundedBorder(10, Color.decode("#BDBDBD"));
 	
@@ -114,11 +140,12 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 		buscar.setFont(fuenteBoton);
 		buscar.setBorder(bordeBoton);
 		buscar.addActionListener(e -> {
-			
-				//panelOcuparHabitacionTabla.activarTabla();
-				//panelPasajerosSeleccionadosGroupBox.activarTabla();
-			PasajeroDTO filtros = panelOcuparHabitacionBusqueda.getFiltros();
 			try{
+				panelOcuparHabitacionTabla.desactivarTabla();	//TODO: Limpiar paginacion
+				this.panelOcuparHabitacionBusqueda.inputEsValida();
+				
+				PasajeroDTO filtros = panelOcuparHabitacionBusqueda.getFiltros();
+			
 				gestorPasajero.validarDatosBusqueda(filtros);
 				Integer cantResultados = gestorPasajero.buscarCantidadPasajeros(filtros);
 				
@@ -127,14 +154,14 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 				
 			}
 			catch (InputInvalidaException exc) {
-				// TODO falta mensaje de error
-				exc.printStackTrace();
+				// La lista posee "Apellido" o "Nombre" o "Documento", dependiendo en cual debe ponerse el labelError
+				this.panelOcuparHabitacionBusqueda.colocarLabelInvalido(exc.getCamposInvalidos());
 			}
 			catch (SinResultadosException exc) {
 				mensajeNoExistePasajeroBuscar.mostrar(getPanel(), frameActual);
 			}	
 		});
-		c.anchor = GridBagConstraints.CENTER;		c.insets = new Insets(0,60,0,0);
+		c.anchor = GridBagConstraints.CENTER;		c.insets = insetBuscar;
 		c.gridx = 1; c.gridy = 1;
 		this.add(buscar, c);
 		
@@ -172,9 +199,28 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 				mensajeCancelar.mostrar(getPanel(), frame);
 			}
 		});
-		c.anchor = GridBagConstraints.WEST;		c.insets = new Insets(0,60,10,0);
+		c.anchor = GridBagConstraints.WEST;		c.insets = insetCancelar;
 		c.gridx = 0; c.gridy = 4;
 		this.add(cancelar, c);
+		
+		ayuda = new JButton("Ayuda");
+		ImageIcon imagenAyuda = new ImageIcon("src/main/java/interfaces/clasesExtra/AyudaPrueba.PNG");
+		ayuda.setIcon(imagenAyuda);
+		ayuda.setHorizontalAlignment(SwingConstants.LEFT);
+		ayuda.setMinimumSize(dimensionBotonAyuda);
+		ayuda.setPreferredSize(dimensionBotonAyuda);
+		ayuda.setBackground(Color.decode("#E0E0E0"));
+		ayuda.setFont(fuenteBoton);
+		ayuda.setBorder(bordeBoton);
+		ayuda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				mensajeAyuda.mostrar(getPanel(), frame);
+			}
+		});
+		c.anchor = GridBagConstraints.CENTER;		c.insets = insetAyuda;
+		c.gridx = 1; c.gridy = 4;
+		this.add(ayuda, c);
 
 		siguiente = new JButton("Siguiente");
 		siguiente.setMinimumSize(dimensionBoton);
@@ -205,7 +251,7 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 				
 			}
 		});
-		c.anchor = GridBagConstraints.EAST;		c.insets = new Insets(0,0,10,60);
+		c.anchor = GridBagConstraints.EAST;		c.insets = insetSiguiente;
 		c.gridx = 2; c.gridy = 4;
 		this.add(siguiente, c);
 	}

@@ -24,12 +24,17 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	Color colorAmarillo = Color.decode("#ffeb3b");
 	Color colorSeleccionado = Color.decode("#bdbdbd");
 	
+	Color colorHabitacionNoDesocupada = Color.decode("#82c876");
+	
 	Component c;
 	
 	// Lista creada para cuando el conserje selecciona un período que no debería seleccionarse (porque existe una ocupación o la habitación
 	// está fuera de servicio), entonces la celda que selecciona queda como "Seleccionada" y cuando baja y sube por la tabla (al volverse a
 	// actualizar la celda) lanza nuevamente la excepción y el mensaje
 	List<ArrayList<Integer>> celdasPreSeleccionadasQueVuelvenACargar;
+	
+	//List<Integer> habitacionesQueNoHanSidoDesocupadas;
+	List<ArrayList<Integer>> habitacionesQueNoHanSidoDesocupadas;
 	
 	List<ArrayList<Integer>> celdasSeleccionadas;
 	List<ArrayList<Integer>> celdasReservadas;
@@ -48,6 +53,8 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 		this.celdasFueraDeServicio = new ArrayList<ArrayList<Integer>>();	
 		
 		this.celdasPreSeleccionadasQueVuelvenACargar = new ArrayList<ArrayList<Integer>>();
+		//this.habitacionesQueNoHanSidoDesocupadas = new ArrayList<Integer>();
+		this.habitacionesQueNoHanSidoDesocupadas = new ArrayList<ArrayList<Integer>>();
 	}
 
 	@Override
@@ -72,6 +79,7 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 	    	  // Si esta en la lista de "celdasPreSeleccionadasQueVuelvenACargar", entonces es una celda que no deberia ser seleccionada ya que esta luego 
 	    	  // de un periodo en el cual la habitación está ocupada o fuera de servicio y, por ende, no debe seleccionarse	 
 	    	  !celdasPreSeleccionadasQueVuelvenACargar.contains(celdaParaRePintar) &&
+//	    	  !habitacionesQueNoHanSidoDesocupadas.contains(celdaParaRePintar) &&
 	    	  // Si es la primera vez, entra por la bandera. Sino, debe cumplirse el seleccionar la misma columna y que la fila sea mayor a su celda anterior
 	    	  (banderaPrimeraVez || (column == columnaSeleccion && row > ultimaFilaSeleccionada))) {	
 
@@ -156,15 +164,20 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
 		
   	  ArrayList<Integer> filaYColumna = new ArrayList<Integer>();	filaYColumna.add(row); filaYColumna.add(column);
   	 
+//  	  if(this.habitacionesQueNoHanSidoDesocupadas.contains(filaYColumna.get(1)))
+//  		  c.setBackground(colorHabitacionNoDesocupada);
+  	  
+  	  
   	  if(column == 0) {	//FECHA
   		c.setBackground(Color.white);
+  		return;
   	  }
   	  else if(value == null) {	//Ver si vale la pena dejar el value como null y hacer el if aca o colocar la fila como EstadoHabitacion.LIBRE
   		c.setBackground(colorVerde);
+  		return;
   	  }
-  	  else {
+  	  else {  		  
   		switch((EstadoHabitacion) value) {
-  		
   			case LIBRE:
   	    	  c.setBackground(colorVerde);
   	    	  break;
@@ -180,8 +193,20 @@ public class RenderParaTablaEstadoColores extends DefaultTableCellRenderer{
   	    	  c.setBackground(colorAmarillo);
   	    	  celdasFueraDeServicio.add(filaYColumna);
   	    	  break;
+  			case TODAVIA_NO_DESOCUPO:
+  	  			this.habitacionesQueNoHanSidoDesocupadas.add(filaYColumna);
+  				
+  				c.setBackground(colorHabitacionNoDesocupada);
   		}
-  		  
+  		
+//  		for(int index = 0; index < this.habitacionesQueNoHanSidoDesocupadas.size(); index++) {
+//  			
+//  			if(this.habitacionesQueNoHanSidoDesocupadas.get(index).get(1) == filaYColumna.get(1)) {
+//  				
+//  				c.setBackground(colorHabitacionNoDesocupada);
+//  			}
+//  		}
+  		
   	  }
 	}
 	

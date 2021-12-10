@@ -10,7 +10,7 @@ public class App{
 			
 			FramePrincipal frame = new FramePrincipal();
 			
-			//frame.setNuevoPanel(new PanelMostrarEstadoHabitaciones(frame, new PanelMenuPrincipal(frame)));
+			frame.setNuevoPanel(new PanelMostrarEstadoHabitaciones(frame, new PanelMenuPrincipal(frame)));
 		
 	}
 }

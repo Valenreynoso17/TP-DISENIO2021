@@ -53,7 +53,6 @@ public class Mensaje extends JDialog{
 	private FrameODialog frameActual;
 
 	public Mensaje(Integer id, String texto, TipoMensaje tipo, String opcionAceptar, final String opcionCancelar) {	
-		//super();
 		this.setTitle("Sistema Hotel Premier");
 		this.id = id;
 		this.texto = texto;
@@ -135,6 +134,7 @@ public class Mensaje extends JDialog{
 		}
 		
 		setContentPane(contentPane);
+		
 		this.setVisible(true);
 	}
 

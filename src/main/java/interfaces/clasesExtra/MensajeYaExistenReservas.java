@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -25,7 +26,7 @@ import main.java.dtos.ReservaDTO;
 import main.java.interfaces.frames.FrameODialog;
 import main.java.interfaces.frames.FramePrincipal;
 
-public class MensajeYaExistenReservas extends JFrame{
+public class MensajeYaExistenReservas extends JDialog{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -58,9 +59,11 @@ public class MensajeYaExistenReservas extends JFrame{
 	private Dimension dimensionTextoReservasExistentes = new Dimension(200,60);
 	
 	private FrameODialog frameActual;
+	
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	public MensajeYaExistenReservas(Integer i) {
-		super("Sistema Hotel Premier");
+		this.setTitle("Sistema Hotel Premier");
 		this.id = i;
 	}
 	
@@ -70,11 +73,10 @@ public class MensajeYaExistenReservas extends JFrame{
 		
 		frame.setEnabled(false);	//Para que solo se pueda clickear el mensaje
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 240);
 		contentPane = new JPanel();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		this.setVisible(true);
+
 		this.setLocationRelativeTo(null);
 		
 		contentPane.setBackground(Color.WHITE);
@@ -148,6 +150,8 @@ public class MensajeYaExistenReservas extends JFrame{
 		contentPane.add(botonIzquierdo, c);
 
 		setContentPane(contentPane);
+		
+		this.setVisible(true);
 	}
 	
 	
@@ -156,7 +160,7 @@ public class MensajeYaExistenReservas extends JFrame{
 		
 		for(ReservaDTO r : reservas) {
 			
-			resultado += "-Entre los días "+r.getIngreso().toLocalDate()+" y "+r.getEgreso().toLocalDate()
+			resultado += " - Entre los días "+r.getIngreso().toLocalDate().format(formatter)+" y "+r.getEgreso().toLocalDate().format(formatter)
 						 +" reservó "+r.getNombre()+" "+r.getApellido()+".\n";
 		}
 		
