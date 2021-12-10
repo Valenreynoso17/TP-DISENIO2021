@@ -59,8 +59,6 @@ public class Pasajero {
 	@JoinColumn(name = "iddireccion", referencedColumnName = "id")
 	private Direccion direccion; 
 	
-	//private ResponsableDePago responsableDePago;
-	
 	
 	public Pasajero(Integer id, String apellido, String nombre, TipoDocumento tipoDocumento, String documento,
 			LocalDate fechaNacimiento, String email, String ocupacion, String telefono, String cuit,
