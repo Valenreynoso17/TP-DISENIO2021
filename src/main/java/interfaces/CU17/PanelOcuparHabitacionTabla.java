@@ -224,6 +224,7 @@ public class PanelOcuparHabitacionTabla extends JPanel implements Paginable{
 	public void desactivarTabla() {
 		
 		miModelo.limpiarTabla();
+		paginacion.refrescarCantidadResultados(0, 1);
 	}
 	
 	public void actualizarTabla() {
