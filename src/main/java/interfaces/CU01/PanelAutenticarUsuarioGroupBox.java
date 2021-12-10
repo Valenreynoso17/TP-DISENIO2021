@@ -17,6 +17,7 @@ import javax.swing.event.DocumentListener;
 import main.java.excepciones.InputVacioException;
 import main.java.excepciones.UsuarioOContraseniaIncorrectaException;
 import main.java.gestores.GestorUsuario;
+import main.java.interfaces.clasesExtra.JTextFieldLimitado;
 import main.java.interfaces.clasesExtra.RoundedBorder;
 import main.java.interfaces.clasesExtra.TextPrompt;
 
@@ -80,6 +81,7 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 			c.anchor = GridBagConstraints.CENTER; c.fill = GridBagConstraints.HORIZONTAL;  c.insets = insetCampo;
 		
 		nombre = new JTextField(); nombre.setBorder(bordeCampo);
+		nombre.setDocument(new JTextFieldLimitado(40));
 		nombre.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelNombreVacio.setVisible(false);
@@ -115,6 +117,7 @@ public class PanelAutenticarUsuarioGroupBox extends JPanel{
 			c.anchor = GridBagConstraints.CENTER; c.fill = GridBagConstraints.HORIZONTAL; c.insets = new Insets(0,80,50,80);
 		
 		contrasenia = new JPasswordField();	contrasenia.setBorder(bordeCampo);
+		contrasenia.setDocument(new JTextFieldLimitado(40));
 		contrasenia.getDocument().addDocumentListener(new DocumentListener() {	//Para que desaparezca el mensaje al presionar una tecla
 			  public void changedUpdate(DocumentEvent e) {
 				  labelContraseniaVacio.setVisible(false);

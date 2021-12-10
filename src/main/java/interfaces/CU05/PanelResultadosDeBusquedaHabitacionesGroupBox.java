@@ -110,9 +110,9 @@ public class PanelResultadosDeBusquedaHabitacionesGroupBox extends JPanel{
 		for(TipoHabitacionDTO tipo : mapHabitacionesTipo.keySet()) {
 			
 			cA = new ColumnaAgrupada(tipo.getTipo());
-			
-			if(tipo.getTipo().equals("Suite Double"))
-				cA = new ColumnaAgrupada("Suite D.");
+//			
+//			if(tipo.getTipo().equals("SUITE DOBLE"))
+//				cA = new ColumnaAgrupada("SUITE D.");
 			
 			for(int i = 0; i <= mapHabitacionesTipo.get(tipo).size(); i++) {
 				

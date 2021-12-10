@@ -1,7 +1,5 @@
 package main.java.main;
 
-import main.java.interfaces.CU05.PanelMostrarEstadoHabitaciones;
-import main.java.interfaces.MenuPrincipal.PanelMenuPrincipal;
 import main.java.interfaces.frames.FramePrincipal;
 
 public class App{
@@ -9,9 +7,6 @@ public class App{
 	public static void main(String[] args) {
 			
 			FramePrincipal frame = new FramePrincipal();
-			
-			frame.setNuevoPanel(new PanelMostrarEstadoHabitaciones(frame, new PanelMenuPrincipal(frame)));
-		
 	}
 }
 

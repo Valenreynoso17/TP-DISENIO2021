@@ -79,11 +79,9 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 					
 					if(mapFechaHabitacionEstado.get(fecha).containsKey(h.getId())) {
 						
-						System.out.println("Fecha: "+fecha+" h: "+h.getId()+" est: "+mapFechaHabitacionEstado.get(fecha).get(h.getId()));
 						fila[habitaciones.indexOf(h)+1] = mapFechaHabitacionEstado.get(fecha).get(h.getId());
 					}
 					else {
-						System.out.println("Fecha: "+fecha+" h: "+h.getId()+" est: LIBRE");
 						fila[habitaciones.indexOf(h)+1] = EstadoHabitacion.LIBRE;
 					}
 				}
@@ -131,8 +129,6 @@ public class ModeloTablaEstadoHabitaciones extends DefaultTableModel{
 				for(OcupacionDTO o : h.getOcupaciones()) {
 					
 					if(o.getFechaEgreso().equals(LocalDate.now()) && o.getFechaHoraSalidaReal() == null) {
-						
-						System.out.println("fecha hasta: "+fechaHasta);
 						
 						for(LocalDate fecha = LocalDate.now(); fecha.isBefore(fechaHasta.plusDays(1)); fecha = fecha.plusDays(1)) {
 							
