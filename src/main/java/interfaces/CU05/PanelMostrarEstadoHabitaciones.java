@@ -75,9 +75,9 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			+ "		</ul>"
 			+ "	<li><b>No</b> se podrá <b>seleccionar</b> un período si:</li>"
 			+ "    	<ul>"
-			+ "			<li>La habitacion está actualmente <b>ocupada</b>.</li>"
-			+ "    		<li>La habitacion tiene un período de <b>fuera de servicio</b></li>"
-			+ "			<li>Todavía no se realizó el <b>checkout de la ocupación anterior</b>.</li>"
+			+ "			<li>La habitacion está actualmente <b>ocupada</b>. (Rojo)</li>"
+			+ "    		<li>La habitacion tiene un período de <b>fuera de servicio</b>. (Amarillo)</li>"
+			+ "			<li>Todavía no se realizó el <b>checkout de la ocupación anterior</b>. (Verde oscuro)</li>"
 			+ "		</ul>"
 			+ "</ul>"
 			+ "</html>";
