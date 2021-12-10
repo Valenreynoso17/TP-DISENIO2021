@@ -61,8 +61,8 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 	
 	
 	private String textoMensajeAyuda = 
-			"<html> <h3>Ayuda sobre: Mostrar Estado de Habitaciones</h3>"
-			+ "<ul>"
+			  "<html> <h3 style=\"padding:0 0 0 15\">Ayuda sobre: Mostrar Estado de Habitaciones</h3>"
+			+ "<ul style=\"padding:0px 0px 0px 5px;\">"
 			+ "	<li>Todos los períodos de ocupación comienzan desde la fecha actual.</li>"
 			+ "	<li>Para <b>seleccionar</b> un período de ocupacion el usuario puede:</li>"
 			+ "		<ul>"
@@ -77,6 +77,7 @@ public class PanelMostrarEstadoHabitaciones extends JPanel implements PanelPermi
 			+ "    	<ul>"
 			+ "			<li>La habitacion está actualmente <b>ocupada</b>.</li>"
 			+ "    		<li>La habitacion tiene un período de <b>fuera de servicio</b></li>"
+			+ "			<li>Todavía no se realizó el <b>checkout de la ocupación anterior</b>.</li>"
 			+ "		</ul>"
 			+ "</ul>"
 			+ "</html>";

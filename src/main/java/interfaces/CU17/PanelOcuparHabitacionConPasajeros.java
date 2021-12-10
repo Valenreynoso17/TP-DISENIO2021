@@ -65,14 +65,14 @@ public class PanelOcuparHabitacionConPasajeros extends JPanel implements PanelPe
 	private Mensaje mensajeResponsableMenorDeEdad = new Mensaje(4, textoResponsableMenorDeEdad, TipoMensaje.ERROR, "Aceptar", null);
 	
 	private String textoMensajeAyuda = 
-			"<html> <h3>Ayuda sobre: Ocupar Habitación</h3>\r\n"
-			+ "<ul>\r\n"
-			+ "	<li>Para <b>seleccionar</b> un pasajero:</li>\r\n"
-			+ "    <ul><li>Haga click <b>izquierdo</b> sobre su nombre en la grilla de <b>Resultados de busqueda</b>.</li></ul>\r\n"
-			+ "	<li>Para <b>deseleccionar</b> un pasajero:</li>\r\n"
-			+ "    <ul><li>Haga click <b>derecho</b> sobre su nombre en la grilla de <b>Pasajeros seleccionados</b>.</li></ul>\r\n"
-			+ "    <li>El responsable de la habicacion <b>debe</b> ser un pasajero <b>mayor de edad</b>.</li>\r\n"
-			+ "</ul>\r\n"
+			"<html> <h3 style=\"padding:0 0 0 15\">Ayuda sobre: Ocupar Habitación</h3>"
+			+ "<ul style=\"padding:0px 0px 0px 5px;\">"
+			+ "	<li>Para <b>seleccionar</b> un pasajero:</li>"
+			+ "    <ul><li>Haga click <b>izquierdo</b> sobre su nombre en la grilla de <b>Resultados de busqueda</b>.</li></ul>"
+			+ "	<li>Para <b>deseleccionar</b> un pasajero:</li>"
+			+ "    <ul><li>Haga click <b>derecho</b> sobre su nombre en la grilla de <b>Pasajeros seleccionados</b>.</li></ul>"
+			+ "    <li>El responsable de la habicacion <b>debe</b> ser un pasajero <b>mayor de edad</b>.</li>"
+			+ "</ul>"
 			+ "</html>";
 	private MensajeAyuda mensajeAyuda = new MensajeAyuda(textoMensajeAyuda); 
 	
